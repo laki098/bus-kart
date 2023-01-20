@@ -1,14 +1,14 @@
 import LoginLogic from "./login.logic";
-import 'loginStyle.css';
+import './loginStyle.css';
 
 
 const LoginComponent = () => {
-    
+    const loginLogic = LoginLogic()
     return ( 
     <>
-        <input className="input1" type="text" required onChange={(e) => LoginLogic().setEmail(e.target.value)}></input>
-        <input type="text"></input>
-        <button onClick={LoginLogic().login}>Login</button>
+        <input className="input1" type="text" name="username" required onChange={loginLogic.changeHandler}></input>
+        <input type="text" name="password" required onChange={loginLogic.changeHandler}></input>
+        <button onClick={loginLogic.login}>Login</button>
     </> );
 }
  
