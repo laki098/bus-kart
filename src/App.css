@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  padding: 5px 20px;
+}
+
+.wrapper fieldset {
+  margin: 20px 0;
+}
+
+.styleHome{
+  color: #159;
+  background-color: #EBF5FB;
+}
