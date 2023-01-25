@@ -1,16 +1,17 @@
-import logo from './logo.svg';
+
 import './App.css';
 import React, { useState } from 'react';
 import LoginComponent from './components/login/login.component';
-import RegistrationComponent from './components/registration/registration.component';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NavBar from './components/NavBar/navbar';
+import Footer from './components/NavBar/footer';
+
+
 
 function App() {
  
   return (
-   <div>
-    <LoginComponent />
-    <RegistrationComponent />
-    </div>
+   <></>
   
 
   );
