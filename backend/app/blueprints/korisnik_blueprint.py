@@ -60,11 +60,12 @@ def registration():
     
 
     korisnickoIme = data["korisnickoIme"]
-    lozinka = data["lozinka"]
     ime = data["ime"]
     prezime = data["prezime"]
     brojTelefona = data["brojTelefona"]
     email = data["email"]
+    lozinka = Korisnik.hash_lozinka(data["lozinka"])
+    data['lozinka'] = lozinka
     
     form_korisnik = [korisnickoIme, lozinka, ime, prezime, brojTelefona, email]
     
