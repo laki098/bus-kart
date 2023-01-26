@@ -19,7 +19,7 @@ const Navbar = () => {
           <li><Link to='/'><i className='fa-solid fa-circle-info nav-links'></i>Informacije</Link></li>
           <li><Link to='/'><i className='fa fa-ticket nav-links'></i>Rezervacija Karte</Link></li>
           <li><Link to='/'><i className='fa-solid fa-address-book nav-links'></i>Kontakt</Link></li>
-          <li><Link to='../login/login.component'><i className='fa fa-user-circle nav-links'></i>Prijavi se</Link></li>
+          <li><Link to='/login.component'><i className='fa fa-user-circle nav-links'></i>Prijavi se</Link></li>
           </ul>
       </nav>
     );

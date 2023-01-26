@@ -10,25 +10,27 @@ import Pocetna from './components/NavBar/links/Pocetna';
 function App() {
 
   return (<>
+  <Router>
     <div className='header'>
-      <Router>
+      
       <Navbar />
-      <Switch>
-        <Route path="links/pocetna">
-          <Pocetna /> 
-        </Route>
-        <Route path='login.component'>
-          <LoginComponent />
-        </Route>
-      </Switch>
-      </Router>
+        
+      
     </div>
    <div className='main'>
-    
+   <Switch>
+          <Route path="links/pocetna">
+            <Pocetna /> 
+          </Route>
+          <Route path='/login.component'>
+            <LoginComponent />
+          </Route>
+        </Switch>
     </div>
     <div className='footer'>
     
     </div>
+    </Router>
   </>
   );
 }
