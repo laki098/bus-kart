@@ -1,132 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
-/* base styles */
-* {
-  margin: 0;
-  font-family: "Quicksand";
-  color: #333;
-}
 .navbar {
-  padding: 20px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
-  border-bottom: 1px solid #f2f2f2;
+  font-size: 1.2rem;
+  padding: 0 30px;
+  background-color: rgba(88, 218, 250, 0.822);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  width: 95%;
+  height: 80px;
+  border-radius: 13px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%);
 }
-.navbar h1 {
-  color: #f1356d;
-}
-.navbar .links {
-  margin-left: auto;
-}
-.navbar a {
-  margin-left: 16px;
-  text-decoration: none;
-  padding: 6px;
-}
-.navbar a:hover {
-  color: #f1356d;
-}
-.content {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-}
-/* blog previews / list */
-.blog-preview {
-  padding: 10px 16px;
-  margin: 20px 0;
-  border-bottom: 1px solid #fafafa;
-}
-.blog-preview:hover {
-  box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
-}
-.blog-preview h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 8px;
-}
-.blog-preview a{
-  text-decoration: none;
-}
-/* blog details page */
-.blog-details h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 10px;
-}
-.blog-details div {
-  margin: 20px 0;
-}
-.blog-details button {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
+
+.logo {
+  color: rgb(7, 2, 31);
+  justify-self: start;
   cursor: pointer;
 }
-.create {
-  max-width: 400px;
-  margin: 0 auto;
+
+.fa-bus {
+  margin-left: 0.2rem;
+  font-size: 1.6rem;
+}
+
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  grid-gap: 10px;
+  list-style: none;
+  align-items: center;
   text-align: center;
+  justify-content: end;
 }
-.create label {
-  text-align: left;
-  display: block;
-}
-.create h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 30px;
-}
-.create input, .create textarea, .create select {
-  width: 100%;
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  display: block;
-}
-.create button {
-  background: #f1356d;
+
+.nav-links {
+  text-decoration: none;
   color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
 }
-.dodaj {
-  max-width: 300px;
-  margin: 0;
-  text-align: center;
+
+.nav-links i {
+  padding-right: 10px;
 }
-.dodaj label {
-  text-align: left;
-  display: flex;
+
+.nav-links:hover {
+  background: rgb(238, 10, 10);
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
 }
-.dodaj h2 {
-  font-size: 25px;
-  color:red;
-  margin-bottom: 40px;
-}
-.dodaj input, .dodaj textarea, .dodaj select {
-  width: 90%;
-  padding: 5px 11px;
-  margin: 11px 0;
-  border: 1px solid blue;
-  box-sizing: border-box;
-  display: flex;
-}
-.dodaj button {
-  background: red;
-  color: whitesmoke;
-  border: 0;
-  padding: 7px;
-  border-radius: 15px;
-  cursor: pointer;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 img {
     height: 50px;
