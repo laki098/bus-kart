@@ -5,10 +5,15 @@ import 'react-calendar/dist/Calendar.css';
 
 const Rezervacija = () => {
 
-    const [prevoznik, setPrevoznik] = useState('Nišekspres');
+    const [prevoznik, setPrevoznik] = useState('');
     const [linija, setLinija] = useState('Niš Beograd');
     const [vrstakarte, setVrstakarte]=useState('Jednosmerna');
     const [value, onChange] = useState(new Date());
+    const [putnik, setPutnik] = useState('Odrasli');
+    const [polaznaStanica, setPolaznastanica]=useState('');
+    const [dolaznaStanica, setDolaznastanica]=useState('');
+    const [brPolazaka, setBrPolazaka]=useState('3');
+    const brPol=true;
     
     
     return ( 
@@ -23,6 +28,7 @@ const Rezervacija = () => {
                         <td><label>Dolazna stanica</label></td>
                      {/*   <td><label>Datum polaska</label></td>    */}
                         <td><label>Tip karte</label></td>
+                        <td><label>Putnik</label></td>
                     </tr>
                     <tr>
                         <td>
@@ -38,16 +44,8 @@ const Rezervacija = () => {
                         </select>
 
                         </td>
-                        <td><input type="text" name="polaznast" className="inputText"/></td>
-                        <td><input type="text" name="dolaznast" className="inputText"/></td>
-                     {/*   <td>
-                        <Calendar
-                            onChange={onChange}
-                            value={value}
-                            
-                        />
-
-                        </td>   */}
+                        <td><input type="text" name="polaznast" className="inputText" value={polaznaStanica} onChange={(e) => setPolaznastanica(e.target.value)}/></td>
+                        <td><input type="text" name="dolaznast" className="inputText" value={dolaznaStanica} onChange={(e) => setDolaznastanica(e.target.value)}/></td>
                         <td>
                         <select
                             value={vrstakarte}
@@ -57,6 +55,16 @@ const Rezervacija = () => {
                             <option value="Povratna">Povratna</option>
                         </select>
                         </td>
+                        <td>
+                        <select
+                            value={putnik}
+                            onChange={(e) => setVrstakarte(e.target.value)}
+                            >
+                            <option value="Odrasli">Odrasli</option>
+                            <option value="Deca">Deca</option>
+                        </select>
+                        </td>
+
                     </tr>
                     <tr>
                         <td colSpan={2}>
@@ -69,12 +77,41 @@ const Rezervacija = () => {
                         </td>
                         <td></td>
                         <td></td>
+                        <td><button>Traži</button></td>
                     </tr>
 
                 </table>
 
 
             </fieldset>
+<hr/>
+
+            <h2>Rezervacija sedišta u autobusu</h2>
+            <p>Linija :  <b> {polaznaStanica} - {dolaznaStanica} </b></p> 
+            <fieldset className="sirinaSet" >
+                <table className="table">
+                    <tr>
+                        <td>Prevoznik </td>
+                        <td>
+                        <label> Vreme dolaska</label>
+                        </td>
+                        <td><label> Vreme polaska</label></td>
+                        <td><label> Broj slobodnih mesta</label></td>
+                        <td> Kupi / Rezerviši</td>    
+                    </tr>
+
+                        <tr>
+                        <td>Prevoznik </td>
+                        <td>
+                        <label> Vreme dolaska</label>
+                        </td>
+                        <td><label> Vreme polaska</label></td>
+                        <td><label> Broj slobodnih mesta</label></td>
+                        <td> Kupi / Rezerviši</td> 
+                        </tr>  
+                </table>
+            </fieldset>
+<hr/>
             </div>
         </div>
      );

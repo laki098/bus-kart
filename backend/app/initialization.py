@@ -1,6 +1,6 @@
 import os
 from db.DB import DB
-from models.user import User
+from models.korisnik import Korisnik
 
 
 def create_folder():
@@ -13,19 +13,27 @@ def create_folder():
 
 
 def init_db():
-    DB.create_table("""CREATE TABLE IF NOT EXISTS `user` (
+    DB.create_table("""CREATE TABLE IF NOT EXISTS `korisnik` (
                         `id` int NOT NULL AUTO_INCREMENT,
-                        `username` varchar(255) NOT NULL,
-                        `password` varchar(255) NOT NULL,
+                        `korisnickoIme` varchar(255) NOT NULL,
+                        `lozinka` varchar(255) NOT NULL,
+                        `ime` VARCHAR(255) NOT NULL,
+                        `prezime` VARCHAR(255) NOT NULL,
+                        `brojTelefona` VARCHAR(255) NOT NULL,
+                        `email` VARCHAR(255) NOT NULL,
                         PRIMARY KEY (`id`),
-                        UNIQUE KEY `username_UNIQUE` (`username`)
+                        UNIQUE KEY `korisnickoIme_UNIQUE` (`korisnickoIme`)
                     ) ENGINE=InnoDB""")
 
-    username = "admin"
-    password = User.hash_password("admin")
+    korisnickoIme = "admin"
+    lozinka = Korisnik.hash_lozinka("admin")
+    ime = "admin"
+    prezime = "admin"
+    email = "admin@admin.com"
+    brojTelefona = 124142
 
     DB.insert_into_query(
-        "INSERT IGNORE INTO user (username, password) VALUES (%s, %s)", (username, password))
+        "INSERT IGNORE INTO korisnik (korisnickoIme, lozinka, ime, prezime, brojTelefona, email) VALUES (%s, %s, %s, %s, %s, %s)", (korisnickoIme, lozinka, ime, prezime, brojTelefona, email))
 
     DB.create_table("""CREATE TABLE IF NOT EXISTS `employee` (
                         `id` int NOT NULL AUTO_INCREMENT,

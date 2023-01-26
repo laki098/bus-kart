@@ -1,7 +1,7 @@
 from flask import Flask
 
 from blueprints.employee_blueprint import employee_services
-from blueprints.user_blueprint import user_services
+from blueprints.korisnik_blueprint import korisnik_services
 from initialization import init
 
 app = Flask(__name__, static_url_path="")
@@ -9,7 +9,7 @@ app = Flask(__name__, static_url_path="")
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1000 * 1000
 app.secret_key = "busSub*"
 
-app.register_blueprint(user_services, url_prefix="/users")
+app.register_blueprint(korisnik_services, url_prefix="/korisnik")
 app.register_blueprint(employee_services, url_prefix="/employees")
 init()
 

@@ -1,12 +1,11 @@
 import loginApi from "../../api/login.api";
 import { useState } from "react";
-import LoginComponent from "./login.component";
 
 const LoginLogic = () => {
     let [data, setData] = useState({})
     const login = () =>{
 
-        loginApi().login(data.username, data.password).then((response)=>{
+        loginApi().login(data.korisnickoIme, data.lozinka).then((response)=>{
             console.log(response)
             alert("Konacccno")
         })

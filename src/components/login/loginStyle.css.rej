@@ -1,0 +1,13 @@
+diff a/src/components/login/loginStyle.css b/src/components/login/loginStyle.css	(rejected hunks)
+@@ -1,5 +1,10 @@
+ .input1{
+     background-color: aquamarine;
++<<<<<<< HEAD
+     border-radius: 30%;
+     color: blue;
++=======
++    border-radius: 0;
++    color: red;
++>>>>>>> 1177348b45d5e1c319a7efb2b51ebb8bad4d24a3
+ }
+\ No newline at end of file
