@@ -8,6 +8,7 @@ import Informacije from './components/NavBar/links/Informacije';
 import RezervacijaKarte from './components/NavBar/links/RezervacijaKarte';
 import Kontakt from './components/NavBar/links/Kontakt';
 import Footer from './components/NavBar/footer';
+import RegistrationComponent from './components/registration/registration.component';
 
 
 
@@ -42,7 +43,7 @@ function App() {
 
             </Switch>
             <Footer />
-          
+          <RegistrationComponent />
           </div>
         </div>
         </Router>
