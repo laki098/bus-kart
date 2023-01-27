@@ -6,6 +6,10 @@ import Pocetna from './components/NavBar/links/Pocetna';
 import Rezervacija from './components/rezervacija/Rezervacija';
 import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje';
 
+import Informacije from './components/NavBar/links/Informacije';
+import RezervacijaKarte from './components/NavBar/links/RezervacijaKarte';
+import Kontakt from './components/NavBar/links/Kontakt';
+import Footer from './components/NavBar/footer';
 
 
 
@@ -34,6 +38,41 @@ function App() {
     
     </div>
   </>
+  return (
+  
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="content">
+            <Switch>
+              
+              <Route path ="/pocetna">
+                  <Pocetna />
+              </Route>
+              <Route path="/informacije">
+                <Informacije />
+              </Route>
+              <Route path="/login.component">
+                <LoginComponent />
+              </Route>
+              <Route path="/rezervacijakarte">
+                <RezervacijaKarte />
+              </Route>
+              <Route path="/kontakt">
+                <Kontakt />
+              </Route>
+             
+              
+              
+
+            </Switch>
+            <Footer />
+          
+          </div>
+        </div>
+        </Router>
+        
+  
   );
 }
 

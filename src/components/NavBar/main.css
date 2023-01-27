@@ -56,23 +56,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 img {
-    height: 50px;
-    width: 200px;
+    height: 80px;
+    width: 300px;
     padding: 0.5rem;
 }
 
@@ -81,7 +67,7 @@ img {
     bottom: 0;
     text-align: center;
     width: 100%;
-    background-color: blue;
+    background-color: rgb(4, 92, 133);
     color: white;
     padding: 1rem;
 }
