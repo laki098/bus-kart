@@ -7,8 +7,8 @@ const LoginComponent = () => {
     return ( 
     <>
         <input className="input1" type="text" name="korisnickoIme" required onChange={loginLogic.changeHandler}></input>
-        <input type="password" name="lozinka" required onChange={loginLogic.changeHandler}></input>
-        <button onClick={loginLogic.login}>Login</button>
+        <input className="input1" type="password" name="lozinka" required onChange={loginLogic.changeHandler}></input>
+        <button className="button" onClick={loginLogic.login}>Login</button>
     </> );
 }
  
