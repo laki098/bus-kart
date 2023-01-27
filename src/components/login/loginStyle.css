@@ -1,6 +1,12 @@
 .input1{
-    background-color: aquamarine;
-    border-radius: 30%;
+    background-color: rgb(108, 255, 255);
+    /* border-radius: 30%; */
     color: blue;
     text-align: center;
+    width: 20rem;
+}
+.button {
+    border-radius: 5rem;
+    width: 16rem;
+    
 }

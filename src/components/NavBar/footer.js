@@ -1,10 +1,13 @@
 import React from "react";
 import "./main.css";
+import img1 from '../images/eurocompass.png';
+
+
 
 const Footer = () => {
     return ( 
-        <div className>
-            <h3 className="footer">Eurocompass</h3>
+        <div className="footer">
+            <img src={img1} />
 
         </div>
      );

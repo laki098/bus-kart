@@ -4,7 +4,11 @@ import LoginComponent from './components/login/login.component';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/NavBar/navbar';
 import Pocetna from './components/NavBar/links/Pocetna';
-import Informacije from './components/NavBar/links/Informacije'
+import Informacije from './components/NavBar/links/Informacije';
+import RezervacijaKarte from './components/NavBar/links/RezervacijaKarte';
+import Kontakt from './components/NavBar/links/Kontakt';
+import Footer from './components/NavBar/footer';
+
 
 
 function App() {
@@ -26,13 +30,23 @@ function App() {
               <Route path="/login.component">
                 <LoginComponent />
               </Route>
+              <Route path="/rezervacijakarte">
+                <RezervacijaKarte />
+              </Route>
+              <Route path="/kontakt">
+                <Kontakt />
+              </Route>
+             
+              
+              
 
             </Switch>
-
+            <Footer />
           
           </div>
         </div>
         </Router>
+        
   
   );
 }
