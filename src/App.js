@@ -3,6 +3,9 @@ import LoginComponent from './components/login/login.component';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/NavBar/navbar';
 import Pocetna from './components/NavBar/links/Pocetna';
+import Rezervacija from './components/rezervacija/Rezervacija';
+import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje';
+
 
 
 
@@ -10,7 +13,7 @@ function App() {
 
   return (<>
     <div className='header'>
-      <Router>
+      {/* <Router>
       <Navbar />
       <Switch>
         <Route path="links/pocetna">
@@ -20,12 +23,14 @@ function App() {
           <LoginComponent />
         </Route>
       </Switch>
-      </Router>
+      </Router> */}
     </div>
    <div className='main'>
-    
+   <UpisiRedVoznje/>
+   <Rezervacija/>
     </div>
     <div className='footer'>
+    
     
     </div>
   </>
