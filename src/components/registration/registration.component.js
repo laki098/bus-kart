@@ -1,26 +1,94 @@
+import { useRef, useState } from "react";
 import RegistrationLogic from "./registration.logic";
+import classes from "./registration.module.css"
 
 const RegistrationComponent = () => {
-    const registrationLogic = RegistrationLogic()
-    return ( 
-        <div>
-            <label>Ime:</label>
-            <input type="text" name = "ime" required onChange={registrationLogic.changeHandler}></input>
-            <label >Prezime:</label>
-            <input type="text" name = "prezime" required onChange={registrationLogic.changeHandler}></input>
-            <label>Koriscko ime:</label>
-            <input type="text" name = "korisnickoIme" required onChange={registrationLogic.changeHandler}></input>
-            <label>Lozinka:</label>
-            <input type="password" name = "lozinka" required onChange={registrationLogic.changeHandler}></input>
-            <label>Broj telefona:</label>
-            <input type="text" name = "brojTelefona" required onChange={registrationLogic.changeHandler}></input>
-            <label>Email:</label>
-            <input type="email" name = "email" required onChange={registrationLogic.changeHandler}></input>
-            
-            <button onClick={registrationLogic.registracija}>klik</button>
-            
-        </div>
-     );
-}
- 
+  let [formInputsValid, setFormInputsValid] = useState({name: true, prezime: true, email: true, korisnickoIme: true, lozinka: true, brojTelefona: true})
+  const registrationLogic = RegistrationLogic();
+  
+  const fNameInputRef = useRef(); 
+  const prezimeInputRef = useRef();
+  const korisnickoImeInputRef = useRef();
+  const emailInputRef = useRef();
+  const brojTelefonaInputRef = useRef();
+  const lozinkaInputRef = useRef();
+  
+
+
+  const confirmeHandler = (event) => {
+    event.preventDefault();
+
+    const formValidation = registrationLogic.formValidation(fNameInputRef, prezimeInputRef, emailInputRef, korisnickoImeInputRef, lozinkaInputRef, brojTelefonaInputRef) ;
+    setFormInputsValid({name: formValidation.validName, prezime: formValidation.validPrezime ,  email: formValidation.validEmail, korisnickoIme: formValidation.validKorisnickoIme, brojTelefona:formValidation.validPhone, lozinka: formValidation.validLozinka })
+    if (!formValidation.isFormValid) {
+        return;
+    }
+
+    registrationLogic.registracija()
+  }
+  return (
+    <form onSubmit={confirmeHandler} className={classes.form} >
+      
+      <div className={`${classes.control} ${formInputsValid.name ? "" : classes.invalid}`}>
+        <label>Ime:</label>
+        <input
+          type="text"
+          name="ime"
+          onChange={registrationLogic.changeHandler}
+          ref={fNameInputRef}
+        />
+        {!formInputsValid.name && <p>Unesite ime</p>}   
+      </div> 
+      <div className={`${classes.control} ${formInputsValid.prezime ? "" : classes.invalid}`}>
+        <label>Prezime:</label>
+        <input
+          type="text"
+          name="prezime"
+          ref={prezimeInputRef}
+          onChange={registrationLogic.changeHandler}
+        />
+      </div>
+      <div className={`${classes.control} ${formInputsValid.korisnickoIme ? "" : classes.invalid}`}>
+        <label>Koriscko ime:</label>
+        <input
+          type="text"
+          name="korisnickoIme"
+          ref={korisnickoImeInputRef}
+          onChange={registrationLogic.changeHandler}
+        ></input>
+      </div>
+      <div className={`${classes.control} ${formInputsValid.lozinka ? "" : classes.invalid}`}>
+        <label>Lozinka:</label>
+        <input
+          type="password"
+          name="lozinka"
+          ref={lozinkaInputRef}
+          onChange={registrationLogic.changeHandler}
+        ></input>
+      </div>
+      <div className={`${classes.control} ${formInputsValid.brojTelefona ? "" : classes.invalid}`}>
+        <label>Broj telefona:</label>
+        <input
+          type="text"
+          name="brojTelefona"
+          ref={brojTelefonaInputRef}
+          onChange={registrationLogic.changeHandler}
+        ></input>
+      </div>
+      <div className={`${classes.control} ${formInputsValid.email ? "" : classes.invalid}`}>
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          ref={emailInputRef}
+          onChange={registrationLogic.changeHandler}
+        ></input>
+      </div>
+      <div>
+        <button className={classes.submit}>klik</button>
+      </div>
+    </form>
+  );
+};
+
 export default RegistrationComponent;
