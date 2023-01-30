@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import RegistrationLogic from "./registration.logic";
 import classes from "./registration.module.css"
-import  data from "./registration.logic";
-import confirmeHandler from "./registration.logic"
 
 const RegistrationComponent = () => {
   let [formInputsValid, setFormInputsValid] = useState({name: true, prezime: true, email: true, korisnickoIme: true, lozinka: true, brojTelefona: true})
@@ -30,6 +28,7 @@ const RegistrationComponent = () => {
   }
   return (
     <form onSubmit={confirmeHandler} className={classes.form} >
+      
       <div className={`${classes.control} ${formInputsValid.name ? "" : classes.invalid}`}>
         <label>Ime:</label>
         <input
