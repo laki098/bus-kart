@@ -19,6 +19,7 @@ function App() {
         <div className="App">
           <Navbar />
           <div className="content">
+           
             <Switch>
               
               <Route path ="/pocetna">
@@ -36,10 +37,6 @@ function App() {
               <Route path="/kontakt">
                 <Kontakt />
               </Route>
-             
-              
-              
-
             </Switch>
             <Footer />
           
