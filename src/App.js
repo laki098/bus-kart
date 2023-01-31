@@ -10,34 +10,13 @@ import Informacije from './components/NavBar/links/Informacije';
 import RezervacijaKarte from './components/NavBar/links/RezervacijaKarte';
 import Kontakt from './components/NavBar/links/Kontakt';
 import Footer from './components/NavBar/footer';
+import PromenaPasworda from './components/prevoznik/PromenaPasworda';
 
 
 
 function App() {
 
-  return (<>
-    <div className='header'>
-      {/* <Router>
-      <Navbar />
-      <Switch>
-        <Route path="links/pocetna">
-          <Pocetna /> 
-        </Route>
-        <Route path='login.component'>
-          <LoginComponent />
-        </Route>
-      </Switch>
-      </Router> */}
-    </div>
-   <div className='main'>
-   <UpisiRedVoznje/>
-   <Rezervacija/>
-    </div>
-    <div className='footer'>
-    
-    
-    </div>
-  </>
+  
   return (
   
       <Router>
@@ -48,6 +27,7 @@ function App() {
               
               <Route path ="/pocetna">
                   <Pocetna />
+                  
               </Route>
               <Route path="/informacije">
                 <Informacije />
@@ -61,17 +41,17 @@ function App() {
               <Route path="/kontakt">
                 <Kontakt />
               </Route>
-             
-              
-              
 
             </Switch>
             <Footer />
-          
+            
           </div>
+        
         </div>
+
         </Router>
         
+       
   
   );
 }

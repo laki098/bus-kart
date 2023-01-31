@@ -18,7 +18,7 @@ const Rezervacija = () => {
     
     return ( 
         <div className="styleHome">
-            <div className="wrapper">
+            <div className="wrapper levo">
             <h1>Rezervacija karata u autobuskom prevozu</h1>
             <fieldset className="sirinaSet" >
                 <table className="table">

@@ -1,0 +1,42 @@
+.wrapper {
+    padding: 5px 20px;
+  }
+  
+  .wrapper fieldset {
+    margin: 20px 0;
+  }
+  
+  .styleHome{
+    color: #159;
+    background-color: #EBF5FB;
+  }
+  
+  .styleHome1{
+    color: #159;
+    background-color: #d6edfa;
+  }
+  .table{
+    text-align: center;
+    height: 50px;
+    width: fit-content;
+    vertical-align: top;
+    padding: 20px;
+    border-spacing: 15px;
+  
+  }
+  
+  .inputText{
+    width: 150px;
+  }
+  .sirinaSet{
+    width: fit-content;
+    border-color: blue;
+  }
+  .levo{
+    text-align: left;
+  }
+  .tekst{
+    font-size:20px;
+    
+
+  }
