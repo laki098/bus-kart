@@ -9,7 +9,7 @@ import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje';
 import Informacije from './components/NavBar/links/Informacije';
 import RezervacijaKarte from './components/NavBar/links/RezervacijaKarte';
 import Kontakt from './components/NavBar/links/Kontakt';
-import Footer from './components/NavBar/footer';
+import Footer from './components/NavBar/Footer/footer';
 import RegistrationComponent from './components/registration/registration.component';
 
 
@@ -23,6 +23,7 @@ function App() {
         <div className="App">
           <Navbar />
           <div className="content">
+           
             <Switch>
               
               <Route path ="/pocetna">
@@ -41,12 +42,15 @@ function App() {
               <Route path="/kontakt">
                 <Kontakt />
               </Route>
-
             </Switch>
-            <Footer />
-          <RegistrationComponent />
+            
+            <Route path="/registration.component">
+              <RegistrationComponent />
+            </Route>
           </div>
         
+          <Footer />
+          
         </div>
 
         </Router>

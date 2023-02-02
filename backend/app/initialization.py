@@ -48,6 +48,16 @@ def init_db():
                         PRIMARY KEY (`id`)
                     ) ENGINE=InnoDB""")
 
+    DB.create_table(""" CREATE TABLE IF NOT EXISTS `linije` (
+        `idlinije` INT NOT NULL,
+        `mestoPolaska` VARCHAR(255) NOT NULL,
+        `mestoDolaska` VARCHAR(255) NOT NULL,
+        `vremePolaska` TIMESTAMP NOT NULL,
+        `vremeDolaska` TIMESTAMP NOT NULL,
+        `prevoznik` VARCHAR(255) NULL,
+        PRIMARY KEY (`idlinije`)
+        )ENGINE=InnoDB""")
+
 
 def init():
     # create_folder()

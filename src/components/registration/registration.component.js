@@ -84,7 +84,7 @@ const RegistrationComponent = () => {
       </div>
       <div className={`${classes.control} ${formInputsValid.email ? "" : classes.invalid}`}>
         <label>Email:</label>
-        <input
+        <input 
           type="email"
           name="email"
           ref={emailInputRef}
