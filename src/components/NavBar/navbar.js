@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
       <nav className="navbar">
-        <Link to='/pocetna' className='logo'>React<i className="fa fa-bus"></i></Link>
+        <Link to='/pocetna' className='logo'><i className="fa fa-bus"></i></Link>
         
         <ul className='nav-menu'>
           <li><Link to='/pocetna'><i className='fa-solid fa-house-user nav-links'>Pocetna</i></Link></li>
@@ -22,6 +22,8 @@ const Navbar = () => {
           <li><Link to='/login.component'><i className='fa fa-user-circle nav-links'></i>Prijavi se</Link></li>
           </ul>
       </nav>
+
+     
     );
   }
    

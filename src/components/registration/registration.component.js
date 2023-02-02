@@ -27,7 +27,7 @@ const RegistrationComponent = () => {
     registrationLogic.registracija()
   }
   return (
-    <form onSubmit={confirmeHandler} className={classes.form} >
+    <form onSubmit={confirmeHandler} className={classes.form}  >
       
       <div className={`${classes.control} ${formInputsValid.name ? "" : classes.invalid}`}>
         <label>Ime:</label>
@@ -77,7 +77,7 @@ const RegistrationComponent = () => {
       </div>
       <div className={`${classes.control} ${formInputsValid.email ? "" : classes.invalid}`}>
         <label>Email:</label>
-        <input
+        <input 
           type="email"
           name="email"
           ref={emailInputRef}
