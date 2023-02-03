@@ -49,7 +49,7 @@ def init_db():
                     ) ENGINE=InnoDB""")
 
     DB.create_table(""" CREATE TABLE IF NOT EXISTS `linije` (
-        `idlinije` INT NOT NULL,
+        `idlinije` INT NOT NULL AUTO_INCREMENT,
         `mestoPolaska` VARCHAR(255) NOT NULL,
         `mestoDolaska` VARCHAR(255) NOT NULL,
         `vremePolaska` TIMESTAMP NOT NULL,
