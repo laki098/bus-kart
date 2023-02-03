@@ -1,4 +1,4 @@
-from flask import (Blueprint, request, render_template, Response)
+from flask import (Blueprint,jsonify ,request, render_template, Response)
 from db.DB import DB
 from upload import upload_file
 from util.check_data import default_values
@@ -32,6 +32,7 @@ def linijeNov():
     all_keys = ["mestoPolaska", "mestoDolaska", "vremePolaska", "vremeDolaska", "prevoznik"]
     data = default_values(data, all_keys)
     parameters = (
+
         data["mestoPolaska"],
         data["mestoDolaska"],
         data["vremePolaska"],
@@ -42,3 +43,23 @@ def linijeNov():
     mydb.commit()
 
     return Response(status=200)
+
+@linije_services.route("/linija", methods=["GET"])
+def linije():
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+    cursor.execute("SELECT * FROM bus.linije")
+    row = cursor.fetchall()
+    list_linije = []
+    for linija in row:
+        list_linije.append({
+            'id': linija[0],
+            'mestoPolaska': linija[1],
+            'mestoDolaska': linija[2],
+            'vremePolaska': linija[3],
+            'vremeDolaska': linija[4],
+            'prevoznik': linija[5]
+        })
+
+  
+    return jsonify(list_linije)
