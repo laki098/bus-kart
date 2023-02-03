@@ -28,9 +28,6 @@ const Pocetna = () => {
 
   return (
     <div>
-<<<<<<< HEAD
-    
-=======
         <select className='input' value={val1} onChange={(e) => {setVal1(e.target.value)}}>
           {linije.map(linija => {
             return <option key={linija.id} value={linija.mestoPolaska}>{linija.mestoPolaska}</option>
@@ -43,7 +40,6 @@ const Pocetna = () => {
           })}
           
         </select>
->>>>>>> c23187f166b7a9a6790f38a10e0096f6bc6cb907
     </div>
   )
 }
