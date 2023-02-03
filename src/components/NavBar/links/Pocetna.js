@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './pocetna.css';
 
-
 const Pocetna = () => {
   const [val1, setVal1] = useState('')
   const [val2, setVal2] = useState('')
