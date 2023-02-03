@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import LinijeApi from '../../../api/linije.api';
 import './pocetna.css';
 
 
