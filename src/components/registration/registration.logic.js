@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState} from "react";
 import { toast } from "react-toastify";
 import RegistracijaApi from "../../api/registration.api";
 import COHelpers from "../../helpers/checkoutHelpers";

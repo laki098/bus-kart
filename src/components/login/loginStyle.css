@@ -2,89 +2,134 @@
     text-align: center;
     justify-content: center;
     display: flex; 
-    padding-top: 90px;
-    padding-bottom: 90px;
+    padding-top: 5.625rem;
+    padding-bottom: 5.625rem;
     background-color: #e1e3eb;
   }
   .sub-main {
     display: flex;
     justify-content: center;
-    height: 550px;
+    height: 34.375rem;
     width: 35%;
-    box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
-    padding-top: 30px;
-    border-radius: 60px; 
+    box-shadow: 0.688rem 0.75rem 0.813rem 0.75rem rgb(207, 207, 207);
+    padding-top: 1.875rem;
+    border-radius: 3.75rem; 
     background-color: white;
   }
   .imgs {
-      padding-top: 20px;
+      padding-top: 1.25rem;
       justify-content: center;
       display: flex;
     }
   .container-image {
     background-color: rgb(223, 221, 221); 
-    border-radius: 150px;
+    border-radius: 9.375rem;
     align-items: center;
     display: flex;
     justify-content: center;
-    height: 115px;
-    width: 115px;
+    height: 7.188rem;
+    width: 7.188rem;
   }
   .profile {
-    height: 127px;
+    height: 7.938rem;
     /* width: 129px; */
-    border-radius: 130px;
+    border-radius: 8.125rem;
   } 
 
   .input{
-      width: 300px;
-      height: 50px;
-      border-radius: 60px;
-      box-shadow: inset 0px 0px 25px 0px #888;
+      width: 18.75rem;
+      height: 3.125rem;
+      border-radius: 3.75rem;
+      box-shadow: inset 0rem 0rem 1.563rem 0rem #888;
       border: none;
       outline: none;
       background-color: #fff;
   }
 
   .user{
-      height: 49px;
-      width: 60px;
+      height: 3.063rem;
+      width: 3.75rem;
       position: absolute;
-      padding-left: 17px;
+      padding-left: 1.063rem;
   }
   .user1{
-    height: 52px;
-    width: 70px;
+    height: 3.25rem;
+    width: 4.375rem;
     position: absolute;
-    padding-left: 3px;
+    padding-left: 0.188rem;
 }
 
   .name{
-      padding-left: 70px;
-      font-size: 20px;
+      padding-left: 4.375rem;
+      font-size: 1.25rem;
   }
   .second-input{
-      padding-top: 20px;
+      padding-top: 1.25rem;
   }
 
-  .button{
-      width: 380px;
-      height: 50px;
-      border-radius: 60px;
+  /* .button{
+      width: 20vw;
+      height: 3.125rem;
+      border-radius: 3.75rem;
       background-color: #93cede;
       color: white;
-      font-size: 25px;
+      font-size: 1.563rem;
       border: none;
-  }
+  } */
   .login-button{
-      padding-top: 25px;
+      padding-top: 1.563rem;
   }
 
   .link{
-      font-size: 25px;
-      font-weight: 400;
-      padding-top: 15px;
+      font-size: 1.563rem;
+      font-weight: 25rem;
+      padding-top: 0.938rem;
   }
    .a{
        color: blue;
    }
+
+   .button {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 0.25rem;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem,rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,#D6D6E7 0 -0.188rem 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 3rem;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 1.125rem;
+  }
+  
+  .button:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
+  }
+  
+  .button:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.25rem 0.5rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
+    transform: translateY(-0.125rem);
+  }
+  
+  .button:active {
+    box-shadow: #D6D6E7 0 0.188rem 0.438rem inset;
+    transform: translateY(0.125rem);
+  }

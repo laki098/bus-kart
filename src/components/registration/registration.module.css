@@ -1,18 +1,18 @@
 .form {
     
     height: auto;
-    -webkit-box-shadow: 7px 7px 23px 2px rgba(0,0,0,0.6);   
-    -moz-box-shadow: 7px 7px 23px 2px rgba(0,0,0,0.6);
-    box-shadow: 7px 7px 23px 2px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);   
+    -moz-box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);
+    box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);
     background-color: #93cede;
     border-top-right-radius: 5%;
     border-bottom-right-radius: 5%;
     border-bottom-left-radius: 5%;
-    width: 35rem;
+    width: 50vw;
     padding: 1.5rem;
     margin:auto;
     margin-top: 1.5rem;
-
+    margin-bottom: 1.5rem;
 }
 
 
@@ -28,8 +28,8 @@
 
 .control input {
     font: inherit;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 0.063rem solid #ccc;
+    border-radius: 0.25rem;
     width: 20rem;
     max-width: 100%;
 }
@@ -46,7 +46,7 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
-    border-radius: 25px;
+    border-radius: 1.563rem;
     padding: 0.5rem 2rem;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .actions .submit {
-    border: 1px solid #5a1a01;
+    border: 0.063rem solid #5a1a01;
     background-color: #5a1a01;
     color: white;
 }
@@ -74,29 +74,29 @@
     border-color: #aa0b20;
     background-color: #ffeff1;
 }
-p{
+/* p{
     color:#aa0b20
-}
+} */
 
 .submit {
     align-items: center;
     appearance: none;
     background-color: #FCFCFD;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     border-width: 0;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem,rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,#D6D6E7 0 -0.188rem 0 inset;
     box-sizing: border-box;
     color: #36395A;
     cursor: pointer;
     display: inline-flex;
     font-family: "JetBrains Mono",monospace;
-    height: 48px;
+    height: 3rem;
     justify-content: center;
     line-height: 1;
     list-style: none;
     overflow: hidden;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 1rem;
+    padding-right: 1rem;
     position: relative;
     text-align: left;
     text-decoration: none;
@@ -106,19 +106,19 @@ p{
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: 18px;
+    font-size: 1.125rem;
   }
   
   .submit:focus {
-    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
   }
   
   .submit:hover {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-    transform: translateY(-2px);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.25rem 0.5rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
+    transform: translateY(-0.125rem);
   }
   
   .submit:active {
-    box-shadow: #D6D6E7 0 3px 7px inset;
-    transform: translateY(2px);
+    box-shadow: #D6D6E7 0 0.188rem 0.438rem inset;
+    transform: translateY(0.125rem);
   }
