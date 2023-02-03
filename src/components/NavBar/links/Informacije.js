@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+
+import Pretraga from '../../rezervacija/Pretraga';
+import UpisPolazaka from '../../prevoznik/UpisPolazaka';
 
 const informacije = () => {
   return (
     <div>
-        informacije
+       {/* <Pretraga/>   
+       <UpisPolazaka/>
+       <br/><br/>
+       <br/><br/> */}
     </div>
   )
 }

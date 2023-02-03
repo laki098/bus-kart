@@ -1,0 +1,111 @@
+.wrapper {
+    padding: 5px 20px;
+  }
+  
+  .wrapper fieldset {
+    margin: 20px 0;
+  }
+  
+  .styleHome{
+    color: #159;
+    background-color: #EBF5FB;
+  }
+  
+  .styleHome1{
+    color: #159;
+    background-color: #d6edfa;
+  }
+  .table{
+    text-align: center;
+    height: 50px;
+    width: fit-content;
+    vertical-align: top;
+    padding: 20px;
+    border-spacing: 15px;
+  }
+  .table_manja{
+    text-align: center;
+    height: 50px;
+    width: fit-content;
+    vertical-align: top;
+    padding: 20px;
+    border-spacing: 15px;
+  }
+  .inputText{
+    width: 150px;
+  }
+  .sirinaSet{
+    width: fit-content;
+    border-color: blue;
+  }
+  .levo{
+    text-align: left;
+  }
+  .desno{
+    text-align: right;
+  }
+  .tekst{
+    font-size:20px;
+  }
+
+  .box_3{
+    -webkit-box-shadow: 10px 10px 10px 10px rgba(138,138,191,1);
+    -moz-box-shadow: 10px 10px 10px 10px rgba(138,138,191,1);
+    box-shadow: 10px 10px 10px 10px rgba(138,138,191,1);
+    background-color: #b8e3f2;  
+   /* background-color: #b8c6f0;  */
+    width: 80rem;             
+    height: 20rem;
+    border-radius: 20px 20px 20px 20px;
+    align-content: center;
+  }
+
+    .kutija{
+      text-align: center;
+    /*  background-color: #EBF5FB;  */
+      margin: auto;     
+      width: 80%;     /* pomereno u levo da se ostavi mesto za reklamu */
+    }
+
+    .kutija_manja{
+      text-align: center;
+     /* margin: auto;    */
+      width: 80%;
+    }
+    .centar {
+      margin: auto;
+      width: 50%;
+      
+      padding: 10px;
+    }
+
+
+  /* CSS */
+.button-43 {
+  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  text-decoration: none;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-43:hover {
+  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+  .button-43 {
+    padding: 1rem 2rem;
+  }
+}
+

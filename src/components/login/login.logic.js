@@ -3,9 +3,11 @@ import { useState } from "react";
 
 const LoginLogic = () => {
     let [data, setData] = useState({})
+    console.log(data)
     const login = () =>{
 
-        loginApi().login(data.korisnickoIme, data.lozinka).then((response)=>{
+        loginApi().login(data.korisnickoIme, data.lozinka)
+            .then((response)=>{
             console.log(response)
             alert("Konacccno")
         })
@@ -17,6 +19,7 @@ const LoginLogic = () => {
         ...data,
         [e.target.name]: e.target.value
       })
+      
     return {setData, login, changeHandler};
 }
  
