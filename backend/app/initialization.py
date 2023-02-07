@@ -52,9 +52,11 @@ def init_db():
         `idlinije` INT NOT NULL AUTO_INCREMENT,
         `mestoPolaska` VARCHAR(255) NOT NULL,
         `mestoDolaska` VARCHAR(255) NOT NULL,
-        `vremePolaska` TIMESTAMP NOT NULL,
-        `vremeDolaska` TIMESTAMP NOT NULL,
+        `vremePolaska` TIME NOT NULL,
+        `vremeDolaska` TIME NOT NULL,
         `prevoznik` VARCHAR(255) NULL,
+        `datumPolaska` DATE NOT NULL,
+        `datumDolaska` DATE NOT NULL,
         PRIMARY KEY (`idlinije`)
         )ENGINE=InnoDB""")
 
