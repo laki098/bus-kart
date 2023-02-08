@@ -46,7 +46,7 @@ const Pocetna = () => {
         <button className='fa-solid fa-repeat buttonSwitch  ' onClick={click}></button>
         <select className='input' value={val2} onChange={(e) => setVal2(e.target.value)}>
           {linije.map(linija => {
-            return <option key={linija.id} value={linija.mestoDolaska}>{linija.mestoDolaska}</option>
+            return <option key={linija.id} value={linija.mestoPolaska}>{linija.mestoPolaska}</option>
           })}
         
         
@@ -60,11 +60,15 @@ const Pocetna = () => {
           <ul>
           {filteredLinije.map(linija => {
             return <li key={linija.id}>
-              vreme dolaska: {linija.datumDolaska},
-              vreme polaska: {linija.datumPolaska},
-              prevoznik: {linija.prevoznik}
+              vreme polaska: {linija.vremePolaska},
+              vreme dolaska: {linija.vremeDolaska},
+              prevoznik: {linija.prevoznik},
+              mesto polaska: {linija.mestoPolaska},
+              mesto dolaska: {linija.mestoDolaska}
+              <button>rezervisi</button>
             </li>
           })}
+          
           </ul>
         </div>
     </div>
