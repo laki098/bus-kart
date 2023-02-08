@@ -14,7 +14,7 @@ const ResetPassword = () => {
                     </div>
                     <h1 className="h1">Resetuj lozinku</h1>
                     <div>
-                        <input type='email' placeholder="Email adresa" className="input1 name" name="email" />
+                        <input type='email' placeholder="Email adresa" className="input1 name1" name="email"  required />
                     </div>
 
                     <div className="login-button">

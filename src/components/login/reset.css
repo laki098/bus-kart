@@ -47,7 +47,11 @@
 }
 .name{
     padding-left: 4.375rem;
-    font-size: 1.25rem;
+    font-size: 1.25rem
+}
+.name1{
+  padding-left: 0.375rem;
+  font-size: 1.25rem
 }
 .button {
     align-items: center;
