@@ -6,8 +6,8 @@ import  DatePicker  from 'react-datepicker';
 
 const AdminComponent = () => {
 
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date())
     /* const [startTime, setStartTime] = useState('') */
 
     
@@ -31,21 +31,21 @@ const AdminComponent = () => {
                 
                 <label>Datum polaska</label>
                 <DatePicker className="inputText"
-                    value={startDate}
-                    showYearDropdown
-                    required
-                    placeholderText="Datum polaska"
-                    scrollableMonthYearDropdownv 
-                    onChange={(date) =>   
+                 selected={startDate}
+                  value={startDate}
+                  required
+                  scrollableMonthYearDropdownv 
+                  placeholderText="Datum dolaska"
+                   onChange={(date) =>   
                             setStartDate(date)} />  
                 <label>Datum dolaska</label>
                 <DatePicker className="inputText"
-                    value={endDate}
-                    showYearDropdown
-                    placeholderText="Datum dolaska"
-                    required
-                    scrollableMonthYearDropdownv 
-                    onChange={(date) =>   
+                 selected={endDate}
+                  value={endDate}
+                  required
+                  scrollableMonthYearDropdownv 
+                  placeholderText="Datum dolaska"
+                   onChange={(date) =>   
                             setEndDate(date)} /><br/>
                 <label>Vreme polaska</label><br/>
                 <input className="inputText" type="time" required label="Time"></input>
