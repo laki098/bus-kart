@@ -39,7 +39,7 @@ const LoginComponent = () => {
           </div>
            
             <div className="link">
-            <Link to ='/registration.component' className="a">Zaboravio sifru ? </Link> ili <Link to ='/registration.component' className="a">Registruj se</Link>
+            <Link to ='/reset.password' className="a">Zaboravio sifru ? </Link> ili <Link to ='/registration.component' className="a">Registruj se</Link>
             </div>
            
  
