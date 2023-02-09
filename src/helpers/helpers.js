@@ -10,8 +10,13 @@ function validEmail(email) {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 }
 
+function filterUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 export default {
     isStringNotEmpty,
     passwordValidation,
-    validEmail
+    validEmail,
+    filterUnique
 };

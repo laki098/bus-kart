@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import LinijeApi from '../../../api/linije.api';
 import './pocetna.css';
+import helpers from '../../../helpers/helpers';
 
 const Pocetna = () => {
   const [filteredLinije, setFilteredLinije] = useState([])
   const [valueDate, setValueDate] = useState('');
   const [val1, setVal1] = useState('')
   const [val2, setVal2] = useState('')
+  const [polasci, setPolasci] = useState([])
+  const [dolasci, setDolasci] = useState([])
   const [linije, setLinije] = useState([])
 
   const filterLinija = async() => {
@@ -20,7 +23,12 @@ const Pocetna = () => {
   const getLinije = async () => {
     const response = await fetch("http://localhost:5000/linije/linija");
     const data = await response.json();
+    const mestaPolaska = data.map(item => item.mestoPolaska).filter(helpers.filterUnique)
+    const mestaDolaska = data.map(item => item.mestoDolaska).filter(helpers.filterUnique)
+
     setLinije(data)
+    setPolasci(mestaPolaska)
+    setDolasci(mestaDolaska)
     setVal1(data[0].mestoPolaska)
     setVal2(data[0].mestoDolaska)
   }
@@ -30,6 +38,13 @@ const Pocetna = () => {
   }, [])
 
   const click = () => {
+    //ovde mozes upit da napravis da li se val 1 sadrzi u dolasci
+    // i da li se val 2 sadrzi u polasci
+    // primer polasci.includes(val2)
+    
+    if (!polasci.includes(val2) || !dolasci.includes(val1)) {
+      return;
+    }
     
     setVal1(val2)
     setVal2(val1)
@@ -38,15 +53,14 @@ const Pocetna = () => {
   return (
     <div>
         <select className='input' value={val1} onChange={(e) => setVal1(e.target.value)}>
-          {linije.map(linija => {
-            return <option key={linija.id} value={linija.mestoPolaska}>{linija.mestoPolaska}</option>
-            
+          {polasci.map(linija => {
+            return <option key={linija} value={linija}>{linija}</option>
           })} 
         </select>
         <button className='fa-solid fa-repeat buttonSwitch  ' onClick={click}></button>
         <select className='input' value={val2} onChange={(e) => setVal2(e.target.value)}>
-          {linije.map(linija => {
-            return <option key={linija.id} value={linija.mestoPolaska}>{linija.mestoPolaska}</option>
+          {dolasci.map(linija => {
+            return <option key={linija} value={linija}>{linija}</option>
           })}
         
         

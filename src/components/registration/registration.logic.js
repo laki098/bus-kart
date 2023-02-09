@@ -1,7 +1,7 @@
 import { useState} from "react";
 import { toast } from "react-toastify";
 import RegistracijaApi from "../../api/registration.api";
-import COHelpers from "../../helpers/checkoutHelpers";
+import COHelpers from "../../helpers/helpers";
 
 const RegistrationLogic = () => {
   let [data, setData] = useState({});
