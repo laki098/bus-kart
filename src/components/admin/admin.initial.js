@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LinijeApi from "../../api/linije.api";
+import AdminLogic from "./admin.logic";
 
 const AdminInitial = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -26,6 +27,8 @@ const AdminInitial = () => {
   useEffect(() => {
     getLinije();
   }, []);
+
+  const adminLogic = AdminLogic()
 
   return (
     <div>
@@ -75,7 +78,7 @@ const AdminInitial = () => {
               mesto polaska: {linija.mestoPolaska},
               mesto dolaska: {linija.mestoDolaska}
               <button>zameni</button>
-              <button>obrisi</button>
+              <button onClick={() => adminLogic.brisanjeLinije(linija.id)}>obrisi</button>
                 </li>
             })}
         </ul>

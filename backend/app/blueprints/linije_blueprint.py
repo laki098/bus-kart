@@ -4,6 +4,8 @@ from db.DB import DB
 from upload import upload_file
 from util.check_data import default_values
 import os
+from models.linije import Linije
+from util.check_data import check_parameters, default_values, if_exists
 
 linije_services = Blueprint("linije_services", __name__)
 
@@ -126,3 +128,102 @@ def delete_linija(idlinije):
     flash('Linije Removed Successfully')
     return Response(status=200)
 
+
+@linije_services.route("/update/<idlinije>", methods=["GET"])
+def upd(idlinije):
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+    cursor.execute("SELECT * FROM linije WHERE idlinije=%s", (idlinije,))
+    row = cursor.fetchone()
+
+    if row == None:
+        return redirect(url_for("employee_services.index"))
+
+    row = clear_bytearray(row)
+    idlinije = row[0]
+    mestoPolaska = row[1]
+    mestoDolaska = row[2]
+    vremePolaska = row[3]
+    vremeDolaska = row[4]
+    prevoznik = row[5]
+    datumPolaska = row[6]
+    datumDolaska = row[7]
+
+    linija = Linije(idlinije, mestoPolaska, mestoDolaska, vremePolaska,
+                        vremeDolaska, prevoznik, datumPolaska, datumDolaska)
+
+    return render_template("update.html", linija=linija)
+
+
+@linije_services.route("/update/<id>", methods=["POST"])
+def update(idlinije):
+    data = request.form
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+        
+    photoUrl = upload_file()
+    if photoUrl == False:
+        idlinije = idlinije
+        mestoPolaska = data['mestoPolaska']
+        mestoDolaska = data['mestoDolaska']
+        vremePolaska = data['vremePolaska']
+        vremeDolaska = data['vremeDolaska']
+        prevoznik = data['prevoznik']
+        datumPolaska = data['datumPolaska']
+        datumDolaska = data['datumDolaska']
+        cursor.execute("SELECT * FROM linije WHERE idlinije=%s", (idlinije,))
+        row = cursor.fetchone()
+        row = clear_bytearray(row)
+        current_photoUrl = row[7]
+        linije = Linije(idlinije=idlinije, mestoPolaska=mestoPolaska, mestoDolaska=mestoDolaska, vremePolaska=vremePolaska,
+                            vremeDolaska=vremeDolaska, prevoznik=prevoznik, datumPolaska=datumPolaska, datumDolaska=datumDolaska, photoUrl=current_photoUrl)
+        return render_template("update.html", linije=linije, file_error="Invalid type of file!")
+
+    cursor.execute("SELECT * FROM linije WHERE idlinije=%s", (idlinije,))
+    row = cursor.fetchone()
+    row = clear_bytearray(row)
+    q = """UPDATE linije SET `mestoPolaska`=%s, `mestoDolaska`=%s, `vremePolaska`=%s, `vremeDolaska`=%s, `prevoznik`=%s, `datumPolaska`=%s, `datumDolaska`=%s, `photo_url`=%s WHERE `idlinije`=%s"""
+    photo = row[7]
+
+    if data['deletePhoto'] == '1' and photo != "":
+        if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__))[:os.path.dirname(os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photo)):
+            os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__))[
+                      :os.path.dirname(os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photo))
+        photoUrl = ''
+    elif data['deletePhoto'] == '1' and photoUrl != "":
+        if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__))[:os.path.dirname(os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photoUrl)):
+            os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__))[:os.path.dirname(
+                os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photoUrl))
+        photoUrl = ''
+    elif photoUrl == '' and photo != '':
+        photoUrl = photo
+    elif photoUrl != photo:
+        if photo != '':
+            if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__))[:os.path.dirname(os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photo)):
+                os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__))[
+                          :os.path.dirname(os.path.abspath(__file__)).rindex(os.path.sep)], "static" + photo))
+
+    keys = ["mestoPolaska", "mestoDolaska", "vremePolaska",
+            "vremeDolaska", "prevoznik", "datumPolaska", "datumDolaska"]
+    data = if_exists(data, row, keys)
+    parameters = (
+        data["mestoPolaska"],
+        data["mestoDolaska"],
+        data["vremePolaska"],
+        data["vremeDolaska"],
+        data["prevoznik"],
+        data["datumPolaska"],
+        data["datumDolaska"],
+        photoUrl,
+        id)
+    DB.update_query(q, parameters)
+    return redirect(url_for("employee_services.index"))
+
+def clear_bytearray(rows):
+    rows = list(rows)
+    n = len(rows)
+    for i in range(n):
+        if isinstance(rows[i], bytearray):
+            rows[i] = rows[i].decode()
+
+    return rows

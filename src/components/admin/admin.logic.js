@@ -28,7 +28,22 @@ const AdminLogic = () => {
         console.log(error);
       });
   };
-  return { changeHandler, setData, upisLinije };
+  
+  const brisanjeLinije = (id) => {
+    console.log(id)
+    LinijeApi().brisanjeLinije(
+      id
+      
+    )
+    .then((response) => {
+      console.log(response);
+      alert("Konacccno");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  return { changeHandler, setData, upisLinije,brisanjeLinije };
 };
 
 export default AdminLogic;
