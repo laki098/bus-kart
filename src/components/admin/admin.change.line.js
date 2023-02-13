@@ -11,4 +11,4 @@ const AdminChangeLine = () => {
     </div> );
 }
  
-export default AdminChange;
+export default AdminChangeLine;
