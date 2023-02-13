@@ -1,70 +1,105 @@
 import React, { useState } from "react";
-import  DatePicker  from 'react-datepicker';
-
-
-
+import DatePicker from "react-datepicker";
+import AdminLogic from "./admin.logic";
 
 const AdminComponent = () => {
+  /* const [startDate, setStartDate] = useState(new Date()); */
+  const [endDate, setEndDate] = useState(new Date());
+  const adminLogic = AdminLogic();
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date())
-    /* const [startTime, setStartTime] = useState('') */
+  return (
+    <div>
+      <h2>Nova linija</h2>
+      <form>
+        <label>Mesto polaska</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Mesto polaska"
+          required
+          name="mestoPolaska"
+          onChange={adminLogic.changeHandler}
+        />
+        <br />
+        <label>Mesto dolaska</label>
+        <br />
+        <input
+          type="text"
+          name="mestoDolaska"
+          placeholder="Mesto dolaska"
+          required
+          onChange={adminLogic.changeHandler}
+        />
+        <br />
 
-    
-
-    return ( 
-        <div>
-             <h2>Nova linija</h2>
-             <form>
-                <label>Mesto polaska</label><br />
-                <input
-                type='text'
-                placeholder="Mesto polaska"
-                required
-                /><br/>
-                <label>Mesto dolaska</label><br/>
-                <input
-                type='text'
-                placeholder="Mesto dolaska"
-                required
-                /><br/>
-                
-                <label>Datum polaska</label>
-                <DatePicker className="inputText"
+        <label>Datum polaska</label>
+        <br />
+        <input
+          name="datumPolaska"
+          type="date"
+          onChange={adminLogic.changeHandler}
+        />
+        <br />
+        {/* <DatePicker className="inputText"
                  selected={startDate}
                   value={startDate}
                   required
                   scrollableMonthYearDropdownv 
                   placeholderText="Datum dolaska"
-                   onChange={(date) =>   
-                            setStartDate(date)} />  
-                <label>Datum dolaska</label>
-                <DatePicker className="inputText"
+                   onChange={(date) => 
+                    setStartDate(date)
+                            } />   */}
+        <label>Datum dolaska</label>
+        <br />
+        <input
+          name="datumDolaska"
+          type="date"
+          onChange={adminLogic.changeHandler}
+        />
+        <br />
+        {/* <DatePicker className="inputText"
                  selected={endDate}
                   value={endDate}
                   required
                   scrollableMonthYearDropdownv 
                   placeholderText="Datum dolaska"
                    onChange={(date) =>   
-                            setEndDate(date)} /><br/>
-                <label>Vreme polaska</label><br/>
-                <input className="inputText" type="time" required label="Time"></input>
-                <br/>
-                <label>Vreme dolaska</label><br/>
-                <input className="inputText" type="time" required ></input><br/>
-                <label>Prevoznik</label><br/>
-                <select>
-                    <option value=''>Eurocompass</option>
-                    
-                </select><br/>
-                
-                <button>Dodaj</button>
+                            setEndDate(date)} /> */}
+        <label>Vreme polaska</label>
+        <br />
+        <input
+          className="inputText"
+          type="time"
+          required
+          label="Time"
+          name="vremePolaska"
+          onChange={adminLogic.changeHandler}
+        ></input>
+        <br />
+        <label>Vreme dolaska</label>
+        <br />
+        <input
+          className="inputText"
+          type="time"
+          required
+          name="vremeDolaska"
+          onChange={adminLogic.changeHandler}
+        ></input>
+        <br />
+        <label>Prevoznik</label>
+        <br />
+        <select name="prevoznik" onChange={adminLogic.changeHandler}>
+          <option disabled={false} value="">
+            --Izaberi prevoznika--
+          </option>
+          <option>Eurocompass</option>
+        </select>
+        <br />
 
-                </form>   
-                    
-         </div>
+        <button onClick={adminLogic.upisLinije}>Dodaj</button>
+        </form>
+    </div>
+  );
+};
 
-     );
-}
- 
 export default AdminComponent;

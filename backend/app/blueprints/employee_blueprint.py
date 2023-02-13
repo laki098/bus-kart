@@ -86,7 +86,6 @@ def get():
 
 
 @employee_services.route('/delete/<id>', methods=['POST'])
-@login_required
 def delete_employee(id):
     q = "SELECT * FROM employee WHERE id=%s"
     parameters = (id,)
@@ -110,7 +109,6 @@ def register():
 
 
 @employee_services.route("/register", methods=["POST"])
-@login_required
 def registration():
     mydb = DB.connect()
     cursor = mydb.cursor(prepared=True)
