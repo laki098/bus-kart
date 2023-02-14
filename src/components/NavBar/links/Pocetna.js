@@ -64,6 +64,10 @@ const Pocetna = () => {
     changer();
   };
 
+
+  let showDate = new Date();
+  let displayTodaysDate = showDate.getDate() + '/' + (showDate.getMonth() + 1) + '/' + showDate.getFullYear;
+
   return (
     <div>
       <div className="home-page">

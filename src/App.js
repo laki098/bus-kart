@@ -12,7 +12,8 @@ import Kontakt from './components/NavBar/links/Kontakt';
 import Footer from './components/NavBar/Footer/footer';
 import RegistrationComponent from './components/registration/registration.component';
 import ResetPassword from './components/login/reset.password';
-
+import AdminChangeLine from './components/admin/admin.change.line';
+import AdminComponent from './components/admin/admin.component';
 
 
 function App() {
@@ -51,6 +52,12 @@ function App() {
             <Route path='/reset.password'>
               <ResetPassword />
               </Route>
+            <Route path="/admin.change.line">
+              <AdminChangeLine />
+            </Route>
+            <Route path="/admin.component">
+              <AdminComponent />
+            </Route>
           </div>
           
           <Footer />

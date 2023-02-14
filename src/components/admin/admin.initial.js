@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LinijeApi from "../../api/linije.api";
 import AdminLogic from "./admin.logic";
+import { Link } from 'react-router-dom';
 
 const AdminInitial = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -67,6 +68,7 @@ const AdminInitial = () => {
         onChange={(e) => setValueDate(e.target.value)}
       />
       <button onClick={filterLinija}>Red voznje</button>
+      <button><Link to ='/admin.component'>Dodaj</Link></button>
       
       <div>
         <ul>
@@ -77,8 +79,10 @@ const AdminInitial = () => {
               prevoznik: {linija.prevoznik},
               mesto polaska: {linija.mestoPolaska},
               mesto dolaska: {linija.mestoDolaska}
-              <button>zameni</button>
+              <button><Link to ='/admin.change.line'>Zameni</Link></button>
               <button onClick={() => adminLogic.brisanjeLinije(linija.id)}>obrisi</button>
+              
+              
                 </li>
             })}
         </ul>

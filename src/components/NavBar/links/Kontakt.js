@@ -5,8 +5,8 @@ import AdminInitial from '../../admin/admin.initial'
 const Kontakt = () => {
   return (
     <div>
-        Kontakt
-        <AdminComponent />
+        Kontakt{/* 
+        <AdminComponent /> */}
         <AdminInitial />
     </div>
   )
