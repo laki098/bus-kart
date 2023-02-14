@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LinijeApi from "../../api/linije.api";
 import AdminLogic from "./admin.logic";
+import { Link } from 'react-router-dom';
 
 const AdminInitial = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -78,7 +79,7 @@ const AdminInitial = () => {
               prevoznik: {linija.prevoznik},
               mesto polaska: {linija.mestoPolaska},
               mesto dolaska: {linija.mestoDolaska}
-              <button>zameni</button>
+              <button><Link to = '/admin.change.line'>zameni</Link></button>
               <button onClick={() => adminLogic.brisanjeLinije(linija.id)}>obrisi</button>
               
               
