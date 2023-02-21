@@ -44,7 +44,7 @@
 
   .travel {
     position: relative;
-    display: block;
+    display: inline-flex;
     /* width: 90vw; */
     max-width: 80rem;
     background: #fff;
@@ -133,7 +133,7 @@
   box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;
   border-radius: 0.4rem;
   transition: 0.2s all;
-  padding: 2.6rem 4rem;
+  padding: 2.5rem 2rem 2.5rem 2rem;
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
  /*  display: none; */
@@ -168,7 +168,77 @@
   white-space: nowrap;
   will-change: box-shadow,transform;
   font-size: 1rem;
-  margin-left: 1rem;
-  
+  margin-left: 2rem;
+  margin-top: 0.3rem;
 }
 
+.operator {
+  display: flex;
+  align-items: center;
+  /* gap: 0.5rem; */
+  padding-right: 7rem;
+}
+
+
+.start {
+  display: flex;
+  /* max-width: 12rem; */
+  justify-content: space-between;
+  gap: 2rem;
+  grid-column: 2/3;
+  align-items: center;
+}
+
+.time-line {
+  position: relative;
+  width: 12vw;
+    height: 1px;
+    background: #1d1d1d;
+    margin: 0.5rem ;
+}
+
+.start-destination {
+  max-width: 60%;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.time {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.travel-time {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.end {
+  /* max-width: 12rem; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.end-destination {
+  font-weight: 600;
+    font-size: 1.1rem;
+    width: max-content;
+  
+}
+.end-time {
+  /* max-width: 60%; */
+  color: red;
+  font-size: 1.5rem;
+  
+    
+}
+
+.start-time {
+  color: red;
+  font-size: 1.5rem;
+}
