@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LinijeApi from "../../api/linije.api";
 import AdminLogic from "./admin.logic";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import "./admin.css";
 
 const AdminInitial = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -31,11 +32,24 @@ const AdminInitial = () => {
 
   const adminLogic = AdminLogic()
 
+  const [showClass, setShowClass] = useState(false);
+
+  const changer = () => {
+    setShowClass(!showClass);
+  };
+
+  const clickButton = (event) => {
+    filterLinija();
+    changer();
+  }
+
   return (
     <div>
-      <p>Mesto polaska:</p>
+      <div className="home">
+      <div className="prvi">
+      <label>Mesto polaska:</label>
       <select
-        className=""
+        className="position"
         value={val1}
         onChange={(e) => setVal1(e.target.value)}
       >
@@ -47,9 +61,11 @@ const AdminInitial = () => {
           );
         })}
       </select>
-      <p>Mesto Dolaska:</p>
+      </div>
+      <div className="prvi">
+      <label>Mesto Dolaska:</label>
       <select
-        className=""
+        className="position"
         value={val2}
         onChange={(e) => setVal2(e.target.value)}
       >
@@ -61,19 +77,33 @@ const AdminInitial = () => {
           );
         })}
       </select>
+      </div>
+      <div className="prvi">
       <label>Datum polaska</label>
       <input
         type="date"
+        className="position"
         value={valueDate}
         onChange={(e) => setValueDate(e.target.value)}
       />
-      <button onClick={filterLinija}>Red voznje</button>
-      <button><Link to ='/admin.component'>Dodaj</Link></button>
-      
+      </div>
+      <button className="button-admin" onClick={clickButton}>Red voznje</button>
+      <Link to ='/admin.component'><button className="button-admin">Dododavanje linije </button></Link>
+      </div>
       <div>
         <ul>
+        <div className={`home1 .home1 ${showClass ? "show" : ""}`}>
+          <style>{`
+            .home1 {
+              display: none;
+            }
+            .show {
+              display: block;
+            }
+          `}</style>
             {filteredLinije.map(linija => {
                 return <li key={linija.id}>
+                    <div className="home-show">
                     vreme polaska: {linija.vremePolaska},
               vreme dolaska: {linija.vremeDolaska},
               prevoznik: {linija.prevoznik},
@@ -85,6 +115,7 @@ const AdminInitial = () => {
               
                 </li>
             })}
+            </div>
         </ul>
       </div>
       

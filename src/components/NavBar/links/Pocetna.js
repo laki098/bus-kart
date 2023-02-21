@@ -68,6 +68,8 @@ const Pocetna = () => {
   let showDate = new Date();
   let displayTodaysDate = showDate.getDate() + '/' + (showDate.getMonth() + 1) + '/' + showDate.getFullYear;
 
+ 
+
   return (
     <div>
       <div className="home-page">
@@ -152,17 +154,34 @@ const Pocetna = () => {
             return (
               <li key={linija.id}>
                 <div className="travel">
-                  prevoznik: {linija.prevoznik},vreme polaska:{" "}
-                  {linija.vremePolaska}, vreme dolaska: {linija.vremeDolaska},
-                  mesto polaska: {linija.mestoPolaska}, mesto dolaska:{" "}
-                  {linija.mestoDolaska}
+                 <div className="operator"> {linija.prevoznik}</div>
+                 <div className="start"><span className="start-time">{" "}{linija.vremePolaska}</span> 
+                  <div className="start-destination"> {linija.mestoPolaska} </div></div>
+
+
+
+                 <div className="travel-time">
+                  <div className="time">
+                   {linija.vremeDolaska - linija.vremePolaska}</div>
+                  <div className="time-line"></div> 
+                  <div className="space">broj mesta</div>
+                  </div>
+
+
+
+                <div className="end">
+                <div className="end-destination">{" "}{linija.mestoDolaska}</div>
+                 <span className="end-time"> {linija.vremeDolaska}</span> 
+                  </div>
+                  <div >
                   <button className="buttonSwitch1">Rezervisi</button>
+                  </div>
                 </div>
               </li>
             );
           })}
         </div>
-      </ul>
+      </ul> 
     </div>
   );
 };
