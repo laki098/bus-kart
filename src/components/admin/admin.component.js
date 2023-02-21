@@ -10,7 +10,7 @@ const AdminComponent = () => {
   return (
     <div>
       <h2>Nova linija</h2>
-      <form>
+      
         <label>Mesto polaska</label>
         <br />
         <input
@@ -97,7 +97,7 @@ const AdminComponent = () => {
         <br />
 
         <button onClick={adminLogic.upisLinije}>Dodaj</button>
-        </form>
+        
     </div>
   );
 };
