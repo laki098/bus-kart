@@ -3,13 +3,13 @@
 const AdminChangeLine = () => {
     return ( 
     <div>
-        <p>Mesto Polaska:</p>
-        <p>Mesto Dolaska:</p>
-        <p>Vreme Polaska:</p>
-        <p>Vreme Dolaska:</p>
-        <p>Prevoznik:</p>
-        <p>Datum Polaska</p>
-        <p>Datum Dolaska</p>
+        <label>Mesto Polaska:</label>
+        <label>Mesto Dolaska:</label>
+        <label>Vreme Polaska:</label>
+        <label>Vreme Dolaska:</label>
+        <label>Prevoznik:</label>
+        <label>Datum Polaska</label>
+        <label>Datum Dolaska</label>
     </div> );
 }
  

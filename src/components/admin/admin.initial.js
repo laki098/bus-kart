@@ -12,7 +12,7 @@ const AdminInitial = () => {
   const [val2, setVal2] = useState("");
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
-  const [linije, setLinije] = useState([]);
+/*   const [linije, setLinije] = useState([]); */
 
   const filterLinija = async () => {
     if (!valueDate) return;
@@ -116,7 +116,7 @@ const AdminInitial = () => {
               prevoznik: {linija.prevoznik},
               mesto polaska: {linija.mestoPolaska},
               mesto dolaska: {linija.mestoDolaska}
-              <button >zameni</button>
+              <Link to="/admin.change.line"><button >zameni</button></Link>
               <button onClick={() => adminLogic.brisanjeLinije(linija.id)}>obrisi</button>
               
                 </div>

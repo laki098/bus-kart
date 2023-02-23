@@ -67,7 +67,7 @@ def linije():
         seconds %= 3600
         minutes = seconds // 60
         seconds %= 60
-        return "%d:%02d:%02d" % (hour, minutes, seconds)
+        return "%02d:%02d" % (hour, minutes)
     list_linije = []
     for linija in row:
         list_linije.append({
@@ -101,7 +101,7 @@ def filterLinije():
         seconds %= 3600
         minutes = seconds // 60
         seconds %= 60
-        return "%d:%02d:%02d" % (hour, minutes, seconds)
+        return "%02d:%02d" % (hour, minutes)
 
     list_linije = []
     for linija in row:
