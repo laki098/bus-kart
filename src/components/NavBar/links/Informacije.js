@@ -6,8 +6,8 @@ import UpisPolazaka from '../../prevoznik/UpisPolazaka';
 const informacije = () => {
   return (
     <div>
-       <Pretraga/>   
-       <UpisPolazaka/>
+       {/* <Pretraga/>   
+       <UpisPolazaka/> */}
        <br/><br/>
        <br/><br/>
     </div>

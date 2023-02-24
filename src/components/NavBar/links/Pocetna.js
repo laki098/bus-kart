@@ -150,6 +150,7 @@ const Pocetna = () => {
             <i className="fa-solid fa-bus"></i>
             <span className="span">Red voznje</span>
           </h2>
+          <div className="scroll">
           {filteredLinije.map((linija) => {
             return (
               <li key={linija.id}>
@@ -180,6 +181,7 @@ const Pocetna = () => {
               </li>
             );
           })}
+          </div>
         </div>
       </ul> 
     </div>
