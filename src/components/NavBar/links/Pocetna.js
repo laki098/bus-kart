@@ -64,11 +64,36 @@ const Pocetna = () => {
     changer();
   };
 
-
   let showDate = new Date();
-  let displayTodaysDate = showDate.getDate() + '/' + (showDate.getMonth() + 1) + '/' + showDate.getFullYear;
+  let displayTodaysDate =
+    showDate.getDate() +
+    "/" +
+    (showDate.getMonth() + 1) +
+    "/" +
+    showDate.getFullYear;
 
- 
+  const vremePuta = (linija) => {
+    const datumPolaska = new Date(linija.datumPolaska);
+    const vremePolaska = linija.vremePolaska.split(":");
+    datumPolaska.setHours(vremePolaska[0]);
+    datumPolaska.setMinutes(vremePolaska[1]);
+
+    const datumDolaska = new Date(linija.datumPolaska);
+    const vremeDolaska = linija.vremeDolaska.split(":");
+    datumDolaska.setHours(vremeDolaska[0]);
+    datumDolaska.setMinutes(vremeDolaska[1]);
+
+    const vremePuta = Math.abs(datumDolaska.getTime() - datumPolaska.getTime());
+
+    const minuti = Math.floor((vremePuta % (1000 * 60 * 60)) / (1000 * 60));
+    const sati = Math.floor(vremePuta / (1000 * 60 * 60));
+
+    if (sati < 1) {
+      return `${minuti} min`;
+    } else {
+      return [sati, minuti].join(":");
+    }
+  };
 
   return (
     <div>
@@ -154,34 +179,40 @@ const Pocetna = () => {
             return (
               <li key={linija.id}>
                 <div className="travel">
-                 <div className="operator"> {linija.prevoznik}</div>
-                 <div className="start"><span className="start-time">{" "}{linija.vremePolaska}</span> 
-                  <div className="start-destination"> {linija.mestoPolaska} </div></div>
-
-
-
-                 <div className="travel-time">
-                  <div className="time">
-                   {linija.vremeDolaska - linija.vremePolaska}</div>
-                  <div className="time-line"></div> 
-                  <div className="space">broj mesta</div>
+                  <div className="operator"> {linija.prevoznik}</div>
+                  <div className="start">
+                    <span className="start-time"> {linija.vremePolaska}</span>
+                    <div className="start-destination">
+                      {" "}
+                      {linija.mestoPolaska}{" "}
+                    </div>
                   </div>
 
-
-
-                <div className="end">
-                <div className="end-destination">{" "}{linija.mestoDolaska}</div>
-                 <span className="end-time"> {linija.vremeDolaska}</span> 
+                  <div className="travel-time">
+                    <div className="time">
+                      {/* {linija.vremeDolaska - linija.vremePolaska} */}
+                      {vremePuta(linija)}
+                    </div>
+                    <div className="time-line"></div>
+                    <div className="space">broj mesta</div>
                   </div>
-                  <div >
-                  <button className="buttonSwitch1">Rezervisi</button>
+
+                  <div className="end">
+                    <div className="end-destination">
+                      {" "}
+                      {linija.mestoDolaska}
+                    </div>
+                    <span className="end-time"> {linija.vremeDolaska}</span>
+                  </div>
+                  <div>
+                    <button className="buttonSwitch1">Rezervisi</button>
                   </div>
                 </div>
               </li>
             );
           })}
         </div>
-      </ul> 
+      </ul>
     </div>
   );
 };
