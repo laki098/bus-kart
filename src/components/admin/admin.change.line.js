@@ -1,16 +1,11 @@
-
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import LineForm from "./line.form";
 
 const AdminChangeLine = () => {
-    return ( 
-    <div>
-        <p>Mesto Polaska:</p>
-        <p>Mesto Dolaska:</p>
-        <p>Vreme Polaska:</p>
-        <p>Vreme Dolaska:</p>
-        <p>Prevoznik:</p>
-        <p>Datum Polaska</p>
-        <p>Datum Dolaska</p>
-    </div> );
-}
- 
+  const { id } = useParams(); //useParams vraca sve kljuceve parametara iz url-a. Dekonstuisemo ga da ne bi pisali params.id
+
+  return <LineForm mode="edit" id={id} />;
+};
+
 export default AdminChangeLine;

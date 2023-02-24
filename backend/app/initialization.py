@@ -59,7 +59,14 @@ def init_db():
         `datumDolaska` DATE NOT NULL,
         PRIMARY KEY (`idlinije`)
         )ENGINE=InnoDB""")
-
+    
+    DB.create_table(""" CREATE TABLE IF NOT EXISTS `autobusi` (
+            `idautobusi` INT NOT NULL,
+            `tablica` VARCHAR(255) NOT NULL,
+            `brojMesta` INT NOT NULL,
+            PRIMARY KEY (`idautobusi`),
+            UNIQUE INDEX `tablica_UNIQUE` (`tablica` ASC) VISIBLE
+            )ENGINE=InnoDB""")
 
 def init():
     # create_folder()

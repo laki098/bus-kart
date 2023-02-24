@@ -50,12 +50,31 @@ const LinijeApi = () => {
     });
   };
   const brisanjeLinije = async (id) => {
-    console.log(id);
-    return await axios.post(`http://localhost:5000/linije/delete/${id}`, {
+    return await axios.post(`http://localhost:5000/linije/delete/${id}`, {});
+  };
+
+  const editLinije = async (
+    id,
+    mestoPolaska,
+    mestoDolaska,
+    vremePolaska,
+    vremeDolaska,
+    prevoznik,
+    datumPolaska,
+    datumDolaska
+  ) => {
+    return await axios.post(`http://localhost:5000/linije/update/${id}`, {
+      mestoPolaska: mestoPolaska,
+      mestoDolaska: mestoDolaska,
+      vremePolaska: vremePolaska,
+      vremeDolaska: vremeDolaska,
+      prevoznik: prevoznik,
+      datumPolaska: datumPolaska,
+      datumDolaska: datumDolaska,
     });
   };
 
-  return { filterLinija, upisLinije, getLinije, brisanjeLinije };
+  return { filterLinija, upisLinije, getLinije, brisanjeLinije, editLinije };
 };
 
 export default LinijeApi;
