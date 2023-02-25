@@ -1,13 +1,12 @@
-import React from 'react'
-
+import React from "react";
+import RezervacijaKarteComponents from "../../rezervacija/RezervacijaKarte.components";
 
 const RezervacijaKarte = () => {
   return (
     <div>
-      Rezervacija Karte
-      
+      <RezervacijaKarteComponents />
     </div>
-  )
-}
+  );
+};
 
-export default RezervacijaKarte
+export default RezervacijaKarte;

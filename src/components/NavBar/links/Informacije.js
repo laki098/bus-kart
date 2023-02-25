@@ -5,11 +5,7 @@ import Pretraga from "../../rezervacija/Pretraga";
 import UpisPolazaka from "../../prevoznik/UpisPolazaka";
 
 const informacije = () => {
-  return (
-    <div>
-      <RezervacijaKarteComponents />
-    </div>
-  );
+  return <div>informacije</div>;
 };
 
 export default informacije;
