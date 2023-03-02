@@ -1,5 +1,5 @@
 import React from "react";
-import RezervacijaKarteComponents from "../../rezervacija/RezervacijaKarte.components";
+import RezervacijaKarteComponents from "../../rezervacije/rezervacija.component";
 
 const RezervacijaKarte = () => {
   return (

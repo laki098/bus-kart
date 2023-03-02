@@ -91,8 +91,8 @@ const Pocetna = () => {
     if (sati < 1) {
       return `${minuti} min`;
     } else {
-      const sati1 = `${sati}h` ;
-      const min = `${minuti}m`
+      const sati1 = `${sati}h`;
+      const min = `${minuti}m`;
       return [sati1, min].join(":");
     }
   };
@@ -178,42 +178,42 @@ const Pocetna = () => {
             <span className="span">Red voznje</span>
           </h2>
           <div className="scroll">
-          {filteredLinije.map((linija) => {
-            return (
-              <li key={linija.id}>
-                <div className="travel">
-                  <div className="operator"> {linija.prevoznik}</div>
-                  <div className="start">
-                    <span className="start-time"> {linija.vremePolaska}</span>
-                    <div className="start-destination">
-                      {" "}
-                      {linija.mestoPolaska}{" "}
+            {filteredLinije.map((linija) => {
+              return (
+                <li key={linija.id}>
+                  <div className="travel">
+                    <div className="operator"> {linija.prevoznik}</div>
+                    <div className="start">
+                      <span className="start-time"> {linija.vremePolaska}</span>
+                      <div className="start-destination">
+                        {" "}
+                        {linija.mestoPolaska}{" "}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="travel-time">
-                    <div className="time">
-                      {/* {linija.vremeDolaska - linija.vremePolaska} */}
-                      {vremePuta(linija)}
+                    <div className="travel-time">
+                      <div className="time">
+                        {/* {linija.vremeDolaska - linija.vremePolaska} */}
+                        {vremePuta(linija)}
+                      </div>
+                      <div className="time-line"></div>
+                      <div className="space">broj mesta</div>
                     </div>
-                    <div className="time-line"></div>
-                    <div className="space">broj mesta</div>
-                  </div>
 
-                  <div className="end">
-                    <div className="end-destination">
-                      {" "}
-                      {linija.mestoDolaska}
+                    <div className="end">
+                      <div className="end-destination">
+                        {" "}
+                        {linija.mestoDolaska}
+                      </div>
+                      <span className="end-time"> {linija.vremeDolaska}</span>
                     </div>
-                    <span className="end-time"> {linija.vremeDolaska}</span>
+                    <div>
+                      <button className="buttonSwitch1">Rezervisi</button>
+                    </div>
                   </div>
-                  <div>
-                    <button className="buttonSwitch1">Rezervisi</button>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
+                </li>
+              );
+            })}
           </div>
         </div>
       </ul>
