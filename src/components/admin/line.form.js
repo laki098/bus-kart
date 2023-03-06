@@ -1,10 +1,37 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { useState, useEffect } from "react";
 import AdminLogic from "./admin.logic";
+import LinijeApi from "../../api/linije.api";
 
 const LineForm = ({ mode, id }) => {
+  const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
-  const [endDate, setEndDate] = useState(new Date());
+
+  const izmeniLiniju = async () => {
+    const response = await LinijeApi().filterLinijaID(id); // Filter linije za bas taj id koji cemo da menjamo
+    // if (response.error) {
+    //   setError(response.error);
+    //   return;
+    // }
+    const data = await response.data; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
+    let polazak = data.datumPolaska.split(",");
+    let dolazak = data.datumDolaska.split(",");
+    const linija = {
+      ...data,
+      datumPolaska: new Date(+polazak[0], +polazak[1] - 1, +polazak[2] + 1)
+        .toISOString()
+        .substr(0, 10),
+      datumDolaska: new Date(+dolazak[0], +dolazak[1] - 1, +dolazak[2] + 1) //+ prebacuje u int iz stringa
+        .toISOString()
+        .substr(0, 10),
+    };
+    setLinija(linija);
+  };
+
+  useEffect(() => {
+    if (mode === "edit") {
+      izmeniLiniju();
+    }
+  }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -23,6 +50,7 @@ const LineForm = ({ mode, id }) => {
         datumPolaska: formData.get("datumPolaska"),
         datumDolaska: formData.get("datumDolaska"),
       };
+
       adminLogic.editLinije(data);
     }
   };
@@ -34,6 +62,7 @@ const LineForm = ({ mode, id }) => {
       <label>Mesto polaska</label>
       <br />
       <input
+        defaultValue={linija.mestoPolaska}
         type="text"
         placeholder="Mesto polaska"
         required
@@ -44,6 +73,7 @@ const LineForm = ({ mode, id }) => {
       <label>Mesto dolaska</label>
       <br />
       <input
+        defaultValue={linija.mestoDolaska}
         type="text"
         name="mestoDolaska"
         placeholder="Mesto dolaska"
@@ -55,6 +85,7 @@ const LineForm = ({ mode, id }) => {
       <label>Datum polaska</label>
       <br />
       <input
+        defaultValue={linija.datumPolaska}
         name="datumPolaska"
         type="date"
         onChange={adminLogic.changeHandler}
@@ -72,6 +103,7 @@ const LineForm = ({ mode, id }) => {
       <label>Datum dolaska</label>
       <br />
       <input
+        defaultValue={linija.datumDolaska}
         name="datumDolaska"
         type="date"
         onChange={adminLogic.changeHandler}
@@ -88,6 +120,7 @@ const LineForm = ({ mode, id }) => {
       <label>Vreme polaska</label>
       <br />
       <input
+        defaultValue={linija.vremePolaska}
         className="inputText"
         type="time"
         required
@@ -99,6 +132,7 @@ const LineForm = ({ mode, id }) => {
       <label>Vreme dolaska</label>
       <br />
       <input
+        defaultValue={linija.vremeDolaska}
         className="inputText"
         type="time"
         required
@@ -108,7 +142,11 @@ const LineForm = ({ mode, id }) => {
       <br />
       <label>Prevoznik</label>
       <br />
-      <select name="prevoznik" onChange={adminLogic.changeHandler}>
+      <select
+        value={linija.prevoznik}
+        name="prevoznik"
+        onChange={adminLogic.changeHandler}
+      >
         <option disabled={false} value="">
           --Izaberi prevoznika--
         </option>

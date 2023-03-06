@@ -21,14 +21,14 @@ const Pocetna = () => {
   };
 
   const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linije/linija");
-    const data = await response.json();
-    const mestaPolaska = data
-      .map((item) => item.mestoPolaska)
-      .filter(helpers.filterUnique);
-    const mestaDolaska = data
-      .map((item) => item.mestoDolaska)
-      .filter(helpers.filterUnique);
+    const response = await fetch("http://localhost:5000/linije/linija"); //izvlacenje svih linija iz baze
+    const data = await response.json(); //
+    const mestaPolaska = data //
+      .map((item) => item.mestoPolaska) //Uradjen filter da se u selektu ne ponavljaju linije
+      .filter(helpers.filterUnique); // za mesto polaska
+    const mestaDolaska = data //
+      .map((item) => item.mestoDolaska) //Uradjen filter da se u selektu ne ponavljaju linije
+      .filter(helpers.filterUnique); //za mesto dolaska
 
     setLinije(data);
     setPolasci(mestaPolaska);
@@ -38,8 +38,9 @@ const Pocetna = () => {
   };
 
   useEffect(() => {
-    getLinije();
-  }, []);
+    //
+    getLinije(); //Prilikom ucitavanja stranice da pozove funkciju get linije
+  }, []); //
 
   const click = () => {
     //ovde mozes upit da napravis da li se val 1 sadrzi u dolasci
@@ -47,6 +48,7 @@ const Pocetna = () => {
     // primer polasci.includes(val2)
 
     if (!polasci.includes(val2) || !dolasci.includes(val1)) {
+      //zamena mesta polja mesto dolaska i mesto polaska
       return;
     }
     setVal1(val2);

@@ -17,6 +17,10 @@ def linijeNov():
     cursor = mydb.cursor(prepared=True)
     data = request.json
 
+    if 'mestoPolaska' not in data:
+        msg = 'Sva polja moraju biti popunjena'
+        return {'error': msg}, 422
+
     mestoPolaska = data["mestoPolaska"]
     mestoDolaska = data["mestoDolaska"]
     vremePolaska = data["vremePolaska"]
@@ -117,6 +121,35 @@ def filterLinije():
         })
 
     return jsonify(list_linije)
+
+
+@linije_services.route("/filterLinijaID/<idlinije>", methods=["GET", "POST"])
+def filterLinijaID(idlinije):
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+    cursor.execute("SELECT * FROM linije WHERE idlinije=%s", (idlinije,))
+    row = cursor.fetchone()
+
+    def toHrs(seconds):
+        seconds = seconds % (24 * 3600)
+        hour = seconds // 3600
+        seconds %= 3600
+        minutes = seconds // 60
+        seconds %= 60
+        return "%02d:%02d" % (hour, minutes)
+
+    linija = {
+        'idlinija': row[0],
+        'mestoPolaska': row[1],
+        'mestoDolaska': row[2],
+        'vremePolaska': toHrs(row[3].seconds),
+        'vremeDolaska': toHrs(row[4].seconds),
+        'prevoznik': row[5],
+        'datumPolaska': str(row[6].year) + ',' + str(row[6].month) + ',' + str(row[6].day),
+        'datumDolaska': str(row[7].year) + ',' + str(row[7].month) + ',' + str(row[7].day)
+    }
+
+    return jsonify(linija)
 
 
 @linije_services.route('/delete/<idlinije>', methods=['POST'])
