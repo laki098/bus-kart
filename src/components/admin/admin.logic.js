@@ -10,7 +10,7 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-  const upisLinije = () => {
+  const upisLinije = async () => {
     LinijeApi()
       .upisLinije(
         data.mestoPolaska,

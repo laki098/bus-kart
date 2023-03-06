@@ -43,14 +43,22 @@ const LinijeApi = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        mestoPolaska: mestoPolaska,
-        mestoDolaska: mestoDolaska,
-        datumPolaska: datumPolaska,
+        //filter radi po mestu polaska, mestu dolaska i datumu polaska
+        mestoPolaska: mestoPolaska, //
+        mestoDolaska: mestoDolaska, //
+        datumPolaska: datumPolaska, //
       }),
     });
   };
+  const filterLinijaID = async (id) => {
+    return await axios.get(
+      `http://localhost:5000/linije/filterLinijaID/${id}`,
+      {}
+    );
+  };
+
   const brisanjeLinije = async (id) => {
-    return await axios.post(`http://localhost:5000/linije/delete/${id}`, {});
+    return await axios.post(`http://localhost:5000/linije/delete/${id}`, {}); //brisanje radi po id-u
   };
 
   const editLinije = async (
@@ -64,6 +72,7 @@ const LinijeApi = () => {
     datumDolaska
   ) => {
     return await axios.post(`http://localhost:5000/linije/update/${id}`, {
+      //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
       mestoPolaska: mestoPolaska,
       mestoDolaska: mestoDolaska,
       vremePolaska: vremePolaska,
@@ -74,7 +83,14 @@ const LinijeApi = () => {
     });
   };
 
-  return { filterLinija, upisLinije, getLinije, brisanjeLinije, editLinije };
+  return {
+    filterLinija,
+    upisLinije,
+    getLinije,
+    brisanjeLinije,
+    editLinije,
+    filterLinijaID,
+  };
 };
 
 export default LinijeApi;
