@@ -21,6 +21,7 @@ def init_db():
                         `prezime` VARCHAR(255) NOT NULL,
                         `brojTelefona` VARCHAR(255) NOT NULL,
                         `email` VARCHAR(255) NOT NULL,
+                        `role` VARCHAR(255) NOT NULL,
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `korisnickoIme_UNIQUE` (`korisnickoIme`)
                     ) ENGINE=InnoDB""")
@@ -31,9 +32,10 @@ def init_db():
     prezime = "admin"
     email = "admin@admin.com"
     brojTelefona = 124142
+    role = "admin"
 
     DB.insert_into_query(
-        "INSERT IGNORE INTO korisnik (korisnickoIme, lozinka, ime, prezime, brojTelefona, email) VALUES (%s, %s, %s, %s, %s, %s)", (korisnickoIme, lozinka, ime, prezime, brojTelefona, email))
+        "INSERT IGNORE INTO korisnik (korisnickoIme, lozinka, ime, prezime, brojTelefona, email, role) VALUES (%s, %s, %s, %s, %s, %s, %s)", (korisnickoIme, lozinka, ime, prezime, brojTelefona, email, role))
 
     DB.create_table("""CREATE TABLE IF NOT EXISTS `employee` (
                         `id` int NOT NULL AUTO_INCREMENT,
@@ -59,7 +61,7 @@ def init_db():
         `datumDolaska` DATE NOT NULL,
         PRIMARY KEY (`idlinije`)
         )ENGINE=InnoDB""")
-    
+
     DB.create_table(""" CREATE TABLE IF NOT EXISTS `autobusi` (
             `idautobusi` INT NOT NULL,
             `tablica` VARCHAR(255) NOT NULL,
@@ -67,6 +69,7 @@ def init_db():
             PRIMARY KEY (`idautobusi`),
             UNIQUE INDEX `tablica_UNIQUE` (`tablica` ASC) VISIBLE
             )ENGINE=InnoDB""")
+
 
 def init():
     # create_folder()
