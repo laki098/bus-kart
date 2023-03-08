@@ -4,17 +4,14 @@ const BusApi = () => {
   const getBus = async () => {
     return await fetch("http://localhost:5000/autobusi");
   };
-  const upisBus = async (
-    tablica,
-    brojMesta,
-  ) => {
+  const upisBus = async (tablica, brojMesta) => {
     console.log({
-        tablica: tablica,
-        brojMesta: brojMesta,
+      tablica: tablica,
+      brojMesta: brojMesta,
     });
     return await axios.post("http://localhost:5000/autobusi/autobusiNov", {
-        tablica: tablica,
-        brojMesta: brojMesta,
+      tablica: tablica,
+      brojMesta: brojMesta,
     });
   };
 

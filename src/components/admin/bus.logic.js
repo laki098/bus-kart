@@ -1,5 +1,4 @@
 import { useState } from "react";
-import BusApi from "../../api/bus.api";
 
 
 const BusLogic = () => {
@@ -13,10 +12,7 @@ const BusLogic = () => {
 
   const upisBus = async () => {
     BusApi()
-      .upisBus(
-        data.tablica,
-        data.brojMesta,
-      )
+      .upisBus(data.tablica, data.brojMesta)
       .then((response) => {
         console.log(response);
         alert("Konacccno");
@@ -28,11 +24,7 @@ const BusLogic = () => {
 
   const editBus = (data) => {
     BusApi()
-      .editBus(
-        data.id,
-        data.tablica,
-        data.brojMesta,
-      )
+      .editBus(data.id, data.tablica, data.brojMesta)
       .then((response) => {
         console.log(response);
         alert("Konacccno");
@@ -42,12 +34,7 @@ const BusLogic = () => {
       });
   };
 
-  
   return { changeHandler, setData, upisBus, editBus };
 };
 
 export default BusLogic;
-
-
-
-  
