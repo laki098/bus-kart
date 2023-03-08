@@ -7,11 +7,11 @@ class Korisnik:
 
     __korisnickoIme: str
     __lozinka: str
-    __ime:str
-    __prezime:str
-    __brojTelefona:str
-    __email:str
-    
+    __ime: str
+    __prezime: str
+    __brojTelefona: str
+    __email: str
+    __role: str
 
     @staticmethod
     def hash_lozinka(lozinka):
@@ -34,20 +34,17 @@ class Korisnik:
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         return pwdhash == stored_lozinka
 
-
-    def init(self, korisnickoIme: str, lozinka: str, ime:str, prezime:str, brojTelefona:str, email:str ):
+    def init(self, korisnickoIme: str, lozinka: str, ime: str, prezime: str, brojTelefona: str, email: str, role: str):
         self.__korisnickoIme = korisnickoIme
         self.__lozinka = lozinka
-        self.__ime =ime
+        self.__ime = ime
         self.__prezime = prezime
         self.__brojTelefona = brojTelefona
         self.__email = email
-        
-
+        self.__role = role
 
     def get_korisnickoIme(self):
         return self.__korisnickoIme
-
 
     def get_lozinka(self):
         return self.__lozinka
@@ -57,21 +54,18 @@ class Korisnik:
 
     def get_prezime(self):
         return self.__prezime
-    
+
     def get_brojTelefona(self):
         return self.__brojTelefona
 
     def get_email(self):
         return self.__email
 
-    
-
-
-
+    def get_role(self):
+        return self.__role
 
     def set_korisnickoIme(self, new_korisnickoIme):
         self.__korisnickoIme = new_korisnickoIme
-
 
     def set_lozinka(self, new_lozinka):
         self.__lozinka = new_lozinka
@@ -88,11 +82,8 @@ class Korisnik:
     def set_email(self, new_email):
         self.__email = new_email
 
-    
-
-
-        
-
+    def set_role(self, new_role):
+        self.__role = new_role
 
     def __str__(self) -> str:
 
@@ -100,18 +91,20 @@ class Korisnik:
         res += f"lozinka: {self.__lozinka} \n"
         res += f"ime: {self.__ime} \n"
         res += f"prezime: {self.__prezime} \n"
-        
+
         res += f"brojTelefona: {self.__brojTelefona} \n "
-        res += f"email: {self.__email} "
+        res += f"email: {self.__email}\n "
+        res += f"role: {self.__role} "
         return res
 
     def to_dict(self):
-        return{
+        return {
             "korisnickoIme": self.__korisnickoIme,
             "lozinka": self.__lozinka,
             "ime": self.__ime,
             "prezime": self.__prezime,
             "brojTelefona": self.__brojTelefona,
             "email": self.__email,
+            "role": self.__role,
 
         }
