@@ -3,7 +3,7 @@ import BusLogic from "./bus.logic";
 import BusApi from "../../api/bus.api";
 
 
-const BusForm = () => {
+const BusForm = ({mode, id}) => {
    
     const [bus,setBus] = useState({});
     const busLogic = BusLogic();
@@ -15,11 +15,11 @@ const BusForm = () => {
         setBus(bus);
     }; */
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(mode === 'edit') {
             izmeniBus();
         }
-    }, []);
+    }, []); */
 
    const submitHandler = (event) => {
     event.preventDefault();

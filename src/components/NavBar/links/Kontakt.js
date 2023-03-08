@@ -2,6 +2,8 @@ import React from 'react'
 import "./kontakt.css";
 import AdminInitial from '../../admin/admin.initial'
 import Bus from '../../admin/admin.bus';
+import BusForm from '../../admin/bus.form';
+
 
 
 
@@ -9,9 +11,9 @@ import Bus from '../../admin/admin.bus';
 const Kontakt = () => {
   return (
     <div>
-        Kontakt
-        
-        <Bus />
+     
+
+        <BusForm />
 
 
         <AdminInitial />
