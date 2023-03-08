@@ -95,7 +95,7 @@ const Pocetna = () => {
     } else {
       const sati1 = `${sati}h`;
       const min = `${minuti}m`;
-      return [sati1, min].join(":");
+      return [sati1, min].join(" ");
     }
   };
 
@@ -166,7 +166,7 @@ const Pocetna = () => {
       </div>
 
       <ul>
-        <div className={`home-page1 .home-page1 ${showClass ? "show" : ""}`}>
+        <div className={`home-page1 .home-page1 ${showClass ? "show" : ""}`}> {/*kada se pretisne dugme otvorit se nov div sa ispisanim podacima*/}
           <style>{`
             .home-page1 {
               display: none;

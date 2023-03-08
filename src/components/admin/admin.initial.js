@@ -126,7 +126,7 @@ const AdminInitial = () => {
       {filteredLinije.length > 0 ? (
         <div>
           <ul>
-            <div className={`home1 .home1 ${showClass ? "show" : ""}`}>
+            <div className={`home1 .home1 ${showClass ? "show" : ""}`}>     
               <style>{`
             .home1 {
               display: none;

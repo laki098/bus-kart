@@ -1,6 +1,7 @@
 import React from 'react'
 import "./kontakt.css";
 import AdminInitial from '../../admin/admin.initial'
+import Bus from '../../admin/admin.bus';
 
 
 
@@ -10,7 +11,11 @@ const Kontakt = () => {
     <div>
         Kontakt
         
+        <Bus />
+
+
         <AdminInitial />
+      
       
       <section className='distance'>
         <div className="contact row1">
