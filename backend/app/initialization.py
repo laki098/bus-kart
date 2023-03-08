@@ -63,7 +63,7 @@ def init_db():
         )ENGINE=InnoDB""")
 
     DB.create_table(""" CREATE TABLE IF NOT EXISTS `autobusi` (
-            `idautobusi` INT NOT NULL,
+            `idautobusi` INT NOT NULL AUTO_INCREMENT,
             `tablica` VARCHAR(255) NOT NULL,
             `brojMesta` INT NOT NULL,
             PRIMARY KEY (`idautobusi`),
