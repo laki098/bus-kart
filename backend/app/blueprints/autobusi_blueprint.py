@@ -15,24 +15,24 @@ def autobusiNov():
     data = request.json
 
     tablica = data["tablica"]
-    brojSedista = data["brojSedista"]
+    brojMesta = data["brojMesta"]
 
-    form_autobusi = [tablica, brojSedista]
+    form_autobusi = [tablica, brojMesta]
     photoUrl = upload_file()
 
     if photoUrl == False:
-        return render_template(file_error="Invalid type of file!", tablica=form_autobusi[0], brojSedista=form_autobusi[1])
+        return render_template(file_error="Invalid type of file!", tablica=form_autobusi[0], brojMesta=form_autobusi[1])
 
     cursor = mydb.cursor(prepared=True)
     q = "INSERT INTO autobusi VALUE (null, %s,%s)"
 
-    all_keys = ["tablica", "brojSedista"]
+    all_keys = ["tablica", "brojMesta"]
 
     data = default_values(data, all_keys)
 
     parametars = (
         data["tablica"],
-        data["brojSedista"]
+        data["brojMesta"]
     )
 
     cursor.execute(q, parametars)
