@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BusApi = () => {
   const getBus = async () => {
-    return await fetch("http://localhost:5000/autobusi");
+    return await axios.get("http://localhost:5000/autobusi/autobusi");
   };
   const upisBus = async (tablica, brojMesta) => {
     console.log({

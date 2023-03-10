@@ -6,6 +6,19 @@ const BusForm = ({ mode, id }) => {
   const [bus, setBus] = useState({});
   const busLogic = BusLogic();
 
+  const izvlacenjeAutobusa = async () => {
+    const response = await fetch("http://localhost:5000/autobusi/autobusi");
+    const data1 = await response.json();
+
+    setBus(data1);
+  };
+
+  console.log(bus);
+
+  useEffect(() => {
+    izvlacenjeAutobusa();
+  }, []);
+
   /* const izmeniBus = async () => {
         const response = await BusApi().filterBusID(id);
 
@@ -43,7 +56,7 @@ const BusForm = ({ mode, id }) => {
       <label>Tablica</label>
       <br />
       <input
-        defaultValue={bus.tablica}
+        /* defaultValue={bus.tablica} */
         type="text"
         placeholder="tablica"
         required
@@ -54,7 +67,7 @@ const BusForm = ({ mode, id }) => {
       <label>Broj mesta</label>
       <br />
       <input
-        defaultValue={bus.mestoDolaska}
+        /* defaultValue={bus.mestoDolaska} */
         type="text"
         name="brojMesta"
         placeholder="Broj mesta"
