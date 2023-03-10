@@ -7,8 +7,8 @@ const Kontakt = () => {
   return (
     <div>
       Kontakt
-      <BusAdd />
       <AdminInitial />
+      <BusAdd />
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">

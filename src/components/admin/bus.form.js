@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from "react";
 import BusLogic from "./bus.logic";
-import BusApi from "../../api/bus.api";
 
 const BusForm = ({ mode, id }) => {
-  const [bus, setBus] = useState({});
+  const [bus, setBus] = useState([]);
   const busLogic = BusLogic();
 
+  /* const izvlacenjeAutobusa = async () => {
+    const response = await fetch("http://localhost:5000/autobusi/autobusi");
+    const data1 = await response.json();
+
+    setBus(data1);
+  };
+
+  console.log(bus);
+
+  useEffect(() => {
+    izvlacenjeAutobusa();
+  }, []); */
+
+  /* const izmeniBus = async () => {
+        const response = await BusApi().filterBusID(id);
 
   
 
@@ -24,7 +38,7 @@ const BusForm = ({ mode, id }) => {
 
     const clickButton = () => {
       izmeniBus();
-    };
+    };*/
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -50,7 +64,7 @@ const BusForm = ({ mode, id }) => {
       <label>Tablica</label>
       <br />
       <input
-       /*  defaultValue={bus.tablica} */
+        /* defaultValue={bus.tablica} */
         type="text"
         placeholder="tablica"
         required
@@ -61,7 +75,7 @@ const BusForm = ({ mode, id }) => {
       <label>Broj mesta</label>
       <br />
       <input
-        /* defaultValue={bus.brojMesta} */
+        /* defaultValue={bus.mestoDolaska} */
         type="text"
         name="brojMesta"
         placeholder="Broj mesta"
@@ -71,7 +85,7 @@ const BusForm = ({ mode, id }) => {
       <br />
 
       <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
-      <button onClick={clickButton}>Pregled Autobusa</button>
+      <button /* onClick={clickButton} */>Pregled Autobusa</button>
     </form>
   );
 };

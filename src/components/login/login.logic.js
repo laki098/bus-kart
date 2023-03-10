@@ -9,6 +9,8 @@ const LoginLogic = () => {
       .login(data.korisnickoIme, data.lozinka, data.ime)
       .then((response) => {
         console.log(data.ime);
+        sessionStorage.setItem("loggedIn", response.data.role);
+        // sessionStorage.removeItem('loggedIn') ovo u logout
         alert("Konacccno");
         window.location.href = "pocetna";
       })
