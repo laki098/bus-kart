@@ -1,16 +1,42 @@
 from flask import (Blueprint, jsonify, flash, redirect,
-                   url_for, request, render_template, Response)
+                   url_for, request, render_template, Response, session, current_app)
+from functools import wraps
 from db.DB import DB
 from upload import upload_file
 from util.check_data import default_values
 import os
 from models.linije import Linije
 from util.check_data import check_parameters, default_values, if_exists
+import jwt
 
 linije_services = Blueprint("linije_services", __name__)
 
 
+def isLoggedInAdmin(fnc):
+    @wraps(fnc)
+    def wrap(*args, **kwargs):
+        if 'loggedin' in session:
+            token = session["role"]
+            secret = current_app.secret_key
+            role = jwt.decode(token, secret)
+        else:
+
+            return {"error": "Not logged in"}, 422
+    return wrap
+
+
+""" def login_required(fnc):
+    @wraps(fnc)
+    def wrap(*args, **kwargs):
+        if 'loggedin' in session:
+            return fnc(*args, **kwargs)
+        else:
+            return redirect(url_for('user_services.login_page'))
+    return wrap """
+
+
 @linije_services.route("/linijeNov", methods=['GET', 'POST'])
+@isLoggedInAdmin
 def linijeNov():
 
     mydb = DB.connect()
