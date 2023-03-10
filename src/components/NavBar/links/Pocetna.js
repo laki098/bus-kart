@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LinijeApi from "../../../api/linije.api";
 import "./pocetna.css";
 import helpers from "../../../helpers/helpers";
+import { Link } from "react-router-dom";
 
 const Pocetna = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -166,7 +167,9 @@ const Pocetna = () => {
       </div>
 
       <ul>
-        <div className={`home-page1 .home-page1 ${showClass ? "show" : ""}`}> {/*kada se pretisne dugme otvorit se nov div sa ispisanim podacima*/}
+        <div className={`home-page1 .home-page1 ${showClass ? "show" : ""}`}>
+          {" "}
+          {/*kada se pretisne dugme otvorit se nov div sa ispisanim podacima*/}
           <style>{`
             .home-page1 {
               display: none;
@@ -210,7 +213,9 @@ const Pocetna = () => {
                       <span className="end-time"> {linija.vremeDolaska}</span>
                     </div>
                     <div>
-                      <button className="buttonSwitch1">Rezervisi</button>
+                      <Link to={`${linija.id}/rezervacijakarte`}>
+                        <button className="buttonSwitch1">Rezervisi</button>
+                      </Link>
                     </div>
                   </div>
                 </li>

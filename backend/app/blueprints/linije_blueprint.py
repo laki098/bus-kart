@@ -15,8 +15,8 @@ linije_services = Blueprint("linije_services", __name__)
 def isLoggedInAdmin(fnc):
     @wraps(fnc)
     def wrap(*args, **kwargs):
-        if 'loggedin' in session:
-            token = session["role"]
+        token = 'asdasddsa'
+        if 'loggedIn' in session:
             secret = current_app.secret_key
             role = jwt.decode(token, secret)
         else:
@@ -36,7 +36,6 @@ def isLoggedInAdmin(fnc):
 
 
 @linije_services.route("/linijeNov", methods=['GET', 'POST'])
-@isLoggedInAdmin
 def linijeNov():
 
     mydb = DB.connect()

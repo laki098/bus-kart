@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import BusLogic from "./bus.logic";
-import BusApi from "../../api/bus.api";
 
 const BusForm = ({ mode, id }) => {
-  const [bus, setBus] = useState({});
+  const [bus, setBus] = useState([]);
   const busLogic = BusLogic();
 
-  const izvlacenjeAutobusa = async () => {
+  /* const izvlacenjeAutobusa = async () => {
     const response = await fetch("http://localhost:5000/autobusi/autobusi");
     const data1 = await response.json();
 
@@ -17,7 +16,7 @@ const BusForm = ({ mode, id }) => {
 
   useEffect(() => {
     izvlacenjeAutobusa();
-  }, []);
+  }, []); */
 
   /* const izmeniBus = async () => {
         const response = await BusApi().filterBusID(id);

@@ -57,7 +57,7 @@ def login():
                 token = generate_token(userRole)
                 session['role'] = token
 
-                return {"role": userRole}, 200
+                return {"role": token}, 200
             else:
                 msg = 'korisnickoIme and/or lozinka is not correct!!'
                 return msg, 422

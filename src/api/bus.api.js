@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const BusApi = () => {
-  const getBus = async () => {
+  /* const getBus = async () => {
     return await axios.get("http://localhost:5000/autobusi/autobusi");
-  };
+  }; */
   const upisBus = async (tablica, brojMesta) => {
     console.log({
       tablica: tablica,
@@ -57,7 +57,6 @@ const BusApi = () => {
   return {
     /* filterBus, */
     upisBus,
-    getBus,
     /* brisanjeBus,
     editBus,
     filterBusID, */

@@ -1,13 +1,26 @@
 .tableNova {
   text-align: left;
   height: auto;
-  width: fit-content;
+  width: fit-content;   
   vertical-align: top;
   padding: 40px;
   border-spacing: 15px;
   font-size: 16px;
   color: rgb(5, 62, 120);
 }
+
+.tableNova11 {
+  text-align: left;
+  height: auto;
+  width: fit-content;   
+  vertical-align: top;
+  padding: 40px;
+  border-spacing: 15px;
+  font-size: 16px;
+  color: rgb(5, 62, 120);
+}
+
+
 .inputText {
   width: 150px;
   font-size: medium;
