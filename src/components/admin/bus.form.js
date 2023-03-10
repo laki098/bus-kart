@@ -6,18 +6,25 @@ const BusForm = ({ mode, id }) => {
   const [bus, setBus] = useState({});
   const busLogic = BusLogic();
 
-  /* const izmeniBus = async () => {
-        const response = await BusApi().filterBusID(id);
 
+  
+
+ const izmeniBus = async () => {
+        const response = await BusApi().filterBusID(id);
+        const data = await response.data;
         
         setBus(bus);
-    }; */
+    }; 
 
-  /* useEffect(() => {
+  useEffect(() => {
         if(mode === 'edit') {
             izmeniBus();
         }
-    }, []); */
+    }, []);
+
+    const clickButton = () => {
+      izmeniBus();
+    };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -43,7 +50,7 @@ const BusForm = ({ mode, id }) => {
       <label>Tablica</label>
       <br />
       <input
-        defaultValue={bus.tablica}
+       /*  defaultValue={bus.tablica} */
         type="text"
         placeholder="tablica"
         required
@@ -54,7 +61,7 @@ const BusForm = ({ mode, id }) => {
       <label>Broj mesta</label>
       <br />
       <input
-        defaultValue={bus.mestoDolaska}
+        /* defaultValue={bus.brojMesta} */
         type="text"
         name="brojMesta"
         placeholder="Broj mesta"
@@ -64,6 +71,7 @@ const BusForm = ({ mode, id }) => {
       <br />
 
       <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
+      <button onClick={clickButton}>Pregled Autobusa</button>
     </form>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import "./kontakt.css";
 import AdminInitial from "../../admin/admin.initial";
-import BusForm from "../../admin/bus.form";
 import BusAdd from "../../admin/bus.add";
 
 const Kontakt = () => {
