@@ -39,3 +39,21 @@ def autobusiNov():
     mydb.commit()
 
     return Response(status=200)
+
+
+@autobusi_services.route("/autobusi", methods=["GET"])
+def autobusi():
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+    cursor.execute("SELECT * FROM bus.autobusi")
+    row = cursor.fetchall()
+
+    list_autobusi = []
+    for autobus in row:
+        list_autobusi.append({
+            'idautobusi': autobus[0],
+            'tablica': autobus[1],
+            'brojMesta': autobus[2],
+        })
+
+    return jsonify(list_autobusi)
