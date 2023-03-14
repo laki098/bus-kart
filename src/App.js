@@ -34,6 +34,9 @@ function App() {
             <Route path="/:id/rezervacijakarte">
               <RezervacijaKarte />
             </Route>
+            <Route path="/rezervacijakarte">
+              <RezervacijaKarte />
+            </Route>
             <Route path="/kontakt">
               <Kontakt />
             </Route>
