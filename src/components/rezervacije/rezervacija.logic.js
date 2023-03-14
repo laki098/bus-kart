@@ -9,11 +9,14 @@ const RezervacijaLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-  const formValidation = (ime, mesto, datum, vreme, email, telefon) => {
+  const formValidation = (ime, mesto, mestoD, datum, datumD, vreme, vremeD,  email, telefon) => {
     const validName = COHelpers.isStringNotEmpty(ime.current.value);
     const validMesto = COHelpers.isStringNotEmpty(mesto.current.value);
+    const validMestoD = COHelpers.isStringNotEmpty(mestoD.current.value);
     const validDatum = COHelpers.isStringNotEmpty(datum.current.value);
+    const validDatumD = COHelpers.isStringNotEmpty(datumD.current.value);
     const validVreme = COHelpers.isStringNotEmpty(vreme.current.value);
+    const validVremeD = COHelpers.isStringNotEmpty(vremeD.current.value);
     const validEmail = COHelpers.isStringNotEmpty(email.current.value);
     const validTelefon = COHelpers.isStringNotEmpty(telefon.current.value);
 
@@ -22,10 +25,13 @@ const RezervacijaLogic = () => {
       isFormValid,
       validName,
       validMesto,
+      validMestoD,
       validDatum,
+      validDatumD,
       validVreme,
+      validVremeD,
       validEmail,
-      validTelefon
+      validTelefon,
     };
   };
 

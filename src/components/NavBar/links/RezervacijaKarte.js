@@ -4,7 +4,6 @@ import RezervacijaKarteComponents from "../../rezervacije/rezervacija.component"
 
 const RezervacijaKarte = () => {
   const { id } = useParams();
-  console.log(typeof id);
   return (
     <>
       <RezervacijaKarteComponents id={id} />
