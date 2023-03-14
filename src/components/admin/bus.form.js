@@ -21,15 +21,24 @@ const BusForm = ({ mode, id }) => {
   /* const izmeniBus = async () => {
         const response = await BusApi().filterBusID(id);
 
+  
+
+ const izmeniBus = async () => {
+        const response = await BusApi().filterBusID(id);
+        const data = await response.data;
         
         setBus(bus);
-    }; */
+    }; 
 
-  /* useEffect(() => {
+  useEffect(() => {
         if(mode === 'edit') {
             izmeniBus();
         }
-    }, []); */
+    }, []);
+
+    const clickButton = () => {
+      izmeniBus();
+    };*/
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -76,6 +85,7 @@ const BusForm = ({ mode, id }) => {
       <br />
 
       <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
+      <button /* onClick={clickButton} */>Pregled Autobusa</button>
     </form>
   );
 };

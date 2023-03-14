@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BusApi from "../../api/bus.api";
 
+
 const BusLogic = () => {
   let [data, setData] = useState({});
 

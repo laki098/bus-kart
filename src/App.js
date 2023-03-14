@@ -31,6 +31,9 @@ function App() {
             <Route path="/login.component">
               <LoginComponent />
             </Route>
+            <Route path="/rezervacijakarte">
+              <RezervacijaKarte />
+            </Route>
             <Route path="/:id/rezervacijakarte">
               <RezervacijaKarte />
             </Route>

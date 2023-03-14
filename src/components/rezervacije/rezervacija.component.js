@@ -6,12 +6,12 @@ import classes from "../registration/registration.module.css";
 //import VrstaKarte2 from "../rezervacija/VrstaKarte2";
 import { Popup } from "../Popup/Popup";
 import LinijeApi from "../../api/linije.api";
+import Qrcode from "./QrCode";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
   const [open, setOpen] = useState(false); /*  za popup  */
 
-  console.log(id);
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
     const data = await response.data; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
@@ -30,16 +30,37 @@ const RezervacijaComponent = ({ id }) => {
   };
 
   useEffect(() => {
-    rezervacija();
+    if (id) {
+      rezervacija();
+    }
   }, []);
 
-  console.log(linija);
+
+  const [osvezenje, setOsvezenje] = useState('');
+
+  const change = (event) => {
+    setOsvezenje(osvezenje);
+  };
+
+
+  const code = {
+    mestoPolaska: linija.mestoPolaska,
+    mestoDolaska: linija.mestoDolaska,
+    datumPolaska: linija.datumPolaska,
+    datumDolaska: linija.datumDolaska,
+    vremePolaska: linija.vremePolaska,
+    vremeDolaska: linija.vremeDolaska,
+    osvezenje: osvezenje
+  }; // vrednosti koje se prosledjuju u QRcodu da bi se on generisao
 
   let [formInputsValid, setFormInputsValid] = useState({
     name: true,
     mesto: true,
+    mestoD: true,
     datum: true,
+    datumD: true,
     vreme: true,
+    vremeD: true,
     email: true,
     telefon: true,
   });
@@ -47,8 +68,11 @@ const RezervacijaComponent = ({ id }) => {
 
   const fNameInputRef = useRef();
   const mestoInputRef = useRef();
+  const mestoDInputRef = useRef();
   const datumInputRef = useRef();
+  const datumDInputRef = useRef();
   const vremeInputRef = useRef();
+  const vremeDInputRef = useRef();
   const emailInputRef = useRef();
   const telefonInputRef = useRef();
 
@@ -58,16 +82,22 @@ const RezervacijaComponent = ({ id }) => {
     const formValidation = rezervacijaLogic.formValidation(
       fNameInputRef,
       mestoInputRef,
+      mestoDInputRef,
       datumInputRef,
+      datumDInputRef,
       vremeInputRef,
+      vremeDInputRef,
       emailInputRef,
       telefonInputRef
     );
     setFormInputsValid({
       name: formValidation.validName,
       mesto: formValidation.validMesto,
+      mestoD: formValidation.validMestoD,
       datum: formValidation.validDatum,
+      datumD: formValidation.validDatumD,
       vreme: formValidation.validVreme,
+      vremeD: formValidation.validVremeD,
       email: formValidation.validEmail,
       telefon: formValidation.validTelefon,
     });
@@ -75,6 +105,7 @@ const RezervacijaComponent = ({ id }) => {
       return;
     }
   };
+
   return (
     <>
       <form onSubmit={confirmeHandler} className={classes.form}>
@@ -111,6 +142,22 @@ const RezervacijaComponent = ({ id }) => {
 
         <div
           className={`${classes.control} ${
+            formInputsValid.mesto ? "" : classes.invalid
+          }`}
+        >
+          <label>Mesto dolaska:</label>
+          <input
+            defaultValue={linija.mestoDolaska}
+            type="text"
+            name="mestoD"
+            ref={mestoDInputRef}
+            onChange={rezervacijaLogic.changeHandler}
+          />
+          {!formInputsValid.mestoD && <p>Unesite mesto</p>}
+        </div>
+
+        <div
+          className={`${classes.control} ${
             formInputsValid.datum ? "" : classes.invalid
           }`}
         >
@@ -125,6 +172,23 @@ const RezervacijaComponent = ({ id }) => {
           />
 
           {!formInputsValid.datum && <p>Unesite datum</p>}
+        </div>
+        <div
+          className={`${classes.control} ${
+            formInputsValid.datum ? "" : classes.invalid
+          }`}
+        >
+          <label>Datum dolaska:</label>
+
+          <input
+            defaultValue={linija.datumDolaska}
+            type="date"
+            name="datum"
+            ref={datumDInputRef}
+            onChange={rezervacijaLogic.changeHandler}
+          />
+
+          {!formInputsValid.datumD && <p>Unesite datum</p>}
         </div>
 
         <div
@@ -141,6 +205,22 @@ const RezervacijaComponent = ({ id }) => {
             onChange={rezervacijaLogic.changeHandler}
           />
           {!formInputsValid.vreme && <p>Unesite vreme</p>}
+        </div>
+
+        <div
+          className={`${classes.control} ${
+            formInputsValid.vreme ? "" : classes.invalid
+          }`}
+        >
+          <label>Vreme dolaska:</label>
+          <input
+            defaultValue={linija.vremeDolaska}
+            type="time"
+            name="vremeD"
+            ref={vremeDInputRef}
+            onChange={rezervacijaLogic.changeHandler}
+          />
+          {!formInputsValid.vremeD && <p>Unesite vreme</p>}
         </div>
 
         <div
@@ -173,6 +253,20 @@ const RezervacijaComponent = ({ id }) => {
           {!formInputsValid.telefon && <p>Unesite telefon</p>}
         </div>
 
+        <select
+            type="text"
+            name="osvezenje"
+            value={osvezenje}
+            onChange={(event) => {setOsvezenje(event.target.value)}}
+            >
+          <option disabled={false} value="">
+            Izaberite osvezenje
+          </option>
+          <option>Kafa</option>
+          <option>Caj</option>
+          <option>Nes</option>
+        </select>
+
         <div>
           {/*  / ---------------------------POPUP----------------------------------    / */}
 
@@ -192,8 +286,16 @@ const RezervacijaComponent = ({ id }) => {
           <br />
           <br />
           <button className={classes.submit}>Rezervisi kartu</button>
+
+          <p>
+            Korisnik je kupio kartu od mesta {linija.mestoPolaska} do mesta{" "}
+            {linija.mestoDolaska} i to datuma {" "}
+            {linija.datumPolaska} za vreme {linija.vremePolaska} casova i dolazi{" "}
+            {linija.datumDolaska} i to u vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje {osvezenje}
+          </p>
         </div>
       </form>
+      <Qrcode code={code} />
     </>
   );
 };
