@@ -30,13 +30,10 @@ const BusApi = () => {
         brojMesta: brojMesta, 
       }),
     });
+  };*/
+  const filterBusId = async (id) => {
+    return await axios.get(`http://localhost:5000/autobusi/filterID/${id}`, {});
   };
-  const filterBusID = async (id) => {
-    return await axios.get(
-      `http://localhost:5000/autobusi/filterBusID/${id}`,
-      {}
-    );
-  }; */
 
   /* const brisanjeBus = async (id) => {
     return await axios.post(`http://localhost:5000/autobusi/delete/${id}`, {}); //brisanje radi po id-u
@@ -58,8 +55,8 @@ const BusApi = () => {
     /* filterBus, */
     upisBus,
     /* brisanjeBus,
-    editBus,
-    filterBusID, */
+    editBus,*/
+    filterBusId,
   };
 };
 

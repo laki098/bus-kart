@@ -55,5 +55,20 @@ def autobusi():
             'tablica': autobus[1],
             'brojMesta': autobus[2],
         })
+    return jsonify(list_autobusi)
+
+
+@autobusi_services.route("/filterID/<idautobusi>", methods=["GET", "POST"])
+def filterAutobusiID(idautobusi):
+    mydb = DB.connect()
+    cursor = mydb.cursor(prepared=True)
+    cursor.execute("SELECT * FROM autobusi WHERE idautobusi=%s", (idautobusi,))
+    row = cursor.fetchone()
+
+    list_autobusi = {
+        'idautobusi': row[0],
+        'tablica': row[1],
+        'brojMesta': row[2],
+    }
 
     return jsonify(list_autobusi)
