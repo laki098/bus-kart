@@ -50,7 +50,7 @@ const VrstaKarte2 = () => {
   };
 
   return (
-    <form className={classes.form}>
+    <div className={classes.form}>
       {" "}
       {/* className={classes.form} */}
       <div className="app">
@@ -81,7 +81,7 @@ const VrstaKarte2 = () => {
           {/*  {setPom}={checkedItems};   */}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

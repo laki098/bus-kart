@@ -14,6 +14,10 @@ import RegistrationComponent from "./components/registration/registration.compon
 import ResetPassword from "./components/login/reset.password";
 import AdminChangeLine from "./components/admin/admin.change.line";
 import AdminComponent from "./components/admin/admin.component";
+import AdminInitial from "./components/admin/admin.initial";
+import BusInitional from "./components/admin/bus.initional";
+import BusAdd from "./components/admin/bus.add";
+import BusChangeLine from "./components/admin/bus.change.line";
 
 function App() {
   return (
@@ -56,6 +60,18 @@ function App() {
           </Route>
           <Route path="/admin.component">
             <AdminComponent />
+          </Route>
+          <Route path="/admin.initial">
+            <AdminInitial />
+          </Route>
+          <Route path="/bus.initial">
+            <BusInitional />
+          </Route>
+          <Route path="/bus.add">
+            <BusAdd />
+          </Route>
+          <Route path="/:id/bus.change.line">
+            <BusChangeLine />
           </Route>
         </div>
 

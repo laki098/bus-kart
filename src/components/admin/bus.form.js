@@ -1,44 +1,24 @@
 import React, { useState, useEffect } from "react";
 import BusLogic from "./bus.logic";
+import BusApi from "../../api/bus.api";
 
 const BusForm = ({ mode, id }) => {
-  const [bus, setBus] = useState([]);
+  const [bus, setBus] = useState({});
   const busLogic = BusLogic();
 
-  /* const izvlacenjeAutobusa = async () => {
-    const response = await fetch("http://localhost:5000/autobusi/autobusi");
-    const data1 = await response.json();
+  const izmeinAutobus = async () => {
+    const response = await BusApi().filterBusId(id);
+    const data = await response.data;
 
-    setBus(data1);
+    setBus(data);
   };
 
   console.log(bus);
-
   useEffect(() => {
-    izvlacenjeAutobusa();
-  }, []); */
-
-  /* const izmeniBus = async () => {
-        const response = await BusApi().filterBusID(id);
-
-  
-
- const izmeniBus = async () => {
-        const response = await BusApi().filterBusID(id);
-        const data = await response.data;
-        
-        setBus(bus);
-    }; 
-
-  useEffect(() => {
-        if(mode === 'edit') {
-            izmeniBus();
-        }
-    }, []);
-
-    const clickButton = () => {
-      izmeniBus();
-    };*/
+    if (mode == "edit") {
+      izmeinAutobus();
+    }
+  }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -85,7 +65,6 @@ const BusForm = ({ mode, id }) => {
       <br />
 
       <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
-      <button /* onClick={clickButton} */>Pregled Autobusa</button>
     </form>
   );
 };

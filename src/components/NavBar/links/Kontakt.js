@@ -1,14 +1,12 @@
 import React from "react";
 import "./kontakt.css";
-import AdminInitial from "../../admin/admin.initial";
-import BusAdd from "../../admin/bus.add";
+import AdminPanel from "../../admin/admin.panel";
 
 const Kontakt = () => {
   return (
     <div>
       Kontakt
-      <AdminInitial />
-      <BusAdd />
+      <AdminPanel />
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">
