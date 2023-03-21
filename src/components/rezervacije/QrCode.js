@@ -1,7 +1,6 @@
 import { useState } from "react";
 import QRCode from "react-qr-code";
 import QrScanner from 'qr-scanner';
-import RezervacijaComponent from "./rezervacija.component";
 
 
 const Qrcode = (props) => {
@@ -10,7 +9,7 @@ const Qrcode = (props) => {
     const [result, setResult] = useState("")
     const code = props.code;
     const[inputValue, setInputValue] = useState('')
-    const qrcode = `Korisnik je kupio kartu od mesta ${code.mestoPolaska} do mesta  ${code.mestoDolaska}  i to datuma  ${code.datumPolaska} za vreme ${code.vremePolaska} casova  i dolazi ${code.datumDolaska}  to u vremenu ${code.vremeDolaska} casova i bira osvezenje ${code.osvezenje}`; 
+    const qrcode = `Korisnik je kupio kartu od mesta ${code.mestoPolaska} do mesta  ${code.mestoDolaska}  i to datuma  ${code.datumPolaska} za vreme ${code.vremePolaska} casova  i dolazi ${code.datumDolaska}  to u vremenu ${code.vremeDolaska} casova i bira osvezenje ${code.osvezenje}.Korisnik je izabrao kartu ${code.radio} i korisnik je rezervisao ${code.karte} karte`; 
     
     
     

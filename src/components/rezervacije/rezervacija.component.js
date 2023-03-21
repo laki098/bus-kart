@@ -1,16 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import RezervacijaLogic from "./rezervacija.logic";
 import classes from "../registration/registration.module.css";
-
-//import VrstaKarte from "./VrstaKarte";
-//import VrstaKarte2 from "../rezervacija/VrstaKarte2";
-import { Popup } from "../Popup/Popup";
 import LinijeApi from "../../api/linije.api";
 import Qrcode from "./QrCode";
+import Poppup from "./rezervacija/poppup";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
-  const [open, setOpen] = useState(false); /*  za popup  */
 
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
@@ -38,10 +34,24 @@ const RezervacijaComponent = ({ id }) => {
 
   const [osvezenje, setOsvezenje] = useState('');
 
-  const change = (event) => {
-    setOsvezenje(osvezenje);
-  };
+  /* const [isOpen, setIsOpen] = useState(false);
 
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  } */
+
+ 
+
+  const [selectedValue, setSelectedValue] = useState('');
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  }
+
+  const [selectedKarta, setSelectedKarta] = useState('');
+  const handleKarte = (event) => {
+    setSelectedKarta(event.target.value)
+  };
 
   const code = {
     mestoPolaska: linija.mestoPolaska,
@@ -50,7 +60,9 @@ const RezervacijaComponent = ({ id }) => {
     datumDolaska: linija.datumDolaska,
     vremePolaska: linija.vremePolaska,
     vremeDolaska: linija.vremeDolaska,
-    osvezenje: osvezenje
+    osvezenje: osvezenje,
+    radio:selectedValue,
+    karte:selectedKarta
   }; // vrednosti koje se prosledjuju u QRcodu da bi se on generisao
 
   let [formInputsValid, setFormInputsValid] = useState({
@@ -116,6 +128,7 @@ const RezervacijaComponent = ({ id }) => {
         >
           <label>Ime i prezime:</label>
           <input
+          className="test"
             type="text"
             name="ime"
             onChange={rezervacijaLogic.changeHandler}
@@ -132,6 +145,7 @@ const RezervacijaComponent = ({ id }) => {
           <label>Mesto polaska:</label>
           <input
             defaultValue={linija.mestoPolaska}
+            className="test"
             type="text"
             name="mesto"
             ref={mestoInputRef}
@@ -148,6 +162,7 @@ const RezervacijaComponent = ({ id }) => {
           <label>Mesto dolaska:</label>
           <input
             defaultValue={linija.mestoDolaska}
+            className="test"
             type="text"
             name="mestoD"
             ref={mestoDInputRef}
@@ -165,7 +180,8 @@ const RezervacijaComponent = ({ id }) => {
 
           <input
             defaultValue={linija.datumPolaska}
-            type="date"
+            className="test"
+            /* type="date" */
             name="datum"
             ref={datumInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -182,7 +198,8 @@ const RezervacijaComponent = ({ id }) => {
 
           <input
             defaultValue={linija.datumDolaska}
-            type="date"
+            className="test"
+           /*  type="date" */
             name="datum"
             ref={datumDInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -199,7 +216,8 @@ const RezervacijaComponent = ({ id }) => {
           <label>Vreme polaska:</label>
           <input
             defaultValue={linija.vremePolaska}
-            type="time"
+            className="test"
+            /* type="time" */ /*da ne bi moglo vreme da se menja */
             name="vreme"
             ref={vremeInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -215,7 +233,8 @@ const RezervacijaComponent = ({ id }) => {
           <label>Vreme dolaska:</label>
           <input
             defaultValue={linija.vremeDolaska}
-            type="time"
+            className="test"
+            /* type="time" */
             name="vremeD"
             ref={vremeDInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -231,6 +250,7 @@ const RezervacijaComponent = ({ id }) => {
           <label>Email:</label>
           <input
             type="text"
+            className="test"
             name="email"
             ref={emailInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -246,6 +266,7 @@ const RezervacijaComponent = ({ id }) => {
           <label>Telefon:</label>
           <input
             type="text"
+            className="test"
             name="telefon"
             ref={telefonInputRef}
             onChange={rezervacijaLogic.changeHandler}
@@ -253,12 +274,17 @@ const RezervacijaComponent = ({ id }) => {
           {!formInputsValid.telefon && <p>Unesite telefon</p>}
         </div>
 
-        <select
-            type="text"
-            name="osvezenje"
-            value={osvezenje}
-            onChange={(event) => {setOsvezenje(event.target.value)}}
-            >
+        <div className="radio">
+        <select className="select"
+          type="text"
+          name="osvezenje"
+          value={osvezenje}
+          required
+          onChange={(event) => {
+            setOsvezenje(event.target.value);
+          }}
+        >
+          
           <option disabled={false} value="">
             Izaberite osvezenje
           </option>
@@ -266,21 +292,48 @@ const RezervacijaComponent = ({ id }) => {
           <option>Caj</option>
           <option>Nes</option>
         </select>
+        </div>
+         
+         
 
-        <div>
-          {/*  / ---------------------------POPUP----------------------------------    / */}
+  
+        <div className="radio" >
+          <select className="radio1"
+          type='text'
+          name="Izaberi kartu"
+          required
+          value={selectedValue}
+          onChange={(event) => {
+            setSelectedValue(event.target.value)
+          }}>
+            <option disabled={false} value="">
+            Izaberite kartu
+          </option>
+            <option>Jednosmerna</option>
+            <option>Povratna</option>
+            <option>Besplatna</option>
+            <option>Studentska</option>
+            <option>Vikend</option>
+            <option>Nedeljna</option>
+      </select>
 
-          <div>
-            <button onClick={() => setOpen(true)} className={classes.submit}>
-              {" "}
-              Vrsta karte
-            </button>
-            {open ? (
-              <Popup
-                text="Birate vrstu karte!"
-                closePopup={() => setOpen(false)}
-              />
-            ) : null}
+
+          <div className="radio">
+            <select className="radio1"
+            required
+            name="Broj mesta"
+            value={selectedKarta}
+            onChange={(event) => {
+              setSelectedKarta(event.target.value)
+            }}>
+            <option disabled={false} value="">Broj karte</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+            </select>
           </div>
 
           <br />
@@ -289,9 +342,10 @@ const RezervacijaComponent = ({ id }) => {
 
           <p>
             Korisnik je kupio kartu od mesta {linija.mestoPolaska} do mesta{" "}
-            {linija.mestoDolaska} i to datuma {" "}
-            {linija.datumPolaska} za vreme {linija.vremePolaska} casova i dolazi{" "}
-            {linija.datumDolaska} i to u vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje {osvezenje}
+            {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}
+            {linija.vremePolaska} casova i dolazi {linija.datumDolaska} i to u
+            vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje{" "}
+            {osvezenje}.Korisnik je izabrao kartu  {selectedValue} i korisnik je rezervisao {selectedKarta} kartu
           </p>
         </div>
       </form>

@@ -1,63 +1,28 @@
-.tableNova {
-  text-align: left;
-  height: auto;
-  width: fit-content;   
-  vertical-align: top;
-  padding: 40px;
-  border-spacing: 15px;
-  font-size: 16px;
-  color: rgb(5, 62, 120);
+
+
+.radio {
+  margin-top: 2rem;
 }
-
-.tableNova11 {
-  text-align: left;
-  height: auto;
-  width: fit-content;   
-  vertical-align: top;
-  padding: 40px;
-  border-spacing: 15px;
-  font-size: 16px;
-  color: rgb(5, 62, 120);
-}
-
-
-.inputText {
-  width: 150px;
+.select {
+  text-align: center;
+  width: 40%;
+  border-radius: 1rem;
   font-size: medium;
+  font-weight: 300;
 }
-.inputTextVeci {
-  width: 20rem;
-  height: 2.5rem;
+
+.radio1 {
+  text-align: center;
+  width: 40%;
+  border-radius: 1rem;
   font-size: medium;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  font-weight: 300;
+}
+.test {
+  text-align: center;
 }
 
-.inputPolje {
-  width: 20rem;
-  height: 6rem;
-  font-size: medium;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-}
 
-.stavka1 {
-  padding-top: 0.2rem;
-  padding-bottom: 0.5rem;
-}
-
-.stavka2 {
-  padding-top: 0.2rem;
-  padding-bottom: 0.5rem;
-  text-align: left;
-  height: auto;
-  width: fit-content;
-  vertical-align: top;
-  padding: 40px;
-  border-spacing: 15px;
-  font-size: 16px;
-  color: rgb(5, 62, 120);
-}
 
 .filedset {
   text-align: left;
