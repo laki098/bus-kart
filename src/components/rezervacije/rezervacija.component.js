@@ -3,7 +3,8 @@ import RezervacijaLogic from "./rezervacija.logic";
 import classes from "../registration/registration.module.css";
 import LinijeApi from "../../api/linije.api";
 import Qrcode from "./QrCode";
-import Poppup from "./rezervacija/poppup";
+import  "../rezervacije/index1.css"
+import Autobus from "./sedista/autobus";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
@@ -52,6 +53,9 @@ const RezervacijaComponent = ({ id }) => {
   const handleKarte = (event) => {
     setSelectedKarta(event.target.value)
   };
+
+ 
+ 
 
   const code = {
     mestoPolaska: linija.mestoPolaska,
@@ -334,7 +338,8 @@ const RezervacijaComponent = ({ id }) => {
               <option>5</option>
               <option>6</option>
             </select>
-          </div>
+          </div> 
+          <Autobus  />
 
           <br />
           <br />
@@ -350,6 +355,8 @@ const RezervacijaComponent = ({ id }) => {
         </div>
       </form>
       <Qrcode code={code} />
+     {/* <BusSedista /> */} 
+     
     </>
   );
 };
