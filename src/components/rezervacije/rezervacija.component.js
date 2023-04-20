@@ -4,7 +4,7 @@ import classes from "../registration/registration.module.css";
 import LinijeApi from "../../api/linije.api";
 import Qrcode from "./QrCode";
 import  "../rezervacije/index1.css"
-import Autobus from "./sedista/autobus";
+import "./sedista/sedista.css";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
@@ -54,8 +54,21 @@ const RezervacijaComponent = ({ id }) => {
     setSelectedKarta(event.target.value)
   };
 
+
+  
+  const [rezervacije, setRezervacije] = useState(Array(53).fill(false));
+  const [trenutnaRezervacija, setTrenutnaRezervacija] = useState(null);
  
- 
+  function handleClick(index) {
+    const noviNiz = [...rezervacije];
+    console.log(index + 1)
+    noviNiz[index] = !noviNiz[index];
+
+    setRezervacije(noviNiz);
+    setTrenutnaRezervacija(noviNiz[index] ? index + 1 : null);
+  }
+
+
 
   const code = {
     mestoPolaska: linija.mestoPolaska,
@@ -66,7 +79,7 @@ const RezervacijaComponent = ({ id }) => {
     vremeDolaska: linija.vremeDolaska,
     osvezenje: osvezenje,
     radio:selectedValue,
-    karte:selectedKarta
+    sediste:trenutnaRezervacija
   }; // vrednosti koje se prosledjuju u QRcodu da bi se on generisao
 
   let [formInputsValid, setFormInputsValid] = useState({
@@ -322,7 +335,7 @@ const RezervacijaComponent = ({ id }) => {
       </select>
 
 
-          <div className="radio">
+          {/* <div className="radio">
             <select className="radio1"
             required
             name="Broj mesta"
@@ -338,8 +351,46 @@ const RezervacijaComponent = ({ id }) => {
               <option>5</option>
               <option>6</option>
             </select>
-          </div> 
-          <Autobus  />
+          </div>  */}
+          <div className="autobus">
+      {rezervacije.map((rezervisano, index) => (
+        <div
+          key={index}
+          className={`sediste ${rezervisano ? 'rezervisano' : ''}`}
+          onClick={() => handleClick(index)}
+          style={{
+            marginRight: index % 4 === 1 ? '1.5rem' : 1,
+            width: index % 4 === 4 || index === rezervacije.length - 1 ? 'calc(20% - 0rem)' : '20%',
+            marginLeft:
+              index >= 48 && index <= 48 ? 'calc(5% - 1rem)' :
+              index >= 49 && index <= 49 ? 'calc(5% - 0.6rem)' :
+              index >= 50 && index <= 50 ? 'calc(5% - 2rem)' :
+              index >= 51 && index <= 52 ? 'calc(5% - 0.6rem)' :/* 
+              index % 4 === 4 && index !== 0 ? '2.5rem' : */
+              0,
+          }}
+        >
+          {index + 1}
+        </div>
+      ))}
+      <div>
+        Trenutno rezervisano mesto: {trenutnaRezervacija || 'Nijedno'}
+      </div>
+      <ul className="showcase">
+        <li>
+          <div className="seat selected"></div>
+          <small>Izabrano</small>
+        </li>
+
+        <li>
+          <div className="seat occupied"></div>
+          <small>Zauzeto</small>
+        </li>
+      </ul>
+      <button>Izaberite sediste</button>
+   
+    </div>
+         {/*  <Autobus /> */}
 
           <br />
           <br />
@@ -350,7 +401,7 @@ const RezervacijaComponent = ({ id }) => {
             {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}
             {linija.vremePolaska} casova i dolazi {linija.datumDolaska} i to u
             vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje{" "}
-            {osvezenje}.Korisnik je izabrao kartu  {selectedValue} i korisnik je rezervisao {selectedKarta} kartu
+            {osvezenje}.Korisnik je izabrao   {selectedValue} kartu i rezervisao sediste broj {trenutnaRezervacija} 
           </p>
         </div>
       </form>

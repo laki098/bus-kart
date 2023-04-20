@@ -14,7 +14,6 @@ function Autobus() {
     setTrenutnaRezervacija(noviNiz[index] ? index + 1 : null);
   }
  
-  
 
   return (
     <div className="autobus">
@@ -53,9 +52,9 @@ function Autobus() {
         </li>
       </ul>
       <button>Izaberite sediste</button>
-    
+   
     </div>
   );
 }
 
-export default Autobus;
+export default Autobus; // ceo kod je ubacen u rezervacijacomponent
