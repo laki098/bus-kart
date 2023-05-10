@@ -96,7 +96,7 @@ const Pocetna = () => {
     } else {
       const sati1 = `${sati}h`;
       const min = `${minuti}m`;
-      return [sati1, min].join(" ");
+      return [sati1, min].join(" : ");
     }
   };
 

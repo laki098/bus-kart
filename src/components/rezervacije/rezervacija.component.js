@@ -8,6 +8,7 @@ import "./sedista/sedista.css";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
+  var count = 0;
 
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
@@ -56,8 +57,10 @@ const RezervacijaComponent = ({ id }) => {
 
 
   
-  const [rezervacije, setRezervacije] = useState(Array(53).fill(false));
+  const [rezervacije, setRezervacije] = useState(Array(57).fill(false));
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState(null);
+  const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
+  const [ukupnaCena, setUkupnaCena] = useState(0);
  
   function handleClick(index) {
     const noviNiz = [...rezervacije];
@@ -66,8 +69,47 @@ const RezervacijaComponent = ({ id }) => {
 
     setRezervacije(noviNiz);
     setTrenutnaRezervacija(noviNiz[index] ? index + 1 : null);
-  }
+    const brojIzabranih = noviNiz.filter(s => s).length;
+    setBrojIzabranihSedista(brojIzabranih);
+  } // kod za pravljenje divova za autobus
 
+  useEffect(() => {
+    const novaCena = calculateTicketPrice(selectedValue) * brojIzabranihSedista;
+    setUkupnaCena(novaCena);
+  }, [selectedValue, brojIzabranihSedista]);
+  
+
+
+  const [showReturnDate, setShowReturnDate] = useState(false);
+
+  const [ticketPrice, setTicketPrice] = useState(0);
+
+  const calculateTicketPrice = (selectedTicketType) => {
+    let price = 0;
+    switch(selectedTicketType) {
+      case "Jednosmerna":
+        price = 1000;
+        break;
+      case "Povratna":
+        price = 2000; 
+        break;
+      case "Besplatna":
+        price = 0; 
+        break;
+      case "Studentska":
+        price = 500; 
+        break;
+      case "Vikend":
+        price = 1500; 
+        break;
+      case "Nedeljna":
+        price = 2500; 
+        break;
+      default:
+        price = 0;
+    }
+    return price;
+  };
 
 
   const code = {
@@ -79,7 +121,8 @@ const RezervacijaComponent = ({ id }) => {
     vremeDolaska: linija.vremeDolaska,
     osvezenje: osvezenje,
     radio:selectedValue,
-    sediste:trenutnaRezervacija
+    sediste:trenutnaRezervacija,
+    cena:ukupnaCena
   }; // vrednosti koje se prosledjuju u QRcodu da bi se on generisao
 
   let [formInputsValid, setFormInputsValid] = useState({
@@ -321,8 +364,16 @@ const RezervacijaComponent = ({ id }) => {
           required
           value={selectedValue}
           onChange={(event) => {
-            setSelectedValue(event.target.value)
-          }}>
+            setSelectedValue(event.target.value);
+            if (event.target.value === "Povratna") {
+              setShowReturnDate(true);
+              
+            } else {
+              setShowReturnDate(false);
+              
+            }
+          }}
+        >
             <option disabled={false} value="">
             Izaberite kartu
           </option>
@@ -333,25 +384,17 @@ const RezervacijaComponent = ({ id }) => {
             <option>Vikend</option>
             <option>Nedeljna</option>
       </select>
+      {showReturnDate && (
+        <div>
+          <label htmlFor="returnDate">Datum povratka:</label>
+          <input type="date" id="returnDate" name="returnDate"  min={new Date().toISOString().split('T')[0]} />
+        </div>
+        
+)} <div><p>Cena karte: {calculateTicketPrice(selectedValue)} dinara</p>
+        <p>Broj izabranih sedišta: {brojIzabranihSedista}</p>
+        <p>Ukupna cena: {ukupnaCena} dinara</p></div>
 
 
-          {/* <div className="radio">
-            <select className="radio1"
-            required
-            name="Broj mesta"
-            value={selectedKarta}
-            onChange={(event) => {
-              setSelectedKarta(event.target.value)
-            }}>
-            <option disabled={false} value="">Broj karte</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-            </select>
-          </div>  */}
           <div className="autobus">
       {rezervacije.map((rezervisano, index) => (
         <div
@@ -362,10 +405,10 @@ const RezervacijaComponent = ({ id }) => {
             marginRight: index % 4 === 1 ? '1.5rem' : 1,
             width: index % 4 === 4 || index === rezervacije.length - 1 ? 'calc(20% - 0rem)' : '20%',
             marginLeft:
-              index >= 48 && index <= 48 ? 'calc(5% - 1rem)' :
-              index >= 49 && index <= 49 ? 'calc(5% - 0.6rem)' :
-              index >= 50 && index <= 50 ? 'calc(5% - 2rem)' :
-              index >= 51 && index <= 52 ? 'calc(5% - 0.6rem)' :/* 
+              index >= rezervacije.length - 5 && index <= rezervacije.length - 5 ? 'calc(5% - 1rem)' :
+              index >= rezervacije.length - 4 && index <= rezervacije.length - 4 ? 'calc(5% - 0.6rem)' :
+              index >= rezervacije.length - 3 && index <= rezervacije.length - 3 ? 'calc(5% - 2rem)' :
+              index >= rezervacije.length - 2 && index <= rezervacije.length  ? 'calc(5% - 0.6rem)' :/* 
               index % 4 === 4 && index !== 0 ? '2.5rem' : */
               0,
           }}
@@ -401,7 +444,7 @@ const RezervacijaComponent = ({ id }) => {
             {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}
             {linija.vremePolaska} casova i dolazi {linija.datumDolaska} i to u
             vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje{" "}
-            {osvezenje}.Korisnik je izabrao   {selectedValue} kartu i rezervisao sediste broj {trenutnaRezervacija} 
+            {osvezenje}.Korisnik je izabrao   {selectedValue} kartu i  cena te karte je {ukupnaCena } dinara i rezervisao je sediste broj {trenutnaRezervacija} 
           </p>
         </div>
       </form>
