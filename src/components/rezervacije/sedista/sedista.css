@@ -54,7 +54,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 217px;
-    height: 749px;
+    height: auto;
     border: 2px solid black;
     padding: 30px;
     margin-left:36.5%;
@@ -81,4 +81,6 @@
   .rezervisano {
     background-color: #6feaf6;
   }
+  
+
   

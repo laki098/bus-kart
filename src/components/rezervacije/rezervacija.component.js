@@ -58,20 +58,23 @@ const RezervacijaComponent = ({ id }) => {
 
   
   const [rezervacije, setRezervacije] = useState(Array(57).fill(false));
-  const [trenutnaRezervacija, setTrenutnaRezervacija] = useState(null);
+  const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([  ]);
   const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
   const [ukupnaCena, setUkupnaCena] = useState(0);
  
   function handleClick(index) {
-    const noviNiz = [...rezervacije];
-    console.log(index + 1)
-    noviNiz[index] = !noviNiz[index];
+  const noviNiz = [...rezervacije];
+  console.log(index + 1);
+  noviNiz[index] = !noviNiz[index];
 
-    setRezervacije(noviNiz);
-    setTrenutnaRezervacija(noviNiz[index] ? index + 1 : null);
-    const brojIzabranih = noviNiz.filter(s => s).length;
-    setBrojIzabranihSedista(brojIzabranih);
-  } // kod za pravljenje divova za autobus
+  setRezervacije(noviNiz);
+  const noviNizRezervacija = noviNiz
+    .map((rezervisano, index) => (rezervisano ? index + 1 : null))
+    .filter(sediste => sediste !== null);
+  setTrenutnaRezervacija(noviNizRezervacija);
+  const brojIzabranih = noviNiz.filter(s => s).length;
+  setBrojIzabranihSedista(brojIzabranih);
+} // kod za pravljenje divova za autobus
 
   useEffect(() => {
     const novaCena = calculateTicketPrice(selectedValue) * brojIzabranihSedista;
@@ -417,7 +420,7 @@ const RezervacijaComponent = ({ id }) => {
         </div>
       ))}
       <div>
-        Trenutno rezervisano mesto: {trenutnaRezervacija || 'Nijedno'}
+        Trenutno rezervisano mesto: {trenutnaRezervacija + ''|| 'Nijedno'}
       </div>
       <ul className="showcase">
         <li>
@@ -444,7 +447,7 @@ const RezervacijaComponent = ({ id }) => {
             {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}
             {linija.vremePolaska} casova i dolazi {linija.datumDolaska} i to u
             vremenu {linija.vremeDolaska} casova i korisnik bira osvezenje{" "}
-            {osvezenje}.Korisnik je izabrao   {selectedValue} kartu i  cena te karte je {ukupnaCena } dinara i rezervisao je sediste broj {trenutnaRezervacija} 
+            {osvezenje}.Korisnik je izabrao   {selectedValue} kartu i  cena te karte je {ukupnaCena } dinara i rezervisao je sediste broj {trenutnaRezervacija + ''} 
           </p>
         </div>
       </form>
