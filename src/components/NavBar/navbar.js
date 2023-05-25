@@ -16,6 +16,7 @@ const Navbar = () => {
         
         <ul className={isMobile ? "nav-links-mobile" : "nav-menu"}
         onClick={() => setIsMobile(false)}>
+          <li><Link to='/adminpanel'><i className='fa-solid fa-users nav-links'></i>Admin panel</Link></li>
           <li><Link to='/pocetna'><i className='fa-solid fa-house-user nav-links'></i>Početna</Link></li>
           <li><Link to='/kontakt'><i className='fa-solid fa-address-book nav-links'></i>Kontakt</Link></li>
           <li><Link to='/login.component'><i className='fa fa-user-circle nav-links'></i>Prijavi se</Link></li>

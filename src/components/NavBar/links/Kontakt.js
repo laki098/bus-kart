@@ -1,12 +1,9 @@
 import React from "react";
 import "./kontakt.css";
-import AdminPanel from "../../admin/admin.panel";
 
 const Kontakt = () => {
   return (
     <div>
-      Kontakt
-      <AdminPanel />
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">

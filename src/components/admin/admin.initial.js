@@ -112,6 +112,7 @@ const AdminInitial = () => {
           <input
             type="date"
             className="position"
+            min={new Date().toISOString().split('T')[0]}
             value={valueDate}
             onChange={(e) => setValueDate(e.target.value)}
           />

@@ -18,14 +18,21 @@ import AdminInitial from "./components/admin/admin.initial";
 import BusInitional from "./components/admin/bus.initional";
 import BusAdd from "./components/admin/bus.add";
 import BusChangeLine from "./components/admin/bus.change.line";
+import AdminPanel from "./components/admin/admin.panel";
 
 function App() {
   return (
     <Router>
       <div className="App">
+    
+      
         <Navbar />
+        
         <div className="content">
           <Switch>
+            <Route path="/adminpanel">
+              <AdminPanel />
+            </Route>
             <Route path="/pocetna">
               <Pocetna />
             </Route>

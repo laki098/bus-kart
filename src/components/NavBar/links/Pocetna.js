@@ -3,6 +3,8 @@ import LinijeApi from "../../../api/linije.api";
 import "./pocetna.css";
 import helpers from "../../../helpers/helpers";
 import { Link } from "react-router-dom";
+import bus1 from '../../images/bus1.jpg'
+import bus2 from '../../images/bus2.jpg'
 
 const Pocetna = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
@@ -67,6 +69,22 @@ const Pocetna = () => {
     changer();
   };
 
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [bus1, bus2];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Promijeni slajd na sledeći
+      setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
+    }, 10000); // Promjena slike svakih 5 sekundi
+
+    return () => {
+      clearInterval(interval); // Očisti interval kad se komponenta unmountuje
+    };
+  }, []);
+  
+
   let showDate = new Date();
   let displayTodaysDate =
     showDate.getDate() +
@@ -101,7 +119,7 @@ const Pocetna = () => {
   };
 
   return (
-    <div>
+    <div >
       <div className="home-page">
         <h2 className="h2-card">
           <i className="fa fa-bus"></i>
@@ -154,6 +172,7 @@ const Pocetna = () => {
                 type="date"
                 className="dates"
                 value={valueDate}
+                min={new Date().toISOString().split('T')[0]}
                 onChange={(e) => setValueDate(e.target.value)}
               />
             </div>
@@ -224,6 +243,9 @@ const Pocetna = () => {
           </div>
         </div>
       </ul>
+      <div className="bus-container">
+      <img src={slides[currentSlide]} alt="Slideshow" className="bus-image"/>
+    </div>
     </div>
   );
 };
