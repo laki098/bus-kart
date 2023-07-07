@@ -183,7 +183,8 @@ const RezervacijaComponent = ({ id }) => {
 
   return (
     <>
-      <form onSubmit={confirmeHandler} className={classes.form}>
+      <form onSubmit={confirmeHandler} className={`${classes.form} side`} >
+      <div className="left-side">
         <div
           className={`${classes.control} ${
             formInputsValid.name ? "" : classes.invalid
@@ -396,7 +397,9 @@ const RezervacijaComponent = ({ id }) => {
 )} <div><p>Cena karte: {calculateTicketPrice(selectedValue)} dinara</p>
         <p>Broj izabranih sedišta: {brojIzabranihSedista}</p>
         <p>Ukupna cena: {ukupnaCena} dinara</p></div>
+        </div>
 
+        <div className="right-side">
 
           <div className="autobus">
       {rezervacije.map((rezervisano, index) => (
@@ -422,18 +425,14 @@ const RezervacijaComponent = ({ id }) => {
       <div>
         Trenutno rezervisano mesto: {trenutnaRezervacija + ''|| 'Nijedno'}
       </div>
-      <ul className="showcase">
-        <li>
           <div className="seat selected"></div>
           <small>Izabrano</small>
-        </li>
-
-        <li>
+        
           <div className="seat occupied"></div>
           <small>Zauzeto</small>
-        </li>
-      </ul>
-      <button>Izaberite sediste</button>
+        
+      {/* 
+      <button>Izaberite sediste</button> */}
    
     </div>
          {/*  <Autobus /> */}
@@ -441,7 +440,8 @@ const RezervacijaComponent = ({ id }) => {
           <br />
           <br />
           <button className={classes.submit}>Rezervisi kartu</button>
-
+          <button className={classes.submit}>Kupi kartu</button>
+          </div>
           <p>
             Korisnik je kupio kartu od mesta {linija.mestoPolaska} do mesta{" "}
             {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}

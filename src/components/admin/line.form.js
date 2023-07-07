@@ -6,6 +6,27 @@ const LineForm = ({ mode, id }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
 
+  const [waypoints, setWaypoints] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [cene, setCene] = useState([]);
+
+  const addWaypoint = () => {
+    setWaypoints([...waypoints, ""]);
+    setSelectedValues([...selectedValues, ""]);
+    setCene([...cene, ""]);
+  };
+
+  const handleSelectChange = (event, index) => {
+    const newSelectedValues = [...selectedValues];
+    newSelectedValues[index] = event.target.value;
+    setSelectedValues(newSelectedValues);
+  };
+  const handleCenaChange = (event, index) => {
+    const newCene = [...cene];
+    newCene[index] = event.target.value;
+    setCene(newCene);
+  };
+
   const izmeniLiniju = async () => {
     const response = await LinijeApi().filterLinijaID(id); // Filter linije za bas taj id koji cemo da menjamo
     // if (response.error) {
@@ -35,6 +56,8 @@ const LineForm = ({ mode, id }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    
 
     if (mode === "add") {
       adminLogic.upisLinije();
@@ -70,6 +93,39 @@ const LineForm = ({ mode, id }) => {
         onChange={adminLogic.changeHandler}
       />
       <br />
+
+      {waypoints.map((waypoint, index) => (
+  <div key={index}>
+    <label>Usputna stanica {index + 1}</label>
+    <br />
+    <select
+      value={selectedValues[index]}
+      onChange={(event) => handleSelectChange(event, index)}
+    >
+      <option value="">Dodaj podstanicu</option>
+      <option value="Stanica 1">Aleksinac</option>
+      <option value="Stanica 2">Krusevac</option>
+      <option value="Stanica 3">Kragujevac</option>
+      <option value="Stanica 4">Jagodina</option>
+      <option value="Stanica 5">Novi Sad</option>
+
+      {/* Dodajte ostale opcije usputnih stanica */}
+    </select>
+    <label>Cena</label>
+        
+          <input
+            type="number"
+            value={cene[index]}
+            onChange={(event) => handleCenaChange(event, index)}
+          />
+          <br />
+  </div>
+))}
+
+<button type="button" onClick={addWaypoint}>
+  Dodaj usputnu stanicu
+</button> <br />
+
       <label>Mesto dolaska</label>
       <br />
       <input
@@ -153,7 +209,22 @@ const LineForm = ({ mode, id }) => {
         <option>Eurocompass</option>
       </select>
       <br />
-
+      <label>Izaberite autobus</label>
+      <br />
+      <select>
+      <option disabled={false} value="">
+        --Oznaka autobusa--
+      </option>
+      <option>VH - 91</option>
+      <option>S2 - 83</option>
+      <option>S1 - 75</option>
+      <option>MAN - 57</option>
+      <option>MB1 - 55</option>
+      <option>MB3 - 51</option>
+      <option>MB4 - 48</option>
+      <option>VL - 49</option>
+      </select>
+      <br />
       <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
     </form>
   );

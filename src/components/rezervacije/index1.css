@@ -5,17 +5,17 @@
 }
 .select {
   text-align: center;
-  width: 40%;
+ /*  width: 40%; */
   border-radius: 1rem;
-  font-size: medium;
+  font-size: large;
   font-weight: 300;
 }
 
 .radio1 {
   text-align: center;
-  width: 40%;
+ /*  width: 40%; */
   border-radius: 1rem;
-  font-size: medium;
+  font-size:large;
   font-weight: 300;
 }
 .test {

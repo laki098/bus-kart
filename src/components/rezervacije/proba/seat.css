@@ -1,73 +1,218 @@
-.Available {
-    background-color: #444451;
-    height: 12px;
-    width: 15px;
-    margin: 3px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
 
 
-.Available:hover{
-	background: yellow;
-	cursor: pointer;
-}
-
-#selected {
-	background-color: #6feaf6;
-}
-
-
-.Unavailable {
-    height: 12px;
-    width: 15px;
-    margin: 3px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-	background: red;
-}
-
-.seats-bus {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: 20px 70px;
-}
-.Available:nth-of-type(2) {
-    margin-right: 14px;
-  }
+.container-seat {
+  perspective: 1000px;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  border: 2px solid #000;
+  background: #fff;
   
-.Available:nth-last-of-type(2) {
-    margin-left: 14px;
-  }
-  .bus-seats {
-    display: inline-grid;
-    border-style: groove;
-  }
-  .container-bus {
-    margin-top: 2rem;
-    max-width: 1170px;
-  }
-
-.Available1:nth-of-type(2) {
-    margin-right: 14px;
-  }
+  margin-top: 2rem;
+  padding: 30px;
+  width: 217px;
+  margin-left: 36.5%;
   
-.Available1:nth-last-of-type(2) {
-    margin-left: 14px;
-  }
-  
-  .seats-bus-last:nth-of-type(2) {
-    margin-right: 0;
-  }
-  
-.seats-bus-last:nth-last-of-type(2) {
-    margin-left: 0;
-  }
-.seats-bus-last{
   display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: 20px 70px;
-  }
+  flex-wrap: wrap;
+  height: auto;
+}
+
+.seat {
+  background-color: #444451;
+  height: 33px;
+  width: 24px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+.seat1 {
+  background-color: #444451;
+  height: 33px;
+  width: 24px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+.seat.selected {
+  background-color: #17dbec;
+}
+.seat1.selected {
+  background-color: #17dbec;
+}
+.seat2.selected {
+  background-color: #17dbec;
+}
+
+.seat.occupied {
+  background-color: #fff;
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 18px;
+}
+
+.seat:nth-last-of-type(2) {
+  margin-left: 18px;
+}
+
+.seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.seat1:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.seat2:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+
+.row {
+  display: flex;
+}
+
+
+p.text {
+  margin: 5px 0;
+}
+
+p.text span {
+  color: #6feaf6;
+}
+.stairs {
+  width: 5px;
+}
+
+.seat2 {
+  background-color: #444451;
+  height: 33px;
+  width: 24px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-right: -8.9px;
+  position: relative;
+}
+.volan {
+  width: 65px;
+  height: 65px;
+}
+.ulaz {
+  height: 66px;
+  width: 54px;
+  left: 187px;
+  position: absolute;
+}
+.ulaz1 {
+  position: absolute;
+  left: 185px;
+  height: 66px;
+  width: 54px;
+  top: 427px;
+}
+.wc {
+  position: absolute;
+  left: 107px;
+  height: 49px;
+  width: 93px;
+  top: 382px;
+}
+.stepenice {
+  position: absolute;
+    left: 107px;
+    height: 49px;
+    width: 93px;
+    top: 435px;
+}
+.ulaz-bus2 {
+  height: 66px;
+  width: 54px;
+  left: 187px;
+  position: absolute;
+}
+.ulaz-bus22 {
+  position: absolute;
+  left: 185px;
+  height: 66px;
+  width: 54px;
+  top: 427px;
+}
+
+.stepenice-bus2 {
+  position: absolute;
+    left: 107px;
+    height: 49px;
+    width: 93px;
+    top: 435px;
+}
+.seat-number {
+  position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: white;
+    margin-left: -6px
+}
+.seat-number1 {
+  position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: white;
+}
+.seat-number2 {
+  position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: white;
+    margin-left: -9px;
+}
+.stepenice-bus3 {
+  position: absolute;
+    left: 107px;
+    height: 49px;
+    width: 93px;
+    top: 77px;
+}
+.stepenice-busgore {
+  position: absolute;
+  left: 102px;
+  height: 49px;
+  width: 93px;
+  top: 576px;
+}
+.sto1 {
+  position: absolute;
+    left: 23px;
+    height: 46px;
+    width: 74px;
+    top: 206px;
+}
+.sto2{
+  position: absolute;
+  left: 114px;
+  height: 46px;
+  width: 74px;
+  top: 206px;
+}
+.left{
+  left: -15px;
+}
+.left1 {
+  left: -3px;
+}

@@ -6,7 +6,6 @@ import Pocetna from "./components/NavBar/links/Pocetna";
 /* import Rezervacija from './components/rezervacija/Rezervacija';
 import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje'; */
 
-import Informacije from "./components/NavBar/links/Informacije";
 import RezervacijaKarte from "./components/NavBar/links/RezervacijaKarte";
 import Kontakt from "./components/NavBar/links/Kontakt";
 import Footer from "./components/NavBar/Footer/footer";
@@ -35,9 +34,6 @@ function App() {
             </Route>
             <Route path="/pocetna">
               <Pocetna />
-            </Route>
-            <Route path="/informacije">
-              <Informacije />
             </Route>
             <Route path="/login.component">
               <LoginComponent />
