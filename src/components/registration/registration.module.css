@@ -1,0 +1,126 @@
+.form {
+    
+    height: auto;
+    -webkit-box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);   
+    -moz-box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);
+    box-shadow: 0.438rem 0.438rem 1.438rem 0.125rem rgba(0,0,0,0.6);
+    background-color: #93cede;
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+    border-bottom-left-radius: 5%;
+    width: 70%;      /*  50vw          */
+    padding: 1.5rem;
+    margin:auto;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.control {
+    margin-bottom: 0.5rem;
+}
+
+.control label {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.control input {
+    font: inherit;
+    border: 0.063rem solid #ccc;
+    border-radius: 0.25rem;
+    width: 20rem;
+    max-width: 100%;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.actions button {
+    font: inherit;
+    color: #5a1a01;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-radius: 1.563rem;
+    padding: 0.5rem 2rem;
+}
+
+.actions button:hover,
+.actions button:active {
+    background-color: #ffe6dc;
+}
+
+.actions .submit {
+    border: 0.063rem solid #5a1a01;
+    background-color: #5a1a01;
+    color: white;
+}
+
+.actions .submit:hover,
+.actions .submit:active {
+    background-color: #7a2706;
+}
+
+.invalid label {
+    color: #ca3e51;
+}
+
+.invalid input {
+    border-color: #aa0b20;
+    background-color: #ffeff1;
+}
+/* p{
+    color:#aa0b20
+} */
+
+.submit {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 0.25rem;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem,rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,#D6D6E7 0 -0.188rem 0 inset;
+ /*   box-sizing: border-box;   */
+    box-sizing: content-box;            /*      sn      */
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 3rem;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+ /*   font-size: 1.125rem;          */
+    font-size: 1rem;
+  }
+  
+  .submit:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
+  }
+  
+  .submit:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 0.25rem 0.5rem, rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem, #D6D6E7 0 -0.188rem 0 inset;
+    transform: translateY(-0.125rem);
+  }
+  
+  .submit:active {
+    box-shadow: #D6D6E7 0 0.188rem 0.438rem inset;
+    transform: translateY(0.125rem);
+  }

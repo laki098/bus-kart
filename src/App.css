@@ -1,6 +1,14 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+.content {
+  flex: 1;
+}
+
+
 
 .App-logo {
   height: 40vmin;
@@ -20,7 +28,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(0.625rem + 2vmin);
   color: white;
 }
 
@@ -35,4 +43,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.wrapper {
+  padding: 5px 20px;
+}
+
+.wrapper fieldset {
+  margin: 20px 0;
+}
+
+.styleHome{
+  color: #159;
+  background-color: #EBF5FB;
 }

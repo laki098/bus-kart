@@ -1,0 +1,62 @@
+.contact {
+  background-color: #ebf5fb;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+}
+.contact_prikaz {
+  width: 50%;
+  height: 60vh;
+  padding: 10px;
+}
+.contact-div{
+  display: block;
+  padding-top: 16vh;
+  font-size: larger;
+  line-height: 3;
+}
+rasponsive-maps {
+  overflow: hidden;
+  position: relative;
+  height: 75vh;
+}
+.rasponsive-maps iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.distance {
+  margin-top: 7vh;
+}
+
+@media screen and (max-width: 600px) {
+  .contact_prikaz {
+    width: 100%;
+  }
+}
+/*                                              nisam unela klasu .unos iz radnog fajla     */
+
+.podaci{
+  text-align: left;
+}
+
+.podaci1{
+  text-align: center;
+}
+
+.contact-div-1{
+  display: block;
+  padding-top: 6vh;  /* 16    */
+  font-size: large;   /* larger   */
+  line-height: 1.5;   /*  3     */
+  color: darkblue;
+}

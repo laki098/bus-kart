@@ -1,17 +1,20 @@
+import axios from "axios";
 
+const loginApi = () => {
+  const getKorisnik = async () => {
+    return await fetch("http://localhost:5000/korisnik");
+  };
 
-  const loginApi = () => {
+  const login = async (korisnickoIme, lozinka, ime) => {
+    console.log({ korisnickoIme: korisnickoIme, lozinka: lozinka, ime });
+    /* return await fetch("http://localhost:5000/korisnik/login", {"method":"POST", "body":{korisnickoIme:korisnickoIme, lozinka:lozinka}}); */
+    return await axios.post("http://localhost:5000/korisnik/login", {
+      korisnickoIme: korisnickoIme,
+      lozinka: lozinka,
+    });
+  };
 
-    const getUsers = async () => {
-        return await fetch("http://localhost:5000/korisnici");
-      }
+  return { getKorisnik, login };
+};
 
-      const login = async (email, password) => {
-        console.log(email, password)
-        //return await fetch("http://localhost:5000/login");
-      }
-    
-    return {getUsers, login};
-}
- 
 export default loginApi;

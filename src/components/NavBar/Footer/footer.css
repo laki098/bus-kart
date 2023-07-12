@@ -1,0 +1,102 @@
+
+
+.container{
+	max-width: 1170px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: 1rem;
+}
+ul{
+	list-style: none;
+}
+.footer{
+    padding: 4.375rem 0;
+	background: rgba(148,203,255,1);
+	background: -moz-linear-gradient(left, rgba(148,203,255,1) 27%, rgba(116,183,255,1) 46%, rgba(109,179,255,1) 50%, rgba(87,165,255,1) 63%);
+	background: -webkit-gradient(left top, right top, color-stop(27%, rgba(148,203,255,1)), color-stop(46%, rgba(116,183,255,1)), color-stop(50%, rgba(109,179,255,1)), color-stop(63%, rgba(87,165,255,1)));
+	background: -webkit-linear-gradient(left, rgba(148,203,255,1) 27%, rgba(116,183,255,1) 46%, rgba(109,179,255,1) 50%, rgba(87,165,255,1) 63%);
+	background: -o-linear-gradient(left, rgba(148,203,255,1) 27%, rgba(116,183,255,1) 46%, rgba(109,179,255,1) 50%, rgba(87,165,255,1) 63%);
+	background: -ms-linear-gradient(left, rgba(148,203,255,1) 27%, rgba(116,183,255,1) 46%, rgba(109,179,255,1) 50%, rgba(87,165,255,1) 63%);
+	background: linear-gradient(to right, rgba(148,203,255,1) 27%, rgba(116,183,255,1) 46%, rgba(109,179,255,1) 50%, rgba(87,165,255,1) 63%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#94cbff', endColorstr='#57a5ff', GradientType=1 );
+	margin-top: 20vh;
+
+}
+.footer-col{
+	width: 25%;
+   padding: 0 0.938rem;
+}
+.footer-col h4{
+	font-size: 1.125rem;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 2.188rem;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -0.625rem;
+	background-color: #e91e63;
+	height: 0.125rem;
+	box-sizing: border-box;
+	width: 3.125rem;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 0.625rem;
+}
+.footer-col ul li a{
+	font-size: 1rem;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 0.5rem;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 2.5rem;
+	width: 2.5rem;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 0.625rem 0.625rem 0;
+	text-align: center;
+	line-height: 2.5rem;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+.data {
+	padding-top: 1rem;
+	bottom: 0;
+}
+
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 1.875rem;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+	bottom: 0;
+}
+}

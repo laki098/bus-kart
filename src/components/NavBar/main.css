@@ -1,0 +1,210 @@
+.navbar {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 0 1.875rem;
+  /* background-color: rgba(88, 218, 250, 0.822); */
+  box-shadow: 0 0.313rem 0.938rem rgba(0, 0, 0, 0.25);
+  height: 5rem;
+  border-radius: 0.813rem;
+ /*  position: fixed; */
+  top: 1.25rem;
+  left: 50%;
+  /* transform: translate(-50%); */
+  margin: 1rem;
+  
+}
+.navbar {
+  background: rgba(232, 244, 248, 1);
+  background: -moz-linear-gradient(
+    left,
+    rgba(232, 244, 248, 1) 0%,
+    rgba(190, 224, 233, 1) 43%,
+    rgba(134, 196, 213, 1) 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(232, 244, 248, 1)),
+    color-stop(43%, rgba(190, 224, 233, 1)),
+    color-stop(100%, rgba(134, 196, 213, 1))
+  );
+  background: -webkit-linear-gradient(
+    left,
+    rgba(232, 244, 248, 1) 0%,
+    rgba(190, 224, 233, 1) 43%,
+    rgba(134, 196, 213, 1) 100%
+  );
+  background: -o-linear-gradient(
+    left,
+    rgba(232, 244, 248, 1) 0%,
+    rgba(190, 224, 233, 1) 43%,
+    rgba(134, 196, 213, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    left,
+    rgba(232, 244, 248, 1) 0%,
+    rgba(190, 224, 233, 1) 43%,
+    rgba(134, 196, 213, 1) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgba(232, 244, 248, 1) 0%,
+    rgba(190, 224, 233, 1) 43%,
+    rgba(134, 196, 213, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8f4f8', endColorstr='#86c4d5', GradientType=1 );
+}
+
+.logo {
+  color: rgb(7, 2, 31);
+  justify-self: start;      
+  cursor: pointer;
+}
+.logosajt {
+  width: 50%;    /*  15vw  bilo  */
+  height: 50%;    /*  7vh   bilo  */
+}
+
+.fa-bus {
+  margin-left: 0.2rem;
+  font-size: 1.6rem;
+}
+
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  grid-gap: 0.625rem;
+  list-style: none;
+  align-items: center;
+  text-align: center;
+  justify-content: end;
+}
+
+.nav-links {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
+}
+
+.nav-links i {
+  padding-right: 0.625rem;
+}
+
+.nav-links:hover {
+  background: rgb(3, 146, 230);
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+img {
+  height: 5rem;
+  width: 18.75rem;
+  padding: 0.5rem;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+
+
+
+@media screen and (max-width: 890px) {
+  .logo {
+    display: flex;
+  }
+
+.nav-menu {
+    display: none;
+  }
+  .nav-links-mobile {
+    position: absolute;
+    display: block;
+    list-style: none;
+    background: -webkit-linear-gradient(
+      left,
+      rgba(232, 244, 248, 1) 0%,
+      rgba(190, 224, 233, 1) 43%,
+      rgba(134, 196, 213, 1) 100%
+    );
+    background: -o-linear-gradient(
+      left,
+      rgba(232, 244, 248, 1) 0%,
+      rgba(190, 224, 233, 1) 43%,
+      rgba(134, 196, 213, 1) 100%
+    );
+    background: -ms-linear-gradient(
+      left,
+      rgba(232, 244, 248, 1) 0%,
+      rgba(190, 224, 233, 1) 43%,
+      rgba(134, 196, 213, 1) 100%
+    );
+    background: linear-gradient(
+      to right,
+      rgba(232, 244, 248, 1) 0%,
+      rgba(190, 224, 233, 1) 43%,
+      rgba(134, 196, 213, 1) 100%
+    );
+   left: 0; 
+    top: 4.688rem;
+    transition: all 0.5s ease-out;
+    width: 95%;
+    margin: 1rem;
+    z-index: 10;
+    
+  }
+  .nav-links {
+    color: white;
+    bottom: 0;
+    text-align: center;
+    padding: 2rem;
+     width: 100%; 
+    transition: all 0.5s ease;
+    
+  }
+  .mobile-menu-icon {
+    display: block;
+    position: absolute;
+    font-size: 1.875rem;
+    background-color: rgb(4, 92, 133);
+    color: white;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    top: auto;
+    right: 2.188rem;
+  }
+}
+
+/* @media screen and (max-width: 890px) {
+  .nav-links-mobile {
+    width: 95.5vw;
+  }
+}  */
+/* @media screen and (max-width: 480px) {
+.nav-links-mobile {
+  width: 91.5vw;
+}
+} */
+@media (min-width: 480px) and (max-width: 690px) {
+  .nav-links-mobile {
+    width: 91.5vw;
+    border-radius: 1rem;
+  }
+}
+
+@media (min-width: 690px) {
+  .nav-links-mobile {
+    width: 94.2vw;
+    border-radius: 1rem;
+  }
+}
+
+@media (min-width: 890px) {
+  .nav-links-mobile {
+    width: 95.5vw;
+    border-radius: 1rem;
+  }
+}
