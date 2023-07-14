@@ -6,6 +6,7 @@ import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 import SeatSabiranje from "../../rezervacije/proba/seatbiranje";
+import Autobus from "../../rezervacije/sedista/autobus";
 
 const Kontakt = () => {
   //prevodjenje
@@ -74,6 +75,7 @@ const Kontakt = () => {
       </section>
 
       <SeatSabiranje />
+      <Autobus />
     </div>
   );
 };

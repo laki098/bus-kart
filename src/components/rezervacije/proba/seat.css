@@ -25,6 +25,9 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: relative;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .seat1 {

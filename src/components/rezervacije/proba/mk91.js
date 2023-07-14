@@ -875,6 +875,11 @@ const MK91 = () => {
               </span>
             </div>
           </div>
+          {selectedSeats.length > 0 && (
+            <div>
+              <p>Korisnik je izabrao sedišta: {selectedSeats.join(", ")}</p>
+            </div>
+          )}
           <img src={sto} alt="sto" className="sto1" />
           <img src={sto} alt="sto" className="sto2" />
           <img src={ulaz} alt="ulaz-bus2 " className="ulaz-bus2 " />

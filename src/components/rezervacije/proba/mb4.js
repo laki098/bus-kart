@@ -187,13 +187,13 @@ const MB4 = () => {
       </div>
       <div className="row">
         <div
-          className={`seat2 ${isSeatSelected(23) ? "selected" : ""}`}
+          className={`seat  ${isSeatSelected(23) ? "selected" : ""}`}
           onClick={() => handleSeatClick(23)}
         >
-          <span className="seat-number1">{isSeatSelected(23) ? "" : "23"}</span>
+          <span className="seat-number">{isSeatSelected(23) ? "" : "23"}</span>
         </div>
         <div
-          className={`seat left1 ${isSeatSelected(24) ? "selected" : ""}`}
+          className={`seat left ${isSeatSelected(24) ? "selected" : ""}`}
           onClick={() => handleSeatClick(24)}
         >
           <span className="seat-number">{isSeatSelected(24) ? "" : "24"}</span>
@@ -357,6 +357,11 @@ const MB4 = () => {
           <span className="seat-number">{isSeatSelected(48) ? "" : "48"}</span>
         </div>
       </div>
+      {selectedSeats.length > 0 && (
+        <div>
+          <p>Korisnik je izabrao sedišta: {selectedSeats.join(", ")}</p>
+        </div>
+      )}
 
       <img src={ulaz} alt="ulaz" className="ulaz" />
       <img src={ulaz} alt="ulaz" className="ulaz1" />
