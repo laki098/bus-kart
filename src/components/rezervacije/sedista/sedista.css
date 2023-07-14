@@ -1,86 +1,33 @@
+.autobus {
+  display: flex;
+  flex-wrap: wrap;
+  width: 555px;
+  height: auto;
+  border: 2px solid black;
+  padding: 30px;
+  margin-left: 36.5%;
+  justify-content: flex-start;
+  background: white;
+  margin-top: 2rem;
+}
 
-  .seat {
-    background-color: #444451;
-    height: 12px;
-    width: 15px;
-    margin: 3px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    text-indent: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  
-  .seat.selected {
-    background-color: #6feaf6;
-  }
-  
-  .seat.occupied {
-    background-color: #e42020;
-  }
-  
-  
-  
- 
-  
-/*   .showcase {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: #777;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  
-.showcase li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 10px;
-  }  
-  
-  .showcase li small {
-    margin-left: 10px;
-  }  
-   */
-  
-  
- 
- 
-  
-  .autobus {
-    display: flex;
-    flex-wrap: wrap;
-    width: 217px;
-    height: auto;
-    border: 2px solid black;
-    padding: 30px;
-    margin-left:36.5%;
-    justify-content: flex-end;
-    
-    background: white;
-   margin-top: 2rem;
-  }
-  
-  .sediste {
-    width: 24px;
-    height: 33px;
-    background-color: rgba(33, 18, 173, 0.199);
-    margin: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .rezervisano {
-    background-color: #6feaf6;
-  }
-  
+.sediste {
+  width: 112px;
+  height: 111px;
+  background-color: rgba(33, 18, 173, 0.199);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
 
-  
+.rezervisano {
+  background-color: #6feaf6;
+}
+
+.razmak {
+  width: 37px;
+  height: 145px;
+  visibility: hidden;
+}

@@ -627,22 +627,6 @@ const MK91 = () => {
               {isSeatSelected(91) ? "" : "91"}
             </span>
           </div>
-          {/* <div
-            className={`seat ${isSeatSelected(86) ? "selected" : ""}`}
-            onClick={() => handleSeatClick(86)}
-          >
-            <span className="seat-number">
-              {isSeatSelected(86) ? "" : "86"}
-            </span>
-          </div>
-          <div
-            className={`seat ${isSeatSelected(87) ? "selected" : ""}`}
-            onClick={() => handleSeatClick(87)}
-          >
-            <span className="seat-number">
-              {isSeatSelected(87) ? "" : "87"}
-            </span>
-          </div> */}
           </div>
         <div className="row">
           <div
@@ -849,6 +833,11 @@ const MK91 = () => {
             </span>
           </div> 
         </div>
+        {selectedSeats.length > 0 && (
+        <div>
+          <p>Korisnik je izabrao sedišta: {selectedSeats.join(", ")}</p>
+        </div>
+      )}
         <img src={sto} alt="sto" className="sto1" />
         <img src={sto} alt="sto" className="sto2" />
         <img src={ulaz} alt="ulaz-bus2 " className="ulaz-bus2 "/>

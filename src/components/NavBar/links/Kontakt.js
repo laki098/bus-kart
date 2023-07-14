@@ -1,6 +1,7 @@
 import React from "react";
 import "./kontakt.css";
 import SeatSabiranje from "../../rezervacije/proba/seatbiranje";
+import Autobus from "../../rezervacije/sedista/autobus";
 
 const Kontakt = () => {
   return (
@@ -25,6 +26,7 @@ const Kontakt = () => {
         </div>
       </section>
       <SeatSabiranje />
+      <Autobus />
     </div>
   );
 };

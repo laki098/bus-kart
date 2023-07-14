@@ -81,7 +81,7 @@ const MB3 = () => {
         <div
           className={`seat ${isSeatSelected(8) ? "selected" : ""}`}
           onClick={() => handleSeatClick(8)}
-        ><span className="seat-number2">{isSeatSelected(8) ? "✓" : "8"}</span></div>
+        ><span className="seat-number2">{isSeatSelected(8) ? "" : "8"}</span></div>
       </div>
 
       <div className="row">
@@ -282,7 +282,11 @@ const MB3 = () => {
           onClick={() => handleSeat1Click(51)}
         ><span className="seat-number1">{isSeatSelected(51) ? "" : "51"}</span></div>
       </div>
-      
+      {selectedSeats.length > 0 && (
+        <div>
+          <p>Korisnik je izabrao sedište broj: {selectedSeats.join(", ")}</p>
+        </div>
+      )}
       <img src={ulaz} alt="ulaz-bus2 " className="ulaz-bus2 "/>
       <img src={ulaz} alt="ulaz-bus22" className="ulaz-bus22"/>
       <img src={stepenice} alt="stepenice-bus2" className="stepenice-bus2"/>
