@@ -1,64 +1,63 @@
-import { useState } from 'react';
-import './sedista.css';
+import { useState } from "react";
+import "./sedista.css";
 
 function Autobus() {
-  const autobusi = [
-    { oznaka: 'MB1', brojSedista: 55 },
-    { oznaka: 'MB3', brojSedista: 51 },
-    { oznaka: 'MB4', brojSedista: 48 },
-    { oznaka: 'VL', brojSedista: 49 },
-    { oznaka: 'MAN', brojSedista: 57 },
-    { oznaka: 'S1', brojSedista: 75 },
-    { oznaka: 'S2', brojSedista: 83 },
-    { oznaka: 'VH', brojSedista: 91 },
-  ];
-
-  const [rezervacije, setRezervacije] = useState(Array(55).fill(false));
+  const [rezervacije, setRezervacije] = useState(Array(53).fill(false));
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState(null);
-  const [odabraniAutobus, setOdabraniAutobus] = useState(0);
 
   function handleClick(index) {
     const noviNiz = [...rezervacije];
+    console.log(index + 1);
     noviNiz[index] = !noviNiz[index];
 
     setRezervacije(noviNiz);
     setTrenutnaRezervacija(noviNiz[index] ? index + 1 : null);
   }
 
-  function handleSelect(event) {
-    const index = parseInt(event.target.value);
-    setOdabraniAutobus(index);
-    const brojSedista = autobusi[index].brojSedista;
-    const noviNiz = Array(brojSedista).fill(false);
-    setRezervacije(noviNiz);
-    setTrenutnaRezervacija(null);
-  }
-
   return (
-    <div>
-        <select value={odabraniAutobus} onChange={handleSelect}>
-          {autobusi.map((autobus, index) => (
-            <option key={index} value={index}>
-              {autobus.oznaka} - {autobus.brojSedista} sedišta
-            </option>
-          ))}
-        </select>
-      
     <div className="autobus">
-      
       {rezervacije.map((rezervisano, index) => (
         <div
           key={index}
-          className={`sediste ${rezervisano ? 'rezervisano' : ''}`}
+          className={`sediste ${rezervisano ? "rezervisano" : ""}`}
           onClick={() => handleClick(index)}
+          style={{
+            marginRight: index % 4 === 1 ? "1.5rem" : 1,
+            width:
+              index % 4 === 4 || index === rezervacije.length - 1
+                ? "calc(20% - 0rem)"
+                : "20%",
+            marginLeft:
+              index >= 48 && index <= 48
+                ? "calc(5% - 1rem)"
+                : index >= 49 && index <= 49
+                ? "calc(5% - 0.6rem)"
+                : index >= 50 && index <= 50
+                ? "calc(5% - 2rem)"
+                : index >= 51 && index <= 52
+                ? "calc(5% - 0.6rem)" /* 
+              index % 4 === 4 && index !== 0 ? '2.5rem' : */
+                : 0,
+          }}
         >
           {index + 1}
         </div>
       ))}
-      <div>Trenutno rezervisano mesto: {trenutnaRezervacija || 'Nijedno'}</div>
-    </div>
+      <div>Trenutno rezervisano mesto: {trenutnaRezervacija || "Nijedno"}</div>
+      <ul className="showcase">
+        <li>
+          <div className="seat selected"></div>
+          <small>Izabrano</small>
+        </li>
+
+        <li>
+          <div className="seat occupied"></div>
+          <small>Zauzeto</small>
+        </li>
+      </ul>
+      <button>Izaberite sediste</button>
     </div>
   );
 }
 
-export default Autobus;
+export default Autobus; // ceo kod je ubacen u rezervacijacomponent

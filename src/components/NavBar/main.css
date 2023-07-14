@@ -8,12 +8,11 @@
   box-shadow: 0 0.313rem 0.938rem rgba(0, 0, 0, 0.25);
   height: 5rem;
   border-radius: 0.813rem;
- /*  position: fixed; */
+  /*  position: fixed; */
   top: 1.25rem;
   left: 50%;
   /* transform: translate(-50%); */
   margin: 1rem;
-  
 }
 .navbar {
   background: rgba(232, 244, 248, 1);
@@ -63,8 +62,8 @@
   cursor: pointer;
 }
 .logosajt {
-  width: 15vw;
-  height: 7vh;
+  width: 50%; /*  15vw  bilo  */
+  height: 50%; /*  7vh   bilo  */
 }
 
 .fa-bus {
@@ -109,14 +108,12 @@ img {
   display: none;
 }
 
-
-
 @media screen and (max-width: 890px) {
   .logo {
     display: flex;
   }
 
-.nav-menu {
+  .nav-menu {
     display: none;
   }
   .nav-links-mobile {
@@ -147,22 +144,20 @@ img {
       rgba(190, 224, 233, 1) 43%,
       rgba(134, 196, 213, 1) 100%
     );
-   left: 0; 
+    left: 0;
     top: 4.688rem;
     transition: all 0.5s ease-out;
     width: 95%;
     margin: 1rem;
     z-index: 10;
-    
   }
   .nav-links {
     color: white;
     bottom: 0;
     text-align: center;
     padding: 2rem;
-     width: 100%; 
+    width: 100%;
     transition: all 0.5s ease;
-    
   }
   .mobile-menu-icon {
     display: block;

@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
 .container-seat {
   perspective: 1000px;
@@ -8,28 +6,17 @@
   margin-top: 2rem;
   border: 2px solid #000;
   background: #fff;
-  
+
   margin-top: 2rem;
   padding: 30px;
   width: 217px;
   margin-left: 36.5%;
-  
+
   display: flex;
   flex-wrap: wrap;
   height: auto;
 }
 
-.seat {
-  background-color: #444451;
-  height: 12px;
-  width: 15px;
-  margin: 3px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
 .seat {
   background-color: #444451;
   height: 33px;
@@ -89,11 +76,9 @@
   transform: scale(1);
 }
 
-
 .row {
   display: flex;
 }
-
 
 p.text {
   margin: 5px 0;
@@ -142,10 +127,10 @@ p.text span {
 }
 .stepenice {
   position: absolute;
-    left: 107px;
-    height: 49px;
-    width: 93px;
-    top: 435px;
+  left: 107px;
+  height: 49px;
+  width: 93px;
+  top: 435px;
 }
 .ulaz-bus2 {
   height: 66px;
@@ -163,42 +148,42 @@ p.text span {
 
 .stepenice-bus2 {
   position: absolute;
-    left: 107px;
-    height: 49px;
-    width: 93px;
-    top: 435px;
+  left: 107px;
+  height: 49px;
+  width: 93px;
+  top: 435px;
 }
 .seat-number {
   position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    color: white;
-    margin-left: -6px
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: white;
+  margin-left: -6px;
 }
 .seat-number1 {
   position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    color: white;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: white;
 }
 .seat-number2 {
   position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    color: white;
-    margin-left: -9px;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: white;
+  margin-left: -9px;
 }
 .stepenice-bus3 {
   position: absolute;
-    left: 107px;
-    height: 49px;
-    width: 93px;
-    top: 77px;
+  left: 107px;
+  height: 49px;
+  width: 93px;
+  top: 77px;
 }
 .stepenice-busgore {
   position: absolute;
@@ -209,19 +194,19 @@ p.text span {
 }
 .sto1 {
   position: absolute;
-    left: 23px;
-    height: 46px;
-    width: 74px;
-    top: 206px;
+  left: 23px;
+  height: 46px;
+  width: 74px;
+  top: 206px;
 }
-.sto2{
+.sto2 {
   position: absolute;
   left: 114px;
   height: 46px;
   width: 74px;
   top: 206px;
 }
-.left{
+.left {
   left: -15px;
 }
 .left1 {

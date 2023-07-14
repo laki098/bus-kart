@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import BusLogic from "./bus.logic";
 import BusApi from "../../api/bus.api";
 
+import "../login/loginStyle.css"; /* koristim stil kao ize dela za logovanje */
+//import "../NavBar/links/pocetna.css";
+
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../NavBar/links/i18n";
+import "../../components/NavBar/links/i18n";
+
 const BusForm = ({ mode, id }) => {
   const [bus, setBus] = useState({});
   const busLogic = BusLogic();
@@ -37,35 +44,93 @@ const BusForm = ({ mode, id }) => {
     }
   };
 
+  //prevodjenje start
+  const lngs = {
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
   return (
-    <form onSubmit={submitHandler}>
-      {mode === "add" ? <h2>Novi Bus</h2> : <h2>Edituj Bus</h2>}
+    <div className="pozadina">
+      <header>
+        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+      <div className="main">
+        <div className="sub-main">
+          <form onSubmit={submitHandler}>
+            <div>
+              <br />
+              {mode === "add" ? (
+                <p className="naslov">
+                  <Trans i18nKey="description.part127">Dodajte autobus</Trans>
+                </p>
+              ) : (
+                <p className="naslov">Edituj autobus</p>
+              )}
+              <br />
+              <label>
+                <Trans i18nKey="description.part126">Registarska tablica</Trans>
+              </label>
+              <br />
+              <input
+                /* defaultValue={bus.tablica} */
+                type="text"
+                placeholder="Registarska tablica"
+                required
+                name="tablica"
+                className="input-new"
+                onChange={busLogic.changeHandler}
+              />
+              <br />
+              <br />
+              <label>
+                <Trans i18nKey="description.part36">Broj mesta</Trans>
+              </label>
+              <br />
+              <input
+                /* defaultValue={bus.mestoDolaska} */
+                type="text"
+                name="brojMesta"
+                className="input-new"
+                placeholder="Broj mesta"
+                required
+                onChange={busLogic.changeHandler}
+              />
+              <br />
+              <br />
+              <br />
 
-      <label>Tablica</label>
-      <br />
-      <input
-        /* defaultValue={bus.tablica} */
-        type="text"
-        placeholder="tablica"
-        required
-        name="tablica"
-        onChange={busLogic.changeHandler}
-      />
-      <br />
-      <label>Broj mesta</label>
-      <br />
-      <input
-        /* defaultValue={bus.mestoDolaska} */
-        type="text"
-        name="brojMesta"
-        placeholder="Broj mesta"
-        required
-        onChange={busLogic.changeHandler}
-      />
-      <br />
-
-      <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
-    </form>
+              <button
+                type="submit"
+                className="button"
+                style={{ height: "2rem" }}
+              >
+                {mode === "add" ? (
+                  <Trans i18nKey="description.part128">"Dodaj"</Trans>
+                ) : (
+                  <Trans i18nKey="description.part129">"Sačuvaj"</Trans>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
