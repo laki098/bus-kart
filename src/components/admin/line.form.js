@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import AdminLogic from "./admin.logic";
 import LinijeApi from "../../api/linije.api";
 
+import "../login/loginStyle.css"; /* preuzimam stil od login/login.component.js */
+
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../NavBar/links/i18n";
+import "../../components/NavBar/links/i18n";
+
 const LineForm = ({ mode, id }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
@@ -57,8 +63,6 @@ const LineForm = ({ mode, id }) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    
-
     if (mode === "add") {
       adminLogic.upisLinije();
     } else if (mode === "edit") {
@@ -78,76 +82,121 @@ const LineForm = ({ mode, id }) => {
     }
   };
 
+  //prevodjenje start
+  const lngs = {
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
   return (
-    <form onSubmit={submitHandler}>
-      {mode === "add" ? <h2>Nova linija</h2> : <h2>Edituj Liniju</h2>}
+    <div className="pozadina">
+      <header>
+        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
 
-      <label>Mesto polaska</label>
-      <br />
-      <input
-        defaultValue={linija.mestoPolaska}
-        type="text"
-        placeholder="Mesto polaska"
-        required
-        name="mestoPolaska"
-        onChange={adminLogic.changeHandler}
-      />
-      <br />
+      <div className="main">
+        <div className=" sub-main">
+          <form onSubmit={submitHandler}>
+            {mode === "add" ? (
+              <p className="naslov" style={{ fontSize: "1.5rem" }}>
+                <Trans i18nKey="description.part130">Nova linija</Trans>
+              </p>
+            ) : (
+              <h2>Edituj Liniju</h2>
+            )}{" "}
+            {/* bilo je h2 a ne <>  */}
+            <br />
+            <div className="labela">
+              <label>
+                <Trans i18nKey="description.part3">Mesto polaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.mestoPolaska}
+                type="text"
+                placeholder="Mesto polaska"
+                required
+                name="mestoPolaska"
+                className="name1 input-new"
+                style={{ fontSize: "1rem", color: "darkblue" }}
+                onChange={adminLogic.changeHandler}
+              />
+              <br />
+              {waypoints.map((waypoint, index) => (
+                <div key={index}>
+                  <label>Usputna stanica {index + 1}</label>
+                  <br />
+                  <select
+                    value={selectedValues[index]}
+                    onChange={(event) => handleSelectChange(event, index)}
+                  >
+                    <option value="">Dodaj podstanicu</option>
+                    <option value="Stanica 1">Aleksinac</option>
+                    <option value="Stanica 2">Krusevac</option>
+                    <option value="Stanica 3">Kragujevac</option>
+                    <option value="Stanica 4">Jagodina</option>
+                    <option value="Stanica 5">Novi Sad</option>
 
-      {waypoints.map((waypoint, index) => (
-  <div key={index}>
-    <label>Usputna stanica {index + 1}</label>
-    <br />
-    <select
-      value={selectedValues[index]}
-      onChange={(event) => handleSelectChange(event, index)}
-    >
-      <option value="">Dodaj podstanicu</option>
-      <option value="Stanica 1">Aleksinac</option>
-      <option value="Stanica 2">Krusevac</option>
-      <option value="Stanica 3">Kragujevac</option>
-      <option value="Stanica 4">Jagodina</option>
-      <option value="Stanica 5">Novi Sad</option>
+                    {/* Dodajte ostale opcije usputnih stanica */}
+                  </select>
+                  <label>Cena</label>
 
-      {/* Dodajte ostale opcije usputnih stanica */}
-    </select>
-    <label>Cena</label>
-        
-          <input
-            type="number"
-            value={cene[index]}
-            onChange={(event) => handleCenaChange(event, index)}
-          />
-          <br />
-  </div>
-))}
-
-<button type="button" onClick={addWaypoint}>
-  Dodaj usputnu stanicu
-</button> <br />
-
-      <label>Mesto dolaska</label>
-      <br />
-      <input
-        defaultValue={linija.mestoDolaska}
-        type="text"
-        name="mestoDolaska"
-        placeholder="Mesto dolaska"
-        required
-        onChange={adminLogic.changeHandler}
-      />
-      <br />
-
-      <label>Datum polaska</label>
-      <br />
-      <input
-        defaultValue={linija.datumPolaska}
-        name="datumPolaska"
-        type="date"
-        onChange={adminLogic.changeHandler}
-      />
-      <br />
-      {/* <DatePicker className="inputText"
+                  <input
+                    type="number"
+                    value={cene[index]}
+                    onChange={(event) => handleCenaChange(event, index)}
+                  />
+                  <br />
+                </div>
+              ))}
+              <button type="button" onClick={addWaypoint}>
+                Dodaj usputnu stanicu
+              </button>{" "}
+              <br />
+              <label>
+                <Trans i18nKey="description.part5">Mesto dolaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.mestoDolaska}
+                type="text"
+                name="mestoDolaska"
+                placeholder="Mesto dolaska"
+                className="name1 input-new"
+                style={{ fontSize: "1rem", color: "darkblue" }}
+                required
+                onChange={adminLogic.changeHandler}
+              />
+              <br />
+              <label>
+                <Trans i18nKey="description.part7">Datum polaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.datumPolaska}
+                name="datumPolaska"
+                type="date"
+                className="name1 input-new"
+                style={{ fontSize: "1rem" }}
+                onChange={adminLogic.changeHandler}
+              />
+              <br />
+              {/* <DatePicker className="inputText"
                  selected={startDate}
                   value={startDate}
                   required
@@ -156,16 +205,20 @@ const LineForm = ({ mode, id }) => {
                    onChange={(date) => 
                     setStartDate(date)
                             } />   */}
-      <label>Datum dolaska</label>
-      <br />
-      <input
-        defaultValue={linija.datumDolaska}
-        name="datumDolaska"
-        type="date"
-        onChange={adminLogic.changeHandler}
-      />
-      <br />
-      {/* <DatePicker className="inputText"
+              <label>
+                <Trans i18nKey="description.part9">Datum dolaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.datumDolaska}
+                name="datumDolaska"
+                type="date"
+                className="name1 input-new"
+                style={{ fontSize: "1rem" }}
+                onChange={adminLogic.changeHandler}
+              />
+              <br />
+              {/* <DatePicker className="inputText"
                  selected={endDate}
                   value={endDate}
                   required
@@ -173,60 +226,85 @@ const LineForm = ({ mode, id }) => {
                   placeholderText="Datum dolaska"
                    onChange={(date) =>   
                             setEndDate(date)} /> */}
-      <label>Vreme polaska</label>
-      <br />
-      <input
-        defaultValue={linija.vremePolaska}
-        className="inputText"
-        type="time"
-        required
-        label="Time"
-        name="vremePolaska"
-        onChange={adminLogic.changeHandler}
-      ></input>
-      <br />
-      <label>Vreme dolaska</label>
-      <br />
-      <input
-        defaultValue={linija.vremeDolaska}
-        className="inputText"
-        type="time"
-        required
-        name="vremeDolaska"
-        onChange={adminLogic.changeHandler}
-      ></input>
-      <br />
-      <label>Prevoznik</label>
-      <br />
-      <select
-        value={linija.prevoznik}
-        name="prevoznik"
-        onChange={adminLogic.changeHandler}
-      >
-        <option disabled={false} value="">
-          --Izaberi prevoznika--
-        </option>
-        <option>Eurocompass</option>
-      </select>
-      <br />
-      <label>Izaberite autobus</label>
-      <br />
-      <select>
-      <option disabled={false} value="">
-        --Oznaka autobusa--
-      </option>
-      <option>VH - 91</option>
-      <option>S2 - 83</option>
-      <option>S1 - 75</option>
-      <option>MAN - 57</option>
-      <option>MB1 - 55</option>
-      <option>MB3 - 51</option>
-      <option>MB4 - 48</option>
-      <option>VL - 49</option>
-      </select>
-      <br />
-      <button type="submit">{mode === "add" ? "Dodaj" : "Sacuvaj"}</button>
-    </form>
+              <label>
+                <Trans i18nKey="description.part11">Vreme polaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.vremePolaska}
+                className="inputText name1 input-new"
+                type="time"
+                required
+                label="Time"
+                name="vremePolaska"
+                style={{ fontSize: "1rem" }}
+                onChange={adminLogic.changeHandler}
+              ></input>
+              <br />
+              <label>
+                <Trans i18nKey="description.part13">vreme dolaska</Trans>
+              </label>
+              <br />
+              <input
+                defaultValue={linija.vremeDolaska}
+                className="inputText name1 input-new"
+                type="time"
+                required
+                name="vremeDolaska"
+                style={{ fontSize: "1rem" }}
+                onChange={adminLogic.changeHandler}
+              ></input>
+              <br />
+              <label>
+                <Trans i18nKey="description.part131">Prevoznik</Trans>
+              </label>
+              <br />
+              <select
+                value={linija.prevoznik}
+                name="prevoznik"
+                className="name1 input-new"
+                style={{ fontSize: "1rem" }}
+                onChange={adminLogic.changeHandler}
+              >
+                <option disabled={false} value="">
+                  --
+                  <Trans i18nKey="description.part132">
+                    Izaberite prevoznika
+                  </Trans>
+                  --
+                </option>
+                <option>Eurocompass</option>
+              </select>
+              <br />
+              <label>Izaberite autobus</label>
+              <br />
+              <select>
+                <option disabled={false} value="">
+                  --Oznaka autobusa--
+                </option>
+                <option>VH - 91</option>
+                <option>S2 - 83</option>
+                <option>S1 - 75</option>
+                <option>MAN - 57</option>
+                <option>MB1 - 55</option>
+                <option>MB3 - 51</option>
+                <option>MB4 - 48</option>
+                <option>VL - 49</option>
+              </select>
+              <br />
+              <br />
+              <button type="submit" className="button">
+                {mode === "add" ? (
+                  <Trans i18nKey="description.part128">"Dodaj"</Trans>
+                ) : (
+                  "Sačuvaj"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

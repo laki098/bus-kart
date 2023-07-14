@@ -1,20 +1,68 @@
 import React from "react";
 import "./kontakt.css";
+
+import "./i18n"; // za prevodjenje
+import "../../rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+
 import SeatSabiranje from "../../rezervacije/proba/seatbiranje";
 import Autobus from "../../rezervacije/sedista/autobus";
 
 const Kontakt = () => {
+  //prevodjenje
+  const lngs = {
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
+  const { t, i18n } = useTranslation();
+  // prevodjenje
+
   return (
     <div>
+      {/*  header je deo za prevodjenje*/}
+      <header>
+        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">
-            <div className="contact-div">
-              <h3>Nas kontakt</h3>
-
-              <h5>Broj i Email</h5>
-              <p>broj: 037 44 32 77</p>
-              <p>e-mail: eurocompassdoo@gmail.com </p>
+            <div className="contact-div-1">
+              <div className="podaci1">
+                <div
+                  className="podaci"
+                  style={{ paddingLeft: "10%", overflowX: "auto" }}
+                >
+                  {" "}
+                  {/* 35% u paddingLeft bilo */}
+                  <h4>
+                    <Trans i18nKey="description.part110">Kontakt </Trans>
+                  </h4>{" "}
+                  <br />
+                  <h6>
+                    <Trans i18nKey="description.part111">Adresa:</Trans>
+                  </h6>{" "}
+                  <h6> Jug Bogdanova, Kruševac</h6> <br />
+                  <h6>
+                    <Trans i18nKey="description.part112">Telefon: </Trans>
+                  </h6>
+                  <h5>+381 (0)37 44 32 77</h5> <br />
+                  <h5>e-mail:</h5> <h5> eurocompassdoo@gmail.com </h5>
+                </div>
+              </div>
             </div>
           </div>
           <div className="rasponsive-maps contact_prikaz">
@@ -25,6 +73,7 @@ const Kontakt = () => {
           </div>
         </div>
       </section>
+
       <SeatSabiranje />
       <Autobus />
     </div>

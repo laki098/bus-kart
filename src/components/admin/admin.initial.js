@@ -5,6 +5,17 @@ import { Link } from "react-router-dom";
 import "./admin.css";
 import helpers from "../../helpers/helpers";
 
+//import "../registration/registration.module.css";         // dodala sn
+import classes from "../registration/registration.module.css";
+import "../login/loginStyle.css";
+
+import "../NavBar/links/i18n"; // za prevodjenje
+import "../rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+
+import { useMediaQuery } from "react-responsive"; // responsive
+import MediaQuery from "react-responsive";
+
 const AdminInitial = () => {
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [val1, setVal1] = useState("");
@@ -12,7 +23,6 @@ const AdminInitial = () => {
   const [val2, setVal2] = useState("");
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
-  const [mesta, setMesta] = useState([]);
   /*   const [linije, setLinije] = useState([]); */
 
   const filterLinija = async () => {
@@ -23,19 +33,14 @@ const AdminInitial = () => {
     setFilteredLinije(data);
   };
   const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/gradovi/stanice");
-    const { stanice } = await response.json();
-
-    const svaMesta = stanice.map((stanica) => stanica.naziv);
-
+    const response = await fetch("http://localhost:5000/linije/linija");
+    const data = await response.json();
     const mestoPolaska = data
       .map((item) => item.mestoPolaska)
       .filter(helpers.filterUnique); //filtriranje mesto polaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
-
     const mestoDolaska = data
       .map((item) => item.mestoDolaska)
       .filter(helpers.filterUnique); //filtriranje mesto dolaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
-
     setPolasci(mestoPolaska); // setujemo filtrirano mesto polaska(da ne bi moglo da ispisuje duplo)
     setDolasci(mestoDolaska); // setujemo filtrirano mesto dolaska(da ne bi moglo da ispisuje duplo)
     /* setLinije(data); */
@@ -74,13 +79,47 @@ const AdminInitial = () => {
     });
   };
 
+  //prevodjenje
+  const lngs = {
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
+  const { t, i18n } = useTranslation();
+  // prevodjenje
+
   return (
     <div>
-      <div className="home">
-        <div className="prvi">
-          <label>Mesto polaska:</label>
+      {" "}
+      {/*  dodala klasu iz registration komponent*/}
+      {/*  header je deo za prevodjenje*/}
+      <header>
+        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+      <div className={classes.form}>
+        {" "}
+        {/* className={classes.form}   className="home" */}
+        <div style={{ textAlign: "center" }}>
+          {" "}
+          {/* className="prvi"  */}
+          <label className="labela">
+            <Trans i18nKey="description.part3">Mesto polaska:</Trans>
+          </label>
+          <br />
           <select //
-            className="position" //
+            className="position unos" //className="position" bilo je  className="unos"
             value={val1} //
             onChange={(e) => setVal1(e.target.value)} //
           >
@@ -95,10 +134,15 @@ const AdminInitial = () => {
             })}
           </select>
         </div>
-        <div className="prvi">
-          <label>Mesto Dolaska:</label>
+        <div style={{ textAlign: "center" }}>
+          {" "}
+          {/* className="prvi"  */}
+          <label className="labela">
+            <Trans i18nKey="description.part5">Mesto Dolaska:</Trans>
+          </label>
+          <br />
           <select //
-            className="position" //
+            className="position unos" // unos sam dopisala dodatno
             value={val2} //
             onChange={(e) => setVal2(e.target.value)} //
           >
@@ -113,21 +157,26 @@ const AdminInitial = () => {
             })}
           </select>
         </div>
-        <div className="prvi">
-          <label>Datum polaska</label>
+        <div style={{ textAlign: "center" }}>
+          <label className="labela">
+            <Trans i18nKey="description.part9">Datum polaska</Trans>
+          </label>
+          <br />
           <input
             type="date"
-            className="position"
-            min={new Date().toISOString().split("T")[0]}
+            className="position unos"
             value={valueDate}
             onChange={(e) => setValueDate(e.target.value)}
           />
-        </div>
+        </div>{" "}
+        <br />
         <button className="button-admin" onClick={clickButton}>
-          Red voznje
+          <Trans i18nKey="description.part34">Red vožnje </Trans>
         </button>
         <Link to="/admin.component">
-          <button className="button-admin">Dododavanje linije </button>
+          <button className="button-admin">
+            <Trans i18nKey="description.part37">Dododavanje linije </Trans>
+          </button>
         </Link>
       </div>
       {filteredLinije.length > 0 ? (
@@ -146,15 +195,41 @@ const AdminInitial = () => {
                 return (
                   <li key={linija.id}>
                     <div className="home-show">
-                      vreme polaska: {linija.vremePolaska}, vreme dolaska:{" "}
-                      {linija.vremeDolaska}, prevoznik: {linija.prevoznik},
-                      mesto polaska: {linija.mestoPolaska}, mesto dolaska:{" "}
+                      <Trans i18nKey="description.part11">
+                        Vreme polaska:{" "}
+                      </Trans>{" "}
+                      {linija.vremePolaska},
+                      <Trans i18nKey="description.part13">Vreme dolaska:</Trans>{" "}
+                      {linija.vremeDolaska},
+                      <Trans i18nKey="description.part131">Prevoznik: </Trans>{" "}
+                      {linija.prevoznik},
+                      <Trans i18nKey="description.part3">Mesto polaska: </Trans>{" "}
+                      {linija.mestoPolaska},
+                      <Trans i18nKey="description.part5">Mesto dolaska: </Trans>{" "}
                       {linija.mestoDolaska}
+                      &nbsp;&nbsp;
+                      <br />
                       <Link to={`${linija.id}/admin.change.line`}>
-                        <button>zameni</button>
-                      </Link>
-                      <button onClick={() => brisanjeLinije(linija.id)}>
-                        obrisi
+                        <button
+                          style={{
+                            backgroundColor: "lightblue",
+                            borderBlockColor: "blue",
+                            marginBlock: "0.4rem",
+                            borderColor: "blue",
+                          }}
+                        >
+                          <Trans i18nKey="description.part133">Zameni</Trans>
+                        </button>
+                      </Link>{" "}
+                      &emsp;
+                      <button
+                        onClick={() => brisanjeLinije(linija.id)}
+                        style={{
+                          backgroundColor: "lightblue",
+                          borderBlockColor: "blue",
+                        }}
+                      >
+                        <Trans i18nKey="description.part134">Obriši</Trans>
                       </button>
                     </div>
                   </li>
@@ -164,7 +239,9 @@ const AdminInitial = () => {
           </ul>
         </div>
       ) : (
-        <p>Nema Linija...</p>
+        <p>
+          <Trans i18nKey="description.part135">Nema Linije...</Trans>
+        </p>
       )}
     </div>
   );

@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import './sedista.css';
+import { useState } from "react";
+import "./sedista.css";
 
 function Autobus() {
   const autobusi = [
-    { oznaka: 'MB1', brojSedista: 55 },
-    { oznaka: 'MB3', brojSedista: 51 },
-    { oznaka: 'MB4', brojSedista: 48 },
-    { oznaka: 'VL', brojSedista: 49 },
-    { oznaka: 'MAN', brojSedista: 57 },
-    { oznaka: 'S1', brojSedista: 75 },
-    { oznaka: 'S2', brojSedista: 83 },
-    { oznaka: 'VH', brojSedista: 91 },
+    { oznaka: "MB1", brojSedista: 55 },
+    { oznaka: "MB3", brojSedista: 51 },
+    { oznaka: "MB4", brojSedista: 48 },
+    { oznaka: "VL", brojSedista: 49 },
+    { oznaka: "MAN", brojSedista: 57 },
+    { oznaka: "S1", brojSedista: 75 },
+    { oznaka: "S2", brojSedista: 83 },
+    { oznaka: "VH", brojSedista: 91 },
   ];
 
-  const [rezervacije, setRezervacije] = useState(Array(55).fill(false));
+  const [rezervacije, setRezervacije] = useState(Array(53).fill(false));
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState(null);
   const [odabraniAutobus, setOdabraniAutobus] = useState(0);
 
@@ -36,27 +36,28 @@ function Autobus() {
 
   return (
     <div>
-        <select value={odabraniAutobus} onChange={handleSelect}>
-          {autobusi.map((autobus, index) => (
-            <option key={index} value={index}>
-              {autobus.oznaka} - {autobus.brojSedista} sedišta
-            </option>
-          ))}
-        </select>
-      
-    <div className="autobus">
-      
-      {rezervacije.map((rezervisano, index) => (
-        <div
-          key={index}
-          className={`sediste ${rezervisano ? 'rezervisano' : ''}`}
-          onClick={() => handleClick(index)}
-        >
-          {index + 1}
+      <select value={odabraniAutobus} onChange={handleSelect}>
+        {autobusi.map((autobus, index) => (
+          <option key={index} value={index}>
+            {autobus.oznaka} - {autobus.brojSedista} sedišta
+          </option>
+        ))}
+      </select>
+
+      <div className="autobus">
+        {rezervacije.map((rezervisano, index) => (
+          <div
+            key={index}
+            className={`sediste ${rezervisano ? "rezervisano" : ""}`}
+            onClick={() => handleClick(index)}
+          >
+            {index + 1}
+          </div>
+        ))}
+        <div>
+          Trenutno rezervisano mesto: {trenutnaRezervacija || "Nijedno"}
         </div>
-      ))}
-      <div>Trenutno rezervisano mesto: {trenutnaRezervacija || 'Nijedno'}</div>
-    </div>
+      </div>
     </div>
   );
 }
