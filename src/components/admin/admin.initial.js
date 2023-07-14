@@ -12,6 +12,7 @@ const AdminInitial = () => {
   const [val2, setVal2] = useState("");
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
+  const [mesta, setMesta] = useState([]);
   /*   const [linije, setLinije] = useState([]); */
 
   const filterLinija = async () => {
@@ -22,14 +23,19 @@ const AdminInitial = () => {
     setFilteredLinije(data);
   };
   const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linije/linija");
-    const data = await response.json();
+    const response = await fetch("http://localhost:5000/gradovi/stanice");
+    const { stanice } = await response.json();
+
+    const svaMesta = stanice.map((stanica) => stanica.naziv);
+
     const mestoPolaska = data
       .map((item) => item.mestoPolaska)
       .filter(helpers.filterUnique); //filtriranje mesto polaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
+
     const mestoDolaska = data
       .map((item) => item.mestoDolaska)
       .filter(helpers.filterUnique); //filtriranje mesto dolaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
+
     setPolasci(mestoPolaska); // setujemo filtrirano mesto polaska(da ne bi moglo da ispisuje duplo)
     setDolasci(mestoDolaska); // setujemo filtrirano mesto dolaska(da ne bi moglo da ispisuje duplo)
     /* setLinije(data); */
@@ -112,7 +118,7 @@ const AdminInitial = () => {
           <input
             type="date"
             className="position"
-            min={new Date().toISOString().split('T')[0]}
+            min={new Date().toISOString().split("T")[0]}
             value={valueDate}
             onChange={(e) => setValueDate(e.target.value)}
           />
@@ -127,7 +133,7 @@ const AdminInitial = () => {
       {filteredLinije.length > 0 ? (
         <div>
           <ul>
-            <div className={`home1 .home1 ${showClass ? "show" : ""}`}>     
+            <div className={`home1 .home1 ${showClass ? "show" : ""}`}>
               <style>{`
             .home1 {
               display: none;
