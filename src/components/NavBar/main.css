@@ -63,10 +63,10 @@
   cursor: pointer;
 }
 .logosajt {
-  width: 15vw;
-  height: 7vh;
+  width: auto;
+  height: 6vh;
+  padding: 0.5rem;
 }
-
 .fa-bus {
   margin-left: 0.2rem;
   font-size: 1.6rem;

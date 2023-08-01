@@ -266,7 +266,8 @@ a {
 .bus-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Održava proporcije slike */
+  object-fit: fill; /* Održava proporcije slike */
+  padding: 0;
 }
 
 

@@ -77,7 +77,7 @@ const Pocetna = () => {
     const interval = setInterval(() => {
       // Promijeni slajd na sledeći
       setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
-    }, 10000); // Promjena slike svakih 5 sekundi
+    }, 10000); // Promjena slike svakih 10 sekundi
 
     return () => {
       clearInterval(interval); // Očisti interval kad se komponenta unmountuje

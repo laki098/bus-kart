@@ -29,11 +29,11 @@ const LoginComponent = () => {
          <div>
            <h1>Uloguj se</h1>
            <div>
-              <img src={user} alt="user" className="user"/>
+              <img src={user} alt="user" className="user "/>
              <input  type="text" placeholder="Korisnicko ime" name="korisnickoIme" className="name input" onChange={loginLogic.changeHandler}/>
            </div>
            <div className="second-input">
-             <img src={password} alt="password" className="user1"/>
+             <img src={password} alt="password" className="user1 "/>
              <input type="password" placeholder="Lozinka" name="lozinka" className="name input" onChange={loginLogic.changeHandler}/>
            </div>
           <div className="login-button">

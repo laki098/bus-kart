@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
+import './admin.css';
 
 const AdminPanel = () => {
   return (
     <>
       <Link to={"/bus.initial"}>
-        <button>Autobusi</button>
+        <button className="dugme">Autobusi</button>
       </Link>
       <Link to={"/admin.initial"}>
-        <button>Linije</button>
+        <button className="dugme">Linije</button>
       </Link>
       <Link to={""}>
-        <button>Korisnici</button>
+        <button className="dugme">Korisnici</button>
       </Link>
     </>
   );
