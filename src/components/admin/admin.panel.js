@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "./admin.css";
 
 import bus1 from "../images/bus1.jpg";
 import "./admin.css";

@@ -289,3 +289,8 @@ input::placeholder {
   }
   /* .input {width: 70%;}        */
 }
+
+.button:active {
+  box-shadow: #d6d6e7 0 0.188rem 0.438rem inset;
+  transform: translateY(0.125rem);
+}

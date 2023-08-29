@@ -61,28 +61,24 @@ const LoginComponent = () => {
               </div>
             </div>
             <div>
-              <br />
-              <p className="naslov">
-                <Trans i18nKey="description.part124">Logovanje</Trans>
-              </p>{" "}
-              <br />
+              <h1>Uloguj se</h1>
               <div>
-                <img src={user} alt="user" className="user" />
+                <img src={user} alt="user" className="user " />
                 <input
                   type="text"
-                  placeholder="Korisničko ime"
+                  placeholder="Korisnicko ime"
                   name="korisnickoIme"
-                  className="name1 input-new"
+                  className="name input"
                   onChange={loginLogic.changeHandler}
                 />
               </div>
               <div className="second-input">
-                <img src={password} alt="password" className="user1" />
+                <img src={password} alt="password" className="user1 " />
                 <input
                   type="password"
                   placeholder="Lozinka"
                   name="lozinka"
-                  className="name1 input-new"
+                  className="name input"
                   onChange={loginLogic.changeHandler}
                 />
               </div>
@@ -91,18 +87,63 @@ const LoginComponent = () => {
                   Login
                 </button>
               </div>
+
               <div className="link">
-                {" "}
-                {/* bilo je "a naslov"  */}
-                <Link to="/reset.password" className=" naslov-srednji">
-                  <Trans i18nKey="description.part125">
-                    Zaboravljena šifra
-                  </Trans>{" "}
+                <Link to="/reset.password" className="a">
+                  Zaboravio sifru ?{" "}
                 </Link>{" "}
-                <br />
-                <Link to="/registration.component" className=" naslov-srednji">
-                  <Trans i18nKey="description.part52">Registracija</Trans>
+                ili{" "}
+                <Link to="/registration.component" className="a">
+                  Registruj se
                 </Link>
+              </div>
+              <div>
+                <br />
+                <p className="naslov">
+                  <Trans i18nKey="description.part124">Logovanje</Trans>
+                </p>{" "}
+                <br />
+                <div>
+                  <img src={user} alt="user" className="user" />
+                  <input
+                    type="text"
+                    placeholder="Korisničko ime"
+                    name="korisnickoIme"
+                    className="name1 input-new"
+                    onChange={loginLogic.changeHandler}
+                  />
+                </div>
+                <div className="second-input">
+                  <img src={password} alt="password" className="user1" />
+                  <input
+                    type="password"
+                    placeholder="Lozinka"
+                    name="lozinka"
+                    className="name1 input-new"
+                    onChange={loginLogic.changeHandler}
+                  />
+                </div>
+                <div className="login-button">
+                  <button className="button" onClick={loginLogic.login}>
+                    Login
+                  </button>
+                </div>
+                <div className="link">
+                  {" "}
+                  {/* bilo je "a naslov"  */}
+                  <Link to="/reset.password" className=" naslov-srednji">
+                    <Trans i18nKey="description.part125">
+                      Zaboravljena šifra
+                    </Trans>{" "}
+                  </Link>{" "}
+                  <br />
+                  <Link
+                    to="/registration.component"
+                    className=" naslov-srednji"
+                  >
+                    <Trans i18nKey="description.part52">Registracija</Trans>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
