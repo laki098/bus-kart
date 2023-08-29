@@ -2,22 +2,22 @@ import loginApi from "../../api/login.api";
 import { useState } from "react";
 
 const LoginLogic = () => {
+  /* const [korisnikB, setKorisnikB] = useState({}); */
   let [data, setData] = useState({});
-  /* console.log(data); */
   const login = () => {
     loginApi()
-      .login(data.korisnickoIme, data.lozinka, data.ime)
+      .login(data.korisnickoIme, data.lozinka)
       .then((response) => {
-        console.log(data.ime);
-        sessionStorage.setItem("loggedIn", response.data.role);
-        // sessionStorage.removeItem('loggedIn') ovo u logout
+        /* setKorisnikB(response.data.korisnickiPodaci); */
         alert("Konacccno");
         window.location.href = "pocetna";
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const changeHandler = (e) =>
     setData({
       ...data,

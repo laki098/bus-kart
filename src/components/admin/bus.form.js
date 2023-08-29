@@ -9,18 +9,16 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 
-const BusForm = ({ mode, id }) => {
+const BusForm = ({ mode, idAutobusa }) => {
   const [bus, setBus] = useState({});
   const busLogic = BusLogic();
-
   const izmeinAutobus = async () => {
-    const response = await BusApi().filterBusId(id);
+    const response = await BusApi().filterBusId(idAutobusa);
     const data = await response.data;
 
-    setBus(data);
+    setBus(data.autobusi);
   };
 
-  console.log(bus);
   useEffect(() => {
     if (mode == "edit") {
       izmeinAutobus();
@@ -35,9 +33,10 @@ const BusForm = ({ mode, id }) => {
     } else if (mode === "edit") {
       const formData = new FormData(event.target);
       const data = {
-        id: id,
-        tablica: formData.get("tablica"),
-        brojMesta: formData.get("brojMesta"),
+        idAutobusa: idAutobusa,
+        oznakaBusa: formData.get("oznakaBusa"),
+        tablice: formData.get("tablice"),
+        brojSedista: formData.get("brojSedista"),
       };
 
       busLogic.editBus(data);
@@ -52,6 +51,7 @@ const BusForm = ({ mode, id }) => {
   const { t, i18n } = useTranslation();
   // prevodjenje end
 
+  console.log(bus);
   return (
     <div className="pozadina">
       <header>
@@ -84,15 +84,31 @@ const BusForm = ({ mode, id }) => {
               )}
               <br />
               <label>
-                <Trans i18nKey="description.part126">Registarska tablica</Trans>
+                <Trans>Oznaka autobusa</Trans>
               </label>
               <br />
               <input
-                /* defaultValue={bus.tablica} */
+                defaultValue={bus.oznakaBusa}
                 type="text"
-                placeholder="Registarska tablica"
+                placeholder="Oznaka autobusa"
                 required
-                name="tablica"
+                name="oznakaBusa"
+                className="input-new"
+                onChange={busLogic.changeHandler}
+              />
+              <br />
+              <br />
+              <label>
+                <Trans i18nKey="description.part126">Registarska tablica</Trans>
+              </label>
+              <br />
+
+              <input
+                defaultValue={bus.tablice}
+                type="text"
+                placeholder="Registarska tablice"
+                required
+                name="tablice"
                 className="input-new"
                 onChange={busLogic.changeHandler}
               />
@@ -103,9 +119,9 @@ const BusForm = ({ mode, id }) => {
               </label>
               <br />
               <input
-                /* defaultValue={bus.mestoDolaska} */
-                type="text"
-                name="brojMesta"
+                defaultValue={bus.brojSedista}
+                type="number"
+                name="brojSedista"
                 className="input-new"
                 placeholder="Broj mesta"
                 required

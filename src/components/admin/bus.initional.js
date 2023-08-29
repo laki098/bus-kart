@@ -1,19 +1,24 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import BusApi from "../../api/bus.api";
 
 const BusInitional = () => {
   const [busevi, setBusevi] = useState([]);
-
-  const getBus = async () => {
-    const response = await fetch("http://localhost:5000/autobusi/autobusi");
-    const data = await response.json();
-    setBusevi(data);
-  };
-  console.log(busevi);
   useEffect(() => {
     getBus();
   }, []);
+
+  const getBus = async () => {
+    const response = await fetch("http://localhost:5000/autobusi");
+    const data = await response.json();
+    setBusevi(data.autobusi);
+  };
+
+  const brisanjeBusa = async (idAutobusa) => {
+    const response = await BusApi().brisanjeBus(idAutobusa);
+  };
+
   return (
     <>
       <div>
@@ -23,13 +28,17 @@ const BusInitional = () => {
             {" "}
             {busevi.map((bus) => {
               return (
-                <li key={bus.idautobusi}>
+                <li key={bus.idAutobusa}>
                   <div>
                     {" "}
-                    tablica: {bus.tablica}, brojMesta: {bus.brojMesta}
-                    <Link to={`${bus.idautobusi}/bus.change.line`}>
+                    oznaka: {bus.oznakaBusa}, tablice: {bus.tablice}, brojMesta:{" "}
+                    {bus.brojSedista}
+                    <Link to={`${bus.idAutobusa}/bus.change.line`}>
                       <button>Izmeni</button>
                     </Link>
+                    <button onClick={() => brisanjeBusa(bus.idAutobusa)}>
+                      Obrisi
+                    </button>
                   </div>
                 </li>
               );

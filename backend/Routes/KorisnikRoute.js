@@ -17,6 +17,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:idKorisnik", async (req, res) => {
+  const { idKorisnik } = req.params;
+  try {
+    const korisnik = await Korisnik.findOne({
+      where: { idKorisnik: idKorisnik },
+    });
+    res
+      .status(200)
+      .json({ message: "uspesno dobavljeni svi autobusi", korisnik });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
 // Kreirajte transporter za slanje email poruka
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -26,7 +40,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/registration", async (req, res) => {
   try {
     const { korisnickoIme, lozinka, ime, prezime, brojTelefona, email } =
       req.body;
@@ -63,10 +77,12 @@ router.post("/signup", async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     res.status(201).json({
+      status: "success",
       message:
         "Uspešno kreiran korisnik. Molimo proverite vašu email adresu radi potvrde.",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.errors[0].message });
   }
 });
@@ -90,7 +106,7 @@ router.get("/verify/:token", async (req, res) => {
     user.verifikacijskiToken = null;
     await user.save();
 
-    res.redirect("https://www.eurocompass.rs/"); //! STAVITI LINK GDE CE DA VODI POSLE CEKIRANJA MEJLA
+    res.redirect("http://localhost:3000/login.component"); //! STAVITI LINK GDE CE DA VODI POSLE CEKIRANJA MEJLA
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -115,24 +131,44 @@ router.post("/login", async (req, res) => {
       //? Neispravna lozinka
       return res.status(401).json({ message: "Neispravna lozinka" });
     }
-    const exp = korisnik.rola === "korisnik" ? "1h" : "8h";
+    const exp = korisnik.role == "korisnik" ? "1h" : "8h";
     //? Generisanje JWT tokena
-    const token = jwt.sign({ korisnik }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: korisnik.email }, process.env.JWT_SECRET, {
       expiresIn: exp,
     });
 
+    //? kreiranje korisnickih podataka za slanje u cookies
+    const userData = {
+      idKorisnika: korisnik.idKorisnik,
+      korisnickoIme: korisnik.korisnickoIme,
+      ime: korisnik.ime,
+      prezime: korisnik.prezime,
+      brojTelefona: korisnik.brojTelefona,
+      email: korisnik.email,
+      rola: korisnik.role,
+    };
+
     //? slanje json web tokena u cookies
     const cookieExp =
-      korisnik.rola === "korisnik"
+      korisnik.role === "korisnik"
         ? new Date(Date.now() + 1000 * 60 * 60)
         : new Date(Date.now() + 1000 * 60 * 60 * 8);
-    res.cookie("jwt", token, {
+
+    res.cookie("token", token, {
       expires: cookieExp,
       httpOnly: true,
+      path: "/",
       secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     });
 
-    res.status(200).json({ token });
+    //? slanje korisnicke podatke u cookies
+    res.cookie("userData", JSON.stringify(userData), {
+      expires: cookieExp,
+      path: "/",
+      secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    });
+
+    res.status(200).json({ userData });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error });
@@ -142,7 +178,8 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   try {
     // Brisanje JWT tokena iz kolačića
-    res.clearCookie("jwt");
+    res.clearCookie("token");
+    res.clearCookie("userData");
 
     // Vraćanje odgovora sa statusom 200 i porukom odjavljivanja
     res.status(200).json({ message: "Uspešno ste se odjavili." });
@@ -233,6 +270,46 @@ router.post("/reset-sifra/:token", async (req, res) => {
   await korisnik.save();
 
   res.status(200).json({ message: "Šifra je uspešno resetovana" });
+});
+
+//?Brisanje korisnika po id-u
+router.delete("/:idKorisnik", async (req, res) => {
+  try {
+    const { idKorisnik } = req.params; // id korisnika koji se brise
+
+    const deleteKorisnik = await Korisnik.destroy({
+      where: { idKorisnik: idKorisnik },
+      limit: 1,
+    });
+
+    if (deleteKorisnik === 0) {
+      return res.status(404).json({ message: "Korisnik nije pronadjen" });
+    }
+
+    res.status(200).json({ message: "Korisnik uspesno obrisan" });
+  } catch (error) {
+    res.status(500).json({ message: "Doslo je do greske" });
+  }
+});
+
+//? editovanje korisnika po id-u
+router.put("/:idKorisnik", async (req, res) => {
+  try {
+    const { idKorisnik } = req.params; //ID korisnika koji se menja
+    const { korisnickoIme, ime, prezime, brojTelefona, email, role } = req.body;
+
+    const updateKorisnik = await Korisnik.update(
+      { korisnickoIme, ime, prezime, brojTelefona, email, role },
+      { where: { idKorisnik: idKorisnik }, limit: 1 }
+    );
+
+    if (updateKorisnik[0] === 0) {
+      return res.status(404).json({ message: "korisnik nije pronadjen" });
+    }
+    return status(200).json({ message: "korisnik uspesno promenjen" });
+  } catch (error) {
+    res.status(500).json({ message: "doslo je do greske", error });
+  }
 });
 
 export default router;

@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const linija = await Linija.findAll({ include: Stanica });
+    const linija = await Linija.findAll({ include: Stanica, Medjustanica });
     res.status(200).json({ message: "uspesno izvucena linija", linija });
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
@@ -205,6 +205,45 @@ router.post("/rezervacija", async (req, res) => {
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {
     res.status(500).json(error.message);
+  }
+});
+
+router.post("/filterLinija", async (req, res) => {
+  try {
+    console.log("aaaaaaa");
+    const { pocetnaStanicaId, krajnjaStanicaId, datumPolaska } = req.body;
+    const linije = await Linija.findAll({
+      where: {
+        pocetnaStanicaId,
+        krajnjaStanicaId,
+        datumPolaska,
+      },
+    });
+    let medjuStanice = await Medjustanica.findAll();
+    for (let i = 0; i < medjuStanice.length; i++) {
+      let element = medjuStanice[i];
+      element.linija = await Linija.findByPk(element.linijaId);
+    }
+
+    let medjuLinijeFilt = medjuStanice.map((medjuStanice) => {
+      if (
+        medjuStanice.linija.pocetnaStanicaId == pocetnaStanicaId &&
+        medjuStanice.linija.krajnjaStanicaId == krajnjaStanicaId &&
+        medjuStanice.linija.datumPolaska == datumPolaska
+      ) {
+        return medjuStanice.linija;
+      }
+    });
+    medjuLinijeFilt.filter((m) => {
+      return m !== null;
+    });
+    const spojeneLinije = linije.concat(medjuLinijeFilt);
+    res.status(200).json({ message: "uspesno izvučena linija", spojeneLinije });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "doslo je do greske pri filtriranju", error });
   }
 });
 

@@ -33,20 +33,24 @@ const LinijeApi = () => {
     });
   };
 
-  const filterLinija = async (mestoPolaska, mestoDolaska, datumPolaska) => {
+  const filterLinija = async (
+    pocetnaStanicaId,
+    krajnjaStanicaId,
+    datumPolaska
+  ) => {
     // return await axios.get("http://localhost:5000/linije/filterLinija", {
     //     mestoPolaska:mestoPolaska, mestoDolaska:mestoDolaska, datumPolaska:datumPolaska
     // })
-    return await fetch("http://localhost:5000/linije/filterLinija", {
+    return await fetch("http://localhost:5000/linija/filterLinija", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         //filter radi po mestu polaska, mestu dolaska i datumu polaska
-        mestoPolaska: mestoPolaska, //
-        mestoDolaska: mestoDolaska, //
-        datumPolaska: datumPolaska, //
+        pocetnaStanicaId, //
+        krajnjaStanicaId, //
+        datumPolaska, //
       }),
     });
   };

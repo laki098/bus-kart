@@ -15,7 +15,7 @@ const AdminPanel = () => {
         <button>Linije</button>
       </Link>{" "}
       &ensp;
-      <Link to={""}>
+      <Link to={"/korisniciInitial"}>
         <button>Korisnici</button>
       </Link>
       <p>

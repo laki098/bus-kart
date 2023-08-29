@@ -18,15 +18,15 @@ import BusInitional from "./components/admin/bus.initional";
 import BusAdd from "./components/admin/bus.add";
 import BusChangeLine from "./components/admin/bus.change.line";
 import AdminPanel from "./components/admin/admin.panel";
+import KorisniciInitial from "./components/admin/korisniciInitial";
+import KorisnikChange from "./components/admin/korisnikChange";
 
 function App() {
   return (
     <Router>
       <div className="App">
-    
-      
         <Navbar />
-        
+
         <div className="content">
           <Switch>
             <Route path="/adminpanel">
@@ -73,8 +73,14 @@ function App() {
           <Route path="/bus.add">
             <BusAdd />
           </Route>
-          <Route path="/:id/bus.change.line">
+          <Route path="/:idAutobusa/bus.change.line">
             <BusChangeLine />
+          </Route>
+          <Route path="/korisniciInitial">
+            <KorisniciInitial />
+          </Route>
+          <Route path="/:idKorisnik/korisnikChange">
+            <KorisnikChange />
           </Route>
         </div>
 

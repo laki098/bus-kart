@@ -34,36 +34,60 @@ const Pocetna = () => {
   const [val2, setVal2] = useState("");
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
-  const [linije, setLinije] = useState([]);
+  /* const [linije, setLinije] = useState([]); */
+  const [stanice, setStanice] = useState([]);
 
   const filterLinija = async () => {
     if (!valueDate) return;
+    console.log(val1.id, val2.id);
+    const response = await LinijeApi().filterLinija(
+      val1.id,
+      val2.id,
+      valueDate
+    );
+    console.log("aaaaaaaaaaaaaaaaaa");
 
-    const response = await LinijeApi().filterLinija(val1, val2, valueDate);
     const data = await response.json();
+    console.log(data);
     setFilteredLinije(data);
+    console.log(data);
   };
 
-  const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linije/linija"); //izvlacenje svih linija iz baze
+  const getStanice = async () => {
+    const response = await fetch("http://localhost:5000/gradovi/stanice");
+    const data = await response.json();
+
+    const a1 = data.stanice.map((item) => {
+      return { naziv: item.naziv, id: item.id };
+    });
+    setStanice(a1);
+    console.log(a1[0].naziv);
+    setVal1(a1[0]);
+    setVal2(a1[1]);
+  };
+
+  /*  const getLinije = async () => {
+    const response = await fetch("http://localhost:5000/linija"); //izvlacenje svih linija iz baze
     const data = await response.json(); //
-    const mestaPolaska = data //
+    console.log(data); */
+  /*  const mestaPolaska = data //
       .map((item) => item.mestoPolaska) //Uradjen filter da se u selektu ne ponavljaju linije
       .filter(helpers.filterUnique); // za mesto polaska
     const mestaDolaska = data //
       .map((item) => item.mestoDolaska) //Uradjen filter da se u selektu ne ponavljaju linije
-      .filter(helpers.filterUnique); //za mesto dolaska
+      .filter(helpers.filterUnique); //za mesto dolaska */
 
-    setLinije(data);
-    setPolasci(mestaPolaska);
+  /*  setLinije(data); */
+  /*  setPolasci(mestaPolaska);
     setDolasci(mestaDolaska);
     setVal1(data[0].mestoPolaska);
-    setVal2(data[0].mestoDolaska);
-  };
+    setVal2(data[0].mestoDolaska); */
+  /*  }; */
 
   useEffect(() => {
     //
-    getLinije(); //Prilikom ucitavanja stranice da pozove funkciju get linije
+    /*  getLinije(); */ //Prilikom ucitavanja stranice da pozove funkciju get linije
+    getStanice();
   }, []); //
 
   const click = () => {
@@ -169,15 +193,16 @@ const Pocetna = () => {
               <label className="labela">
                 <Trans i18nKey="description.part31"> Polazna stanica </Trans>
               </label>
+
               <select
                 className=" box-title"
                 value={val1}
                 onChange={(e) => setVal1(e.target.value)}
               >
-                {polasci.map((linija) => {
+                {stanice.map((linija) => {
                   return (
-                    <option key={linija} value={linija}>
-                      {linija}
+                    <option key={linija.naziv} value={linija.id}>
+                      {linija.naziv}
                     </option>
                   );
                 })}
@@ -199,12 +224,14 @@ const Pocetna = () => {
                 value={val2}
                 onChange={(e) => setVal2(e.target.value)}
               >
-                {dolasci.map((linija) => {
-                  return (
-                    <option key={linija} value={linija}>
-                      {linija}
-                    </option>
-                  );
+                {stanice.map((linija) => {
+                  if (val1.naziv != linija.naziv) {
+                    return (
+                      <option key={linija.naziv} value={linija.id}>
+                        {linija.naziv}
+                      </option>
+                    );
+                  }
                 })}
               </select>
             </div>
@@ -249,10 +276,10 @@ const Pocetna = () => {
                 value={val1}
                 onChange={(e) => setVal1(e.target.value)}
               >
-                {polasci.map((linija) => {
+                {stanice.map((linija) => {
                   return (
-                    <option key={linija} value={linija}>
-                      {linija}
+                    <option key={linija.naziv} value={linija.id}>
+                      {linija.naziv}
                     </option>
                   );
                 })}
@@ -275,12 +302,14 @@ const Pocetna = () => {
                 value={val2}
                 onChange={(e) => setVal2(e.target.value)}
               >
-                {dolasci.map((linija) => {
-                  return (
-                    <option key={linija} value={linija}>
-                      {linija}
-                    </option>
-                  );
+                {stanice.map((linija) => {
+                  if (val1.naziv != linija.naziv) {
+                    return (
+                      <option key={linija.naziv} value={linija.id}>
+                        {linija.naziv}
+                      </option>
+                    );
+                  }
                 })}
               </select>
             </div>

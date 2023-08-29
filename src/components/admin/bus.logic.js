@@ -1,7 +1,6 @@
 import { useState } from "react";
 import BusApi from "../../api/bus.api";
 
-
 const BusLogic = () => {
   let [data, setData] = useState({});
 
@@ -10,12 +9,12 @@ const BusLogic = () => {
       ...data,
       [e.target.name]: e.target.value,
     });
+  console.log(data);
 
   const upisBus = async () => {
     BusApi()
-      .upisBus(data.tablica, data.brojMesta)
+      .upisBus(data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
-        console.log(response);
         alert("Konacccno");
       })
       .catch((error) => {
@@ -25,9 +24,8 @@ const BusLogic = () => {
 
   const editBus = (data) => {
     BusApi()
-      .editBus(data.id, data.tablica, data.brojMesta)
+      .editBus(data.idAutobusa, data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
-        console.log(response);
         alert("Konacccno");
       })
       .catch((error) => {
