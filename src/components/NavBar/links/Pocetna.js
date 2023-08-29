@@ -39,18 +39,14 @@ const Pocetna = () => {
 
   const filterLinija = async () => {
     if (!valueDate) return;
-    console.log(val1.id, val2.id);
     const response = await LinijeApi().filterLinija(
       val1.id,
       val2.id,
       valueDate
     );
-    console.log("aaaaaaaaaaaaaaaaaa");
 
     const data = await response.json();
-    console.log(data);
     setFilteredLinije(data);
-    console.log(data);
   };
 
   const getStanice = async () => {
@@ -61,7 +57,6 @@ const Pocetna = () => {
       return { naziv: item.naziv, id: item.id };
     });
     setStanice(a1);
-    console.log(a1[0].naziv);
     setVal1(a1[0]);
     setVal2(a1[1]);
   };
@@ -69,7 +64,7 @@ const Pocetna = () => {
   /*  const getLinije = async () => {
     const response = await fetch("http://localhost:5000/linija"); //izvlacenje svih linija iz baze
     const data = await response.json(); //
-    console.log(data); */
+     */
   /*  const mestaPolaska = data //
       .map((item) => item.mestoPolaska) //Uradjen filter da se u selektu ne ponavljaju linije
       .filter(helpers.filterUnique); // za mesto polaska
@@ -201,7 +196,7 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.naziv} value={linija.id}>
+                    <option key={linija.id} value={linija.id}>
                       {linija.naziv}
                     </option>
                   );
@@ -227,7 +222,7 @@ const Pocetna = () => {
                 {stanice.map((linija) => {
                   if (val1.naziv != linija.naziv) {
                     return (
-                      <option key={linija.naziv} value={linija.id}>
+                      <option key={linija.id} value={linija.id}>
                         {linija.naziv}
                       </option>
                     );
@@ -278,7 +273,7 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.naziv} value={linija.id}>
+                    <option key={linija.id} value={linija.id}>
                       {linija.naziv}
                     </option>
                   );
@@ -305,7 +300,7 @@ const Pocetna = () => {
                 {stanice.map((linija) => {
                   if (val1.naziv != linija.naziv) {
                     return (
-                      <option key={linija.naziv} value={linija.id}>
+                      <option key={linija.id} value={linija.id}>
                         {linija.naziv}
                       </option>
                     );

@@ -27,7 +27,7 @@ const Navbar = () => {
       {/*  <Link to='/pocetna' className='logo'><img src={logo} alt='logo' className='logosajt'/></Link>      */}
 
       <Link to="/pocetna" className="logo">
-        <img src={logo1} alt="logo" className="logosajt" />
+        <img src={logo} alt="logo" className="logosajt" />
       </Link>
 
       <ul

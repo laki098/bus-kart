@@ -155,21 +155,21 @@
   margin: 0.5rem;
 }
 
-.pozadinaSlika {
+/* .pozadinaSlika {
   background-image: image("Bus1");
 
   min-height: 380px;
 
-  /* Center and scale the image nicely */
+  
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
-  /* Needed to position the navbar */
+  
   position: relative;
-}
+} */
 
-.backgroundBus {
+/* .backgroundBus {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -179,7 +179,7 @@
 .slika {
   width: auto;
   height: 35vh;
-}
+} */
 
 .dugme {
   font-size: 22px;

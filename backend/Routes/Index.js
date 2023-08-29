@@ -3,6 +3,7 @@ import Linija from "../Models/LinijaModels.js";
 import Medjustanica from "../Models/MedjustanicaModels.js";
 import Stanica from "../Models/StanicaModels.js";
 import Rezervacija from "../Models/RezervacijaModels.js";
+import { BIGINT } from "sequelize";
 
 const router = express.Router();
 
@@ -31,14 +32,28 @@ router.post("/", async (req, res) => {
     } = req.body;
 
     // Kreiranje početne stanice
-    const pocetna = await Stanica.create(pocetnaStanica); //!promeniti da ide preko ID-a
+    const pocetna = await Stanica.findOne({
+      where: {
+        naziv: pocetnaStanica,
+      },
+    }); //!promeniti da ide preko ID-a
 
     // Kreiranje krajnje stanice
-    const krajnja = await Stanica.create(krajnjaStanica); //!promeniti da ide preko ID-a
+    const krajnja = await Stanica.findOne({
+      where: {
+        naziv: krajnjaStanica,
+      },
+    }); //!promeniti da ide preko ID-a
 
     // Kreiranje međustanica
-    const međustanice = await Promise.all(
-      medjustanice.map((stanica) => Stanica.create(stanica))
+    const sveMedjustanice = await Promise.all(
+      medjustanice.map((stanica) =>
+        Stanica.findAll({
+          where: {
+            naziv: stanica,
+          },
+        })
+      )
     );
 
     // Kreiranje linije
@@ -56,7 +71,7 @@ router.post("/", async (req, res) => {
 
     // Povezivanje međustanica s linijom
     await Promise.all(
-      međustanice.map(async (stanica, index) => {
+      sveMedjustanice.map(async (stanica, index) => {
         await novaLinija.addStanica(stanica, {
           through: { redosled: index + 1, brojSlobodnihMesta },
         });
@@ -78,16 +93,20 @@ router.post("/rezervacija", async (req, res) => {
 
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
     let stanicaK = await Stanica.findByPk(krajnjaStanicaId);
+
     let postojiStanicaP = false;
     let postojiStanicaK = false;
+
     for (let i = 0; i < linija.Stanicas.length; i++) {
       const stanica = linija.Stanicas[i];
+
       if (
         stanicaP.id == stanica.id ||
         linija.pocetnaStanicaId == pocetnaStanicaId
       ) {
         postojiStanicaP = true;
       }
+
       if (
         stanicaK.id == stanica.id ||
         linija.krajnjaStanicaId == krajnjaStanicaId
@@ -95,11 +114,13 @@ router.post("/rezervacija", async (req, res) => {
         postojiStanicaK = true;
       }
     }
+
     if (!postojiStanicaP) {
       res.status(404).json({
         message: "Nepostoji stanica pocetna ",
       });
     }
+
     if (!postojiStanicaK) {
       res.status(404).json({
         message: "Nepostoji stanica krajnja na ispisanoj liniji",
@@ -109,6 +130,7 @@ router.post("/rezervacija", async (req, res) => {
     if (!linija) {
       res.status(404).json({ message: "Linija nije pronadjena" });
     }
+
     if (!stanicaP || !stanicaK) {
       res.status(404).json({ message: "Stanica nije pronadjena" });
     }
@@ -210,35 +232,63 @@ router.post("/rezervacija", async (req, res) => {
 
 router.post("/filterLinija", async (req, res) => {
   try {
-    console.log("aaaaaaa");
-    const { pocetnaStanicaId, krajnjaStanicaId, datumPolaska } = req.body;
-    const linije = await Linija.findAll({
+    const { nazivPocetneStanice, nazivKrajnjeStanice, datumPolaska } = req.body;
+
+    const pocetnaStanica = await Stanica.findOne({
       where: {
-        pocetnaStanicaId,
-        krajnjaStanicaId,
-        datumPolaska,
+        naziv: nazivPocetneStanice,
       },
     });
-    let medjuStanice = await Medjustanica.findAll();
-    for (let i = 0; i < medjuStanice.length; i++) {
-      let element = medjuStanice[i];
-      element.linija = await Linija.findByPk(element.linijaId);
+
+    const krajnjaStanica = await Stanica.findOne({
+      where: {
+        naziv: nazivKrajnjeStanice,
+      },
+    });
+
+    const jestePocetnaMedjustanica = await Medjustanica.findByPk(
+      pocetnaStanica.id
+    );
+
+    const jesteKrajnjaMedjustanica = await Medjustanica.findByPk(
+      krajnjaStanica.id
+    );
+
+    if (!jestePocetnaMedjustanica) {
+      const linije = await Linija.findAll({
+        where: {
+          datumPolaska,
+          pocetnaStanicaId: pocetnaStanica.id,
+        },
+      });
     }
 
-    let medjuLinijeFilt = medjuStanice.map((medjuStanice) => {
-      if (
-        medjuStanice.linija.pocetnaStanicaId == pocetnaStanicaId &&
-        medjuStanice.linija.krajnjaStanicaId == krajnjaStanicaId &&
-        medjuStanice.linija.datumPolaska == datumPolaska
-      ) {
-        return medjuStanice.linija;
-      }
+    // const medjustanice = await Linija.findAll({
+    //   where: {
+    //     pocetnaStanicaId: pocetnaStanica.id,
+    //     krajnjaStanicaId: krajnjaStanica.id,
+    //   },
+    //   include: Stanica,
+    // });
+
+    const linije = await Linija.findAll({
+      where: {
+        datumPolaska,
+        $or: [
+          {
+            pocetnaStanicaId: pocetnaStanica.id,
+            krajnjaStanicaId: krajnjaStanica.id,
+          },
+          {
+            pocetnaStanicaId: pocetnaStanica.id,
+            krajnjaStanicaId: medjustanice.id,
+          },
+        ],
+      },
+      include: Stanica,
     });
-    medjuLinijeFilt.filter((m) => {
-      return m !== null;
-    });
-    const spojeneLinije = linije.concat(medjuLinijeFilt);
-    res.status(200).json({ message: "uspesno izvučena linija", spojeneLinije });
+
+    res.status(200).json({ message: "uspesno izvučena linija", linije });
   } catch (error) {
     console.log(error);
     res

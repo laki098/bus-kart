@@ -6,47 +6,19 @@ import "./admin.css";
 
 const AdminPanel = () => {
   return (
-    <div className="backgroundBus" style={{ backgroundImage: `url(${bus1})` }}>
+    <div>
       <br />
       <Link to={"/bus.initial"}>
-        <button>Autobusi</button>
-      </Link>{" "}
+        <button className="dugme">Autobusi</button>
+      </Link>
       &ensp;
       <Link to={"/admin.initial"}>
-        <button>Linije</button>
-      </Link>{" "}
+        <button className="dugme">Linije</button>
+      </Link>
       &ensp;
       <Link to={"/korisniciInitial"}>
-        <button>Korisnici</button>
+        <button className="dugme">Korisnici</button>
       </Link>
-      <p>
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-      </p>
-      <p>
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-        &nbsp;
-        <br /> &ensp;
-        <br /> &emsp;
-        <br />
-      </p>
     </div>
   );
 };
