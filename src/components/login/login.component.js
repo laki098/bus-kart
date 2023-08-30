@@ -9,8 +9,6 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 
-import bus1 from "../images/bus1.jpg";
-import bus2 from "../images/bus2.jpg";
 import "../admin/admin.css";
 
 const LoginComponent = () => {
@@ -44,15 +42,7 @@ const LoginComponent = () => {
         </div>
       </header>
 
-      <div
-        className="main"
-        style={{
-          backgroundImage: `url(${bus1})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-          height: "40rem",
-        }}
-      >
+      <div className="main">
         <div className="sub-main" style={{ width: "20rem" }}>
           <div>
             <div className="imgs">
