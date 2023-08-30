@@ -3,7 +3,6 @@ import Linija from "../Models/LinijaModels.js";
 import Medjustanica from "../Models/MedjustanicaModels.js";
 import Stanica from "../Models/StanicaModels.js";
 import Rezervacija from "../Models/RezervacijaModels.js";
-import { BIGINT } from "sequelize";
 
 const router = express.Router();
 
@@ -72,8 +71,13 @@ router.post("/", async (req, res) => {
     // Povezivanje međustanica s linijom
     await Promise.all(
       sveMedjustanice.map(async (stanica, index) => {
+        console.log(stanica);
         await novaLinija.addStanica(stanica, {
-          through: { redosled: index + 1, brojSlobodnihMesta },
+          through: {
+            redosled: index + 1,
+
+            brojSlobodnihMesta,
+          },
         });
       })
     );
@@ -183,16 +187,20 @@ router.post("/rezervacija", async (req, res) => {
       linija.krajnjaStanicaId != krajnjaStanicaId
     ) {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
+
       const medjustanicaPocetna = await Medjustanica.findOne({
         where: linijaId,
         stanicaId: pocetnaStanicaId,
       });
+
       const medjustanicaKrajnja = await Medjustanica.findOne({
         where: linijaId,
         stanicaId: krajnjaStanicaId,
       });
+
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
+
         if (
           element.redosled >= medjustanicaPocetna.redosled &&
           element.redosled <= medjustanicaKrajnja.redosled
@@ -234,61 +242,65 @@ router.post("/filterLinija", async (req, res) => {
   try {
     const { nazivPocetneStanice, nazivKrajnjeStanice, datumPolaska } = req.body;
 
-    const pocetnaStanica = await Stanica.findOne({
-      where: {
-        naziv: nazivPocetneStanice,
-      },
-    });
+    const rezultat = [];
 
-    const krajnjaStanica = await Stanica.findOne({
-      where: {
-        naziv: nazivKrajnjeStanice,
-      },
-    });
-
-    const jestePocetnaMedjustanica = await Medjustanica.findByPk(
-      pocetnaStanica.id
-    );
-
-    const jesteKrajnjaMedjustanica = await Medjustanica.findByPk(
-      krajnjaStanica.id
-    );
-
-    if (!jestePocetnaMedjustanica) {
-      const linije = await Linija.findAll({
-        where: {
-          datumPolaska,
-          pocetnaStanicaId: pocetnaStanica.id,
-        },
-      });
-    }
-
-    // const medjustanice = await Linija.findAll({
-    //   where: {
-    //     pocetnaStanicaId: pocetnaStanica.id,
-    //     krajnjaStanicaId: krajnjaStanica.id,
-    //   },
-    //   include: Stanica,
-    // });
-
-    const linije = await Linija.findAll({
+    const izvuceneLinijeDatum = await Linija.findAll({
       where: {
         datumPolaska,
-        $or: [
-          {
-            pocetnaStanicaId: pocetnaStanica.id,
-            krajnjaStanicaId: krajnjaStanica.id,
-          },
-          {
-            pocetnaStanicaId: pocetnaStanica.id,
-            krajnjaStanicaId: medjustanice.id,
-          },
-        ],
       },
-      include: Stanica,
+      include: [
+        {
+          model: Stanica,
+          as: "pocetnaStanica",
+        },
+        {
+          model: Stanica,
+          as: "krajnjaStanica",
+        },
+        Stanica,
+      ],
     });
 
-    res.status(200).json({ message: "uspesno izvučena linija", linije });
+    //? prolazimo kroz liniju
+    for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
+      const linija = izvuceneLinijeDatum[index];
+      let brojMedjustanicaNaLiniji = 0;
+
+      //? prolazimo kroz medjustanice
+      for (let j = 0; j < linija.Stanicas.length; j++) {
+        const medjustanica = linija.Stanicas[j];
+
+        //?pitamo da li je na liniji ili medjustanici
+        if (
+          (linija.pocetnaStanica.naziv == nazivPocetneStanice &&
+            linija.krajnjaStanica.naziv == nazivKrajnjeStanice) ||
+          (linija.pocetnaStanica.naziv == nazivPocetneStanice &&
+            medjustanica.naziv == nazivKrajnjeStanice) ||
+          (medjustanica.naziv == nazivPocetneStanice &&
+            linija.krajnjaStanica.naziv == nazivKrajnjeStanice)
+        ) {
+          rezultat.push(linija);
+          break;
+        }
+
+        if (
+          medjustanica.naziv == nazivPocetneStanice ||
+          medjustanica.naziv == nazivKrajnjeStanice
+        ) {
+          brojMedjustanicaNaLiniji += 1;
+        }
+
+        if (brojMedjustanicaNaLiniji == 2) {
+          rezultat.push(linija);
+          break;
+        }
+      }
+    }
+
+    /* const proba = await izvuceneLinijeDatum[0].getPocetnaStanica();
+    const proba2 = await izvuceneLinijeDatum[0].getKrajnjaStanica(); */
+
+    res.status(200).json({ message: "uspesno izvučena linija", rezultat });
   } catch (error) {
     console.log(error);
     res

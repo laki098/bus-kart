@@ -14,6 +14,14 @@ const Medjustanica = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    /* vremePolaska: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    vremeDolaska: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    }, */
   },
   {
     tableName: "medjustanica",

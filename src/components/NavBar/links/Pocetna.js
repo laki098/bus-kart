@@ -36,12 +36,13 @@ const Pocetna = () => {
   const [dolasci, setDolasci] = useState([]);
   /* const [linije, setLinije] = useState([]); */
   const [stanice, setStanice] = useState([]);
-
+  console.log(filteredLinije);
   const filterLinija = async () => {
     if (!valueDate) return;
+    console.log(val1, val2.naziv, valueDate);
     const response = await LinijeApi().filterLinija(
-      val1.id,
-      val2.id,
+      val1.naziv,
+      val2.naziv,
       valueDate
     );
 
