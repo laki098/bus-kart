@@ -36,19 +36,16 @@ const Pocetna = () => {
   const [dolasci, setDolasci] = useState([]);
   /* const [linije, setLinije] = useState([]); */
   const [stanice, setStanice] = useState([]);
-  console.log(filteredLinije);
+
   const filterLinija = async () => {
     if (!valueDate) return;
-    console.log(val1, val2.naziv, valueDate);
-    const response = await LinijeApi().filterLinija(
-      val1.naziv,
-      val2.naziv,
-      valueDate
-    );
+    console.log(val1, val2, valueDate);
+    const response = await LinijeApi().filterLinija(val1, val2, valueDate);
 
     const data = await response.json();
-    setFilteredLinije(data);
+    setFilteredLinije(data.rezultat);
   };
+  console.log(filteredLinije);
 
   const getStanice = async () => {
     const response = await fetch("http://localhost:5000/gradovi/stanice");
@@ -85,7 +82,7 @@ const Pocetna = () => {
     /*  getLinije(); */ //Prilikom ucitavanja stranice da pozove funkciju get linije
     getStanice();
   }, []); //
-
+  console.log(stanice);
   const click = () => {
     //ovde mozes upit da napravis da li se val 1 sadrzi u dolasci
     // i da li se val 2 sadrzi u polasci
@@ -135,16 +132,19 @@ const Pocetna = () => {
   const vremePuta = (linija) => {
     const datumPolaska = new Date(linija.datumPolaska);
     const vremePolaska = linija.vremePolaska.split(":");
+
     datumPolaska.setHours(vremePolaska[0]);
     datumPolaska.setMinutes(vremePolaska[1]);
 
-    const datumDolaska = new Date(linija.datumPolaska);
+    const datumDolaska = new Date(linija.datumDolaska);
     const vremeDolaska = linija.vremeDolaska.split(":");
     datumDolaska.setHours(vremeDolaska[0]);
     datumDolaska.setMinutes(vremeDolaska[1]);
 
+    console.log(datumDolaska);
     const vremePuta = Math.abs(datumDolaska.getTime() - datumPolaska.getTime());
 
+    console.log(vremePuta);
     const minuti = Math.floor((vremePuta % (1000 * 60 * 60)) / (1000 * 60));
     const sati = Math.floor(vremePuta / (1000 * 60 * 60));
 
@@ -189,7 +189,6 @@ const Pocetna = () => {
               <label className="labela">
                 <Trans i18nKey="description.part31"> Polazna stanica </Trans>
               </label>
-
               <select
                 className=" box-title"
                 value={val1}
@@ -197,7 +196,7 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.id} value={linija.id}>
+                    <option key={linija.id} value={linija.naziv}>
                       {linija.naziv}
                     </option>
                   );
@@ -223,7 +222,7 @@ const Pocetna = () => {
                 {stanice.map((linija) => {
                   if (val1.naziv != linija.naziv) {
                     return (
-                      <option key={linija.id} value={linija.id}>
+                      <option key={linija.id} value={linija.naziv}>
                         {linija.naziv}
                       </option>
                     );
@@ -274,7 +273,7 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.id} value={linija.id}>
+                    <option key={linija.id} value={linija.naziv}>
                       {linija.naziv}
                     </option>
                   );
@@ -301,7 +300,7 @@ const Pocetna = () => {
                 {stanice.map((linija) => {
                   if (val1.naziv != linija.naziv) {
                     return (
-                      <option key={linija.id} value={linija.id}>
+                      <option key={linija.id} value={linija.naziv}>
                         {linija.naziv}
                       </option>
                     );
@@ -359,6 +358,7 @@ const Pocetna = () => {
           {isDesktop && (
             <div className="scroll">
               {filteredLinije.map((linija) => {
+                console.log(linija);
                 return (
                   <li key={linija.id}>
                     <div className="travel">
@@ -370,7 +370,7 @@ const Pocetna = () => {
                         </span>
                         <div className="start-destination">
                           {" "}
-                          {linija.mestoPolaska}{" "}
+                          {linija.pocetnaStanica}{" "}
                         </div>
                       </div>
 
@@ -382,15 +382,16 @@ const Pocetna = () => {
                         <div className="time-line"></div>
                         <div className="space">
                           <Trans i18nKey="description.part36">
-                            Broj mesta{" "}
+                            Broj mesta:
                           </Trans>
+                          :{linija.brojSlobodnihMesta}
                         </div>
                       </div>
 
                       <div className="end">
                         <div className="end-destination">
                           {" "}
-                          {linija.mestoDolaska}
+                          {linija.krajnjaStanica}
                         </div>
                         <span className="end-time"> {linija.vremeDolaska}</span>
                       </div>

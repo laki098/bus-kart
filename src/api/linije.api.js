@@ -34,8 +34,8 @@ const LinijeApi = () => {
   };
 
   const filterLinija = async (
-    pocetnaStanicaId,
-    krajnjaStanicaId,
+    nazivPocetneStanice,
+    nazivKrajnjeStanice,
     datumPolaska
   ) => {
     // return await axios.get("http://localhost:5000/linije/filterLinija", {
@@ -48,8 +48,8 @@ const LinijeApi = () => {
       },
       body: JSON.stringify({
         //filter radi po mestu polaska, mestu dolaska i datumu polaska
-        pocetnaStanicaId, //
-        krajnjaStanicaId, //
+        nazivPocetneStanice, //
+        nazivKrajnjeStanice, //
         datumPolaska, //
       }),
     });
