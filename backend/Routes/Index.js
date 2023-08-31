@@ -49,6 +49,8 @@ router.post("/", async (req, res) => {
       naziv: stanica.stanica,
       vremePolaska: stanica.vremePolaskaM,
       vremeDolaska: stanica.vremeDolaskaM,
+      datumPolaska: stanica.datumPolaskaM,
+      datumDolaska: stanica.datumDolaskaM,
     }));
 
     // Kreiranje linije
@@ -78,6 +80,8 @@ router.post("/", async (req, res) => {
             redosled: index + 1,
             vremePolaskaM: stanica.vremePolaska,
             vremeDolaskaM: stanica.vremeDolaska,
+            datumPolaskaM: stanica.datumPolaska,
+            datumDolaskaM: stanica.datumDolaska,
             brojSlobodnihMesta,
           },
         });
@@ -290,10 +294,6 @@ router.post("/filterLinija", async (req, res) => {
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
             brojSlobodnihMesta: linija.brojSlobodnihMesta,
           });
-          console.log(
-            "----------------------1-----------------------",
-            rezultat
-          );
           break;
         }
         if (
@@ -304,14 +304,15 @@ router.post("/filterLinija", async (req, res) => {
             id: linija.id,
             pocetnaStanica: linija.pocetnaStanica.naziv,
             krajnjaStanica: medjustanica.naziv,
-            vremePolaska: linija.vremePolaska,
-            vremeDolaska: element.vremeDolaskaM,
+            datumPolaska: linija.datumPolaska,
+            datumDolaska: element.datumDolaskaM,
+            vremePolaska: linija.vremePolaska.split(":").slice(0, 2).join(":"),
+            vremeDolaska: element.vremeDolaskaM
+              .split(":")
+              .slice(0, 2)
+              .join(":"),
             brojSlobodnihMesta: linija.brojSlobodnihMesta,
           });
-          console.log(
-            "---------------2------------------------------",
-            rezultat
-          );
         }
         if (
           medjustanica.naziv == nazivPocetneStanice &&
@@ -321,14 +322,15 @@ router.post("/filterLinija", async (req, res) => {
             id: linija.id,
             pocetnaStanica: medjustanica.naziv,
             krajnjaStanica: linija.krajnjaStanica.naziv,
-            vremePolaska: medjustanica.vremePolaskaM,
-            vremeDolaska: linija.vremeDolaska,
+            datumPolaska: element.datumPolaskaM,
+            datumDolaska: linija.datumDolaska,
+            vremePolaska: element.vremePolaskaM
+              .split(":")
+              .slice(0, 2)
+              .join(":"),
+            vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
             brojSlobodnihMesta: medjustanica.brojSlobodnihMesta,
           });
-          console.log(
-            "--------------3-------------------------------",
-            rezultat
-          );
           break;
         }
 
@@ -338,17 +340,25 @@ router.post("/filterLinija", async (req, res) => {
         ) {
           brojMedjustanicaNaLiniji += 1;
         }
-
+        //! TREBA MI USLOV ZA REDOSLED
         if (brojMedjustanicaNaLiniji == 2) {
           rezultat.push({
             id: linija.id,
             pocetnaStanica: nazivPocetneStanice,
             krajnjaStanica: nazivKrajnjeStanice,
-            vremePolaska: element.vremePolaskaM,
-            vremeDolaska: element.vremeDolaskaM,
+            datumPolaska: element.datumPolaskaM,
+            datumDolaska: element.datumDolaskaM,
+            vremePolaska: element.vremePolaskaM
+              .split(":")
+              .slice(0, 2)
+              .join(":"),
+            vremeDolaska: element.vremeDolaskaM
+              .split(":")
+              .slice(0, 2)
+              .join(":"),
             brojSlobodnihMesta: medjustanica.brojSlobodnihMesta,
+            element,
           });
-          console.log(rezultat);
           break;
         }
       }

@@ -22,6 +22,14 @@ const Medjustanica = db.define(
       type: DataTypes.TIME,
       allowNull: false,
     },
+    datumPolaskaM: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    datumDolaskaM: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
   },
   {
     tableName: "medjustanica",
