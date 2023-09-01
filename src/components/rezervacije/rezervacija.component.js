@@ -2,22 +2,30 @@ import { useRef, useState, useEffect } from "react";
 import RezervacijaLogic from "./rezervacija.logic";
 import classes from "../registration/registration.module.css";
 import LinijeApi from "../../api/linije.api";
-
-//import AdminLogic from "./admin.logic";         /*      sta nam to daje     */
-import AdminLogic from "../admin/admin.logic";
+import cookies from "js-cookie";
 
 import Qrcode from "./QrCode";
 import "../rezervacije/index1.css";
 import "./sedista/sedista.css";
+import S2 from "../rezervacije/proba/s2";
+import MAN from "./proba/man";
+import MK91 from "./proba/mk91";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
-  var count = 0;
+
+  //? izvlacenje korisnika koji je prijavljen
+  let userData = cookies.get("userData");
+  let userPars = {};
+
+  if (userData != undefined) {
+    userPars = JSON.parse(userData);
+  }
 
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
-    const data = await response.data; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
-    let polazak = data.datumPolaska.split(",");
+    const data = await response.data.linija; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
+    /* let polazak = data.datumPolaska.split(",");
     let dolazak = data.datumDolaska.split(",");
     const linija = {
       ...data,
@@ -27,8 +35,9 @@ const RezervacijaComponent = ({ id }) => {
       datumDolaska: new Date(+dolazak[0], +dolazak[1] - 1, +dolazak[2] + 1) //+ prebacuje u int iz stringa
         .toISOString()
         .substr(0, 10),
-    };
-    setLinija(linija);
+    }; */
+    console.log(data);
+    setLinija(data);
   };
 
   useEffect(() => {
@@ -65,7 +74,6 @@ const RezervacijaComponent = ({ id }) => {
 
   function handleClick(index) {
     const noviNiz = [...rezervacije];
-    console.log(index + 1);
     noviNiz[index] = !noviNiz[index];
 
     setRezervacije(noviNiz);
@@ -193,6 +201,11 @@ const RezervacijaComponent = ({ id }) => {
               className="test"
               type="text"
               name="ime"
+              value={
+                userPars.ime == undefined
+                  ? ""
+                  : userPars.ime + " " + userPars.prezime
+              }
               onChange={rezervacijaLogic.changeHandler}
               ref={fNameInputRef}
             />
@@ -314,6 +327,7 @@ const RezervacijaComponent = ({ id }) => {
               type="text"
               className="test"
               name="email"
+              value={userPars.email == undefined ? "" : userPars.email}
               ref={emailInputRef}
               onChange={rezervacijaLogic.changeHandler}
             />
@@ -330,6 +344,9 @@ const RezervacijaComponent = ({ id }) => {
               type="text"
               className="test"
               name="telefon"
+              value={
+                userPars.brojTelefona == undefined ? "" : userPars.brojTelefona
+              }
               ref={telefonInputRef}
               onChange={rezervacijaLogic.changeHandler}
             />
@@ -420,37 +437,11 @@ const RezervacijaComponent = ({ id }) => {
 
           <div className="right-side">
             <div className="autobus">
-              {rezervacije.map((rezervisano, index) => (
-                <div
-                  key={index}
-                  className={`sediste ${rezervisano ? "rezervisano" : ""}`}
-                  onClick={() => handleClick(index)}
-                  style={{
-                    marginRight: index % 4 === 1 ? "1.5rem" : 1,
-                    width:
-                      index % 4 === 4 || index === rezervacije.length - 1
-                        ? "calc(20% - 0rem)"
-                        : "20%",
-                    marginLeft:
-                      index >= rezervacije.length - 5 &&
-                      index <= rezervacije.length - 5
-                        ? "calc(5% - 1rem)"
-                        : index >= rezervacije.length - 4 &&
-                          index <= rezervacije.length - 4
-                        ? "calc(5% - 0.6rem)"
-                        : index >= rezervacije.length - 3 &&
-                          index <= rezervacije.length - 3
-                        ? "calc(5% - 2rem)"
-                        : index >= rezervacije.length - 2 &&
-                          index <= rezervacije.length
-                        ? "calc(5% - 0.6rem)" /* 
-              index % 4 === 4 && index !== 0 ? '2.5rem' : */
-                        : 0,
-                  }}
-                >
-                  {index + 1}
-                </div>
-              ))}
+              <div>
+                {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
+                  (linija.oznakaBusa != "MAN" ? "" : <MAN />) ||
+                  (linija.oznakaBusa != "MK91" ? "" : <MK91 />)}
+              </div>
               <div>
                 Trenutno rezervisano mesto:{" "}
                 {trenutnaRezervacija + "" || "Nijedno"}

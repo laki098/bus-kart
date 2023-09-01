@@ -55,10 +55,7 @@ const LinijeApi = () => {
     });
   };
   const filterLinijaID = async (id) => {
-    return await axios.get(
-      `http://localhost:5000/linije/filterLinijaID/${id}`,
-      {}
-    );
+    return await axios.get(`http://localhost:5000/linija/${id}`, {});
   };
 
   const brisanjeLinije = async (id) => {
