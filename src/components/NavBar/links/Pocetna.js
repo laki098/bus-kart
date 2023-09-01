@@ -46,7 +46,7 @@ const Pocetna = () => {
   };
 
   const getStanice = async () => {
-    const response = await fetch("http://localhost:5000/gradovi/stanice");
+    const response = await fetch("http://localhost:5000/stanica");
     const data = await response.json();
 
     const a1 = data.stanice.map((item) => {

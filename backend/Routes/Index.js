@@ -356,8 +356,7 @@ router.post("/filterLinija", async (req, res) => {
               .split(":")
               .slice(0, 2)
               .join(":"),
-            brojSlobodnihMesta: medjustanica.brojSlobodnihMesta,
-            element,
+            brojSlobodnihMesta: element.brojSlobodnihMesta,
           });
           break;
         }

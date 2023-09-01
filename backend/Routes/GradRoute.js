@@ -104,17 +104,4 @@ router.post("/linije", async (req, res) => {
   }
 }); */
 
-router.get("/stanice", async (req, res) => {
-  try {
-    const stanice = await Stanica.findAll({
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
-    return res.json({ stanice });
-  } catch (error) {
-    res.status(500).json({ message: "eeaeasrasr", error });
-  }
-});
-
 export default router;
