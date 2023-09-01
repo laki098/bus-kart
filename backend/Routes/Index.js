@@ -3,6 +3,7 @@ import Linija from "../Models/LinijaModels.js";
 import Medjustanica from "../Models/MedjustanicaModels.js";
 import Stanica from "../Models/StanicaModels.js";
 import Rezervacija from "../Models/RezervacijaModels.js";
+import Bus from "../Models/BusModels.js";
 
 const router = express.Router();
 
@@ -12,6 +13,20 @@ router.get("/", async (req, res) => {
     res.status(200).json({ message: "uspesno izvucena linija", linija });
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const linija = await Linija.findOne({
+      where: { id },
+    });
+
+    res.status(200).json({ message: "Uspesno pronadjena linija", linija });
+  } catch (error) {
+    res.status(500).json({ message: "Doslo je do greske", error });
   }
 });
 
@@ -27,7 +42,7 @@ router.post("/", async (req, res) => {
       vremeDolaska,
       datumPolaska,
       datumDolaska,
-      brojSlobodnihMesta,
+      oznakaBusa,
     } = req.body;
 
     // Kreiranje početne stanice
@@ -43,6 +58,25 @@ router.post("/", async (req, res) => {
         naziv: krajnjaStanica,
       },
     });
+
+    //kreiranje broja sedista.. izlacenja po oznaci busa
+
+    const brojMestaUBusu = await Bus.findOne({
+      where: {
+        oznakaBusa,
+      },
+      attributes: {
+        exclude: [
+          "idAutobusa",
+          "oznakaBusa",
+          "tablice",
+          "createdAt",
+          "updatedAt",
+        ],
+      },
+    });
+
+    const brojSlobodnihMesta = brojMestaUBusu.brojSedista;
 
     // Kreiranje medjustanica sa vremenima
     const medjustaniceWithTimes = medjustanice.map((stanica) => ({
@@ -60,6 +94,7 @@ router.post("/", async (req, res) => {
       datumPolaska,
       datumDolaska,
       brojSlobodnihMesta,
+      oznakaBusa,
     });
 
     // Povezivanje početne stanice i krajnje stanice s linijom
@@ -163,7 +198,6 @@ router.post("/rezervacija", async (req, res) => {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
-        console.log(element);
         element.brojSlobodnihMesta -= brojMesta;
         element.save();
       }
@@ -276,7 +310,6 @@ router.post("/filterLinija", async (req, res) => {
       for (let j = 0; j < linija.Stanicas.length; j++) {
         const medjustanica = linija.Stanicas[j];
 
-        console.log(medjustanica);
         const element = medjustanica.Medjustanica;
 
         //?pitamo da li je na liniji ili medjustanici

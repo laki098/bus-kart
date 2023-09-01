@@ -25,6 +25,10 @@ const Linija = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    oznakaBusa: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     tableName: "linija",
