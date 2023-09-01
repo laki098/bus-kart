@@ -17,7 +17,9 @@ const BusInitional = () => {
 
   const brisanjeBusa = async (idAutobusa) => {
     const response = await BusApi().brisanjeBus(idAutobusa);
+    window.location.reload();
   };
+
 
   return (
     <>

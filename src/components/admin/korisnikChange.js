@@ -13,6 +13,10 @@ const KorisnikChange = () => {
 
   const korisnikLogic = KorisnikLogic();
 
+  const back = () => {
+    window.history.back();
+  }
+
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -91,7 +95,7 @@ const KorisnikChange = () => {
           <option value="menadzer">menadzer</option>
           <option value="admin">admin</option>
         </select>
-        <button type="submit"> Sacuvaj</button>
+        <button onClick={back} type="submit"> Sacuvaj</button>
       </div>
     </form>
   );

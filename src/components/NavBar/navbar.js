@@ -15,6 +15,13 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
+  const clickBaitLogout = () => { 
+    loginApi().logout();
+    window.location.reload();
+  }
+
   let userData = cookies.get("userData");
   let userPars = {};
 
@@ -69,7 +76,7 @@ const Navbar = () => {
                 <ul className="dropdown">
                   <li>Profil</li>
                   <li>Postavke</li>
-                  <button onClick={loginApi().logout}>Logout</button>
+                  <button onClick={clickBaitLogout}>Logout</button>
                 </ul>
               )}
             </li>
