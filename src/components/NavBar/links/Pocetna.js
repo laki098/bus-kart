@@ -38,6 +38,7 @@ const Pocetna = () => {
   const [stanice, setStanice] = useState([]);
 
   const filterLinija = async () => {
+    console.log(val1, val2, valueDate)
     if (!valueDate) return;
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
 
@@ -53,8 +54,8 @@ const Pocetna = () => {
       return { naziv: item.naziv, id: item.id };
     });
     setStanice(a1);
-    setVal1(a1[0]);
-    setVal2(a1[1]);
+    setVal1(a1[0].naziv);
+    setVal2(a1[1].naziv);
   };
 
   /*  const getLinije = async () => {
