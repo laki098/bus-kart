@@ -408,4 +408,24 @@ router.post("/filterLinija", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteLinija = await Linija.destroy({
+      where: { id },
+      limit: 1,
+    });
+
+    if (deleteLinija === 0) {
+      return res.status(404).json({ message: "Linija nije pronadjena" });
+    }
+    res.status(200).json({ message: "Linija uspesno obrisana" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "doslo je do greske pri ocitavanju baze", error });
+  }
+});
+
 export default router;

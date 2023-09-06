@@ -58,8 +58,9 @@ const LinijeApi = () => {
     return await axios.get(`http://localhost:5000/linija/${id}`, {});
   };
 
-  const brisanjeLinije = async (id) => {
-    return await axios.post(`http://localhost:5000/linije/delete/${id}`, {}); //brisanje radi po id-u
+  const brisanjeLinije = async (idLinije) => {
+    console.log(idLinije);
+    return await axios.delete(`http://localhost:5000/linija/${idLinije}`, {}); //brisanje radi po id-u
   };
 
   const editLinije = async (
