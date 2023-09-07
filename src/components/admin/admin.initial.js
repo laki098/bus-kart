@@ -3,9 +3,7 @@ import LinijeApi from "../../api/linije.api";
 import AdminLogic from "./admin.logic";
 import { Link } from "react-router-dom";
 import "./admin.css";
-import helpers from "../../helpers/helpers";
 
-//import "../registration/registration.module.css";         // dodala sn
 import classes from "../registration/registration.module.css";
 import "../login/loginStyle.css";
 
@@ -24,32 +22,47 @@ const AdminInitial = () => {
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
   /*   const [linije, setLinije] = useState([]); */
+  const [stanice, setStanice] = useState([]);
+
+  const getStanice = async () => {
+    const response = await fetch("http://localhost:5000/stanica");
+    const data = await response.json();
+
+    const a1 = data.stanice.map((item) => {
+      return { naziv: item.naziv, id: item.id };
+    });
+    setStanice(a1);
+    setVal1(a1[0].naziv);
+    setVal2(a1[1].naziv);
+  };
 
   const filterLinija = async () => {
     if (!valueDate) return;
-
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
     const data = await response.json();
-    setFilteredLinije(data);
+    console.log(data.rezultat);
+    setFilteredLinije(data.rezultat);
   };
   const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linije/linija");
-    const data = await response.json();
-    const mestoPolaska = data
+    const response = await fetch("http://localhost:5000/linija");
+    const podaci = await response.json();
+    const data = podaci.linija;
+    console.log(data);
+    /* const mestoPolaska = data
       .map((item) => item.mestoPolaska)
       .filter(helpers.filterUnique); //filtriranje mesto polaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
     const mestoDolaska = data
       .map((item) => item.mestoDolaska)
       .filter(helpers.filterUnique); //filtriranje mesto dolaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
     setPolasci(mestoPolaska); // setujemo filtrirano mesto polaska(da ne bi moglo da ispisuje duplo)
-    setDolasci(mestoDolaska); // setujemo filtrirano mesto dolaska(da ne bi moglo da ispisuje duplo)
+    setDolasci(mestoDolaska); */ // setujemo filtrirano mesto dolaska(da ne bi moglo da ispisuje duplo)
     /* setLinije(data); */
-    setVal1(data[0].mestoPolaska);
-    setVal2(data[0].mestoDolaska);
+    /* setVal1(data[0].mestoPolaska);
+    setVal2(data[0].mestoDolaska); */
   };
 
   useEffect(() => {
-    getLinije();
+    getStanice();
   }, [filteredLinije]);
 
   const adminLogic = AdminLogic();
@@ -123,12 +136,12 @@ const AdminInitial = () => {
             value={val1} //
             onChange={(e) => setVal1(e.target.value)} //
           >
-            {polasci.map((linija) => {
+            {stanice.map((stanice) => {
               // Za ispis iz baze filtrirano mesto polaska
               return (
                 //
-                <option key={linija} value={linija}>
-                  {linija}
+                <option key={stanice.id} value={stanice.naziv}>
+                  {stanice.naziv}
                 </option> //
               );
             })}
@@ -146,14 +159,14 @@ const AdminInitial = () => {
             value={val2} //
             onChange={(e) => setVal2(e.target.value)} //
           >
-            {dolasci.map((linija) => {
-              //Za ispis iz  baze filtirano mesto dolaska
+            {stanice.map((stanice) => {
+              // Za ispis iz baze filtrirano mesto polaska
               return (
                 //
-                <option key={linija} value={linija}>
-                  {linija}
+                <option key={stanice.id} value={stanice.naziv}>
+                  {stanice.naziv}
                 </option> //
-              ); //
+              );
             })}
           </select>
         </div>
@@ -192,6 +205,7 @@ const AdminInitial = () => {
             }
           `}</style>
               {filteredLinije.map((linija) => {
+                console.log(linija);
                 return (
                   <li key={linija.id}>
                     <div className="home-show">
@@ -201,12 +215,12 @@ const AdminInitial = () => {
                       {linija.vremePolaska},
                       <Trans i18nKey="description.part13">Vreme dolaska:</Trans>{" "}
                       {linija.vremeDolaska},
-                      <Trans i18nKey="description.part131">Prevoznik: </Trans>{" "}
-                      {linija.prevoznik},
+                      {/* <Trans i18nKey="description.part131">Prevoznik: </Trans>{" "}
+                      {linija.prevoznik}, */}
                       <Trans i18nKey="description.part3">Mesto polaska: </Trans>{" "}
-                      {linija.mestoPolaska},
+                      {linija.pocetnaStanica},
                       <Trans i18nKey="description.part5">Mesto dolaska: </Trans>{" "}
-                      {linija.mestoDolaska}
+                      {linija.krajnjaStanica}
                       &nbsp;&nbsp;
                       <br />
                       <Link to={`${linija.id}/admin.change.line`}>
