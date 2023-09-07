@@ -368,7 +368,21 @@ const Pocetna = () => {
                         <span className="end-time"> {linija.vremeDolaska}</span>
                       </div>
                       <div>
-                        <Link to={`${linija.id}/rezervacijakarte`}>
+                        <Link
+                          to={{
+                            pathname: `${linija.id}/rezervacijakarte`,
+                            state: {
+                              id: linija.id,
+                              vremePolaska: linija.vremePolaska,
+                              pocetnaStanica: linija.pocetnaStanica,
+                              brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                              krajnjaStanica: linija.krajnjaStanica,
+                              vremeDolaska: linija.vremeDolaska,
+                              datumPolaska: linija.datumPolaska,
+                              datumDolaska: linija.datumDolaska,
+                            },
+                          }}
+                        >
                           <button
                             className="buttonSwitch1"
                             style={{ fontSize: "1rem" }}
@@ -436,7 +450,21 @@ const Pocetna = () => {
                         <span className="end-time"> {linija.vremeDolaska}</span>
                       </div>
                       <div>
-                        <Link to={`${linija.id}/rezervacijakarte`}>
+                        <Link
+                          to={{
+                            pathname: `${linija.id}/rezervacijakarte`,
+                            state: {
+                              id: linija.id,
+                              vremePolaska: linija.vremePolaska,
+                              pocetnaStanica: linija.pocetnaStanica,
+                              brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                              krajnjaStanica: linija.krajnjaStanica,
+                              vremeDolaska: linija.vremeDolaska,
+                              datumPolaska: linija.datumPolaska,
+                              datumDolaska: linija.datumDolaska,
+                            },
+                          }}
+                        >
                           <button
                             className="buttonSwitch1"
                             style={{ marginLeft: "-1rem" }}
