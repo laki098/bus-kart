@@ -46,6 +46,11 @@ const LineForm = ({ mode, id }) => {
     setCene([...cene, ""]);
   };
 
+  const duploDugmeMedjustanica = () => {
+    addWaypoint();
+    adminLogic.dodajMedjustanicu();
+  };
+
   const handleSelectChange = (event, index) => {
     const newSelectedValues = [...selectedValues];
     newSelectedValues[index] = event.target.value;
@@ -153,11 +158,11 @@ const LineForm = ({ mode, id }) => {
               </label>
               <br />
               <input
-                defaultValue={linija.mestoPolaska}
+                defaultValue={linija.pocetnaStanica}
                 type="text"
                 placeholder="Mesto polaska"
                 required
-                name="mestoPolaska"
+                name="pocetnaStanica"
                 className="name1 input-new"
                 style={{ fontSize: "1rem", color: "darkblue" }}
                 onChange={adminLogic.changeHandler}
@@ -168,8 +173,9 @@ const LineForm = ({ mode, id }) => {
                   <label>Usputna stanica {index + 1}</label>
                   <br />
                   <select
-                    value={selectedValues[index]}
-                    onChange={(event) => handleSelectChange(event, index)}
+                    name="stanica"
+                    /* value={medjustanica.stanica} */
+                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
                   >
                     {stanice.map((stanica) => {
                       return (
@@ -181,15 +187,61 @@ const LineForm = ({ mode, id }) => {
                   </select>
                   <label>Cena</label>
 
-                  <input
-                    type="number"
-                    value={cene[index]}
-                    onChange={(event) => handleCenaChange(event, index)}
-                  />
+                  <label>
+                    <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                  </label>
                   <br />
+                  <input
+                    /* defaultValue={linija.vremePolaska} */
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    label="Time"
+                    name="vremePolaskaM"
+                    style={{ fontSize: "1rem" }}
+                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
+                  ></input>
+                  <label>
+                    <Trans i18nKey="description.part11">Vreme dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    /* defaultValue={linija.vremePolaska} */
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    label="Time"
+                    name="vremeDolaskaM"
+                    style={{ fontSize: "1rem" }}
+                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
+                  ></input>
+                  <label>
+                    <Trans i18nKey="description.part7">Datum polaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    /*  defaultValue={linija.datumPolaska} */
+                    name="datumPolaskaM"
+                    type="date"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem" }}
+                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
+                  />
+                  <label>
+                    <Trans i18nKey="description.part7">Datum dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    /*  defaultValue={linija.datumPolaska} */
+                    name="datumDolaskaM"
+                    type="date"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem" }}
+                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
+                  />
                 </div>
               ))}
-              <button type="button" onClick={addWaypoint}>
+              <button type="button" onClick={duploDugmeMedjustanica}>
                 Dodaj usputnu stanicu
               </button>{" "}
               <br />
@@ -198,9 +250,9 @@ const LineForm = ({ mode, id }) => {
               </label>
               <br />
               <input
-                defaultValue={linija.mestoDolaska}
+                defaultValue={linija.krajnjaStanica}
                 type="text"
-                name="mestoDolaska"
+                name="krajnjaStanica"
                 placeholder="Mesto dolaska"
                 className="name1 input-new"
                 style={{ fontSize: "1rem", color: "darkblue" }}
@@ -280,7 +332,7 @@ const LineForm = ({ mode, id }) => {
                 onChange={adminLogic.changeHandler}
               ></input>
               <br />
-              <label>
+              {/* <label>
                 <Trans i18nKey="description.part131">Prevoznik</Trans>
               </label>
               <br />
@@ -300,10 +352,14 @@ const LineForm = ({ mode, id }) => {
                 </option>
                 <option>Eurocompass</option>
               </select>
-              <br />
+              <br /> */}
               <label>Izaberite autobus</label>
               <br />
-              <select>
+              <select
+                value={linija.oznakaBusa}
+                name="oznakaBusa"
+                onChange={adminLogic.changeHandler}
+              >
                 {autobusi.map((autobusi) => {
                   return (
                     <option

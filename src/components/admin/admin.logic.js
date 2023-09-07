@@ -2,7 +2,7 @@ import { useState } from "react";
 import LinijeApi from "../../api/linije.api";
 
 const AdminLogic = () => {
-  let [data, setData] = useState({});
+  let [data, setData] = useState({ medjustanice: [] });
 
   const changeHandler = (e) =>
     setData({
@@ -10,16 +10,54 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
+  const handlerMedjustanice = (e, index) => {
+    const { name, value } = e.target;
+    const novaMedjustanica = [...data.medjustanice];
+    novaMedjustanica[index][name] = value;
+    setData({
+      ...data,
+      medjustanice: novaMedjustanica,
+    });
+  };
+
+  const dodajMedjustanicu = () => {
+    setData({
+      ...data,
+      medjustanice: [...data.medjustanice, {}],
+    });
+  };
+
+  const ukloniMedjustanicu = (index) => {
+    const novaMedjustanica = [...data.medjustanice];
+    novaMedjustanica.splice(index, 1);
+    setData({
+      ...data,
+      medjustanice: novaMedjustanica,
+    });
+  };
+
+  const raspakovanaMedjustanica = data.medjustanice.map((item) => {
+    return {
+      stanica: item.stanica,
+      vremePolaskaM: item.vremePolaskaM,
+      vremeDolaskaM: item.vremeDolaskaM,
+      datumPolaskaM: item.datumPolaskaM,
+      datumDolaskaM: item.datumDolaskaM,
+    };
+  });
+  console.log(raspakovanaMedjustanica);
+
   const upisLinije = async () => {
     LinijeApi()
       .upisLinije(
-        data.mestoPolaska,
-        data.mestoDolaska,
-        data.datumPolaska,
-        data.datumDolaska,
+        data.pocetnaStanica,
+        raspakovanaMedjustanica,
+        data.krajnjaStanica,
         data.vremePolaska,
         data.vremeDolaska,
-        data.prevoznik
+        data.datumPolaska,
+        data.datumDolaska,
+        data.oznakaBusa
       )
       .then((response) => {
         console.log(response);
@@ -63,7 +101,16 @@ const AdminLogic = () => {
     //   console.log(error);
     // });
   };
-  return { changeHandler, setData, upisLinije, brisanjeLinije, editLinije };
+  return {
+    changeHandler,
+    setData,
+    upisLinije,
+    brisanjeLinije,
+    editLinije,
+    handlerMedjustanice,
+    dodajMedjustanicu,
+    ukloniMedjustanicu,
+  };
 };
 
 export default AdminLogic;

@@ -2,34 +2,37 @@ import axios from "axios";
 
 const LinijeApi = () => {
   const getLinije = async () => {
-    return await fetch("http://localhost:5000/linije");
+    return await fetch("http://localhost:5000/linija");
   };
   const upisLinije = async (
-    mestoPolaska,
-    mestoDolaska,
-    datumPolaska,
-    datumDolaska,
+    pocetnaStanica,
+    medjustanice,
+    krajnjaStanica,
     vremePolaska,
     vremeDolaska,
-    prevoznik
+    datumPolaska,
+    datumDolaska,
+    oznakaBusa
   ) => {
     console.log({
-      mestoPolaska: mestoPolaska,
-      mestoDolaska: mestoDolaska,
-      datumPolaska: datumPolaska,
-      datumDolaska: datumDolaska,
-      vremePolaska: vremePolaska,
-      vremeDolaska: vremeDolaska,
-      prevoznik: prevoznik,
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
     });
-    return await axios.post("http://localhost:5000/linije/linijeNov", {
-      mestoPolaska: mestoPolaska,
-      mestoDolaska: mestoDolaska,
-      datumPolaska: datumPolaska,
-      datumDolaska: datumDolaska,
-      vremePolaska: vremePolaska,
-      vremeDolaska: vremeDolaska,
-      prevoznik: prevoznik,
+    return await axios.post("http://localhost:5000/linija", {
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
     });
   };
 
