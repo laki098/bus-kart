@@ -25,8 +25,14 @@ const BusForm = ({ mode, idAutobusa }) => {
     }
   }, []);
 
+  const back = () => {
+    window.history.back();
+  }
+
   const submitHandler = (event) => {
     event.preventDefault();
+
+    
 
     if (mode === "add") {
       busLogic.upisBus();
@@ -132,6 +138,7 @@ const BusForm = ({ mode, idAutobusa }) => {
               <br />
 
               <button
+                onClick={back}
                 type="submit"
                 className="button"
                 style={{ height: "2rem" }}

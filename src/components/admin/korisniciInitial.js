@@ -6,7 +6,7 @@ const KorisniciInitial = () => {
   const [korisnici, setKorisnici] = useState([]);
   useEffect(() => {
     getKorisnici();
-  }, []);
+  }, korisnici);
 
   const getKorisnici = async () => {
     const response = await fetch("http://localhost:5000/korisnik");

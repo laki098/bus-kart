@@ -68,8 +68,6 @@ const ResetPassword = () => {
         </div>
       </header>
       <form ref={form} onSubmit={submit}>
-        <img src={bus1} className="slika" />
-        {/*  <div  className="backgroundBus" style={{ backgroundImage: `url(${bus1})` }}>   */}
         <div className="main" style={{ paddingTop: "0.625rem" }}>
           <div className="sub-main">
             {" "}

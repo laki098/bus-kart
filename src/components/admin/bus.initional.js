@@ -7,7 +7,7 @@ const BusInitional = () => {
   const [busevi, setBusevi] = useState([]);
   useEffect(() => {
     getBus();
-  }, []);
+  }, busevi);
 
   const getBus = async () => {
     const response = await fetch("http://localhost:5000/autobusi");

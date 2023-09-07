@@ -51,42 +51,6 @@ const LoginComponent = () => {
               </div>
             </div>
             <div>
-              <h1>Uloguj se</h1>
-              <div>
-                <img src={user} alt="user" className="user " />
-                <input
-                  type="text"
-                  placeholder="Korisnicko ime"
-                  name="korisnickoIme"
-                  className="name input"
-                  onChange={loginLogic.changeHandler}
-                />
-              </div>
-              <div className="second-input">
-                <img src={password} alt="password" className="user1 " />
-                <input
-                  type="password"
-                  placeholder="Lozinka"
-                  name="lozinka"
-                  className="name input"
-                  onChange={loginLogic.changeHandler}
-                />
-              </div>
-              <div className="login-button">
-                <button className="button" onClick={loginLogic.login}>
-                  Login
-                </button>
-              </div>
-
-              <div className="link">
-                <Link to="/reset.password" className="a">
-                  Zaboravio sifru ?{" "}
-                </Link>{" "}
-                ili{" "}
-                <Link to="/registration.component" className="a">
-                  Registruj se
-                </Link>
-              </div>
               <div>
                 <br />
                 <p className="naslov">
