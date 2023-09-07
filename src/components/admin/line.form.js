@@ -7,14 +7,38 @@ import "../login/loginStyle.css"; /* preuzimam stil od login/login.component.js 
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
+import helpers from "../../helpers/helpers";
 
 const LineForm = ({ mode, id }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
+  const [stanice, setStanice] = useState([]);
 
   const [waypoints, setWaypoints] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [cene, setCene] = useState([]);
+  const [autobusi, setAutobusi] = useState([]);
+
+  const getAutobusi = async () => {
+    const response = await fetch("http://localhost:5000/autobusi");
+    const data = await response.json();
+    const autobusi = data.autobusi.map((item) => {
+      return { oznakaBusa: item.oznakaBusa };
+    });
+    setAutobusi(autobusi);
+  };
+
+  const getStanice = async () => {
+    const response = await fetch("http://localhost:5000/stanica");
+    const data = await response.json();
+    const stanica = data.stanice.map((item) => {
+      return { naziv: item.naziv };
+    });
+    const filterStanica = stanica
+      .map((item) => item.naziv)
+      .filter(helpers.filterUnique);
+    setStanice(filterStanica);
+  };
 
   const addWaypoint = () => {
     setWaypoints([...waypoints, ""]);
@@ -55,6 +79,8 @@ const LineForm = ({ mode, id }) => {
   };
 
   useEffect(() => {
+    getStanice();
+    getAutobusi();
     if (mode === "edit") {
       izmeniLiniju();
     }
@@ -145,14 +171,13 @@ const LineForm = ({ mode, id }) => {
                     value={selectedValues[index]}
                     onChange={(event) => handleSelectChange(event, index)}
                   >
-                    <option value="">Dodaj podstanicu</option>
-                    <option value="Stanica 1">Aleksinac</option>
-                    <option value="Stanica 2">Krusevac</option>
-                    <option value="Stanica 3">Kragujevac</option>
-                    <option value="Stanica 4">Jagodina</option>
-                    <option value="Stanica 5">Novi Sad</option>
-
-                    {/* Dodajte ostale opcije usputnih stanica */}
+                    {stanice.map((stanica) => {
+                      return (
+                        <option key={stanica} value={stanica}>
+                          {stanica}
+                        </option>
+                      );
+                    })}
                   </select>
                   <label>Cena</label>
 
@@ -279,17 +304,16 @@ const LineForm = ({ mode, id }) => {
               <label>Izaberite autobus</label>
               <br />
               <select>
-                <option disabled={false} value="">
-                  --Oznaka autobusa--
-                </option>
-                <option>VH - 91</option>
-                <option>S2 - 83</option>
-                <option>S1 - 75</option>
-                <option>MAN - 57</option>
-                <option>MB1 - 55</option>
-                <option>MB3 - 51</option>
-                <option>MB4 - 48</option>
-                <option>VL - 49</option>
+                {autobusi.map((autobusi) => {
+                  return (
+                    <option
+                      key={autobusi.oznakaBusa}
+                      value={autobusi.oznakaBusa}
+                    >
+                      {autobusi.oznakaBusa}
+                    </option>
+                  );
+                })}
               </select>
               <br />
               <br />

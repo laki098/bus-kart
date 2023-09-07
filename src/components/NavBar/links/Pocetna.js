@@ -32,13 +32,12 @@ const Pocetna = () => {
   const [valueDate, setValueDate] = useState("");
   const [val1, setVal1] = useState("");
   const [val2, setVal2] = useState("");
-  const [polasci, setPolasci] = useState([]);
-  const [dolasci, setDolasci] = useState([]);
-  /* const [linije, setLinije] = useState([]); */
   const [stanice, setStanice] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [bus1, bus2];
+  const [showClass, setShowClass] = useState(false);
 
   const filterLinija = async () => {
-    console.log(val1, val2, valueDate)
     if (!valueDate) return;
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
 
@@ -47,54 +46,35 @@ const Pocetna = () => {
   };
 
   const getStanice = async () => {
-    const response = await fetch("http://localhost:5000/gradovi/stanice");
+    const response = await fetch("http://localhost:5000/stanica");
     const data = await response.json();
 
     const a1 = data.stanice.map((item) => {
       return { naziv: item.naziv, id: item.id };
     });
-    setStanice(a1);
-    setVal1(a1[0].naziv);
-    setVal2(a1[1].naziv);
+
+    const a2 = a1 //
+      .map((item) => item.naziv) //Uradjen filter da se u selektu ne ponavljaju linije
+      .filter(helpers.filterUnique);
+
+    setStanice(a2);
+    setVal1(a2[0]);
+    setVal2(a2[1]);
   };
 
-  /*  const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linija"); //izvlacenje svih linija iz baze
-    const data = await response.json(); //
-     */
-  /*  const mestaPolaska = data //
-      .map((item) => item.mestoPolaska) //Uradjen filter da se u selektu ne ponavljaju linije
-      .filter(helpers.filterUnique); // za mesto polaska
-    const mestaDolaska = data //
-      .map((item) => item.mestoDolaska) //Uradjen filter da se u selektu ne ponavljaju linije
-      .filter(helpers.filterUnique); //za mesto dolaska */
-
-  /*  setLinije(data); */
-  /*  setPolasci(mestaPolaska);
-    setDolasci(mestaDolaska);
-    setVal1(data[0].mestoPolaska);
-    setVal2(data[0].mestoDolaska); */
-  /*  }; */
-
   useEffect(() => {
-    //
-    /*  getLinije(); */ //Prilikom ucitavanja stranice da pozove funkciju get linije
-    getStanice();
-  }, []); //
-  const click = () => {
-    //ovde mozes upit da napravis da li se val 1 sadrzi u dolasci
-    // i da li se val 2 sadrzi u polasci
-    // primer polasci.includes(val2)
+    getStanice(); //?Prilikom ucitavanja stranice da pozove funkciju get stanice
+  }, []);
 
-    if (!polasci.includes(val2) || !dolasci.includes(val1)) {
-      //zamena mesta polja mesto dolaska i mesto polaska
+  const click = () => {
+    if (!stanice.includes(val2) || !stanice.includes(val1)) {
+      //?provera da li stanice sadrze tu vrednost
+      //?zamena mesta polja mesto dolaska i mesto polaska
       return;
     }
     setVal1(val2);
     setVal2(val1);
   };
-
-  const [showClass, setShowClass] = useState(false);
 
   const changer = () => {
     setShowClass(!showClass);
@@ -104,9 +84,6 @@ const Pocetna = () => {
     filterLinija();
     changer();
   };
-
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [bus1, bus2];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -192,8 +169,8 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.id} value={linija.naziv}>
-                      {linija.naziv}
+                    <option key={linija} value={linija}>
+                      {linija}
                     </option>
                   );
                 })}
@@ -216,10 +193,10 @@ const Pocetna = () => {
                 onChange={(e) => setVal2(e.target.value)}
               >
                 {stanice.map((linija) => {
-                  if (val1.naziv != linija.naziv) {
+                  if (val1 != linija) {
                     return (
-                      <option key={linija.id} value={linija.naziv}>
-                        {linija.naziv}
+                      <option key={linija} value={linija}>
+                        {linija}
                       </option>
                     );
                   }
@@ -269,8 +246,8 @@ const Pocetna = () => {
               >
                 {stanice.map((linija) => {
                   return (
-                    <option key={linija.id} value={linija.naziv}>
-                      {linija.naziv}
+                    <option key={linija} value={linija}>
+                      {linija}
                     </option>
                   );
                 })}
@@ -294,10 +271,10 @@ const Pocetna = () => {
                 onChange={(e) => setVal2(e.target.value)}
               >
                 {stanice.map((linija) => {
-                  if (val1.naziv != linija.naziv) {
+                  if (val1 != linija) {
                     return (
-                      <option key={linija.id} value={linija.naziv}>
-                        {linija.naziv}
+                      <option key={linija} value={linija}>
+                        {linija}
                       </option>
                     );
                   }
@@ -433,7 +410,7 @@ const Pocetna = () => {
                       <div className="start">
                         <div className="start-destination">
                           {" "}
-                          {linija.mestoPolaska}{" "}
+                          {linija.pocetnaStanica}{" "}
                         </div>
                         <span className="start-time">
                           {" "}
@@ -448,12 +425,13 @@ const Pocetna = () => {
                         <div className="time-line"></div>
                         <div className="space">
                           <Trans i18nKey="description.part36">Broj mesta</Trans>
+                          :{linija.brojSlobodnihMesta}
                         </div>
                       </div>
                       <div className="end">
                         <div className="end-destination">
                           {" "}
-                          {linija.mestoDolaska}
+                          {linija.krajnjaStanica}
                         </div>
                         <span className="end-time"> {linija.vremeDolaska}</span>
                       </div>

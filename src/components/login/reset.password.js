@@ -32,7 +32,7 @@ const ResetPassword = () => {
       "service_sl566is",
       "template_93iebo1",
       {
-        from_name: "lazar.filipovic@skysoft.rs",
+        from_name: "slobodanka.nedeljkovic@skysoft.rs",
         to_name: "slobodanka.nedeljkovic@skysoft.rs",
         message,
       },
