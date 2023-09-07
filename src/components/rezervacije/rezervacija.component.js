@@ -10,6 +10,11 @@ import "./sedista/sedista.css";
 import S2 from "../rezervacije/proba/s2";
 import MAN from "./proba/man";
 import MK91 from "./proba/mk91";
+import MB1 from "./proba/mb1";
+import MB3 from "./proba/mb3";
+import MB4 from "./proba/mb4";
+import VL from "./proba/vl";
+import S1 from "./proba/s1";
 
 const RezervacijaComponent = ({ id }) => {
   const [linija, setLinija] = useState({});
@@ -440,7 +445,12 @@ const RezervacijaComponent = ({ id }) => {
               <div>
                 {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
                   (linija.oznakaBusa != "MAN" ? "" : <MAN />) ||
-                  (linija.oznakaBusa != "MK91" ? "" : <MK91 />)}
+                  (linija.oznakaBusa != "MK91" ? "" : <MK91 />) ||
+                  (linija.oznakaBusa != "MB1" ? "" : <MB1 />) ||
+                  (linija.oznakaBusa != "MB3" ? "" : <MB3 />) ||
+                  (linija.oznakaBusa != "MB4" ? "" : <MB4 />) ||
+                  (linija.oznakaBusa != "VL" ? "" : <VL />) ||
+                  (linija.oznakaBusa != "S1" ? "" : <S1 />)}
               </div>
               <div>
                 Trenutno rezervisano mesto:{" "}
