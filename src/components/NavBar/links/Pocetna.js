@@ -42,6 +42,8 @@ const Pocetna = () => {
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
 
     const data = await response.json();
+
+    console.log(data.rezultat);
     setFilteredLinije(data.rezultat);
   };
 
@@ -375,6 +377,8 @@ const Pocetna = () => {
                               id: linija.id,
                               vremePolaska: linija.vremePolaska,
                               pocetnaStanica: linija.pocetnaStanica,
+                              pocetnaStanicaId: linija.pocetnaStanicaId,
+                              krajnjaStanicaId: linija.krajnjaStanicaId,
                               brojSlobodnihMesta: linija.brojSlobodnihMesta,
                               krajnjaStanica: linija.krajnjaStanica,
                               vremeDolaska: linija.vremeDolaska,
@@ -459,6 +463,8 @@ const Pocetna = () => {
                               id: linija.id,
                               vremePolaska: linija.vremePolaska,
                               pocetnaStanica: linija.pocetnaStanica,
+                              pocetnaStanicaId: linija.pocetnaStanicaId,
+                              krajnjaStanicaId: linija.krajnjaStanicaId,
                               brojSlobodnihMesta: linija.brojSlobodnihMesta,
                               krajnjaStanica: linija.krajnjaStanica,
                               vremeDolaska: linija.vremeDolaska,

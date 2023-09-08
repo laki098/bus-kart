@@ -320,6 +320,8 @@ router.post("/filterLinija", async (req, res) => {
           rezultat.push({
             id: linija.id,
             pocetnaStanica: linija.pocetnaStanica.naziv,
+            pocetnaStanicaId: linija.pocetnaStanicaId,
+            krajnjaStanicaId: linija.krajnjaStanicaId,
             krajnjaStanica: linija.krajnjaStanica.naziv,
             datumPolaska: linija.datumPolaska,
             datumDolaska: linija.datumDolaska,
@@ -330,6 +332,7 @@ router.post("/filterLinija", async (req, res) => {
           });
           break;
         }
+
         if (
           linija.pocetnaStanica.naziv == nazivPocetneStanice &&
           medjustanica.naziv == nazivKrajnjeStanice
@@ -337,6 +340,8 @@ router.post("/filterLinija", async (req, res) => {
           rezultat.push({
             id: linija.id,
             pocetnaStanica: linija.pocetnaStanica.naziv,
+            pocetnaStanicaId: linija.pocetnaStanicaId,
+            krajnjaStanicaId: element.stanicaId,
             krajnjaStanica: medjustanica.naziv,
             datumPolaska: linija.datumPolaska,
             datumDolaska: element.datumDolaskaM,
@@ -356,6 +361,8 @@ router.post("/filterLinija", async (req, res) => {
           rezultat.push({
             id: linija.id,
             pocetnaStanica: medjustanica.naziv,
+            pocetnaStanicaId: element.stanicaId,
+            krajnjaStanicaId: linija.krajnjaStanicaId,
             krajnjaStanica: linija.krajnjaStanica.naziv,
             datumPolaska: element.datumPolaskaM,
             datumDolaska: linija.datumDolaska,
@@ -378,9 +385,27 @@ router.post("/filterLinija", async (req, res) => {
         }
         //! TREBA MI USLOV ZA REDOSLED
         if (brojMedjustanicaNaLiniji == 2) {
+          const pocetnaFilterId = await Stanica.findOne({
+            where: {
+              naziv: nazivPocetneStanice,
+            },
+          });
+          const kranjnjaFilterId = await Stanica.findOne({
+            where: {
+              naziv: nazivKrajnjeStanice,
+            },
+          });
+          const brSedistaMedjulinija = await Medjustanica.findOne({
+            where: { linijaId: linija.id, stanicaId: pocetnaFilterId.id },
+          });
+          console.log(brSedistaMedjulinija);
+
+          console.log(element);
           rezultat.push({
             id: linija.id,
             pocetnaStanica: nazivPocetneStanice,
+            pocetnaStanicaId: pocetnaFilterId.id,
+            krajnjaStanicaId: kranjnjaFilterId.id,
             krajnjaStanica: nazivKrajnjeStanice,
             datumPolaska: element.datumPolaskaM,
             datumDolaska: element.datumDolaskaM,
@@ -392,7 +417,7 @@ router.post("/filterLinija", async (req, res) => {
               .split(":")
               .slice(0, 2)
               .join(":"),
-            brojSlobodnihMesta: element.brojSlobodnihMesta,
+            brojSlobodnihMesta: brSedistaMedjulinija.brojSlobodnihMesta,
             oznakaBusa: linija.oznakaBusa,
           });
           break;

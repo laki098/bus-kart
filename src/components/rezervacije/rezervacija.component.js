@@ -15,9 +15,11 @@ import MB3 from "./proba/mb3";
 import MB4 from "./proba/mb4";
 import VL from "./proba/vl";
 import S1 from "./proba/s1";
+import RezervacijaApi from "../../api/rezervacijaApi";
 
 const RezervacijaComponent = ({ id, state }) => {
   const [linija, setLinija] = useState({});
+  const [brojSedista, setBrojSedista] = useState();
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -26,7 +28,29 @@ const RezervacijaComponent = ({ id, state }) => {
   if (userData != undefined) {
     userPars = JSON.parse(userData);
   }
-
+  console.log(
+    brojSedista,
+    state.id,
+    state.pocetnaStanicaId,
+    state.krajnjaStanicaId
+  );
+  const novaRezervacija = () => {
+    RezervacijaApi()
+      .rezervacija(
+        brojSedista,
+        state.id,
+        state.pocetnaStanicaId,
+        state.krajnjaStanicaId
+      )
+      .then((response) => {
+        console.log(response);
+        alert("radi");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("nece");
+      });
+  };
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
     const data = await response.data.linija; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
@@ -409,6 +433,7 @@ const RezervacijaComponent = ({ id, state }) => {
               <option>Vikend</option>
               <option>Nedeljna</option>
             </select>
+
             {showReturnDate && (
               <div>
                 <label htmlFor="returnDate">Datum povratka:</label>
@@ -452,36 +477,28 @@ const RezervacijaComponent = ({ id, state }) => {
                   (linija.oznakaBusa != "VL" ? "" : <VL />) ||
                   (linija.oznakaBusa != "S1" ? "" : <S1 />)}
               </div>
-              <div>
-                Trenutno rezervisano mesto:{" "}
-                {trenutnaRezervacija + "" || "Nijedno"}
-              </div>
-              <ul>
-                {" "}
-                {/* ubacila sam ul/li    */}
-                <li>
-                  <div className="seat selected"></div>
-                  <small>Izabrano</small>
-                </li>
-                <li>
-                  <div className="seat zauzeto"></div> {/* bilo je occupied */}
-                  <small>Zauzeto</small>
-                </li>
-              </ul>
-              <button>Izaberite sedište</button>
               <p className="plavo">
                 U slučaju izmene tipa autobusa, moguće je doći do promene
                 rezervacije sedišta, o čemu ćete biti obavešteni.{" "}
               </p>
             </div>
-            {/*  <Autobus /> */}
 
+            {/*  <Autobus /> */}
+            <label>brojSedista</label>
+            <input
+              type="number"
+              value={brojSedista}
+              onChange={(e) => setBrojSedista(e.target.value)}
+            ></input>
             <br />
             <br />
-            <button className={classes.submit}>Rezervisi kartu</button>
+
+            <button className={classes.submit} onClick={novaRezervacija}>
+              Rezervisi kartu
+            </button>
             <button className={classes.submit}>Kupi kartu</button>
           </div>
-          <p>
+          {/* <p>
             Korisnik je kupio kartu od mesta {linija.mestoPolaska} do mesta{" "}
             {linija.mestoDolaska} i to datuma {linija.datumPolaska} za vreme{" "}
             {linija.vremePolaska} casova i dolazi {linija.datumDolaska} i to u
@@ -489,7 +506,7 @@ const RezervacijaComponent = ({ id, state }) => {
             {osvezenje}.Korisnik je izabrao {selectedValue} kartu i cena te
             karte je {ukupnaCena} dinara i rezervisao je sediste broj{" "}
             {trenutnaRezervacija + ""}
-          </p>
+          </p> */}
         </div>
       </form>
       <Qrcode code={code} />
