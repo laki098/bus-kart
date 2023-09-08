@@ -70,12 +70,12 @@ const Navbar = () => {
           ) : (
             <li>
               <button onClick={toggleDropdown}>
-                <p>Ime: {userPars.ime}</p>
+                <p>{userPars.ime} {userPars.prezime}</p>
               </button>
               {isDropdownOpen && (
                 <ul className="dropdown">
-                  <li>Profil</li>
-                  <li>Postavke</li>
+                  <Link to="/korisnik"><li>Profil</li></Link>
+                  <Link to="/karta"><li>Karte</li></Link>
                   <button onClick={clickBaitLogout}>Logout</button>
                 </ul>
               )}

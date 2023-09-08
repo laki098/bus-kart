@@ -20,6 +20,8 @@ import BusChangeLine from "./components/admin/bus.change.line";
 import AdminPanel from "./components/admin/admin.panel";
 import KorisniciInitial from "./components/admin/korisniciInitial";
 import KorisnikChange from "./components/admin/korisnikChange";
+import Korisnik from "./components/NavBar/links/korisnik/korisnik"
+import Karta from "./components/NavBar/links/korisnik/karta";
 
 function App() {
   return (
@@ -49,6 +51,12 @@ function App() {
             </Route>
             <Route path="/kontakt">
               <Kontakt />
+            </Route>
+            <Route path="/korisnik">
+              <Korisnik />
+            </Route>
+            <Route path="/karta">
+              <Karta />
             </Route>
           </Switch>
 
