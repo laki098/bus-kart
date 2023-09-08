@@ -16,7 +16,7 @@ import MB4 from "./proba/mb4";
 import VL from "./proba/vl";
 import S1 from "./proba/s1";
 
-const RezervacijaComponent = ({ id }) => {
+const RezervacijaComponent = ({ id, state }) => {
   const [linija, setLinija] = useState({});
 
   //? izvlacenje korisnika koji je prijavljen
@@ -41,7 +41,7 @@ const RezervacijaComponent = ({ id }) => {
         .toISOString()
         .substr(0, 10),
     }; */
-    console.log(data);
+
     setLinija(data);
   };
 
@@ -224,7 +224,7 @@ const RezervacijaComponent = ({ id }) => {
           >
             <label>Mesto polaska:</label>
             <input
-              defaultValue={linija.mestoPolaska}
+              defaultValue={state.pocetnaStanica}
               className="test"
               type="text"
               name="mesto"
@@ -241,7 +241,7 @@ const RezervacijaComponent = ({ id }) => {
           >
             <label>Mesto dolaska:</label>
             <input
-              defaultValue={linija.mestoDolaska}
+              defaultValue={state.krajnjaStanica}
               className="test"
               type="text"
               name="mestoD"
@@ -259,7 +259,7 @@ const RezervacijaComponent = ({ id }) => {
             <label>Datum polaska:</label>
 
             <input
-              defaultValue={linija.datumPolaska}
+              defaultValue={state.datumPolaska}
               className="test"
               /* type="date" */
               name="datum"
@@ -277,7 +277,7 @@ const RezervacijaComponent = ({ id }) => {
             <label>Datum dolaska:</label>
 
             <input
-              defaultValue={linija.datumDolaska}
+              defaultValue={state.datumDolaska}
               className="test"
               /*  type="date" */
               name="datum"
@@ -295,7 +295,7 @@ const RezervacijaComponent = ({ id }) => {
           >
             <label>Vreme polaska:</label>
             <input
-              defaultValue={linija.vremePolaska}
+              defaultValue={state.vremePolaska}
               className="test"
               /* type="time" */ /*da ne bi moglo vreme da se menja */
               name="vreme"
@@ -312,7 +312,7 @@ const RezervacijaComponent = ({ id }) => {
           >
             <label>Vreme dolaska:</label>
             <input
-              defaultValue={linija.vremeDolaska}
+              defaultValue={state.vremeDolaska}
               className="test"
               /* type="time" */
               name="vremeD"
