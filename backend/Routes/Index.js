@@ -326,6 +326,7 @@ router.post("/filterLinija", async (req, res) => {
             vremePolaska: linija.vremePolaska.split(":").slice(0, 2).join(":"),
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
             brojSlobodnihMesta: linija.brojSlobodnihMesta,
+            oznakaBusa: linija.oznakaBusa,
           });
           break;
         }
@@ -345,6 +346,7 @@ router.post("/filterLinija", async (req, res) => {
               .slice(0, 2)
               .join(":"),
             brojSlobodnihMesta: linija.brojSlobodnihMesta,
+            oznakaBusa: linija.oznakaBusa,
           });
         }
         if (
@@ -363,6 +365,7 @@ router.post("/filterLinija", async (req, res) => {
               .join(":"),
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
             brojSlobodnihMesta: medjustanica.brojSlobodnihMesta,
+            oznakaBusa: linija.oznakaBusa,
           });
           break;
         }
@@ -390,6 +393,7 @@ router.post("/filterLinija", async (req, res) => {
               .slice(0, 2)
               .join(":"),
             brojSlobodnihMesta: element.brojSlobodnihMesta,
+            oznakaBusa: linija.oznakaBusa,
           });
           break;
         }

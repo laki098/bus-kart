@@ -68,7 +68,7 @@ const AdminLogic = () => {
       });
   };
 
-  const editLinije = (data) => {
+  /* const editLinije = (data) => {
     LinijeApi()
       .editLinije(
         data.id,
@@ -87,7 +87,7 @@ const AdminLogic = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; */
 
   const brisanjeLinije = async (id) => {
     console.log("id", id);
@@ -106,7 +106,7 @@ const AdminLogic = () => {
     setData,
     upisLinije,
     brisanjeLinije,
-    editLinije,
+    /* editLinije, */
     handlerMedjustanice,
     dodajMedjustanicu,
     ukloniMedjustanicu,

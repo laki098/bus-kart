@@ -223,7 +223,23 @@ const AdminInitial = () => {
                       {linija.krajnjaStanica}
                       &nbsp;&nbsp;
                       <br />
-                      <Link to={`${linija.id}/admin.change.line`}>
+                      <Link
+                        to={{
+                          //? prosledjivanje id-a linije kroz url
+                          pathname: `${linija.id}/admin.change.line`,
+                          //? prosledjivanje podataka za rezervaciju
+                          state: {
+                            id: linija.id,
+                            vremePolaska: linija.vremePolaska,
+                            pocetnaStanica: linija.pocetnaStanica,
+                            krajnjaStanica: linija.krajnjaStanica,
+                            vremeDolaska: linija.vremeDolaska,
+                            datumPolaska: linija.datumPolaska,
+                            datumDolaska: linija.datumDolaska,
+                            oznakaBusa: linija.oznakaBusa,
+                          },
+                        }}
+                      >
                         <button
                           style={{
                             backgroundColor: "lightblue",

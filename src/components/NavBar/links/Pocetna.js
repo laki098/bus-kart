@@ -452,7 +452,9 @@ const Pocetna = () => {
                       <div>
                         <Link
                           to={{
+                            //? prosledjivanje id-a linije kroz url
                             pathname: `${linija.id}/rezervacijakarte`,
+                            //? prosledjivanje podataka za rezervaciju
                             state: {
                               id: linija.id,
                               vremePolaska: linija.vremePolaska,

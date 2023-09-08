@@ -3,7 +3,6 @@ import RezervacijaLogic from "./rezervacija.logic";
 import classes from "../registration/registration.module.css";
 import LinijeApi from "../../api/linije.api";
 import cookies from "js-cookie";
-import { useLocation } from "react-router-dom";
 
 import Qrcode from "./QrCode";
 import "../rezervacije/index1.css";

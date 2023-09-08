@@ -9,7 +9,7 @@ import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
-const LineForm = ({ mode, id }) => {
+const LineForm = ({ mode, id, state }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
   const [stanice, setStanice] = useState([]);
@@ -61,8 +61,8 @@ const LineForm = ({ mode, id }) => {
     newCene[index] = event.target.value;
     setCene(newCene);
   };
-
-  const izmeniLiniju = async () => {
+  console.log(state);
+  /* const izmeniLiniju = async () => {
     const response = await LinijeApi().filterLinijaID(id); // Filter linije za bas taj id koji cemo da menjamo
     // if (response.error) {
     //   setError(response.error);
@@ -81,13 +81,13 @@ const LineForm = ({ mode, id }) => {
         .substr(0, 10),
     };
     setLinija(linija);
-  };
+  }; */
 
   useEffect(() => {
     getStanice();
     getAutobusi();
     if (mode === "edit") {
-      izmeniLiniju();
+      /* izmeniLiniju(); */
     }
   }, []);
 
@@ -144,136 +144,146 @@ const LineForm = ({ mode, id }) => {
         <div className=" sub-main">
           <form onSubmit={submitHandler}>
             {mode === "add" ? (
-              <p className="naslov" style={{ fontSize: "1.5rem" }}>
-                <Trans i18nKey="description.part130">Nova linija</Trans>
-              </p>
-            ) : (
-              <h2>Edituj Liniju</h2>
-            )}{" "}
-            {/* bilo je h2 a ne <>  */}
-            <br />
-            <div className="labela">
-              <label>
-                <Trans i18nKey="description.part3">Mesto polaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.pocetnaStanica}
-                type="text"
-                placeholder="Mesto polaska"
-                required
-                name="pocetnaStanica"
-                className="name1 input-new"
-                style={{ fontSize: "1rem", color: "darkblue" }}
-                onChange={adminLogic.changeHandler}
-              />
-              <br />
-              {waypoints.map((waypoint, index) => (
-                <div key={index}>
-                  <label>Usputna stanica {index + 1}</label>
+              <div>
+                <p className="naslov" style={{ fontSize: "1.5rem" }}>
+                  <Trans i18nKey="description.part130">Nova linija</Trans>
+                </p>
+                <div className="labela">
+                  <label>
+                    <Trans i18nKey="description.part3">Mesto polaska</Trans>
+                  </label>
                   <br />
-                  <select
-                    name="stanica"
-                    /* value={medjustanica.stanica} */
-                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
-                  >
-                    {stanice.map((stanica) => {
-                      return (
-                        <option key={stanica} value={stanica}>
-                          {stanica}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  <label>Cena</label>
+                  <input
+                    defaultValue={linija.pocetnaStanica}
+                    type="text"
+                    placeholder="Mesto polaska"
+                    required
+                    name="pocetnaStanica"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem", color: "darkblue" }}
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  {waypoints.map((waypoint, index) => (
+                    <div key={index}>
+                      <label>Usputna stanica {index + 1}</label>
+                      <br />
+                      <select
+                        name="stanica"
+                        /* value={medjustanica.stanica} */
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      >
+                        {stanice.map((stanica) => {
+                          return (
+                            <option key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <label>Cena</label>
 
+                      <label>
+                        <Trans i18nKey="description.part11">
+                          Vreme polaska
+                        </Trans>
+                      </label>
+                      <br />
+                      <input
+                        /* defaultValue={linija.vremePolaska} */
+                        className="inputText name1 input-new"
+                        type="time"
+                        required
+                        label="Time"
+                        name="vremePolaskaM"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      ></input>
+                      <label>
+                        <Trans i18nKey="description.part11">
+                          Vreme dolaska
+                        </Trans>
+                      </label>
+                      <br />
+                      <input
+                        /* defaultValue={linija.vremePolaska} */
+                        className="inputText name1 input-new"
+                        type="time"
+                        required
+                        label="Time"
+                        name="vremeDolaskaM"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      ></input>
+                      <label>
+                        <Trans i18nKey="description.part7">Datum polaska</Trans>
+                      </label>
+                      <br />
+                      <input
+                        /*  defaultValue={linija.datumPolaska} */
+                        name="datumPolaskaM"
+                        type="date"
+                        className="name1 input-new"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      />
+                      <label>
+                        <Trans i18nKey="description.part7">Datum dolaska</Trans>
+                      </label>
+                      <br />
+                      <input
+                        /*  defaultValue={linija.datumPolaska} */
+                        name="datumDolaskaM"
+                        type="date"
+                        className="name1 input-new"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      />
+                    </div>
+                  ))}
+                  <button type="button" onClick={duploDugmeMedjustanica}>
+                    Dodaj usputnu stanicu
+                  </button>{" "}
+                  <br />
                   <label>
-                    <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                    <Trans i18nKey="description.part5">Mesto dolaska</Trans>
                   </label>
                   <br />
                   <input
-                    /* defaultValue={linija.vremePolaska} */
-                    className="inputText name1 input-new"
-                    type="time"
+                    defaultValue={linija.krajnjaStanica}
+                    type="text"
+                    name="krajnjaStanica"
+                    placeholder="Mesto dolaska"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem", color: "darkblue" }}
                     required
-                    label="Time"
-                    name="vremePolaskaM"
-                    style={{ fontSize: "1rem" }}
-                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
-                  ></input>
-                  <label>
-                    <Trans i18nKey="description.part11">Vreme dolaska</Trans>
-                  </label>
+                    onChange={adminLogic.changeHandler}
+                  />
                   <br />
-                  <input
-                    /* defaultValue={linija.vremePolaska} */
-                    className="inputText name1 input-new"
-                    type="time"
-                    required
-                    label="Time"
-                    name="vremeDolaskaM"
-                    style={{ fontSize: "1rem" }}
-                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
-                  ></input>
                   <label>
                     <Trans i18nKey="description.part7">Datum polaska</Trans>
                   </label>
                   <br />
                   <input
-                    /*  defaultValue={linija.datumPolaska} */
-                    name="datumPolaskaM"
+                    defaultValue={linija.datumPolaska}
+                    name="datumPolaska"
                     type="date"
                     className="name1 input-new"
                     style={{ fontSize: "1rem" }}
-                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
+                    onChange={adminLogic.changeHandler}
                   />
-                  <label>
-                    <Trans i18nKey="description.part7">Datum dolaska</Trans>
-                  </label>
                   <br />
-                  <input
-                    /*  defaultValue={linija.datumPolaska} */
-                    name="datumDolaskaM"
-                    type="date"
-                    className="name1 input-new"
-                    style={{ fontSize: "1rem" }}
-                    onChange={(e) => adminLogic.handlerMedjustanice(e, index)}
-                  />
-                </div>
-              ))}
-              <button type="button" onClick={duploDugmeMedjustanica}>
-                Dodaj usputnu stanicu
-              </button>{" "}
-              <br />
-              <label>
-                <Trans i18nKey="description.part5">Mesto dolaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.krajnjaStanica}
-                type="text"
-                name="krajnjaStanica"
-                placeholder="Mesto dolaska"
-                className="name1 input-new"
-                style={{ fontSize: "1rem", color: "darkblue" }}
-                required
-                onChange={adminLogic.changeHandler}
-              />
-              <br />
-              <label>
-                <Trans i18nKey="description.part7">Datum polaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.datumPolaska}
-                name="datumPolaska"
-                type="date"
-                className="name1 input-new"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              />
-              <br />
-              {/* <DatePicker className="inputText"
+                  {/* <DatePicker className="inputText"
                  selected={startDate}
                   value={startDate}
                   required
@@ -282,20 +292,20 @@ const LineForm = ({ mode, id }) => {
                    onChange={(date) => 
                     setStartDate(date)
                             } />   */}
-              <label>
-                <Trans i18nKey="description.part9">Datum dolaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.datumDolaska}
-                name="datumDolaska"
-                type="date"
-                className="name1 input-new"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              />
-              <br />
-              {/* <DatePicker className="inputText"
+                  <label>
+                    <Trans i18nKey="description.part9">Datum dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.datumDolaska}
+                    name="datumDolaska"
+                    type="date"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  {/* <DatePicker className="inputText"
                  selected={endDate}
                   value={endDate}
                   required
@@ -303,36 +313,36 @@ const LineForm = ({ mode, id }) => {
                   placeholderText="Datum dolaska"
                    onChange={(date) =>   
                             setEndDate(date)} /> */}
-              <label>
-                <Trans i18nKey="description.part11">Vreme polaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.vremePolaska}
-                className="inputText name1 input-new"
-                type="time"
-                required
-                label="Time"
-                name="vremePolaska"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              ></input>
-              <br />
-              <label>
-                <Trans i18nKey="description.part13">vreme dolaska</Trans>
-              </label>
-              <br />
-              <input
-                defaultValue={linija.vremeDolaska}
-                className="inputText name1 input-new"
-                type="time"
-                required
-                name="vremeDolaska"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              ></input>
-              <br />
-              {/* <label>
+                  <label>
+                    <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.vremePolaska}
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    label="Time"
+                    name="vremePolaska"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  ></input>
+                  <br />
+                  <label>
+                    <Trans i18nKey="description.part13">vreme dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.vremeDolaska}
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    name="vremeDolaska"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  ></input>
+                  <br />
+                  {/* <label>
                 <Trans i18nKey="description.part131">Prevoznik</Trans>
               </label>
               <br />
@@ -353,34 +363,281 @@ const LineForm = ({ mode, id }) => {
                 <option>Eurocompass</option>
               </select>
               <br /> */}
-              <label>Izaberite autobus</label>
+                  <label>Izaberite autobus</label>
+                  <br />
+                  <select
+                    value={linija.oznakaBusa}
+                    name="oznakaBusa"
+                    onChange={adminLogic.changeHandler}
+                  >
+                    {autobusi.map((autobusi) => {
+                      return (
+                        <option
+                          key={autobusi.oznakaBusa}
+                          value={autobusi.oznakaBusa}
+                        >
+                          {autobusi.oznakaBusa}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <br />
+                  <br />
+                  <button type="submit" className="button">
+                    <Trans i18nKey="description.part128">"Dodaj"</Trans>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2>Edituj Liniju</h2>
+                <div className="labela">
+                  <label>
+                    <Trans i18nKey="description.part3">Mesto polaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={state.pocetnaStanica}
+                    type="text"
+                    placeholder="Mesto polaska"
+                    required
+                    name="pocetnaStanica"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem", color: "darkblue" }}
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  {waypoints.map((waypoint, index) => (
+                    <div key={index}>
+                      <label>Usputna stanica {index + 1}</label>
+                      <br />
+                      <select
+                        name="stanica"
+                        /* value={medjustanica.stanica} */
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      >
+                        {stanice.map((stanica) => {
+                          return (
+                            <option key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <label>Cena</label>
+
+                      <label>
+                        <Trans i18nKey="description.part11">
+                          Vreme polaska
+                        </Trans>
+                      </label>
+                      <br />
+                      <input
+                        /* defaultValue={linija.vremePolaska} */
+                        className="inputText name1 input-new"
+                        type="time"
+                        required
+                        label="Time"
+                        name="vremePolaskaM"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      ></input>
+                      <label>
+                        <Trans i18nKey="description.part11">
+                          Vreme dolaska
+                        </Trans>
+                      </label>
+                      <br />
+                      <input
+                        /* defaultValue={linija.vremePolaska} */
+                        className="inputText name1 input-new"
+                        type="time"
+                        required
+                        label="Time"
+                        name="vremeDolaskaM"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      ></input>
+                      <label>
+                        <Trans i18nKey="description.part7">Datum polaska</Trans>
+                      </label>
+                      <br />
+                      <input
+                        /*  defaultValue={linija.datumPolaska} */
+                        name="datumPolaskaM"
+                        type="date"
+                        className="name1 input-new"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      />
+                      <label>
+                        <Trans i18nKey="description.part7">Datum dolaska</Trans>
+                      </label>
+                      <br />
+                      <input
+                        /*  defaultValue={linija.datumPolaska} */
+                        name="datumDolaskaM"
+                        type="date"
+                        className="name1 input-new"
+                        style={{ fontSize: "1rem" }}
+                        onChange={(e) =>
+                          adminLogic.handlerMedjustanice(e, index)
+                        }
+                      />
+                    </div>
+                  ))}
+                  <button type="button" onClick={duploDugmeMedjustanica}>
+                    Dodaj usputnu stanicu
+                  </button>{" "}
+                  <br />
+                  <label>
+                    <Trans i18nKey="description.part5">Mesto dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.krajnjaStanica}
+                    type="text"
+                    name="krajnjaStanica"
+                    placeholder="Mesto dolaska"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem", color: "darkblue" }}
+                    required
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  <label>
+                    <Trans i18nKey="description.part7">Datum polaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.datumPolaska}
+                    name="datumPolaska"
+                    type="date"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  {/* <DatePicker className="inputText"
+                 selected={startDate}
+                  value={startDate}
+                  required
+                  scrollableMonthYearDropdownv 
+                  placeholderText="Datum dolaska"
+                   onChange={(date) => 
+                    setStartDate(date)
+                            } />   */}
+                  <label>
+                    <Trans i18nKey="description.part9">Datum dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.datumDolaska}
+                    name="datumDolaska"
+                    type="date"
+                    className="name1 input-new"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  />
+                  <br />
+                  {/* <DatePicker className="inputText"
+                 selected={endDate}
+                  value={endDate}
+                  required
+                  scrollableMonthYearDropdownv 
+                  placeholderText="Datum dolaska"
+                   onChange={(date) =>   
+                            setEndDate(date)} /> */}
+                  <label>
+                    <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.vremePolaska}
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    label="Time"
+                    name="vremePolaska"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  ></input>
+                  <br />
+                  <label>
+                    <Trans i18nKey="description.part13">vreme dolaska</Trans>
+                  </label>
+                  <br />
+                  <input
+                    defaultValue={linija.vremeDolaska}
+                    className="inputText name1 input-new"
+                    type="time"
+                    required
+                    name="vremeDolaska"
+                    style={{ fontSize: "1rem" }}
+                    onChange={adminLogic.changeHandler}
+                  ></input>
+                  <br />
+                  {/* <label>
+                <Trans i18nKey="description.part131">Prevoznik</Trans>
+              </label>
               <br />
               <select
-                value={linija.oznakaBusa}
-                name="oznakaBusa"
+                value={linija.prevoznik}
+                name="prevoznik"
+                className="name1 input-new"
+                style={{ fontSize: "1rem" }}
                 onChange={adminLogic.changeHandler}
               >
-                {autobusi.map((autobusi) => {
-                  return (
-                    <option
-                      key={autobusi.oznakaBusa}
-                      value={autobusi.oznakaBusa}
-                    >
-                      {autobusi.oznakaBusa}
-                    </option>
-                  );
-                })}
+                <option disabled={false} value="">
+                  --
+                  <Trans i18nKey="description.part132">
+                    Izaberite prevoznika
+                  </Trans>
+                  --
+                </option>
+                <option>Eurocompass</option>
               </select>
-              <br />
-              <br />
-              <button type="submit" className="button">
-                {mode === "add" ? (
-                  <Trans i18nKey="description.part128">"Dodaj"</Trans>
-                ) : (
-                  "Sačuvaj"
-                )}
-              </button>
-            </div>
+              <br /> */}
+                  <label>Izaberite autobus</label>
+                  <br />
+                  <select
+                    value={linija.oznakaBusa}
+                    name="oznakaBusa"
+                    onChange={adminLogic.changeHandler}
+                  >
+                    {autobusi.map((autobusi) => {
+                      return (
+                        <option
+                          key={autobusi.oznakaBusa}
+                          value={autobusi.oznakaBusa}
+                        >
+                          {autobusi.oznakaBusa}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <br />
+                  <br />
+                  <button type="submit" className="button">
+                    {mode === "add" ? (
+                      <Trans i18nKey="description.part128">"Dodaj"</Trans>
+                    ) : (
+                      "Sačuvaj"
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}{" "}
+            {/* bilo je h2 a ne <>  */}
+            <br />
           </form>
         </div>
       </div>
