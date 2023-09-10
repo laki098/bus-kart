@@ -1,0 +1,25 @@
+/* Stil za naslove */
+.naslov {
+  font-weight: bold;
+  color: #333; /* Boja teksta za naslove */
+}
+
+/* Stil za vrednosti */
+.vrednost {
+  font-size: 16px;
+  color: #666; /* Boja teksta za vrednosti */
+  margin-top: 5px;
+}
+/* Stil za li elemente */
+.lista-stavka {
+  list-style-type: none;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+/* Stil za parne li elemente */
+.lista-stavka:nth-child(even) {
+  background-color: #e5e5e5;
+}

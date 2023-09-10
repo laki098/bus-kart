@@ -131,8 +131,19 @@ router.post("/", async (req, res) => {
 
 router.post("/rezervacija", async (req, res) => {
   try {
-    const { brojMesta, linijaId, pocetnaStanicaId, krajnjaStanicaId } =
-      req.body;
+    const {
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+    } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
@@ -269,8 +280,15 @@ router.post("/rezervacija", async (req, res) => {
     await Rezervacija.create({
       brojMesta,
       linijaId,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
       pocetnaStanicaId,
       krajnjaStanicaId,
+      korisnikId,
     });
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {
@@ -300,7 +318,9 @@ router.post("/filterLinija", async (req, res) => {
         Stanica,
       ],
     });
-
+    console.log("--------11111------------------------");
+    console.log(izvuceneLinijeDatum);
+    console.log("--------22222------------------------");
     //? prolazimo kroz liniju
     for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
       const linija = izvuceneLinijeDatum[index];
@@ -371,7 +391,7 @@ router.post("/filterLinija", async (req, res) => {
               .slice(0, 2)
               .join(":"),
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
-            brojSlobodnihMesta: medjustanica.brojSlobodnihMesta,
+            brojSlobodnihMesta: element.brojSlobodnihMesta,
             oznakaBusa: linija.oznakaBusa,
           });
           break;

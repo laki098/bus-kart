@@ -31,7 +31,7 @@ export const isAuthenticated = async (req, res, next) => {
 
     //?provera da li korisnik postoji
     const user = await Korisnik.findOne(decodedToken.idKorinika);
-    console.log(user);
+    /*  console.log(user); */
     if (!user) return next(new AppError("Nosilac ovog tokena ne postoji", 401));
 
     //? provera da li je korisnik promenio lozinku nakon sto je jwt izdat

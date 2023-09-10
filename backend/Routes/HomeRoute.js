@@ -15,14 +15,14 @@ router.get("/autobusi", testMiddleware, function (req, res) {
   const pera = "ASDasda";
   const mika = 5;
 
-  console.log(req.korisnik);
+  /* console.log(req.korisnik); */
 
   res.json({ pera, mika });
 });
 
 //? request(req) objekat sadrzi body koji saljemo sa postmena ili sa fronta.
 router.post("/autobusi", async function (req, res) {
-  console.log(req.body);
+  /* console.log(req.body); */
   const ime = req.body.ime;
   const sifra = req.body.sifra;
   const kodiranaSifra = await bc.hash(sifra.toString(), 8);

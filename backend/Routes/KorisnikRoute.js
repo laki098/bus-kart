@@ -5,6 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
 
 import Korisnik from "../Models/KorisnikModels.js";
+import Rezervacija from "../Models/RezervacijaModels.js";
+import Linija from "../Models/LinijaModels.js";
+import Stanica from "../Models/StanicaModels.js";
+import Medjustanica from "../Models/MedjustanicaModels.js";
 
 const router = express.Router();
 
@@ -309,6 +313,26 @@ router.put("/:idKorisnik", async (req, res) => {
     return status(200).json({ message: "korisnik uspesno promenjen" });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske", error });
+  }
+});
+
+router.post("/karta", async (req, res) => {
+  try {
+    const { korisnikId } = req.body;
+
+    const rezultat = [];
+
+    const karte = await Rezervacija.findAll({
+      where: { korisnikId },
+    });
+
+    /* console.log(izlacenjeKorisnika[index].linijaId); */
+    res.status(200).json({ message: "izvucen korsnik", karte });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "doslo je do greske pri filtriranju", error });
   }
 });
 

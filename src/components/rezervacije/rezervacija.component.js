@@ -28,19 +28,21 @@ const RezervacijaComponent = ({ id, state }) => {
   if (userData != undefined) {
     userPars = JSON.parse(userData);
   }
-  console.log(
-    brojSedista,
-    state.id,
-    state.pocetnaStanicaId,
-    state.krajnjaStanicaId
-  );
+
   const novaRezervacija = () => {
     RezervacijaApi()
       .rezervacija(
         brojSedista,
+        state.pocetnaStanica,
+        state.krajnjaStanica,
+        state.datumPolaska,
+        state.datumDolaska,
+        state.vremePolaska,
+        state.vremeDolaska,
         state.id,
         state.pocetnaStanicaId,
-        state.krajnjaStanicaId
+        state.krajnjaStanicaId,
+        userPars.idKorisnika
       )
       .then((response) => {
         console.log(response);

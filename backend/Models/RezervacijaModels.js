@@ -2,12 +2,38 @@ import { DataTypes } from "sequelize";
 import db from "../dbConfig.js";
 import Linija from "./LinijaModels.js";
 import Stanica from "./StanicaModels.js";
+import Korisnik from "./KorisnikModels.js";
 
 const Rezervacija = db.define(
   "Rezervacija",
   {
     brojMesta: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    polaznaStanicaR: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    krajnjaStanicaR: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    datumPolaska: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    datumDolaska: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    vremePolaska: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    vremeDolaska: {
+      type: DataTypes.TIME,
       allowNull: false,
     },
   },
@@ -32,5 +58,8 @@ Rezervacija.belongsTo(Stanica, {
   foreignKey: "krajnjaStanicaId",
 });
 Stanica.hasMany(Rezervacija, { foreignKey: "krajnjaStanicaId" });
+
+Rezervacija.belongsTo(Korisnik, { foreignKey: "korisnikId" });
+Korisnik.hasMany(Rezervacija, { foreignKey: "korisnikId" });
 
 export default Rezervacija;
