@@ -318,14 +318,29 @@ router.post("/filterLinija", async (req, res) => {
         Stanica,
       ],
     });
-    console.log("--------11111------------------------");
-    console.log(izvuceneLinijeDatum);
-    console.log("--------22222------------------------");
     //? prolazimo kroz liniju
+    console.log(rezultat);
     for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
       const linija = izvuceneLinijeDatum[index];
       let brojMedjustanicaNaLiniji = 0;
-
+      if (
+        linija.pocetnaStanica.naziv == nazivPocetneStanice &&
+        linija.krajnjaStanica.naziv == nazivKrajnjeStanice
+      ) {
+        rezultat.push({
+          id: linija.id,
+          pocetnaStanica: linija.pocetnaStanica.naziv,
+          pocetnaStanicaId: linija.pocetnaStanicaId,
+          krajnjaStanicaId: linija.krajnjaStanicaId,
+          krajnjaStanica: linija.krajnjaStanica.naziv,
+          datumPolaska: linija.datumPolaska,
+          datumDolaska: linija.datumDolaska,
+          vremePolaska: linija.vremePolaska.split(":").slice(0, 2).join(":"),
+          vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
+          brojSlobodnihMesta: linija.brojSlobodnihMesta,
+          oznakaBusa: linija.oznakaBusa,
+        });
+      }
       //? prolazimo kroz medjustanice
       for (let j = 0; j < linija.Stanicas.length; j++) {
         const medjustanica = linija.Stanicas[j];
@@ -333,25 +348,6 @@ router.post("/filterLinija", async (req, res) => {
         const element = medjustanica.Medjustanica;
 
         //?pitamo da li je na liniji ili medjustanici
-        if (
-          linija.pocetnaStanica.naziv == nazivPocetneStanice &&
-          linija.krajnjaStanica.naziv == nazivKrajnjeStanice
-        ) {
-          rezultat.push({
-            id: linija.id,
-            pocetnaStanica: linija.pocetnaStanica.naziv,
-            pocetnaStanicaId: linija.pocetnaStanicaId,
-            krajnjaStanicaId: linija.krajnjaStanicaId,
-            krajnjaStanica: linija.krajnjaStanica.naziv,
-            datumPolaska: linija.datumPolaska,
-            datumDolaska: linija.datumDolaska,
-            vremePolaska: linija.vremePolaska.split(":").slice(0, 2).join(":"),
-            vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
-            brojSlobodnihMesta: linija.brojSlobodnihMesta,
-            oznakaBusa: linija.oznakaBusa,
-          });
-          break;
-        }
 
         if (
           linija.pocetnaStanica.naziv == nazivPocetneStanice &&
@@ -374,6 +370,7 @@ router.post("/filterLinija", async (req, res) => {
             oznakaBusa: linija.oznakaBusa,
           });
         }
+
         if (
           medjustanica.naziv == nazivPocetneStanice &&
           linija.krajnjaStanica.naziv == nazivKrajnjeStanice
