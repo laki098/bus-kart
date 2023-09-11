@@ -196,7 +196,9 @@ router.post("/rezervacija", async (req, res) => {
     if (linija.pocetnaStanicaId == pocetnaStanicaId) {
       if (linija.brojSlobodnihMesta < brojMesta) {
         res.status(404).json({ message: "nema dovoljno mesta" });
+        return;
       }
+
       linija.brojSlobodnihMesta -= brojMesta;
       await linija.save();
     }
@@ -209,6 +211,10 @@ router.post("/rezervacija", async (req, res) => {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
+        if (element.brojSlobodnihMesta < brojMesta) {
+          res.status(404).json({ message: "nema dovoljno mesta" });
+          return;
+        }
         element.brojSlobodnihMesta -= brojMesta;
         element.save();
       }
@@ -227,7 +233,10 @@ router.post("/rezervacija", async (req, res) => {
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
         if (element.redosled < medjustanicaKrajnja.redosled) {
-          console.log(element);
+          if (element.brojSlobodnihMesta < brojMesta) {
+            res.status(404).json({ message: "nema dovoljno mesta" });
+            return;
+          }
           element.brojSlobodnihMesta -= brojMesta;
           element.save();
         }
@@ -255,7 +264,11 @@ router.post("/rezervacija", async (req, res) => {
           element.redosled >= medjustanicaPocetna.redosled &&
           element.redosled < medjustanicaKrajnja.redosled
         ) {
-          console.log("-----------2-----------");
+          if (element.brojSlobodnihMesta < brojMesta) {
+            res.status(404).json({ message: "nema dovoljno mesta" });
+            return;
+          }
+
           element.brojSlobodnihMesta -= brojMesta;
           element.save();
         }
@@ -273,8 +286,11 @@ router.post("/rezervacija", async (req, res) => {
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
         if (element.redosled >= medjustanicaPocetna.redosled) {
+          if (element.brojSlobodnihMesta < brojMesta) {
+            res.status(404).json({ message: "nema dovoljno mesta" });
+            return;
+          }
           element.brojSlobodnihMesta -= brojMesta;
-          console.log("--------------1--------");
           element.save();
         }
       }
@@ -327,6 +343,19 @@ router.post("/filterLinija", async (req, res) => {
       const linija = izvuceneLinijeDatum[index];
       let brojMedjustanicaNaLiniji = 0;
 
+      let najmanjiBroj;
+      let brojSlobodnihMesta1 = [];
+      if (nazivPocetneStanice == linija.pocetnaStanica.naziv) {
+        brojSlobodnihMesta1.push(linija.brojSlobodnihMesta);
+      }
+      for (let j = 0; j < linija.Stanicas.length; j++) {
+        const medjustanica = linija.Stanicas[j];
+        const element = medjustanica.Medjustanica;
+
+        brojSlobodnihMesta1.push(element.brojSlobodnihMesta);
+      }
+      najmanjiBroj = Math.min(...brojSlobodnihMesta1);
+
       if (
         linija.pocetnaStanica.naziv == nazivPocetneStanice &&
         linija.krajnjaStanica.naziv == nazivKrajnjeStanice
@@ -341,29 +370,71 @@ router.post("/filterLinija", async (req, res) => {
           datumDolaska: linija.datumDolaska,
           vremePolaska: linija.vremePolaska.split(":").slice(0, 2).join(":"),
           vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
-          brojSlobodnihMesta: linija.brojSlobodnihMesta,
+          brojSlobodnihMesta: najmanjiBroj,
           oznakaBusa: linija.oznakaBusa,
         });
       }
+
+      let pocetnaStanicaRedosled;
+      let krajnjaStanicaRedosled;
+
+      for (let j = 0; j < linija.Stanicas.length; j++) {
+        const medjustanica = linija.Stanicas[j];
+        const element = medjustanica.Medjustanica;
+
+        if (medjustanica.naziv == nazivPocetneStanice) {
+          pocetnaStanicaRedosled = element.redosled;
+        }
+        if (medjustanica.naziv == nazivKrajnjeStanice) {
+          krajnjaStanicaRedosled = element.redosled;
+        }
+      }
+
+      najmanjiBroj;
+      brojSlobodnihMesta1 = [];
+      if (nazivPocetneStanice == linija.pocetnaStanica.naziv) {
+        brojSlobodnihMesta1.push(linija.brojSlobodnihMesta);
+      }
+      for (let j = 0; j < linija.Stanicas.length; j++) {
+        const medjustanica = linija.Stanicas[j];
+        const element = medjustanica.Medjustanica;
+        if (pocetnaStanicaRedosled == undefined) {
+          if (
+            element.redosled >= pocetnaStanicaRedosled ||
+            element.redosled < krajnjaStanicaRedosled
+          ) {
+            brojSlobodnihMesta1.push(element.brojSlobodnihMesta);
+          }
+        }
+        if (krajnjaStanicaRedosled == undefined) {
+          if (
+            element.redosled >= pocetnaStanicaRedosled ||
+            element.redosled < krajnjaStanicaRedosled
+          ) {
+            brojSlobodnihMesta1.push(element.brojSlobodnihMesta);
+          }
+        }
+        if (
+          element.redosled >= pocetnaStanicaRedosled &&
+          element.redosled < krajnjaStanicaRedosled
+        ) {
+          brojSlobodnihMesta1.push(element.brojSlobodnihMesta);
+        }
+      }
+
+      najmanjiBroj = Math.min(...brojSlobodnihMesta1);
+
       //? prolazimo kroz medjustanice
       for (let j = 0; j < linija.Stanicas.length; j++) {
         const medjustanica = linija.Stanicas[j];
-        let brojSlobodnihMesta1 = [];
+
         const element = medjustanica.Medjustanica;
 
-        brojSlobodnihMesta1.push(
-          element.brojSlobodnihMesta,
-          linija.brojSlobodnihMesta
-        );
-
-        const najmanjiBroj = Math.min(...brojSlobodnihMesta1);
-        console.log(najmanjiBroj, "a");
         //?pitamo da li je na liniji ili medjustanici
         if (
           linija.pocetnaStanica.naziv == nazivPocetneStanice &&
           medjustanica.naziv == nazivKrajnjeStanice
         ) {
-          console.log(najmanjiBroj);
           rezultat.push({
             id: linija.id,
             pocetnaStanica: linija.pocetnaStanica.naziv,
@@ -399,7 +470,7 @@ router.post("/filterLinija", async (req, res) => {
               .slice(0, 2)
               .join(":"),
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
-            brojSlobodnihMesta: element.brojSlobodnihMesta,
+            brojSlobodnihMesta: najmanjiBroj,
             oznakaBusa: linija.oznakaBusa,
           });
           break;
@@ -456,7 +527,7 @@ router.post("/filterLinija", async (req, res) => {
                 .split(":")
                 .slice(0, 2)
                 .join(":"),
-              brojSlobodnihMesta: brSedistaMedjulinija.brojSlobodnihMesta,
+              brojSlobodnihMesta: najmanjiBroj,
               oznakaBusa: linija.oznakaBusa,
             });
           }
