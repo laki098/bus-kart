@@ -226,7 +226,8 @@ router.post("/rezervacija", async (req, res) => {
       });
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
-        if (element.redosled <= medjustanicaKrajnja.redosled) {
+        if (element.redosled < medjustanicaKrajnja.redosled) {
+          console.log(element);
           element.brojSlobodnihMesta -= brojMesta;
           element.save();
         }
@@ -240,13 +241,11 @@ router.post("/rezervacija", async (req, res) => {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
 
       const medjustanicaPocetna = await Medjustanica.findOne({
-        where: linijaId,
-        stanicaId: pocetnaStanicaId,
+        where: { linijaId, stanicaId: pocetnaStanicaId },
       });
 
       const medjustanicaKrajnja = await Medjustanica.findOne({
-        where: linijaId,
-        stanicaId: krajnjaStanicaId,
+        where: { linijaId, stanicaId: krajnjaStanicaId },
       });
 
       for (let i = 0; i < medjustanicaSve.length; i++) {
@@ -254,24 +253,28 @@ router.post("/rezervacija", async (req, res) => {
 
         if (
           element.redosled >= medjustanicaPocetna.redosled &&
-          element.redosled <= medjustanicaKrajnja.redosled
+          element.redosled < medjustanicaKrajnja.redosled
         ) {
+          console.log("-----------2-----------");
           element.brojSlobodnihMesta -= brojMesta;
           element.save();
         }
       }
     }
     //? ako ide od neke medjustanice do krajnje stanice na liniji
-    else {
+    if (
+      linija.pocetnaStanicaId != pocetnaStanicaId &&
+      linija.krajnjaStanicaId == krajnjaStanicaId
+    ) {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
       const medjustanicaPocetna = await Medjustanica.findOne({
-        where: linijaId,
-        stanicaId: pocetnaStanicaId,
+        where: { linijaId, stanicaId: pocetnaStanicaId },
       });
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
         if (element.redosled >= medjustanicaPocetna.redosled) {
           element.brojSlobodnihMesta -= brojMesta;
+          console.log("--------------1--------");
           element.save();
         }
       }
