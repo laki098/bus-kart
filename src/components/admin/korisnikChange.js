@@ -15,7 +15,7 @@ const KorisnikChange = () => {
 
   const back = () => {
     window.history.back();
-  }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -94,8 +94,12 @@ const KorisnikChange = () => {
           <option value="korisnik">korisnik</option>
           <option value="menadzer">menadzer</option>
           <option value="admin">admin</option>
+          <option value="admin">stjuardesa</option>
         </select>
-        <button onClick={back} type="submit"> Sacuvaj</button>
+        <button onClick={back} type="submit">
+          {" "}
+          Sacuvaj
+        </button>
       </div>
     </form>
   );
