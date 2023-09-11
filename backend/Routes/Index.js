@@ -321,11 +321,12 @@ router.post("/filterLinija", async (req, res) => {
         Stanica,
       ],
     });
+
     //? prolazimo kroz liniju
-    console.log(rezultat);
     for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
       const linija = izvuceneLinijeDatum[index];
       let brojMedjustanicaNaLiniji = 0;
+
       if (
         linija.pocetnaStanica.naziv == nazivPocetneStanice &&
         linija.krajnjaStanica.naziv == nazivKrajnjeStanice
@@ -347,15 +348,22 @@ router.post("/filterLinija", async (req, res) => {
       //? prolazimo kroz medjustanice
       for (let j = 0; j < linija.Stanicas.length; j++) {
         const medjustanica = linija.Stanicas[j];
-
+        let brojSlobodnihMesta1 = [];
         const element = medjustanica.Medjustanica;
 
-        //?pitamo da li je na liniji ili medjustanici
+        brojSlobodnihMesta1.push(
+          element.brojSlobodnihMesta,
+          linija.brojSlobodnihMesta
+        );
 
+        const najmanjiBroj = Math.min(...brojSlobodnihMesta1);
+        console.log(najmanjiBroj, "a");
+        //?pitamo da li je na liniji ili medjustanici
         if (
           linija.pocetnaStanica.naziv == nazivPocetneStanice &&
           medjustanica.naziv == nazivKrajnjeStanice
         ) {
+          console.log(najmanjiBroj);
           rezultat.push({
             id: linija.id,
             pocetnaStanica: linija.pocetnaStanica.naziv,
@@ -369,7 +377,7 @@ router.post("/filterLinija", async (req, res) => {
               .split(":")
               .slice(0, 2)
               .join(":"),
-            brojSlobodnihMesta: linija.brojSlobodnihMesta,
+            brojSlobodnihMesta: najmanjiBroj,
             oznakaBusa: linija.oznakaBusa,
           });
         }
@@ -403,43 +411,56 @@ router.post("/filterLinija", async (req, res) => {
         ) {
           brojMedjustanicaNaLiniji += 1;
         }
-        //! TREBA MI USLOV ZA REDOSLED
+
         if (brojMedjustanicaNaLiniji == 2) {
           const pocetnaFilterId = await Stanica.findOne({
             where: {
               naziv: nazivPocetneStanice,
             },
           });
+          //? izvuko sam bas tu medju stanicu koja je pocetna
+          const pocetnaFilterMedju = await Medjustanica.findOne({
+            where: {
+              stanicaId: pocetnaFilterId.id,
+            },
+          });
+
           const kranjnjaFilterId = await Stanica.findOne({
             where: {
               naziv: nazivKrajnjeStanice,
             },
           });
-          const brSedistaMedjulinija = await Medjustanica.findOne({
-            where: { linijaId: linija.id, stanicaId: pocetnaFilterId.id },
+          //? izvuko sam bas tu medju stanicu koja je krajnja
+          const krajnjaFilterMedju = await Medjustanica.findOne({
+            where: { stanicaId: kranjnjaFilterId.id },
           });
-          console.log(brSedistaMedjulinija);
 
-          console.log(element);
-          rezultat.push({
-            id: linija.id,
-            pocetnaStanica: nazivPocetneStanice,
-            pocetnaStanicaId: pocetnaFilterId.id,
-            krajnjaStanicaId: kranjnjaFilterId.id,
-            krajnjaStanica: nazivKrajnjeStanice,
-            datumPolaska: element.datumPolaskaM,
-            datumDolaska: element.datumDolaskaM,
-            vremePolaska: element.vremePolaskaM
-              .split(":")
-              .slice(0, 2)
-              .join(":"),
-            vremeDolaska: element.vremeDolaskaM
-              .split(":")
-              .slice(0, 2)
-              .join(":"),
-            brojSlobodnihMesta: brSedistaMedjulinija.brojSlobodnihMesta,
-            oznakaBusa: linija.oznakaBusa,
-          });
+          if (pocetnaFilterMedju.redosled <= krajnjaFilterMedju.redosled) {
+            const brSedistaMedjulinija = await Medjustanica.findAll({
+              where: { linijaId: linija.id },
+            });
+
+            rezultat.push({
+              id: linija.id,
+              pocetnaStanica: nazivPocetneStanice,
+              pocetnaStanicaId: pocetnaFilterId.id,
+              krajnjaStanicaId: kranjnjaFilterId.id,
+              krajnjaStanica: nazivKrajnjeStanice,
+              datumPolaska: element.datumPolaskaM,
+              datumDolaska: element.datumDolaskaM,
+              vremePolaska: element.vremePolaskaM
+                .split(":")
+                .slice(0, 2)
+                .join(":"),
+              vremeDolaska: element.vremeDolaskaM
+                .split(":")
+                .slice(0, 2)
+                .join(":"),
+              brojSlobodnihMesta: brSedistaMedjulinija.brojSlobodnihMesta,
+              oznakaBusa: linija.oznakaBusa,
+            });
+          }
+
           break;
         }
       }
