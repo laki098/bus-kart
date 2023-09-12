@@ -94,7 +94,7 @@ const KorisnikChange = () => {
           <option value="korisnik">korisnik</option>
           <option value="menadzer">menadzer</option>
           <option value="admin">admin</option>
-          <option value="admin">stjuardesa</option>
+          <option value="stjuardesa">stjuardesa</option>
         </select>
         <button onClick={back} type="submit">
           {" "}

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./main.css";
 import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
@@ -25,12 +25,11 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
-  const clickBaitLogout = () => { 
+  const clickBaitLogout = () => {
     loginApi().logout();
     window.location.reload();
-  }
+  };
 
   let userData = cookies.get("userData");
   let userPars = {};
@@ -60,6 +59,16 @@ const Navbar = () => {
             <p></p>
           )}
         </li>
+        {userPars.rola === "stjuardesa" ? (
+          <li>
+            <Link to="/stjuardesa">
+              <i className="fa-solid fa-users nav-links"></i>Cekiranje
+            </Link>
+          </li>
+        ) : (
+          ""
+        )}
+
         <li>
           <Link to="/pocetna">
             <i className="fa-solid fa-house-user nav-links"></i>Početna
@@ -78,27 +87,46 @@ const Navbar = () => {
               </Link>
             </li>
           ) : (
-            <><div className="menu" onClick={() => setMenuOpen(!menuOpen)}></div>
-            <ul className={menuOpen ? "open" : ""}>
-              <li onMouseEnter={handleMenuEnter} onMouseLeave={handleMenuLeave}>
-            <Link on> <i className="fa fa-user-circle nav-links"></i>{userPars.ime}</Link> 
-                {menuOpen && ( 
-                  <ul className="dropdown">
-                    <li className="dropdown-item">
-                    <Link to="/korisnik"><i className="fa-regular fa-user nav-links "></i><li>Profil</li></Link>
-                    </li>
-                    <li className="dropdown-item">
-                    <Link to="/karta"><i className="fa-solid fa-ticket nav-links " ></i><li>Karte</li></Link>
-                    </li>
-                    <li className="dropdown-item">
-                    <Link>
-                    <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i><li onClick={clickBaitLogout}>Logout</li>
-                    </Link>
-                    </li>
-                    
-                  </ul>
-                )}
-              </li></ul></>
+            <>
+              <div
+                className="menu"
+                onClick={() => setMenuOpen(!menuOpen)}
+              ></div>
+              <ul className={menuOpen ? "open" : ""}>
+                <li
+                  onMouseEnter={handleMenuEnter}
+                  onMouseLeave={handleMenuLeave}
+                >
+                  <Link on>
+                    {" "}
+                    <i className="fa fa-user-circle nav-links"></i>
+                    {userPars.ime}
+                  </Link>
+                  {menuOpen && (
+                    <ul className="dropdown">
+                      <li className="dropdown-item">
+                        <Link to="/korisnik">
+                          <i className="fa-regular fa-user nav-links "></i>
+                          <li>Profil</li>
+                        </Link>
+                      </li>
+                      <li className="dropdown-item">
+                        <Link to="/karta">
+                          <i className="fa-solid fa-ticket nav-links "></i>
+                          <li>Karte</li>
+                        </Link>
+                      </li>
+                      <li className="dropdown-item">
+                        <Link>
+                          <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
+                          <li onClick={clickBaitLogout}>Logout</li>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              </ul>
+            </>
           )}
         </div>
       </ul>

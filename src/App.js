@@ -22,6 +22,7 @@ import KorisniciInitial from "./components/admin/korisniciInitial";
 import KorisnikChange from "./components/admin/korisnikChange";
 import Korisnik from "./components/NavBar/links/korisnik/korisnik";
 import Karta from "./components/NavBar/links/korisnik/karta";
+import Stjuardesa from "./components/stjuardesa/stjuardesa";
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
           <Switch>
             <Route path="/adminpanel">
               <AdminPanel />
+            </Route>
+            <Route path="/stjuardesa">
+              <Stjuardesa />
             </Route>
             <Route path="/pocetna">
               <Pocetna />
