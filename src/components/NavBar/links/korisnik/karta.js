@@ -9,7 +9,7 @@ const Karta = () => {
   let userPars = {};
   if (userData != undefined) {
     userPars = JSON.parse(userData);
-  }
+  } 
 
   const userId = { korisnikId: userPars.idKorisnika };
   const userIdP = JSON.stringify(userId);

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import "./main.css";
 import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
 import cookies from "js-cookie";
 import logo from "./../images/logo.png";
-import logo1 from "./../images/eurocompass.png";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -15,6 +14,17 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuEnter = () => {
+    setMenuOpen(true);
+  };
+
+  const handleMenuLeave = () => {
+    setMenuOpen(false);
+  };
+
 
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
   const clickBaitLogout = () => { 
@@ -68,18 +78,27 @@ const Navbar = () => {
               </Link>
             </li>
           ) : (
-            <li>
-              <button onClick={toggleDropdown}>
-                <p>{userPars.ime} {userPars.prezime}</p>
-              </button>
-              {isDropdownOpen && (
-                <ul className="dropdown">
-                  <Link to="/korisnik"><li>Profil</li></Link>
-                  <Link to="/karta"><li>Karte</li></Link>
-                  <button onClick={clickBaitLogout}>Logout</button>
-                </ul>
-              )}
-            </li>
+            <><div className="menu" onClick={() => setMenuOpen(!menuOpen)}></div>
+            <ul className={menuOpen ? "open" : ""}>
+              <li onMouseEnter={handleMenuEnter} onMouseLeave={handleMenuLeave}>
+            <Link on> <i className="fa fa-user-circle nav-links"></i>{userPars.ime}</Link> 
+                {menuOpen && ( 
+                  <ul className="dropdown">
+                    <li className="dropdown-item">
+                    <Link to="/korisnik"><i className="fa-regular fa-user nav-links "></i><li>Profil</li></Link>
+                    </li>
+                    <li className="dropdown-item">
+                    <Link to="/karta"><i className="fa-solid fa-ticket nav-links " ></i><li>Karte</li></Link>
+                    </li>
+                    <li className="dropdown-item">
+                    <Link>
+                    <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i><li onClick={clickBaitLogout}>Logout</li>
+                    </Link>
+                    </li>
+                    
+                  </ul>
+                )}
+              </li></ul></>
           )}
         </div>
       </ul>
