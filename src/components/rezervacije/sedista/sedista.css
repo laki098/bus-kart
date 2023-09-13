@@ -1,11 +1,12 @@
 .autobus {
   display: flex;
   flex-wrap: wrap;
-  width: 555px;
+  width: 26.875rem;
   height: auto;
   border: 2px solid black;
   padding: 30px;
-  margin-left: 36.5%;
+  margin-left: auto;
+  margin-right: auto;
   justify-content: flex-start;
   background: white;
   margin-top: 2rem;

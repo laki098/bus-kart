@@ -4,19 +4,21 @@ import KorisnikApi from "../../api/korisnikApi";
 
 const KorisniciInitial = () => {
   const [korisnici, setKorisnici] = useState([]);
-  useEffect(() => {
-    getKorisnici();
-  }, []);
 
   const getKorisnici = async () => {
     const response = await fetch("http://localhost:5000/korisnik");
     const data = await response.json();
     setKorisnici(data.korisnici);
   };
+
+  useEffect(() => {
+    getKorisnici();
+  }, [setKorisnici]);
+
   const brisanjeKorisnika = async (idKorisnik) => {
     const response = await KorisnikApi().brisanjeKorisnika(idKorisnik);
   };
-  console.log(korisnici);
+
   return (
     <>
       <div>

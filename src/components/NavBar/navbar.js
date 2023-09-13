@@ -118,8 +118,10 @@ const Navbar = () => {
                       </li>
                       <li className="dropdown-item">
                         <Link>
-                          <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
-                          <li onClick={clickBaitLogout}>Logout</li>
+                          <li onClick={clickBaitLogout}>
+                            <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
+                            Logout
+                          </li>
                         </Link>
                       </li>
                     </ul>

@@ -36,7 +36,6 @@ const Kontakt = () => {
           ))}
         </div>
       </header>
-
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">
@@ -73,9 +72,6 @@ const Kontakt = () => {
           </div>
         </div>
       </section>
-
-      <SeatSabiranje />
-      <Autobus />
     </div>
   );
 };
