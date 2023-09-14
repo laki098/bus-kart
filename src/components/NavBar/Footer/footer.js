@@ -3,39 +3,40 @@ import React from "react";
 
 import "./footer.css";
 
+
 const Footer = () => {
   return (
     <div className="footer">
       <div className="container">
         <div className="row">
           <div className="footer-col">
-            <h4>Informacije</h4>
+            <h4>Prevoz putnika</h4>
             <ul>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
+              <li className="footer-li">Red vožnje</li>
+              <li className="footer-li">Rezervacija karata</li>
+              <li className="footer-li">Popusti</li>
+              <li className="footer-li">Prodajna mesta</li>
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Test</h4>
+            <h4>Prava putnika</h4>
             <ul>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
+              <li className="footer-li">Otkazivanje karte</li>
+              <li className="footer-li">Povlastice za invalide</li>
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Test</h4>
+            <h4>Usluge</h4>
             <ul>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
-              <li>Lorem ipsum dolor sit amet</li>
+              <li className="footer-li">Iznajmljivanje vozila</li>
+              <li className="footer-li">Popravka vozila</li>
+              <lli className="footer-li"i>Slanje pošiljki</lli>
             </ul>
           </div>
 
           <div className="footer-col">
             <h4>Pratite nas</h4>
-            <div className="social-links">
+            <div className="social-links ">
               <a
                 href="https://www.facebook.com/"
                 target="_blank"
@@ -70,9 +71,10 @@ const Footer = () => {
         </div>
         <hr />
        
-        <p className="data">
-          &copy;{new Date().getFullYear()} Ovaj sajt je uradjen | Sva prava |
-        </p>
+        <div className="data">
+          <p className="logo-footer">EUROCOMPASS</p>
+          <p className="p-footer">Eurocompass postoji od (možemo da stavimo godinu ovde) godine. Osnovna delatnost preduzeća je prevoz putnika gradskim, međugradskim i međunarodnim linijama.</p>
+        </div>
        
       </div>
     </div>
