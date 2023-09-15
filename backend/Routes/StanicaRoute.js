@@ -1,5 +1,6 @@
 import express from "express";
 import Stanica from "../Models/StanicaModels.js";
+import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js";
 
 const router = express.Router();
 
@@ -34,18 +35,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    const { naziv, adresa } = req.body;
+router.post(
+  "/",
+  isAuthenticated,
+  isAuthorized(["admin", "biletar"]),
+  async (req, res) => {
+    try {
+      const { naziv, adresa } = req.body;
 
-    const novaStanica = await Stanica.create({ naziv, adresa });
-    res
-      .status(201)
-      .json({ message: "Uspesno dodata nova stanica", novaStanica });
-  } catch (error) {
-    res.status(500).json({ message: error.errors[0].message });
+      const novaStanica = await Stanica.create({ naziv, adresa });
+      res
+        .status(201)
+        .json({ message: "Uspesno dodata nova stanica", novaStanica });
+    } catch (error) {
+      res.status(500).json({ message: error.errors[0].message });
+    }
   }
-});
+);
 
 router.put("/:id", async (req, res) => {
   try {
