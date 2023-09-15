@@ -29,6 +29,7 @@ const Navbar = () => {
   const clickBaitLogout = () => {
     loginApi().logout();
     window.location.reload();
+    window.location.href = "pocetna";
   };
 
   let userData = cookies.get("userData");

@@ -1,5 +1,4 @@
 import express from "express";
-import { isAuthenticated } from "../Middlewares/testMiddleware.js";
 
 import Grad from "../Models/GradModels.js";
 import Stanica from "../Models/StanicaModels.js";
@@ -19,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", isAuthenticated, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { nazivGrada, napomena, ostalo } = req.body;
 

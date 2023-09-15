@@ -137,9 +137,13 @@ router.post("/login", async (req, res) => {
     }
     const exp = korisnik.role == "korisnik" ? "1h" : "8h";
     //? Generisanje JWT tokena
-    const token = jwt.sign({ email: korisnik.email }, process.env.JWT_SECRET, {
-      expiresIn: exp,
-    });
+    const token = jwt.sign(
+      { email: korisnik.email, idKorisnik: korisnik.idKorisnik },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: exp,
+      }
+    );
 
     //? kreiranje korisnickih podataka za slanje u cookies
     const userData = {

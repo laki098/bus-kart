@@ -7,7 +7,7 @@ const BusInitional = () => {
   const [busevi, setBusevi] = useState([]);
   useEffect(() => {
     getBus();
-  }, busevi);
+  }, []);
 
   const getBus = async () => {
     const response = await fetch("http://localhost:5000/autobusi");
@@ -19,7 +19,6 @@ const BusInitional = () => {
     const response = await BusApi().brisanjeBus(idAutobusa);
     window.location.reload();
   };
-
 
   return (
     <>
