@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import KorisnikApi from "../../api/korisnikApi";
 import KorisnikLogic from "./korisnikLogic";
 
+
 const KorisnikChange = () => {
   const [korisnik, setKorisnik] = useState({});
   const { idKorisnik } = useParams();
@@ -13,9 +14,9 @@ const KorisnikChange = () => {
 
   const korisnikLogic = KorisnikLogic();
 
-  const back = () => {
+  /* const back = () => {
     window.history.back();
-  };
+  }; */
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -28,7 +29,7 @@ const KorisnikChange = () => {
       prezime: formData.get("prezime"),
       brojTelefona: formData.get("brojTelefona"),
       email: formData.get("email"),
-      role: formData.get("role"),
+      role: formData.get("role"), //mesto formdata stavljam userpars.rola
     };
     korisnikLogic.editKorisnik(data);
   };
@@ -96,7 +97,7 @@ const KorisnikChange = () => {
           <option value="admin">admin</option>
           <option value="stjuardesa">stjuardesa</option>
         </select>
-        <button onClick={back} type="submit">
+        <button /* onClick={back} */ type="submit">
           {" "}
           Sacuvaj
         </button>

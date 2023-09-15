@@ -301,7 +301,7 @@ router.put("/:idKorisnik", async (req, res) => {
   try {
     const { idKorisnik } = req.params; //ID korisnika koji se menja
     const { korisnickoIme, ime, prezime, brojTelefona, email, role } = req.body;
-
+      console.log(idKorisnik)
     const updateKorisnik = await Korisnik.update(
       { korisnickoIme, ime, prezime, brojTelefona, email, role },
       { where: { idKorisnik: idKorisnik }, limit: 1 }
@@ -310,7 +310,7 @@ router.put("/:idKorisnik", async (req, res) => {
     if (updateKorisnik[0] === 0) {
       return res.status(404).json({ message: "korisnik nije pronadjen" });
     }
-    return status(200).json({ message: "korisnik uspesno promenjen" });
+    return res.status(200).json({ message: "korisnik uspesno promenjen" });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske", error });
   }
