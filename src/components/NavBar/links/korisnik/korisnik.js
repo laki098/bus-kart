@@ -54,48 +54,63 @@ const Korisnik = () => {
 
     return ( 
       <form onSubmit={submitHandler} className="form-user">
-      
-       <label>KorisnickoIme:</label>
+      <div className="user-control">
+       <label className="user-label">Korisnicko Ime:</label>
         <input
+        className="user-input"
           defaultValue={korisnik.korisnickoIme}
           type="text"
           required
           name="korisnickoIme"
           onChange={korisnikLogic.changeHandler}
         ></input>
-        <label>ime:</label>
+        </div>
+        <div className="user-control">
+        <label className="user-label">Ime:</label>
         <input
+        className="user-input"
           defaultValue={korisnik.ime}
           type="text"
           required
           name="ime"
           onChange={korisnikLogic.changeHandler}
         ></input>
-        <label>Prezime:</label>
+        </div>
+
+        <div className="user-control">
+        <label className="user-label">Prezime:</label>
         <input
+        className="user-input"
           defaultValue={korisnik.prezime}
           type="text"
           required
           name="prezime"
           onChange={korisnikLogic.changeHandler}
         ></input>
-        <label>Broj Telefona:</label>
+        </div>
+        <div className="user-control">
+        <label className="user-label">Broj Telefona:</label>
         <input
+        className="user-input"
           defaultValue={korisnik.brojTelefona}
           type="text"
           required
           name="brojTelefona"
           onChange={korisnikLogic.changeHandler}
         ></input>
-        <label>email:</label>
+        </div>
+        <div className="user-control">
+        <label className="user-label">Email:</label>
         <input
+        className="user-input"
           defaultValue={korisnik.email}
           type="text"
           required
           name="email"
           onChange={korisnikLogic.changeHandler}
         ></input>
-         <button  type="submit">
+        </div>
+         <button  type="submit" className="user-button ">
           Sacuvaj
         </button>
     </form>

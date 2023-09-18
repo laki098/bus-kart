@@ -21,8 +21,9 @@ const AdminInitial = () => {
   const [val2, setVal2] = useState("");
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
-  /*   const [linije, setLinije] = useState([]); */
   const [stanice, setStanice] = useState([]);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const [lineToDelete, setLineToDelete] = useState(null);
 
   const getStanice = async () => {
     const response = await fetch("http://localhost:5000/stanica");
@@ -43,22 +44,12 @@ const AdminInitial = () => {
     console.log(data.rezultat);
     setFilteredLinije(data.rezultat);
   };
+
   const getLinije = async () => {
     const response = await fetch("http://localhost:5000/linija");
     const podaci = await response.json();
     const data = podaci.linija;
     console.log(data);
-    /* const mestoPolaska = data
-      .map((item) => item.mestoPolaska)
-      .filter(helpers.filterUnique); //filtriranje mesto polaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
-    const mestoDolaska = data
-      .map((item) => item.mestoDolaska)
-      .filter(helpers.filterUnique); //filtriranje mesto dolaska(da ne bi ispisivao duplo npr:Beograd beograd u selectu)
-    setPolasci(mestoPolaska); // setujemo filtrirano mesto polaska(da ne bi moglo da ispisuje duplo)
-    setDolasci(mestoDolaska); */ // setujemo filtrirano mesto dolaska(da ne bi moglo da ispisuje duplo)
-    /* setLinije(data); */
-    /* setVal1(data[0].mestoPolaska);
-    setVal2(data[0].mestoDolaska); */
   };
 
   useEffect(() => {
@@ -79,17 +70,22 @@ const AdminInitial = () => {
   };
 
   const brisanjeLinije = async (id) => {
-    const response = await adminLogic.brisanjeLinije(id); // slanje zahteva za brisanje bas za taj id
+    setLineToDelete(id);
+    setIsDeleteConfirmationOpen(true);
+  };
 
-    if (!response.statusText === "OK") {
-      //
-      return; // proverava se da li je izbrisan iz baze
-    } //
+  const confirmDelete = async () => {
+    if (lineToDelete !== null) {
+      const response = await adminLogic.brisanjeLinije(lineToDelete);
+      // Dodajte kod za osvežavanje prikaza linija nakon brisanja ako je brisanje uspešno.
+      // Možete koristiti setState za osvežavanje filteredLinije stanja ili bilo koju drugu metodu koja osvežava prikaz.
+    }
+    setIsDeleteConfirmationOpen(false);
+  };
 
-    setFilteredLinije((filtriraneLinije) => {
-      //  ako jeste onda ce da odradi cuvanje linija
-      return filtriraneLinije.filter((linija) => linija.id !== id); //  i ponovo filtrirati. (kako bi se refresovalo)
-    });
+  const cancelDelete = () => {
+    setLineToDelete(null);
+    setIsDeleteConfirmationOpen(false);
   };
 
   //prevodjenje
@@ -102,7 +98,6 @@ const AdminInitial = () => {
 
   return (
     <div>
-      {" "}
       {/*  dodala klasu iz registration komponent*/}
       {/*  header je deo za prevodjenje*/}
       <header>
@@ -122,16 +117,14 @@ const AdminInitial = () => {
         </div>
       </header>
       <div className={classes.form}>
-        {" "}
         {/* className={classes.form}   className="home" */}
         <div style={{ textAlign: "center" }}>
-          {" "}
           {/* className="prvi"  */}
           <label className="labela">
             <Trans i18nKey="description.part3">Mesto polaska:</Trans>
           </label>
           <br />
-          <select //
+          <select
             className="position unos" //className="position" bilo je  className="unos"
             value={val1} //
             onChange={(e) => setVal1(e.target.value)} //
@@ -148,13 +141,12 @@ const AdminInitial = () => {
           </select>
         </div>
         <div style={{ textAlign: "center" }}>
-          {" "}
           {/* className="prvi"  */}
           <label className="labela">
             <Trans i18nKey="description.part5">Mesto Dolaska:</Trans>
           </label>
           <br />
-          <select //
+          <select
             className="position unos" // unos sam dopisala dodatno
             value={val2} //
             onChange={(e) => setVal2(e.target.value)} //
@@ -215,8 +207,6 @@ const AdminInitial = () => {
                       {linija.vremePolaska},
                       <Trans i18nKey="description.part13">Vreme dolaska:</Trans>{" "}
                       {linija.vremeDolaska},
-                      {/* <Trans i18nKey="description.part131">Prevoznik: </Trans>{" "}
-                      {linija.prevoznik}, */}
                       <Trans i18nKey="description.part3">Mesto polaska: </Trans>{" "}
                       {linija.pocetnaStanica},
                       <Trans i18nKey="description.part5">Mesto dolaska: </Trans>{" "}
@@ -272,6 +262,29 @@ const AdminInitial = () => {
         <p>
           <Trans i18nKey="description.part135">Nema Linije...</Trans>
         </p>
+      )}
+      {isDeleteConfirmationOpen && (
+        <div className="confirm-dialog-container">
+          <div className="confirm-dialog-box">
+            <p>
+              <Trans i18nKey="description.part136">
+                Da li ste sigurni da želite da izbrišete liniju?
+              </Trans>
+            </p>
+            <button
+              className="confirm-dialog-yes"
+              onClick={() => confirmDelete()}
+            >
+              <Trans i18nKey="description.part137">Da</Trans>
+            </button>
+            <button
+              className="confirm-dialog-no"
+              onClick={() => cancelDelete()}
+            >
+              <Trans i18nKey="description.part138">Ne</Trans>
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
