@@ -9,15 +9,15 @@ const AdminPanel = () => {
     <div>
       <br />
       <Link to={"/bus.initial"}>
-        <button className="dugme">Autobusi</button>
+        <button className="button-panel">Autobusi</button>
       </Link>
       &ensp;
       <Link to={"/admin.initial"}>
-        <button className="dugme">Linije</button>
+        <button className="button-panel">Linije</button>
       </Link>
       &ensp;
       <Link to={"/korisniciInitial"}>
-        <button className="dugme">Korisnici</button>
+        <button className="button-panel">Korisnici</button>
       </Link>
     </div>
   );

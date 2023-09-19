@@ -64,8 +64,8 @@ const AdminInitial = () => {
     setShowClass(!showClass);
   };
 
-  const clickButton = (event) => {
-    filterLinija();
+  const clickButton = async (event) => {
+    await filterLinija(); // Dodao await ovde kako bi se prvo filtrirale linije pre nego što se promeni klasa.
     changer();
   };
 
@@ -76,9 +76,11 @@ const AdminInitial = () => {
 
   const confirmDelete = async () => {
     if (lineToDelete !== null) {
-      const response = await adminLogic.brisanjeLinije(lineToDelete);
+      await adminLogic.brisanjeLinije(lineToDelete);
       // Dodajte kod za osvežavanje prikaza linija nakon brisanja ako je brisanje uspešno.
       // Možete koristiti setState za osvežavanje filteredLinije stanja ili bilo koju drugu metodu koja osvežava prikaz.
+      const updatedLinije = filteredLinije.filter((linija) => linija.id !== lineToDelete);
+      setFilteredLinije(updatedLinije);
     }
     setIsDeleteConfirmationOpen(false);
   };
@@ -263,7 +265,7 @@ const AdminInitial = () => {
           <Trans i18nKey="description.part135">Nema Linije...</Trans>
         </p>
       )}
-      {isDeleteConfirmationOpen && (
+      {isDeleteConfirmationOpen && (            // izbacuje da pita korisnika da li je siguran da zeli da izbrise liniju
         <div className="confirm-dialog-container">
           <div className="confirm-dialog-box">
             <p>
