@@ -30,6 +30,16 @@ const Medjustanica = db.define(
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
+    pocetakRute: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    krajRute: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "medjustanica",

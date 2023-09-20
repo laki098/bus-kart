@@ -29,6 +29,27 @@ const Linija = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    pocetakRute: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    krajRute: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+    },
+
+    stjuardesa: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
+    vozac: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "linija",
