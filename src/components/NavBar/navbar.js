@@ -28,13 +28,13 @@ const Navbar = () => {
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
   const clickBaitLogout = () => {
     loginApi().logout();
-    window.location.href="pocetna";
+    window.location.href = "pocetna";
   };
 
   //? izvlacenje korisnika iz cookisa
   let userData = cookies.get("userData");
   let userPars = {};
-  
+
   //? pitamo ga da li je prijvljen, ako nije da ne odradi to parsiranje u json.
   if (userData != undefined) {
     userPars = JSON.parse(userData);
@@ -90,17 +90,17 @@ const Navbar = () => {
             </li>
           ) : (
             <>
-              <div className="menu" onClick={() => setMenuOpen(!menuOpen)}></div>
-             <ul className={menuOpen ? "open" : ""}>
-                <li
-                  onClick={handleMenuEnter}
-                  onMouseLeave={handleMenuLeave}
-                >
-                  <Link on>
-                    {" "}
+              <div
+                className="menu"
+                onClick={() => setMenuOpen(!menuOpen)}
+              ></div>
+              <ul className={menuOpen ? "open" : ""}>
+                <li onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
+                  {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
+                  <div>
                     <i className="fa fa-user-circle nav-links"></i>
                     {userPars.ime}
-                  </Link>
+                  </div>
                   {menuOpen && (
                     <ul className="dropdown">
                       <li className="dropdown-item">
@@ -116,12 +116,13 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li className="dropdown-item">
-                      <Link on>
+                        {/* stavi sta hoces samo ne LINK!!! umesto ovog diva ispod*/}
+                        <div>
                           <p onClick={clickBaitLogout}>
                             <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
                             Logout
                           </p>
-                        </Link>
+                        </div>
                       </li>
                     </ul>
                   )}
