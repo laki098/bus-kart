@@ -19,7 +19,6 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-
   try {
     const stanica = await Stanica.findOne({
       where: {
@@ -29,6 +28,7 @@ router.get("/:id", async (req, res) => {
         exclude: ["createdAt", "updatedAt"],
       },
     });
+
     res.status(200).json({ message: "uspesno pronadjena stanica", stanica });
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
@@ -43,7 +43,7 @@ router.post(
     try {
       const { naziv, adresa } = req.body;
 
-      console.log(naziv)
+      console.log(naziv);
 
       const novaStanica = await Stanica.create({ naziv, adresa });
       res

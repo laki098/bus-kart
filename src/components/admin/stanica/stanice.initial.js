@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import StaniceApi from "../../../api/stanice.api";
 
@@ -10,7 +10,7 @@ const StaniceInitial = () => {
   const getStanice = async () => {
     const response = await fetch("http://localhost:5000/stanica");
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     setStanice(data.stanice);
   };
 
@@ -45,7 +45,7 @@ const StaniceInitial = () => {
               <li key={stanica.id}>
                 <div>
                   naziv: {stanica.naziv}, adresa: {stanica.adresa}
-                  <Link to={`${stanice.id}/stanice.edit`}>
+                  <Link to={`${stanica.id}/stanice.edit`}>
                     <button>Izmeni</button>
                   </Link>
                   <button onClick={() => brisanjeStanice(stanica.id)}>
@@ -79,5 +79,3 @@ const StaniceInitial = () => {
 };
 
 export default StaniceInitial;
- 
-
