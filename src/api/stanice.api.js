@@ -6,10 +6,16 @@ const StaniceApi = () => {
       naziv: naziv,
       adresa: adresa,
     });
-    return await axios.post("http://localhost:5000/stanica", {
-      naziv: naziv,
-      adresa: adresa,
-    });
+    return await axios.post(
+      "http://localhost:5000/stanica",
+      {
+        naziv: naziv,
+        adresa: adresa,
+      },
+      {
+        withCredentials: true, //! potrebno je da bi dobili token ili ga prosledili na backend
+      }
+    );
   };
 
   const filterStaniceId = async (id) => {

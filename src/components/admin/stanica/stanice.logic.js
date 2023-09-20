@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StaniceApi from "./stanice.initial";
+import StaniceApi from "../../../api/stanice.api";
 
 const StaniceLogic = () => {
   let [data, setData] = useState({});
@@ -10,7 +10,6 @@ const StaniceLogic = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(data);
 
   const upisStanice = async () => {
     StaniceApi()
@@ -19,8 +18,7 @@ const StaniceLogic = () => {
         alert("Konacno");
       })
       .catch((error) => {
-        console.log(error, "--------------------------------");
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        console.log(error);
       });
   };
 
@@ -32,9 +30,6 @@ const StaniceLogic = () => {
       })
       .catch((error) => {
         console.log(error);
-        console.log(
-          "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        );
       });
   };
 
