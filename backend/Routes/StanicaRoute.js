@@ -43,6 +43,8 @@ router.post(
     try {
       const { naziv, adresa } = req.body;
 
+      console.log(naziv)
+
       const novaStanica = await Stanica.create({ naziv, adresa });
       res
         .status(201)
