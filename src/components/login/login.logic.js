@@ -15,6 +15,7 @@ const LoginLogic = () => {
       })
       .catch((error) => {
         console.log(error);
+        alert("uneti su pogresni podaci");
       });
   };
 
