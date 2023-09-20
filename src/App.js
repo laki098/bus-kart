@@ -23,6 +23,10 @@ import KorisnikChange from "./components/admin/korisnikChange";
 import Korisnik from "./components/NavBar/links/korisnik/korisnik";
 import Karta from "./components/NavBar/links/korisnik/karta";
 import Stjuardesa from "./components/stjuardesa/stjuardesa";
+import StaniceInitial from "./components/admin/stanica/stanice.initial";
+import StaniceAdd from "./components/admin/stanica/stanice.add";
+import StaniceEdit from "./components/admin/stanica/stanice.edit";
+
 
 function App() {
   return (
@@ -82,6 +86,9 @@ function App() {
           <Route path="/bus.initial">
             <BusInitional />
           </Route>
+          <Route path="/stanice.initial">
+            <StaniceInitial />
+          </Route>
           <Route path="/bus.add">
             <BusAdd />
           </Route>
@@ -93,6 +100,12 @@ function App() {
           </Route>
           <Route path="/:idKorisnik/korisnikChange">
             <KorisnikChange />
+          </Route>
+          <Route path="/stanice.add">
+            <StaniceAdd />
+          </Route>
+          <Route path="/:id/stanice.edit">
+            <StaniceEdit />
           </Route>
         </div>
 

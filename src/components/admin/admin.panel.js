@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import "./admin.css";
 
-import bus1 from "../images/bus1.jpg";
-import "./admin.css";
-
 const AdminPanel = () => {
   return (
     <div>
@@ -18,6 +15,9 @@ const AdminPanel = () => {
       &ensp;
       <Link to={"/korisniciInitial"}>
         <button className="button-panel">Korisnici</button>
+      </Link>
+      <Link to={"stanice.initial"}>
+        <button className="button-panel">Stanice</button>
       </Link>
     </div>
   );
