@@ -30,8 +30,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Endpoint za kreiranje nove linije
-// Kod za kreiranje nove linije
+//? Endpoint za kreiranje nove linije
+//? Kod za kreiranje nove linije
 router.post("/", async (req, res) => {
   try {
     const {
@@ -43,6 +43,10 @@ router.post("/", async (req, res) => {
       datumPolaska,
       datumDolaska,
       oznakaBusa,
+      pocetakRute,
+      krajRute,
+      stjuardesa,
+      vozac,
     } = req.body;
 
     // Kreiranje početne stanice
@@ -85,6 +89,8 @@ router.post("/", async (req, res) => {
       vremeDolaska: stanica.vremeDolaskaM,
       datumPolaska: stanica.datumPolaskaM,
       datumDolaska: stanica.datumDolaskaM,
+      pocetakRute: stanica.pocetakRute,
+      krajRute: stanica.krajRute,
     }));
 
     // Kreiranje linije
@@ -95,6 +101,10 @@ router.post("/", async (req, res) => {
       datumDolaska,
       brojSlobodnihMesta,
       oznakaBusa,
+      pocetakRute,
+      krajRute,
+      stjuardesa,
+      vozac,
     });
 
     // Povezivanje početne stanice i krajnje stanice s linijom
@@ -118,12 +128,109 @@ router.post("/", async (req, res) => {
             datumPolaskaM: stanica.datumPolaska,
             datumDolaskaM: stanica.datumDolaska,
             brojSlobodnihMesta,
+            pocetakRute,
+            krajRute,
           },
         });
       })
     );
 
     return res.status(201).json({ message: "Uspesno dodata nova linija" });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    const linijaId = req.params.id;
+    const {
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      pocetakRute,
+      krajRute,
+      stjuardesa,
+      vozac,
+    } = req.body;
+
+    // Pronađite postojeću liniju koju želite urediti
+    const postojucaLinija = await Linija.findByPk(linijaId, {
+      include: Stanica,
+    });
+
+    if (!postojucaLinija) {
+      return res.status(404).json({ message: "Linija nije pronađena." });
+    }
+
+    // Ažurirajte svojstva linije prema novim informacijama
+    postojucaLinija.vremePolaska = vremePolaska;
+    postojucaLinija.vremeDolaska = vremeDolaska;
+    postojucaLinija.datumPolaska = datumPolaska;
+    postojucaLinija.datumDolaska = datumDolaska;
+    postojucaLinija.oznakaBusa = oznakaBusa;
+    postojucaLinija.pocetakRute = pocetakRute;
+    postojucaLinija.krajRute = krajRute;
+    postojucaLinija.stjuardesa = stjuardesa;
+    postojucaLinija.vozac = vozac;
+
+    // Povezivanje početne stanice i krajnje stanice s linijom
+    const pocetna = await Stanica.findOne({
+      where: {
+        naziv: pocetnaStanica,
+      },
+    });
+
+    const krajnja = await Stanica.findOne({
+      where: {
+        naziv: krajnjaStanica,
+      },
+    });
+
+    postojucaLinija.pocetnaStanicaId = pocetna.id;
+    postojucaLinija.krajnjaStanicaId = krajnja.id;
+
+    // Spremite promjene u bazi podataka za liniju
+    await postojucaLinija.save();
+
+    // Sada ažurirajte medjustanice
+    for (let i = 0; i < medjustanice.length; i++) {
+      const medjustanicaData = medjustanice[i];
+      const stanicaNaziv = medjustanicaData.stanica;
+
+      const stanicaId1 = await Stanica.findOne({
+        where: { naziv: stanicaNaziv },
+      });
+
+      console.log(stanicaId1.id);
+      const stanicaId = stanicaId1.id;
+      const novaMedjustanica = await Medjustanica.findOne({
+        where: {
+          stanicaId,
+          linijaId,
+        },
+      });
+
+      if (novaMedjustanica) {
+        // Ažurirajte podatke medjustanice
+        novaMedjustanica.vremePolaskaM = medjustanicaData.vremePolaskaM;
+        novaMedjustanica.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
+        novaMedjustanica.datumPolaskaM = medjustanicaData.datumPolaskaM;
+        novaMedjustanica.datumDolaskaM = medjustanicaData.datumDolaskaM;
+        novaMedjustanica.pocetakRute = medjustanicaData.pocetakRute;
+        novaMedjustanica.krajRute = medjustanicaData.krajRute;
+
+        // Spremite promjene u bazi podataka za medjustanicu
+        await novaMedjustanica.save();
+      }
+    }
+
+    return res.status(200).json({ message: "Uspješno uređena linija." });
   } catch (error) {
     res.status(500).json({ error });
   }
