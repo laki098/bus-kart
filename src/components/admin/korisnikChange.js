@@ -96,6 +96,8 @@ const KorisnikChange = () => {
           <option value="menadzer">menadzer</option>
           <option value="admin">admin</option>
           <option value="stjuardesa">stjuardesa</option>
+          <option value="biletar">biletar</option>
+          <option value="vozac">vozac</option>
         </select>
         <button /* onClick={back} */ type="submit">
           {" "}

@@ -143,6 +143,7 @@ router.post("/rezervacija", async (req, res) => {
       pocetnaStanicaId,
       krajnjaStanicaId,
       korisnikId,
+      osvezenje,
     } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
@@ -308,6 +309,7 @@ router.post("/rezervacija", async (req, res) => {
       pocetnaStanicaId,
       krajnjaStanicaId,
       korisnikId,
+      osvezenje,
     });
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {
@@ -345,7 +347,7 @@ router.post("/filterLinija", async (req, res) => {
 
       let najmanjiBroj;
       let brojSlobodnihMesta1 = [];
-      console.log(linija.pocetnaStanica.naziv)
+      console.log(linija.pocetnaStanica.naziv);
       if (nazivPocetneStanice == linija.pocetnaStanica.naziv) {
         brojSlobodnihMesta1.push(linija.brojSlobodnihMesta);
       }

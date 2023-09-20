@@ -12,6 +12,7 @@ import Medjustanica from "../Models/MedjustanicaModels.js";
 
 const router = express.Router();
 
+//? dobavljanje svih korisnika
 router.get("/", async (req, res) => {
   try {
     const korisnici = await Korisnik.findAll();
@@ -21,6 +22,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//?dobavljanje korisnika po id-u
 router.get("/:idKorisnik", async (req, res) => {
   const { idKorisnik } = req.params;
   try {
@@ -44,6 +46,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+//? registacija na sistem
 router.post("/registration", async (req, res) => {
   try {
     const { korisnickoIme, lozinka, ime, prezime, brojTelefona, email } =
@@ -65,7 +68,7 @@ router.post("/registration", async (req, res) => {
       verifikacijskiToken,
     });
 
-    // Kreirajte HTML kod za dugme
+    //? Kreirajte HTML kod za dugme
     const verifyButtonHtml = `<a href=${req.protocol}://${req.get(
       "host"
     )}/korisnik/verify/${verifikacijskiToken} style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Potvrdite vašu email adresu</a>`;
@@ -91,6 +94,7 @@ router.post("/registration", async (req, res) => {
   }
 });
 
+//?verifikacija tokena
 router.get("/verify/:token", async (req, res) => {
   const { token } = req.params;
 
@@ -116,6 +120,7 @@ router.get("/verify/:token", async (req, res) => {
   }
 });
 
+//?prijava na sistem
 router.post("/login", async (req, res) => {
   try {
     const { korisnickoIme, lozinka } = req.body;
@@ -136,6 +141,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Neispravna lozinka" });
     }
     const exp = korisnik.role == "korisnik" ? "1h" : "8h";
+
     //? Generisanje JWT tokena
     const token = jwt.sign(
       { email: korisnik.email, idKorisnik: korisnik.idKorisnik },
@@ -183,13 +189,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//?odjava sa sistema
 router.post("/logout", (req, res) => {
   try {
-    // Brisanje JWT tokena iz kolačića
+    //? Brisanje JWT tokena iz kolačića
     res.clearCookie("token");
     res.clearCookie("userData");
 
-    // Vraćanje odgovora sa statusom 200 i porukom odjavljivanja
+    //? Vraćanje odgovora sa statusom 200 i porukom odjavljivanja
     res.status(200).json({ message: "Uspešno ste se odjavili." });
   } catch (error) {
     console.log(error);
@@ -197,6 +204,7 @@ router.post("/logout", (req, res) => {
   }
 });
 
+//?kada korisnik zaboravi sifru, prosledjivanje mejla i slanje na mejl reset token
 router.post("/zaboravljena-sifra", async (req, res) => {
   try {
     const { email } = req.body;
@@ -320,6 +328,7 @@ router.put("/:idKorisnik", async (req, res) => {
   }
 });
 
+//? dobavljanje karti za odredjenog korisnika
 router.post("/karta", async (req, res) => {
   try {
     const { korisnikId } = req.body;
@@ -330,7 +339,6 @@ router.post("/karta", async (req, res) => {
       where: { korisnikId },
     });
 
-    /* console.log(izlacenjeKorisnika[index].linijaId); */
     res.status(200).json({ message: "izvucen korsnik", karte });
   } catch (error) {
     console.log(error);

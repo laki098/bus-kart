@@ -11,6 +11,7 @@ import StanicaRouter from "./Routes/StanicaRoute.js";
 
 //? Kreiranje server
 export const app = express();
+
 //? Middleware za koriscenje JSON podataka (kad prosledis sa postman-om BODY)
 app.use(express.json());
 app.use(cookieParser());
