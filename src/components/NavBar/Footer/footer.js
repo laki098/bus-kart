@@ -30,7 +30,7 @@ const Footer = () => {
             <ul>
               <li className="footer-li">Iznajmljivanje vozila</li>
               <li className="footer-li">Popravka vozila</li>
-              <lli className="footer-li"i>Slanje pošiljki</lli>
+              <li className="footer-li"i>Slanje pošiljki</li>
             </ul>
           </div>
 

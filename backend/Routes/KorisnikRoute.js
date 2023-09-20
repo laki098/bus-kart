@@ -313,7 +313,7 @@ router.put("/:idKorisnik", async (req, res) => {
   try {
     const { idKorisnik } = req.params; //ID korisnika koji se menja
     const { korisnickoIme, ime, prezime, brojTelefona, email, role } = req.body;
-
+      console.log(idKorisnik)
     const updateKorisnik = await Korisnik.update(
       { korisnickoIme, ime, prezime, brojTelefona, email, role },
       { where: { idKorisnik: idKorisnik }, limit: 1 }

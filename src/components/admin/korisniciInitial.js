@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import KorisnikApi from "../../api/korisnikApi";
+import "./admin.css";
+
 
 const KorisniciInitial = () => {
   const [korisnici, setKorisnici] = useState([]);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [korisnikToDelete, setKorisnikToDelete] = useState(null);
 
   const getKorisnici = async () => {
     const response = await fetch("http://localhost:5000/korisnik");
@@ -13,10 +17,24 @@ const KorisniciInitial = () => {
 
   useEffect(() => {
     getKorisnici();
-  }, [setKorisnici]);
+  }, []);
 
-  const brisanjeKorisnika = async (idKorisnik) => {
-    const response = await KorisnikApi().brisanjeKorisnika(idKorisnik);
+  const brisanjeKorisnika = (idKorisnik) => {
+    setKorisnikToDelete(idKorisnik);
+    setIsConfirmationOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (korisnikToDelete !== null) {
+      const response = await KorisnikApi().brisanjeKorisnika(korisnikToDelete);
+      window.location.reload();
+    }
+    setIsConfirmationOpen(false);
+  };
+
+  const cancelDelete = () => {
+    setKorisnikToDelete(null);
+    setIsConfirmationOpen(false);
   };
 
   return (
@@ -45,7 +63,22 @@ const KorisniciInitial = () => {
           );
         })}
       </div>
+
+      <div className="confirm-dialog-container">
+        {isConfirmationOpen && (
+          <div className="confirm-dialog-box">
+            <p>Da li ste sigurni da želite da obrišete ovog korisnika?</p>
+            <button className="confirm-dialog-yes" onClick={confirmDelete}>
+              Da
+            </button>
+            <button className="confirm-dialog-no" onClick={cancelDelete}>
+              Ne
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 };
+
 export default KorisniciInitial;

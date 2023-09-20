@@ -25,6 +25,7 @@ const KorisnikLogic = () => {
       )
       .then((response) => {
         alert("radi");
+        window.history.back();
       })
       .catch((error) => {
         console.log(error);
