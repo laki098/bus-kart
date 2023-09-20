@@ -36,6 +36,9 @@ const Rezervacija = db.define(
       type: DataTypes.TIME,
       allowNull: false,
     },
+    osvezenje: {
+      type: DataTypes.STRING,
+    },
   },
   {
     tableName: "rezervacija",
