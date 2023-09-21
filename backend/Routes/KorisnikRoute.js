@@ -312,12 +312,44 @@ router.delete("/:idKorisnik", async (req, res) => {
 router.put("/:idKorisnik", async (req, res) => {
   try {
     const { idKorisnik } = req.params; //ID korisnika koji se menja
-    const { korisnickoIme, ime, prezime, brojTelefona, email, role } = req.body;
-      console.log(idKorisnik)
-    const updateKorisnik = await Korisnik.update(
+    const {
+      korisnickoIme,
+      ime,
+      prezime,
+      brojTelefona,
+      email,
+      role,
+      vremeTrajanjaRole,
+      privremenaRola,
+    } = req.body;
+    console.log(idKorisnik);
+
+    let updateKorisnik;
+
+    let staraRola;
+    if (privremenaRola) {
+      const korisnik = await Korisnik.findByPk(idKorisnik);
+      staraRola = korisnik.role;
+    }
+
+    updateKorisnik = await Korisnik.update(
       { korisnickoIme, ime, prezime, brojTelefona, email, role },
       { where: { idKorisnik: idKorisnik }, limit: 1 }
     );
+
+    if (privremenaRola) {
+      setTimeout(() => {
+        Korisnik.update(
+          {
+            role: staraRola,
+          },
+          {
+            where: { idKorisnik: idKorisnik },
+            limit: 1,
+          }
+        );
+      }, vremeTrajanjaRole * 60 * 60 * 1000);
+    }
 
     if (updateKorisnik[0] === 0) {
       return res.status(404).json({ message: "korisnik nije pronadjen" });

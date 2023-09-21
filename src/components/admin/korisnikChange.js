@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import KorisnikApi from "../../api/korisnikApi";
 import KorisnikLogic from "./korisnikLogic";
 
-
 const KorisnikChange = () => {
   const [korisnik, setKorisnik] = useState({});
   const { idKorisnik } = useParams();
+  const [privremenaRola, setPrivremenaRola] = useState(false);
 
   useEffect(() => {
     getKorisnik();
@@ -30,8 +30,14 @@ const KorisnikChange = () => {
       brojTelefona: formData.get("brojTelefona"),
       email: formData.get("email"),
       role: formData.get("role"), //mesto formdata stavljam userpars.rola
+      vremeTrajanjaRole: formData.get("vremeTrajanjaRole"),
+      privremenaRola,
     };
     korisnikLogic.editKorisnik(data);
+  };
+
+  const handleChange = () => {
+    setPrivremenaRola((prev) => !prev);
   };
 
   const getKorisnik = async () => {
@@ -84,6 +90,18 @@ const KorisnikChange = () => {
           name="email"
           onChange={korisnikLogic.changeHandler}
         ></input>
+        <label>Privremena rola:</label>
+        <input type="checkbox" onChange={handleChange} value={privremenaRola} />
+        {privremenaRola && (
+          <>
+            <label>Vreme trajanja role:</label>
+            <input
+              type="number"
+              name="vremeTrajanjaRole"
+              onChange={korisnikLogic.changeHandler}
+            />
+          </>
+        )}
         <label>role:</label>
         <select
           defaultValue={korisnik.role}
@@ -99,10 +117,7 @@ const KorisnikChange = () => {
           <option value="biletar">biletar</option>
           <option value="vozac">vozac</option>
         </select>
-        <button /* onClick={back} */ type="submit">
-          {" "}
-          Sacuvaj
-        </button>
+        <button /* onClick={back} */ type="submit"> Sacuvaj</button>
       </div>
     </form>
   );
