@@ -262,6 +262,15 @@ router.post("/rezervacija", async (req, res) => {
     let postojiStanicaP = false;
     let postojiStanicaK = false;
 
+    if (linija.Stanicas.length == 0) {
+      if (linija.pocetnaStanicaId == pocetnaStanicaId) {
+        postojiStanicaP = true;
+      }
+      if (linija.krajnjaStanicaId == krajnjaStanicaId) {
+        postojiStanicaK = true;
+      }
+    }
+
     for (let i = 0; i < linija.Stanicas.length; i++) {
       const stanica = linija.Stanicas[i];
 
