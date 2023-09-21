@@ -144,6 +144,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const linijaId = req.params.id;
+    console.log(linijaId, "-----------------------------------")
     const {
       pocetnaStanica,
       medjustanice,

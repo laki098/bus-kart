@@ -62,7 +62,7 @@ const StaniceForm = ({ mode, id }) => {
           name="adresa"
           onChange={staniceLogic.changeHandler}
         ></input>
-        <button type="submit">
+        <button onClick={back} type="submit">
           {mode === "add" ? <>Dodaj</> : <>Izmeni</>}
         </button>
       </div>
