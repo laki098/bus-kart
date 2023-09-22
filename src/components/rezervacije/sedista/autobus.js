@@ -79,7 +79,7 @@ function Autobus() {
         </div>
       </div> */}
       {odabraniAutobus !== undefined && (
-        <div className="autobus">
+        <div className="autobus-stujardesa ">
           {rezervacije.map((rezervisano, index) => (
             <div
               key={index}
@@ -90,7 +90,7 @@ function Autobus() {
             </div>
           ))}
           <div>
-            Trenutno rezervisana mesta:{" "}
+            Trenutno rezervisano mesto broj:{" "}
             {trenutnaRezervacija.length > 0
               ? trenutnaRezervacija.join(", ")
               : "Nijedno"}

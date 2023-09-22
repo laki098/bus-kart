@@ -41,7 +41,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar">
+    <nav className="navbar ">
       {/*  <Link to='/pocetna' className='logo'><img src={logo} alt='logo' className='logosajt'/></Link>      */}
 
       <Link to="/pocetna" className="logo">
@@ -81,7 +81,7 @@ const Navbar = () => {
             <i className="fa-solid fa-address-book nav-links"></i>Kontakt
           </Link>
         </li>
-        <div>
+        <div className="login-style ">
           {Object.keys(userPars).length === 0 ? (
             <li>
               <Link to="/login.component">
@@ -117,7 +117,7 @@ const Navbar = () => {
                       </li>
                       <li className="dropdown-item">
                         {/* stavi sta hoces samo ne LINK!!! umesto ovog diva ispod*/}
-                        <div>
+                        <div className="test-dropdown">
                           <p onClick={clickBaitLogout}>
                             <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
                             Logout
