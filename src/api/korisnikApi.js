@@ -16,17 +16,27 @@ const KorisnikApi = () => {
     prezime,
     brojTelefona,
     email,
-    role
+    role,
+    vremeTrajanjaRole,
+    privremenaRola
   ) => {
-    return await axios.put(`http://localhost:5000/korisnik/${idKorisnik}`, {
-      idKorisnik,
-      korisnickoIme,
-      ime,
-      prezime,
-      brojTelefona,
-      email,
-      role,
-    });
+    return await axios.put(
+      `http://localhost:5000/korisnik/${idKorisnik}`,
+      {
+        idKorisnik,
+        korisnickoIme,
+        ime,
+        prezime,
+        brojTelefona,
+        email,
+        role,
+        vremeTrajanjaRole,
+        privremenaRola,
+      },
+      {
+        withCredentials: true,
+      }
+    );
   };
 
   return { filterKorisnikId, brisanjeKorisnika, editKorisnik };

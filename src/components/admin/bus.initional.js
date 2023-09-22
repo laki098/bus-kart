@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import BusApi from "../../api/bus.api";
 import "./admin.css";
 
+import "./ListBus.css";
+
+import { useTranslation, Trans } from 'react-i18next';    //prevodjenje
+import '../../components/NavBar/links/i18n';
+import '../../components/rezervacije/i18n';
+
 const BusInitional = () => {
   const [busevi, setBusevi] = useState([]);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -37,31 +43,58 @@ const BusInitional = () => {
     setIsConfirmationOpen(false);
   };
 
+  //prevodjenje start
+  const lngs = {
+      en: { nativeName: 'Engleski' }, 
+      de: { nativeName: 'Srpski' }
+      };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
   return (
     <>
-      <div>
+
+    <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)} >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+    </header> 
+
+    <div className="stampajLiniju">
+      <div class="rowTabela ">
         <ul>
-          {busevi.map((bus) => {
-            return (
-              <li key={bus.idAutobusa}>
-                <div>
-                  oznaka: {bus.oznakaBusa}, tablice: {bus.tablice}, brojMesta:{" "}
-                  {bus.brojSedista}
-                  <Link to={`${bus.idAutobusa}/bus.change.line`}>
-                    <button>Izmeni</button>
-                  </Link>
-                  <button onClick={() => brisanjeBusa(bus.idAutobusa)}>
-                    Obrisi
-                  </button>
-                </div>
-              </li>
-            );
-          })}
+          {" "}
+          <div>
+            {" "} 
+            {busevi.map((bus) => {
+              return (
+                <li key={bus.idAutobusa}>                
+                   <div class="column centar"> Oznaka: </div><div className="column podaci centar" style={{width: "4rem"}}> {bus.oznakaBusa}</div>
+                   <div class="column centar" style={{textAlign: "center"}}> Tablice:</div><div className="column podaci centar"> {bus.tablice} </div>
+                   <div class="column centar"> Broj mesta:{" "} </div><div className="column podaci centar"> {bus.brojSedista} </div>
+                   <div class="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
+                      <button className="buttonSwitch">Izmeni</button>  {/* dugme  */}
+                    </Link></div>
+                   <div class="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
+                      Obriši
+                    </button></div>
+                </li> 
+              );
+      })} 
+          </div>
         </ul>
       </div>
+      </div>
+      <div className="red-1"></div>
+      <div>
       <Link to={"/bus.add"}>
-        <button>Dodaj novi autobus</button>
+        <button className="buttonSwitch">Dodajte novi autobus</button>  {/* dugme veceDugme */}
       </Link>
+      </div>
 
       <div className="confirm-dialog-container">
         {isConfirmationOpen && (

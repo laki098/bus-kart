@@ -114,6 +114,11 @@ i18n
             part134: 'Delite',
             part135: 'No line',
 
+            part136: 'You will be notified if the reservation changes',
+            part137: 'Valid for students up to 27 years old. with the index, otherwise the full price of the ticket is paid',
+            part138: 'Buy a ticket',
+            part139: 'Currently reserved seat:',
+
 
           }
         }
@@ -217,6 +222,12 @@ i18n
             part133: 'Zameni',
             part134: 'Obriši',
             part135: 'Nema linije',
+
+            part136: 'Bićete obavešteni, ako se izmeni rezervacija',
+            part137: 'Važi za studente do 27 god. uz index u suprotnom plaća se puna cena karte',
+            part138: 'Kupite kartu',
+            part139: 'Trenutno rezervisano mesto:',
+
 
           }
         }

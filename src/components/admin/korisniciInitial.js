@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import KorisnikApi from "../../api/korisnikApi";
 import "./admin.css";
 
+import "./ListBus.css";
+
+import { useTranslation, Trans } from 'react-i18next';    //prevodjenje
+import '../../components/NavBar/links/i18n';
+import '../../components/rezervacije/i18n';
+
 
 const KorisniciInitial = () => {
   const [korisnici, setKorisnici] = useState([]);
@@ -37,31 +43,58 @@ const KorisniciInitial = () => {
     setIsConfirmationOpen(false);
   };
 
+  //prevodjenje start
+    const lngs = {
+      en: { nativeName: 'Engleski' }, 
+      de: { nativeName: 'Srpski' }
+      };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
   return (
     <>
-      <div>
+
+      <header>
+          <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)} >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+          </div>
+      </header> 
+
+      <div className="red-1"></div>  
+      <div className="stampajLiniju">    
+      <div className="rowTabela korisniciTabela">
         {korisnici.map((korisnik) => {
           return (
             <li key={korisnik.idKorisnik}>
               <div>
-                korisnicko ime: {korisnik.korisnickoIme}, ime: {korisnik.ime},
-                prezime: {korisnik.prezime}, brojTelefona :{" "}
-                {korisnik.brojTelefona}, email: {korisnik.email}, role:{" "}
-                {korisnik.role}
-                <Link to={`${korisnik.idKorisnik}/korisnikChange`}>
-                  <button>Izmeni</button>
+                <div class="column centar"> Korisničko ime:</div><div class="column centar podaci">{korisnik.korisnickoIme}</div>
+                <div class="column centar"> Ime: </div><div class="column centar podaci"> {korisnik.ime}</div>
+                <div class="column centar"> Prezime: </div><div class="column centar podaci"> {korisnik.prezime} </div>
+                <div class="column centar"> Broj telefona:{" "}</div><div class="column centar podaci">{korisnik.brojTelefona}</div>
+                <div class="column centar"> Email:</div><div class="column centar podaci"> {korisnik.email}</div>
+                <div class="column centar"> Role:{" "} </div><div class="column centar podaci">{korisnik.role}</div>
+                <div class="column"><Link to={`${korisnik.idKorisnik}/korisnikChange`}>
+                  <button className="buttonSwitch">Izmeni</button>
                 </Link>
-                <button
+                </div>
+                <div class="column"><button className="buttonSwitch"
                   onClick={() => {
                     brisanjeKorisnika(korisnik.idKorisnik);
                   }}
                 >
-                  Obrisi
+                  Obriši
                 </button>
+                </div>
               </div>
             </li>
+            
           );
         })}
+      </div>
       </div>
 
       <div className="confirm-dialog-container">
