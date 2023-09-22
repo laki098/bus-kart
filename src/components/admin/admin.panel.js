@@ -4,7 +4,7 @@ import "./admin.css";
 const AdminPanel = () => {
   return (
     <div>
-      <br />
+      <div className="red-1"></div>
       <Link to={"/bus.initial"}>
         <button className="button-panel">Autobusi</button>
       </Link>

@@ -1,0 +1,262 @@
+.prikaz{
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+    position: static;
+}
+
+.tabela{
+    width: max-content;
+    border: 1px solid darkblue;
+    border-collapse: collapse;
+    border-bottom: 1px solid #afa2fa;
+   /* column-rule-color: aqua;
+    column-rule-style: double;*/
+    display: flex;
+    margin: auto;
+    padding: 1rem;
+    
+}
+
+.tabela td {
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+    height: 10px;
+    width: max-content;
+    padding: 0.5rem;
+    height: min-content;   
+}
+
+.p::hover{
+    color: blue;
+}
+
+
+.podaci{
+    font-weight: bold;
+    background-color: rgb(228, 233, 244);
+}
+
+.podaci2{
+    width: 4rem;
+    font-weight: bold;
+    background-color: rgb(228, 233, 244);
+}
+
+.table-container {
+    width: 100%;
+}
+  
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    justify-content: "center";
+    align-items: "center";
+    
+    position: "relative";
+    margin: auto;
+    display: "flex",
+
+   
+}
+  
+.table th,
+.table td {
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+    height: 10px;
+    width: max-content;
+}
+  
+.table th {
+    background-color: #f2f2f2;
+}
+
+/*
+.table tr:hover {background-color: coral;}
+.th::selection{
+    background-color: aqua;
+}
+*/
+
+.dugme{
+    color: darkblue;
+    background-color: lightskyblue;
+    border-color: darkblue;
+    border-radius: 0.2rem; /* bilo je 2rem  */
+    border-width: 3px;
+    border-style: initial;
+    width: 6rem;
+    height: 2rem;
+    font-size: medium;
+}
+
+.veceDugme{
+    width: 12rem;
+}
+
+.crvenoDugme{
+    background-color: #b489f7;             /*#a166fc;*/
+    width: 10rem;
+}
+
+.plavoDugme{
+    background-color: rgb(21, 82, 234);
+    color:beige;
+    width: 10rem;
+}
+
+.polje{
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+    height: 3rem;
+    width: max-content;
+}
+
+.centar{
+    text-align: center;      
+    line-height: 55px;      /* dodato zbog horizontalnog centriranja        */
+}
+
+.centar-1{
+    text-align: center;      
+    line-height: 45px;      /* dodato zbog horizontalnog centriranja        */
+}
+
+.column {
+    float: left;
+    width: fit-content;
+    padding: 10px;
+    height: 80px; 
+    border: 1px solid #c2bddf;
+  /*  display: grid;      */
+  /*  grid-row: auto;       */
+  /*  margin: auto;  */
+  /*  align-items: center;
+    text-align: center;*/
+}
+
+.column-1 {
+    float: left;
+    width: fit-content;
+    padding: 10px;
+    height: 70px; 
+    border: 1px solid #c2bddf;
+   /* display: flex;        */
+}
+
+.kolonaPodaci{
+    float: left;
+  /*  width: 70px;        /* uze input polje kod unosa korisnika      */
+    width: min-content;
+    padding: 10px;
+    height: 80px; 
+    border: 1px solid #dddce1;  /* #d5d3e0   #c2bddf  */
+    margin: auto;
+}
+.jedanBus{
+  background-color: #b489f7;
+  margin: 5px;
+  border-width: 1px;
+  border-color: #36395a;
+}
+
+
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .rowTabela{
+    overflow-x: auto;     /* ovim dajem responsive tabeli */
+  /* width: max-content;        */
+    width: 50rem;               /* ubacila sam ovu dim da bi se stampao samo 1 bus u vrsti      */
+   border: 1px solid darkblue;       
+   border-collapse: collapse;
+   border-bottom: 1px solid #afa2fa;
+   display: flex;
+   flex-wrap: wrap;     /* zbog responsive uloge        */
+   margin: auto;
+   padding: 10px;  
+ /*   align-content: center;
+    text-align: left;
+    vertical-align: middle;
+    align-items: center;        */
+  }
+
+  .korisniciTabela{
+    width: max-content;
+  }
+
+  .jezici{
+    text-align: right;
+    margin-right: 3rem;
+  }
+
+  .red-1{
+    margin: 2rem;
+  }
+
+  .inputVelicna{
+    width: 3rem;
+  }
+
+/*    ---------------------------- dugme sa Pocetna.js      */
+
+.buttonSwitch {
+    align-items: center;
+    appearance: none;
+    background-color: #fcfcfd;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395a;
+    cursor: pointer;
+    display: inline-flex;
+    height: 48px;       /*48px      */
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;        /*18px      */
+   
+  }
+  
+  .buttonSwitch:focus {
+    box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  }
+  
+  .buttonSwitch:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+  
+  .buttonSwitch:active {
+    box-shadow: #d6d6e7 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+
+  .stampajLiniju{
+    display: flex;
+    flex-wrap: wrap;
+  }

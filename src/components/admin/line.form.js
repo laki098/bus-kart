@@ -45,7 +45,7 @@ const LineForm = ({ mode, id, state }) => {
   };
   
 
-  const getKorisnici = async () => {
+  const getKorisnici = async () => {    // izdvaja sve korisnike i ovde se radi filter za rolu koja nama treba 
     const response = await fetch("http://localhost:5000/korisnik");
     const data = await response.json();
     const korisnici = data.korisnici;

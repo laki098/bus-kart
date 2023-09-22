@@ -12,6 +12,9 @@
   margin: auto;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+
+  display: flex;      /*zbog desne slike  */
+  flex-wrap: wrap;    /* zbog desne slike   */
 }
 
 /* ----------------------  dodala form1 */
@@ -30,8 +33,6 @@
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
-
-
 
 .control {
   margin-bottom: 0.5rem;
@@ -91,9 +92,6 @@
   border-color: #aa0b20;
   background-color: #ffeff1;
 }
-/* p {
-  color: #aa0b20;
-} */
 
 .submit {
   align-items: center;
@@ -152,5 +150,5 @@
 .side {
     display: flex;
     height: 100vh; 
-    
+    flex-wrap: wrap;    /* dodala zbog desnog prikaza busa  */   
 }

@@ -103,7 +103,7 @@ const AdminInitial = () => {
       {/*  dodala klasu iz registration komponent*/}
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
@@ -118,11 +118,11 @@ const AdminInitial = () => {
           ))}
         </div>
       </header>
-      <div className={classes.form}>
+      <div className="admin-initial-polje">  {/* className={classes.form}  */}
         {/* className={classes.form}   className="home" */}
-        <div style={{ textAlign: "center" }}>
+        <div className="admin-centar">
           {/* className="prvi"  */}
-          <label className="labela">
+          <label className="admin-labela">
             <Trans i18nKey="description.part3">Mesto polaska:</Trans>
           </label>
           <br />
@@ -142,9 +142,10 @@ const AdminInitial = () => {
             })}
           </select>
         </div>
-        <div style={{ textAlign: "center" }}>
+        
+        <div className="admin-centar">
           {/* className="prvi"  */}
-          <label className="labela">
+          <label className="admin-labela">
             <Trans i18nKey="description.part5">Mesto Dolaska:</Trans>
           </label>
           <br />
@@ -164,8 +165,8 @@ const AdminInitial = () => {
             })}
           </select>
         </div>
-        <div style={{ textAlign: "center" }}>
-          <label className="labela">
+        <div className="admin-centar">
+          <label className="admin-labela">
             <Trans i18nKey="description.part9">Datum polaska</Trans>
           </label>
           <br />
@@ -177,21 +178,21 @@ const AdminInitial = () => {
           />
         </div>{" "}
         <br />
-        <button className="button-admin" onClick={clickButton}>
-          <Trans i18nKey="description.part34">Red vožnje </Trans>
+        <button className={classes.submit} onClick={clickButton}>
+        <p className="admin-slovaDugme"><Trans i18nKey="description.part34">Red vožnje</Trans></p>
         </button>
-        <Link to="/admin.component">
-          <button className="button-admin">
-            <Trans i18nKey="description.part37">Dododavanje linije </Trans>
+        <Link to="/admin.component"> {/* className="button-admin" */}
+          <button className={classes.submit}> 
+            <p className="admin-slovaDugme"> <Trans i18nKey="description.part37">Dododavanje linije</Trans></p>
           </button>
         </Link>
       </div>
       {filteredLinije.length > 0 ? (
         <div>
-          <ul>
-            <div className={`home1 .home1 ${showClass ? "show" : ""}`}>
+          <ul>  {/* admin-tebela je zamenila home1  */}
+            <div className={`admin-tebela .admin-tebela ${showClass ? "show" : ""}`}>
               <style>{`
-            .home1 {
+            .admin-tebela {
               display: none;
             }
             .show {
@@ -202,19 +203,21 @@ const AdminInitial = () => {
                 console.log(linija);
                 return (
                   <li key={linija.id}>
-                    <div className="home-show">
-                      <Trans i18nKey="description.part11">
-                        Vreme polaska:{" "}
-                      </Trans>{" "}
-                      {linija.vremePolaska},
-                      <Trans i18nKey="description.part13">Vreme dolaska:</Trans>{" "}
-                      {linija.vremeDolaska},
-                      <Trans i18nKey="description.part3">Mesto polaska: </Trans>{" "}
-                      {linija.pocetnaStanica},
-                      <Trans i18nKey="description.part5">Mesto dolaska: </Trans>{" "}
-                      {linija.krajnjaStanica}
-                      &nbsp;&nbsp;
-                      <br />
+                    <div className="admin-pod-tabela">   {/* bela pozadina */}
+                      <div className="column centar"> <Trans i18nKey="description.part11">
+                        Vreme polaska{" "} </Trans>{" "}</div>
+                      <div className="column centar podaci">{linija.vremePolaska} </div>
+                      <div className="column centar"><Trans i18nKey="description.part13">
+                        Vreme dolaska</Trans>{" "}</div>
+                      <div className="column centar podaci">{linija.vremeDolaska}</div>
+                      <div className="column centar"><Trans i18nKey="description.part3">
+                        Mesto polaska </Trans>{" "}</div>
+                      <div className="column centar podaci">{linija.pocetnaStanica}</div>
+                      <div className="column centar"><Trans i18nKey="description.part5">
+                        Mesto dolaska </Trans>{" "}</div>
+                      <div className="column centar podaci">{linija.krajnjaStanica}</div>
+                     {/* &nbsp;&nbsp;   */}
+                      
                       <Link
                         to={{
                           //? prosledjivanje id-a linije kroz url
@@ -232,7 +235,7 @@ const AdminInitial = () => {
                           },
                         }}
                       >
-                        <button
+                      {/*  <button
                           style={{
                             backgroundColor: "lightblue",
                             borderBlockColor: "blue",
@@ -240,19 +243,28 @@ const AdminInitial = () => {
                             borderColor: "blue",
                           }}
                         >
-                          <Trans i18nKey="description.part133">Zameni</Trans>
+                      */}
+                        <div className="column centar">
+                        <button className={classes.submit}><p className="admin-dugme-slova">
+                          <Trans i18nKey="description.part133">Zameni</Trans></p>
                         </button>
-                      </Link>{" "}
-                      &emsp;
-                      <button
-                        onClick={() => brisanjeLinije(linija.id)}
-                        style={{
+                        </div>
+                      </Link>
+                      {/*  {" "} &emsp;   */}
+                      {/*
+                      style={{
                           backgroundColor: "lightblue",
                           borderBlockColor: "blue",
                         }}
-                      >
-                        <Trans i18nKey="description.part134">Obriši</Trans>
+                      */}
+                      <div className="column centar">
+                      <button
+                        onClick={() => brisanjeLinije(linija.id)}
+                        className={classes.submit}
+                      > <p className="admin-dugme-slova">
+                        <Trans i18nKey="description.part134">Obriši</Trans></p>
                       </button>
+                      </div>
                     </div>
                   </li>
                 );
