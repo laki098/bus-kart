@@ -45,8 +45,17 @@ rasponsive-maps {
 }
 /*                                              nisam unela klasu .unos iz radnog fajla     */
 
-.podaci {
+.podaci {      /* pisalo podaci    */
   text-align: left;
+}
+.podaciKontakt{
+  text-align: left;
+  background-color: #fff;
+/*  border-radius: 0.2rem;
+  border-color: darkblue;
+  border-width: 1px;      */
+  padding-left: 3rem;
+  
 }
 
 .podaci1 {
@@ -59,4 +68,9 @@ rasponsive-maps {
   font-size: large; /* larger   */
   line-height: 1.5; /*  3     */
   color: darkblue;
+}
+
+.prikazKontakt{
+  padding-left: "10%";
+  overflow-x: auto;
 }

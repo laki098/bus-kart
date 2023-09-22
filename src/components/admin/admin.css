@@ -187,7 +187,7 @@
   width: 128px;
   margin: 1rem;
   line-height: 1;
-  color: darkred;
+  color:  darkblue;  /* darkred;   lepse se vidi ova boja a i osnovna je u aplikaciji */
   cursor: pointer;
   box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
     rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
@@ -235,4 +235,76 @@
   border: none;
   cursor: pointer;
   font-size: medium;
+}
+
+.admin-initial-polje{
+  background-color: #f5f5f8;
+  border: 2px solid grey;
+  border-radius: 0.3rem;
+  padding: 4rem;
+  margin: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  height: auto;
+}
+.admin-centar{
+  text-align: center;
+}
+
+.admin-labela{
+  text-align: center;
+  color: darkblue;
+  font-size: medium;
+}
+
+.admin-slovaDugme{
+  color: rgb(18, 18, 129);
+  font-size: large;
+}
+
+.admin-pod-tabela{
+    position: relative;
+    display: block;
+    /* width: 90vw; */
+    max-width: 120vw;   /* menjala sam    */
+    background: #fff;
+    border: 1px solid grey;
+    box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;
+    border-radius: 0.3rem;
+    z-index: 2;
+    /* padding: 2.6rem 5rem;   */
+    padding: 1rem 2rem;
+    /* margin-left: 15vw; */
+    margin-bottom: 1rem;
+    text-align: justify; /* dodala sn    */
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.admin-tebela{
+    position: relative;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 80rem;
+    display: block;
+    background: #d2dff5;
+    border: 2px solid grey;
+    box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;
+    border-radius: 0.4rem;
+    transition: 0.2s all;
+    padding: 2.6rem 4rem;
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.admin-polje{
+  vertical-align: middle;
+  margin-left: auto;
+}
+
+.admin-dugme-slova{
+  font-size: medium;
+  color: darkblue;
 }

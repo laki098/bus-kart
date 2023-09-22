@@ -7,6 +7,12 @@
   border-radius: 1rem;
   font-size: large;
   font-weight: 300;
+  background-color: #7caffa;
+}
+
+.select-selected{
+  background-color: #75a9f7;  
+  display: none;
 }
 
 .radio1 {
@@ -28,6 +34,7 @@
 
 .labela {
   color: rgb(5, 62, 120);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .box_3 {
@@ -154,4 +161,156 @@
   background-color: #a0c2f6;
   font-size: small;
   margin-top: 0.5rem;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ /* border-color: darkblue;
+  border-width: 1px;
+  border-style: inherit;          */
+/*  background-color: DarkBlue;   */
+}
+.flex-clan{
+  background-color: #f1f1f1;
+  width: 30rem;   /* 25rem  */
+  margin: 20px;
+  background-color: #e1e1ea ;   /* #93cede;   */
+/*  border-color: darkblue;
+  border-width: 1px;
+  border-style: inherit;          */
+}
+
+.flex-container > div {
+ /* background-color: #f1f1f1;
+  width: 100px;*/
+  margin: 10px;
+/*  text-align: center;
+  line-height: 75px;
+  font-size: 30px;*/
+}
+
+
+.prikazBusaDesno{
+  margin-top: 1rem;
+  margin-left: 70rem;
+}
+
+.red-1{
+  margin: 1rem;
+}
+
+.forma{
+  width: 70%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-color: #bbc4d1;/* rgb(178, 178, 247); */
+  border-style: solid;
+  border-width: 1px;
+  background-color: #f6f9fa; /*rgb(228, 233, 244)*/
+  justify-content: center;
+}
+
+.deoForme{
+  width: fit-content;
+  height: auto;
+  border-color: #bbc4d1;
+  border-style: solid;
+  border-width: 1px;
+ /* justify-content: center;  */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  background-color: #c5dbf8;
+}
+
+.centar{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.centar-1{
+  align-items: center;
+  padding-left: 1.1rem;
+  padding-bottom: 0%;
+}
+
+.labela-velika{
+ /* color: rgb(5, 62, 120);   */
+  color: #fff;
+  font-size: large;
+  text-align: left;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(26, 80, 134);    
+  width: fit-content;
+  padding: 10px;
+  border-radius: 0.2rem;
+}
+
+.levo{
+  text-align: left;
+}
+
+.sirina-3polja{
+  width: 22rem;
+
+}
+
+.brSedista{
+   color: #09223b;
+   font-size: large;
+   font-weight: bold;
+}
+
+.brSedista::placeholder{
+    color:#09223b;
+}
+
+.slovaDugme{
+  color: #0f3861;
+  font-weight: bold;
+  font-size: large;
+}
+
+.vasIzbor{
+  text-align: left;
+  font-size: medium;
+  padding-left: 3rem;
+}
+.vasIzbor-1{
+  color: darkblue;
+  font-weight: bold;
+}
+
+.selekt{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #4b91f7;
+
+}
+
+.ograda1 {
+  color: red;
+  /*display: flexbox;    */
+  flex-wrap: wrap;  
+  width: 20rem;  /* bilo je 20rem  */
+  height: auto;
+  border: 2px solid darkblue;         /* dodala sn    */
+  border-radius: 1rem;                  /* dodala sn    */
+ /* padding: 5px;       */       /* bilo je 30px   */
+  padding-top: 15px;
+  padding-bottom: 15px;
+ /* margin-left:36.5%;    */
+  margin: auto;                          /* dodala sn    */
+  justify-content: center;        /* flex-end   center */
+ /* text-align: left;           */
+  
+  background: white;
+  margin-top: 2rem;
 }
