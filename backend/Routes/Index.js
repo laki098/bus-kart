@@ -5,6 +5,11 @@ import Stanica from "../Models/StanicaModels.js";
 import Rezervacija from "../Models/RezervacijaModels.js";
 import Bus from "../Models/BusModels.js";
 
+import qrcode from "qrcode";
+import fs from "fs";
+import nodemailer from "nodemailer";
+import Korisnik from "../Models/KorisnikModels.js";
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -144,7 +149,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const linijaId = req.params.id;
-    console.log(linijaId, "-----------------------------------")
+    console.log(linijaId, "-----------------------------------");
     const {
       pocetnaStanica,
       medjustanice,
@@ -237,6 +242,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//? Kreirajte transporter za slanje email poruka
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
 router.post("/rezervacija", async (req, res) => {
   try {
     const {
@@ -258,6 +272,8 @@ router.post("/rezervacija", async (req, res) => {
 
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
     let stanicaK = await Stanica.findByPk(krajnjaStanicaId);
+
+    let korisnik = await Korisnik.findByPk(korisnikId);
 
     let postojiStanicaP = false;
     let postojiStanicaK = false;
@@ -428,9 +444,96 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
     });
+    const qrCodeText = `
+    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${korisnikId}
+
+  
+`;
+    // Postavite opcije za QR kod, na primer veličinu i error correction nivo
+    const opcije = {
+      errorCorrectionLevel: "H",
+      type: "image/png",
+      quality: 0.85,
+      margin: 1,
+      color: {
+        dark: "#000",
+        light: "#fff",
+      },
+    };
+
+    qrcode.toFile("qrcode.png", qrCodeText, opcije, (err, url) => {
+      if (err) {
+        console.error("Greška pri generisanju QR koda:", err);
+        return;
+      }
+      // QR kod je generisan i sačuvan kao "qrcode.png"
+      // Nastavite sa slanjem e-mail poruke
+    });
+
+    //? slanje mejla korisniku kada uspesno rezervise kartu
+    const emailSubject = "Potvrda rezervacije";
+
+    // Čitajte QR kod kao binarni podaci
+    const qrCodeImagePath = "qrcode.png";
+    const qrCodeImage = fs.readFileSync(qrCodeImagePath);
+
+    // Postavite prilog za e-mail
+    const attachments = [
+      {
+        filename: "qrcode.png", // Naziv priloga
+        content: qrCodeImage, // Sadržaj priloga kao binarni podaci
+        cid: "qr-code", // ID priloga, koristite ga u HTML telu e-maila
+      },
+    ];
+
+    const emailText = `
+      Hvala što ste rezervisali putovanje!
+      Broj Mesta: ${brojMesta}
+      Polazna Stanica: ${polaznaStanicaR}
+      Krajnja Stanica: ${krajnjaStanicaR}
+      Datum Polaska: ${datumPolaska}
+      Datum Dolaska: ${datumDolaska}
+      Vreme Polaska: ${vremePolaska}
+      Vreme Dolaska: ${vremeDolaska}
+      Linija ID: ${linijaId}
+      Osveženje: ${osvezenje}
+    
+      Molimo vas da skenirate QR kod za više detalja:
+      <img src="cid:qr-code" alt="QR Code" />
+    `;
+
+    // Unutar vašeg postojećeg koda za slanje e-maila
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: korisnik.email,
+      subject: emailSubject,
+      html: emailText,
+      attachments, // Dodajte prilog e-mail poruci
+    };
+
+    transporter.sendMail(mailOptions);
+
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {
     res.status(500).json(error.message);
+  }
+});
+
+router.get("/cekiranje/:id", async (req, res) => {
+  try {
+    // Ovde možete dobiti ID iz parametara rute
+    const { id } = req.params;
+
+    // Sada možete izvršiti željene akcije na osnovu ID-a iz skeniranog QR koda
+    console.log(
+      "Skeniran QR kod sa ID-jem:---------------------------------------------",
+      id
+    );
+
+    // Vratite odgovor klijentu da potvrdite skeniranje
+    res.status(200).json({ message: "uspesno cekiranje" });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred", error });
   }
 });
 
@@ -656,9 +759,6 @@ router.post("/filterLinija", async (req, res) => {
         }
       }
     }
-
-    /* const proba = await izvuceneLinijeDatum[0].getPocetnaStanica();
-    const proba2 = await izvuceneLinijeDatum[0].getKrajnjaStanica(); */
 
     res.status(200).json({ message: "uspesno izvučena linija", rezultat });
   } catch (error) {
