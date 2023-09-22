@@ -10,7 +10,6 @@ const KorisnikLogic = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(data);
 
   const editKorisnik = (data) => {
     KorisnikApi()
@@ -21,7 +20,9 @@ const KorisnikLogic = () => {
         data.prezime,
         data.brojTelefona,
         data.email,
-        data.role
+        data.role,
+        data.vremeTrajanjaRole,
+        data.privremenaRola
       )
       .then((response) => {
         alert("radi");

@@ -68,23 +68,40 @@ const LinijeApi = () => {
 
   const editLinije = async (
     id,
-    mestoPolaska,
-    mestoDolaska,
-    vremePolaska,
-    vremeDolaska,
-    prevoznik,
-    datumPolaska,
-    datumDolaska
+    pocetnaStanica,
+    medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      vozac,
+      stjuardesa
+      
   ) => {
-    return await axios.post(`http://localhost:5000/linije/update/${id}`, {
+    console.log(pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      vozac,
+      stjuardesa)
+    return await axios.put(`http://localhost:5000/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
-      mestoPolaska: mestoPolaska,
-      mestoDolaska: mestoDolaska,
-      vremePolaska: vremePolaska,
-      vremeDolaska: vremeDolaska,
-      prevoznik: prevoznik,
-      datumPolaska: datumPolaska,
-      datumDolaska: datumDolaska,
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      vozac,
+      stjuardesa
     });
   };
 

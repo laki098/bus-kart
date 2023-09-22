@@ -14,10 +14,14 @@ const LineForm = ({ mode, id, state }) => {
   const adminLogic = AdminLogic();
   const [stanice, setStanice] = useState([]);
 
+  
+
   const [waypoints, setWaypoints] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [cene, setCene] = useState([]);
   const [autobusi, setAutobusi] = useState([]);
+  const [vozac, setVozac] = useState([]);
+  const [stjuardesa,setStjuardesa] = useState([]);
 
   const getAutobusi = async () => {
     const response = await fetch("http://localhost:5000/autobusi");
@@ -39,6 +43,24 @@ const LineForm = ({ mode, id, state }) => {
       .filter(helpers.filterUnique);
     setStanice(filterStanica);
   };
+  
+
+  const getKorisnici = async () => {
+    const response = await fetch("http://localhost:5000/korisnik");
+    const data = await response.json();
+    const korisnici = data.korisnici;
+  
+    const vozaci = korisnici.filter((korisnik) => korisnik.role === "vozac");
+    const stjuardesa = korisnici.filter((korisnik) => korisnik.role === "stjuardesa");
+  
+    setVozac(vozaci);
+    setStjuardesa(stjuardesa);
+  };
+  console.log(vozac)
+  
+  
+  
+  
 
   const addWaypoint = () => {
     setWaypoints([...waypoints, ""]);
@@ -61,7 +83,7 @@ const LineForm = ({ mode, id, state }) => {
     newCene[index] = event.target.value;
     setCene(newCene);
   };
-  console.log(state);
+  
   /* const izmeniLiniju = async () => {
     const response = await LinijeApi().filterLinijaID(id); // Filter linije za bas taj id koji cemo da menjamo
     // if (response.error) {
@@ -86,10 +108,13 @@ const LineForm = ({ mode, id, state }) => {
   useEffect(() => {
     getStanice();
     getAutobusi();
+    getKorisnici()
     if (mode === "edit") {
       /* izmeniLiniju(); */
     }
   }, []);
+
+  const medjustanice = []
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -99,17 +124,20 @@ const LineForm = ({ mode, id, state }) => {
     } else if (mode === "edit") {
       const formData = new FormData(event.target); //pravi objekat koji sadrzi sva imena inputa(zato sto submit ima sve vrednosti)
       const data = {
-        id: id,
-        mestoPolaska: formData.get("mestoPolaska"),
-        mestoDolaska: formData.get("mestoDolaska"),
+        pocetnaStanica: formData.get("pocetnaStanica"),
+        medjustanice: medjustanice,
+        krajnjaStanica: formData.get("krajnjaStanica"),
         vremePolaska: formData.get("vremePolaska"),
         vremeDolaska: formData.get("vremeDolaska"),
-        prevoznik: formData.get("prevoznik"),
         datumPolaska: formData.get("datumPolaska"),
         datumDolaska: formData.get("datumDolaska"),
+        oznakaBusa: formData.get("oznakaBusa"),
+        vozac:formData.get("vozac"),
+        stjuardesa:formData.get("stjuardesa")
+
       };
 
-      adminLogic.editLinije(data);
+      adminLogic.editLinije(data, id);
     }
   };
 
@@ -503,7 +531,7 @@ const LineForm = ({ mode, id, state }) => {
                   </label>
                   <br />
                   <input
-                    defaultValue={linija.krajnjaStanica}
+                    defaultValue={state.krajnjaStanica}
                     type="text"
                     name="krajnjaStanica"
                     placeholder="Mesto dolaska"
@@ -518,7 +546,7 @@ const LineForm = ({ mode, id, state }) => {
                   </label>
                   <br />
                   <input
-                    defaultValue={linija.datumPolaska}
+                    defaultValue={state.datumPolaska}
                     name="datumPolaska"
                     type="date"
                     className="name1 input-new"
@@ -540,7 +568,7 @@ const LineForm = ({ mode, id, state }) => {
                   </label>
                   <br />
                   <input
-                    defaultValue={linija.datumDolaska}
+                    defaultValue={state.datumDolaska}
                     name="datumDolaska"
                     type="date"
                     className="name1 input-new"
@@ -561,7 +589,7 @@ const LineForm = ({ mode, id, state }) => {
                   </label>
                   <br />
                   <input
-                    defaultValue={linija.vremePolaska}
+                    defaultValue={state.vremePolaska}
                     className="inputText name1 input-new"
                     type="time"
                     required
@@ -576,7 +604,7 @@ const LineForm = ({ mode, id, state }) => {
                   </label>
                   <br />
                   <input
-                    defaultValue={linija.vremeDolaska}
+                    defaultValue={state.vremeDolaska}
                     className="inputText name1 input-new"
                     type="time"
                     required
@@ -609,7 +637,7 @@ const LineForm = ({ mode, id, state }) => {
                   <label>Izaberite autobus</label>
                   <br />
                   <select
-                    value={linija.oznakaBusa}
+                    value={state.oznakaBusa}
                     name="oznakaBusa"
                     onChange={adminLogic.changeHandler}
                   >
@@ -626,6 +654,26 @@ const LineForm = ({ mode, id, state }) => {
                   </select>
                   <br />
                   <br />
+                  <div>
+                  <label>Izaberite vozaca</label>
+                  <select value={adminLogic.selectedVozac} name="vozac" onChange={adminLogic.changeHandler}>
+                    {vozac.map((korisnik) => (
+                      <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
+                      {korisnik.ime} {korisnik.prezime}
+                   </option>
+                     ))}
+                  </select>
+                  </div>
+                  <div>
+                  <label>Izaberite stjuardesa</label>
+                  <select value={adminLogic.selectedStjuardesa} name="stjuardesa" onChange={adminLogic.changeHandler}>
+                    {stjuardesa.map((korisnik) => (
+                        <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
+                         {korisnik.ime} {korisnik.prezime}
+                   </option>
+                     ))}
+                    </select>
+                  </div>
                   <button type="submit" className="button">
                     {mode === "add" ? (
                       <Trans i18nKey="description.part128">"Dodaj"</Trans>

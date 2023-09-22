@@ -19,7 +19,7 @@ const AdminLogic = () => {
       medjustanice: novaMedjustanica,
     });
   };
-
+  console.log(data)
   const dodajMedjustanicu = () => {
     setData({
       ...data,
@@ -67,18 +67,23 @@ const AdminLogic = () => {
         console.log(error);
       });
   };
-
-  /* const editLinije = (data) => {
+  
+  const editLinije = (data, id) => {
     LinijeApi()
+    
       .editLinije(
-        data.id,
-        data.mestoPolaska,
-        data.mestoDolaska,
+        id,
+        data.pocetnaStanica,
+        data.medjustanice,
+        data.krajnjaStanica,
         data.vremePolaska,
         data.vremeDolaska,
-        data.prevoznik,
         data.datumPolaska,
-        data.datumDolaska
+        data.datumDolaska,
+        data.oznakaBusa,
+        data.vozac,
+        data.stjuardesa
+        
       )
       .then((response) => {
         console.log(response);
@@ -87,7 +92,7 @@ const AdminLogic = () => {
       .catch((error) => {
         console.log(error);
       });
-  }; */
+  };
 
   const brisanjeLinije = async (id) => {
     console.log("id", id);
@@ -106,7 +111,7 @@ const AdminLogic = () => {
     setData,
     upisLinije,
     brisanjeLinije,
-    /* editLinije, */
+    editLinije,
     handlerMedjustanice,
     dodajMedjustanicu,
     ukloniMedjustanicu,

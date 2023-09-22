@@ -13,6 +13,7 @@ import '../../components/rezervacije/i18n';
 const KorisnikChange = () => {
   const [korisnik, setKorisnik] = useState({});
   const { idKorisnik } = useParams();
+  const [privremenaRola, setPrivremenaRola] = useState(false);
 
   useEffect(() => {
     getKorisnik();
@@ -40,8 +41,14 @@ const KorisnikChange = () => {
       brojTelefona: formData.get("brojTelefona"),
       email: formData.get("email"),
       role: formData.get("role"), //mesto formdata stavljam userpars.rola
+      vremeTrajanjaRole: formData.get("vremeTrajanjaRole"),
+      privremenaRola,
     };
     korisnikLogic.editKorisnik(data);
+  };
+
+  const handleChange = () => {
+    setPrivremenaRola((prev) => !prev);
   };
 
   const getKorisnik = async () => {
@@ -60,81 +67,78 @@ const KorisnikChange = () => {
   // prevodjenje end
 
   return (
-    <div>
-         <div className="red-1"></div>  
-
-<form onSubmit={submitHandler}>
-  <div className="stampajLiniju">
-  <div className="rowTabela korisniciTabela">
-    <div class="column-1 centar-1"><label>Korisničko ime:</label></div>
-    <div class="column-1 centar-1 podaci "><input
-      defaultValue={korisnik.korisnickoIme}
-      type="text"
-      required
-      name="korisnickoIme"
-      style={{width: "6rem"}}
-      onChange={korisnikLogic.changeHandler}
-    ></input></div>
-    <div class="column-1 centar-1 "><label>Ime:</label></div>
-    <div class="column-1 centar-1 podaci"><input
-      defaultValue={korisnik.ime}
-      type="text"
-      required
-      name="ime"
-      style={{width: "6rem"}}
-      className="inputVelicina"
-      onChange={korisnikLogic.changeHandler}
-    ></input></div>
-    <div class="column-1 centar-1"><label>Prezime:</label></div>
-    <div class="column-1 centar-1 podaci"><input
-      defaultValue={korisnik.prezime}
-      type="text"
-      required
-      name="prezime"
-      style={{width: "6rem"}}
-      onChange={korisnikLogic.changeHandler}
-    ></input></div>
-    <div class="column-1 centar-1"><label>Broj telefona:</label></div>
-    <div class="column-1 centar-1 podaci"><input
-      defaultValue={korisnik.brojTelefona}
-      type="text"
-      required
-      name="brojTelefona"
-      style={{width: "6rem"}}
-      onChange={korisnikLogic.changeHandler}
-    ></input></div>
-    <div class="column-1 centar-1"><label>Email:</label></div>
-    <div class="column-1 centar-1 podaci"><input
-      defaultValue={korisnik.email}
-      type="text"
-      required
-      name="email"
-      onChange={korisnikLogic.changeHandler}
-    ></input></div>
-    <div class="column-1 centar-1"><label>Role:</label></div>
-    <div class="column-1 centar-1 podaci"><select
-      defaultValue={korisnik.role}
-      type="text"
-      required
-      name="role"
-      onChange={korisnikLogic.changeHandler}
-    >
-      <option value="korisnik">korisnik</option>
-      <option value="menadzer">menadzer</option>
-      <option value="admin">admin</option>
-      <option value="stjuardesa">stjuardesa</option>
-    </select></div>
-    <div className="column-1"><button onClick={back} type="submit" class="buttonSwitch">   {/* bila je klasa dugme */}
-      {" "}
-      Sačuvaj
-    </button></div>
-  </div>  
-  </div>
-</form>
-
-
-    </div>
-    
+    <form onSubmit={submitHandler}>
+      <div>
+        <label>KorisnickoIme:</label>
+        <input
+          defaultValue={korisnik.korisnickoIme}
+          type="text"
+          required
+          name="korisnickoIme"
+          onChange={korisnikLogic.changeHandler}
+        ></input>
+        <label>ime:</label>
+        <input
+          defaultValue={korisnik.ime}
+          type="text"
+          required
+          name="ime"
+          onChange={korisnikLogic.changeHandler}
+        ></input>
+        <label>Prezime:</label>
+        <input
+          defaultValue={korisnik.prezime}
+          type="text"
+          required
+          name="prezime"
+          onChange={korisnikLogic.changeHandler}
+        ></input>
+        <label>Broj Telefona:</label>
+        <input
+          defaultValue={korisnik.brojTelefona}
+          type="text"
+          required
+          name="brojTelefona"
+          onChange={korisnikLogic.changeHandler}
+        ></input>
+        <label>email:</label>
+        <input
+          defaultValue={korisnik.email}
+          type="text"
+          required
+          name="email"
+          onChange={korisnikLogic.changeHandler}
+        ></input>
+        <label>Privremena rola:</label>
+        <input type="checkbox" onChange={handleChange} value={privremenaRola} />
+        {privremenaRola && (
+          <>
+            <label>Vreme trajanja role:</label>
+            <input
+              type="number"
+              name="vremeTrajanjaRole"
+              onChange={korisnikLogic.changeHandler}
+            />
+          </>
+        )}
+        <label>role:</label>
+        <select
+          defaultValue={korisnik.role}
+          type="text"
+          required
+          name="role"
+          onChange={korisnikLogic.changeHandler}
+        >
+          <option value="korisnik">korisnik</option>
+          <option value="menadzer">menadzer</option>
+          <option value="admin">admin</option>
+          <option value="stjuardesa">stjuardesa</option>
+          <option value="biletar">biletar</option>
+          <option value="vozac">vozac</option>
+        </select>
+        <button /* onClick={back} */ type="submit"> Sacuvaj</button>
+      </div>
+    </form>
   );
 };
 export default KorisnikChange;
