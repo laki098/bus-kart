@@ -430,7 +430,7 @@ router.post("/rezervacija", async (req, res) => {
       }
     }
 
-    await Rezervacija.create({
+    const kreiranjeRezervacije = await Rezervacija.create({
       brojMesta,
       linijaId,
       polaznaStanicaR,
@@ -444,11 +444,16 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
     });
+
+    const idRezervacije = kreiranjeRezervacije.id;
+
     const qrCodeText = `
-    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${korisnikId}
+    oznakaRezervacije: ${idRezervacije}
+    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${idRezervacije}
 
   
 `;
+
     // Postavite opcije za QR kod, na primer veličinu i error correction nivo
     const opcije = {
       errorCorrectionLevel: "H",
@@ -519,7 +524,7 @@ router.post("/rezervacija", async (req, res) => {
   }
 });
 
-router.get("/cekiranje/:id", async (req, res) => {
+router.post("/cekiranje/:id", async (req, res) => {
   try {
     // Ovde možete dobiti ID iz parametara rute
     const { id } = req.params;
