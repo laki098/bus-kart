@@ -538,7 +538,6 @@ router.post(
     try {
       //?dobijanje id rezervacije
       const { id } = req.params;
-
       //?izvlacimo Rezervaciju po id-u
       const izvlacenjeRezervacije = await Rezervacija.findByPk(id);
 
@@ -547,19 +546,15 @@ router.post(
         return res.status(404).json({ message: "Nepostojeca rezervacija" });
       }
 
-      let responseMessage = "uspesno cekiranje";
       //?provera da li je karta vec cekirana
       if (izvlacenjeRezervacije.cekiran === true) {
-        responseMessage = "Karta je vec cekirana";
+        res.status(409).json({ message: "Karta je već čekirana" });
+      } else {
+        // Ako nije čekirana, postavite cekiran na true i vratite status 200
+        izvlacenjeRezervacije.cekiran = true;
+        await izvlacenjeRezervacije.save();
+        res.status(200).json({ message: "Uspešno čekiranje" });
       }
-
-      //?Menjamo da je karta cekirana
-      console.log(izvlacenjeRezervacije.id);
-      izvlacenjeRezervacije.cekiran = true;
-      await izvlacenjeRezervacije.save();
-
-      // Vratite odgovor klijentu da potvrdite skeniranje
-      res.status(200).json({ message: responseMessage });
     } catch (error) {
       res.status(500).json({ message: "An error occurred", error });
     }
