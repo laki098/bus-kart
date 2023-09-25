@@ -1,0 +1,75 @@
+.naslovStanica{
+    text-align: center;
+    color: darkblue;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 2rem;
+  }
+
+  .labela-stanica{
+    color: darkblue;
+    font-size: medium;
+   /* font-weight: ;    */
+    align-items: center;
+  }
+
+    /* glavna tabela za prikaz spiskova stanica   */
+  .tabela-stanica{
+    overflow-x: auto;   /* zbog responsive dela     */
+    width: max-content;
+    border: 1px solid darkblue;
+    border-radius: 0.2rem;
+    border-collapse: collapse;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 2rem;
+    background-color: aliceblue;
+  }
+  .spisak-stanica{
+    width: 40rem;
+  }
+
+    /* prikaz podataka jedne stanice    */
+  .jedan-red-stanica{
+    width: fit-content;   /* 33rem    */
+    line-height: 45px; 
+    background-color: white;
+    border: 1px solid rgb(151, 192, 246);
+    border-radius: 0.2rem;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;    
+  }
+
+  .input-stanica{
+    width: 15rem;
+    height: 2rem;
+    border-color: grey;
+    margin: 0.2rem;
+  }
+
+  .input-stanica::placeholder{
+    color: darkblue;
+    align-items: center;
+  }
+  .polje-stanica{
+   /* line-height: 30px;    */
+    width: fit-content;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.5rem;
+   /* flex-wrap: wrap;    */
+  }
+  .info-stanica{
+    width: 5rem;
+    border: 1px solid rgb(156, 198, 253);
+    background-color: rgb(221, 234, 250);
+    padding: 0.5rem;
+    color: darkblue;
+    font-size: medium;
+    font-weight: bold;
+    text-align: left;
+   /* flex-wrap: wrap;    */
+  }

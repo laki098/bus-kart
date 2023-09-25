@@ -84,7 +84,7 @@ const KorisnikChange = () => {
       <div className="stampajLiniju">
       <div className="rowTabela korisniciTabela">
       <div class="column-1 centar-1"><label>Korisničko ime</label></div>
-        <div class="column-1 centar-1 podaci "><input
+        <div class="column-1 centar-1 podaci"><input
           defaultValue={korisnik.korisnickoIme}
           type="text"
           required

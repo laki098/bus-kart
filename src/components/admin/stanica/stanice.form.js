@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import StaniceLogic from "./stanice.logic";
 import StaniceApi from "../../../api/stanice.api";
+import "./stanica.css";
+
+
+import "../../NavBar/links/i18n";
+import "../../rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 const StaniceForm = ({ mode, id }) => {
   const [stanice, setStanice] = useState({});
@@ -44,29 +50,70 @@ const StaniceForm = ({ mode, id }) => {
     }
   };
 
+  //prevodjenje
+  const lngs = {
+      en: { nativeName: "Engleski" },
+      de: { nativeName: "Srpski" },
+    };
+  const { t, i18n } = useTranslation();
+  // prevodjenje
+
   return (
-    <form onSubmit={submitHandler}>
+    <div>
+      <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
+    <form onSubmit={submitHandler} className="tabela-stanica">
+      
       <div>
-        {mode === "add" ? <p>Nova stanica</p> : <p>Izmena Stanica</p>}
-        <label>Naziv</label>
+        <div className="naslovStanica">
+        {mode === "add" ? <p><Trans i18nKey="description.part140">Nova stanica</Trans></p> : <p><Trans i18nKey="description.part141">Izmena stanica</Trans></p>}
+        </div>
+        <div>
+        <div><label className="labela-stanica"><Trans i18nKey="description.part142">Naziv</Trans></label></div> 
+        {/* za input bilo je className="test"  */}
         <input
           defaultValue={stanice.naziv}
           type="text"
           name="naziv"
+          className="input-stanica"
           onChange={staniceLogic.changeHandler}
         ></input>
-        <label>Adresa</label>
+        </div>
+        <div className="red-1"></div>
+        <div>
+        <div><label className="labela-stanica"><Trans i18nKey="description.part111">Adresa</Trans></label></div>
         <input
           defaultValue={stanice.adresa}
           type="text"
           name="adresa"
+          className="input-stanica"
           onChange={staniceLogic.changeHandler}
         ></input>
-        <button onClick={back} type="submit">
-          {mode === "add" ? <>Dodaj</> : <>Izmeni</>}
+        </div>
+        <div>
+        <div className="red-1"></div>
+        <button onClick={back} type="submit" class="buttonSwitch">
+          {mode === "add" ? <><Trans i18nKey="description.part128">Dodaj</Trans></> : <><Trans i18nKey="description.part133">Zameni</Trans></>}
         </button>
+        </div>
       </div>
     </form>
+    </div>
   );
 };
 
