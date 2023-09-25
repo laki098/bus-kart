@@ -39,6 +39,10 @@ const Rezervacija = db.define(
     osvezenje: {
       type: DataTypes.STRING,
     },
+    cekiran: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     tableName: "rezervacija",

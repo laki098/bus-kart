@@ -9,6 +9,7 @@ import qrcode from "qrcode";
 import fs from "fs";
 import nodemailer from "nodemailer";
 import Korisnik from "../Models/KorisnikModels.js";
+import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js";
 
 const router = express.Router();
 
@@ -445,11 +446,14 @@ router.post("/rezervacija", async (req, res) => {
       osvezenje,
     });
 
-    const idRezervacije = kreiranjeRezervacije.id;
+    /* const idRezervacije = ;
+    console.log(idRezervacije); */
 
     const qrCodeText = `
-    oznakaRezervacije: ${idRezervacije}
-    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${idRezervacije}
+    oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
+    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
+      kreiranjeRezervacije.id + 1
+    }
 
   
 `;
@@ -502,6 +506,7 @@ router.post("/rezervacija", async (req, res) => {
       Vreme Dolaska: ${vremeDolaska}
       Linija ID: ${linijaId}
       Osveženje: ${osvezenje}
+      idRezzervacije: ${kreiranjeRezervacije.id}
     
       Molimo vas da skenirate QR kod za više detalja:
       <img src="cid:qr-code" alt="QR Code" />
@@ -524,23 +529,42 @@ router.post("/rezervacija", async (req, res) => {
   }
 });
 
-router.post("/cekiranje/:id", async (req, res) => {
-  try {
-    // Ovde možete dobiti ID iz parametara rute
-    const { id } = req.params;
+//?Cekiranje karte po id rezervacije
+router.post(
+  "/cekiranje/:id",
+  isAuthenticated,
+  isAuthorized(["stjuardesa"]),
+  async (req, res) => {
+    try {
+      //?dobijanje id rezervacije
+      const { id } = req.params;
 
-    // Sada možete izvršiti željene akcije na osnovu ID-a iz skeniranog QR koda
-    console.log(
-      "Skeniran QR kod sa ID-jem:---------------------------------------------",
-      id
-    );
+      //?izvlacimo Rezervaciju po id-u
+      const izvlacenjeRezervacije = await Rezervacija.findByPk(id);
 
-    // Vratite odgovor klijentu da potvrdite skeniranje
-    res.status(200).json({ message: "uspesno cekiranje" });
-  } catch (error) {
-    res.status(500).json({ message: "An error occurred", error });
+      //?Provera da li rezervacija postoji
+      if (!izvlacenjeRezervacije) {
+        return res.status(404).json({ message: "Nepostojeca rezervacija" });
+      }
+
+      let responseMessage = "uspesno cekiranje";
+      //?provera da li je karta vec cekirana
+      if (izvlacenjeRezervacije.cekiran === true) {
+        responseMessage = "Karta je vec cekirana";
+      }
+
+      //?Menjamo da je karta cekirana
+      console.log(izvlacenjeRezervacije.id);
+      izvlacenjeRezervacije.cekiran = true;
+      await izvlacenjeRezervacije.save();
+
+      // Vratite odgovor klijentu da potvrdite skeniranje
+      res.status(200).json({ message: responseMessage });
+    } catch (error) {
+      res.status(500).json({ message: "An error occurred", error });
+    }
   }
-});
+);
 
 router.post("/filterLinija", async (req, res) => {
   try {

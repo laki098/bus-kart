@@ -24,14 +24,15 @@ class QRScanner extends Component {
 
         fetch(url, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
+          credentials: "include",
         })
           .then((response) => {
+            this.props.onScanSuccess("Uspješno ste skenirali QR kod.");
+            alert("Uspesno cekirana karta");
             if (!response.ok) {
-              throw new Error("HTTP zahtjev nije uspio");
+              throw new Error("HTTP zahtev nije uspio");
             }
           })
           .catch((error) => {
