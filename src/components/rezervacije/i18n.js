@@ -119,6 +119,12 @@ i18n
             part138: 'Buy a ticket',
             part139: 'Currently reserved seat:',
 
+            part140: 'New station',
+            part141: 'Change station',
+            part142: 'Name',
+            part143: 'Edit bus',
+            part144: 'Bus sign',
+
 
           }
         }
@@ -227,6 +233,12 @@ i18n
             part137: 'Važi za studente do 27 god. uz index u suprotnom plaća se puna cena karte',
             part138: 'Kupite kartu',
             part139: 'Trenutno rezervisano mesto:',
+
+            part140: 'Nova stanica',
+            part141: 'Izmena stanica',
+            part142: 'Naziv',
+            part143: 'Edituj autobus',
+            part144: 'Oznaka autobusa',
 
 
           }

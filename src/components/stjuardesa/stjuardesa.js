@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import QRScanner from "./QRScanner";
-import QRScanMessage from "./QRScanMessage"; // Dodajte import
 
 const Stjuardesa = () => {
   const [stjuardesaLinija, setStjuardesaLinija] = useState([]);
   const [showQRScanner, setShowQRScanner] = useState(false);
-  const [scanMessage, setScanMessage] = useState(null); // Dodajte stanje za poruku
 
   const getStjuardesaLinija = async () => {
     const response = await fetch("http://localhost:5000/linija");
@@ -13,18 +11,15 @@ const Stjuardesa = () => {
     setStjuardesaLinija(data.linija);
   };
 
+  //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
     setShowQRScanner(true);
   };
 
+  //?kada skeniramo qrCode da se kamera sama zatvori
   const handleQRScanSuccess = (message) => {
     console.log("Uspešno skeniranje:", message);
-    setScanMessage(message); // Postavite poruku kada je skeniranje uspješno
     setShowQRScanner(false);
-  };
-
-  const handleScanMessageClose = () => {
-    setScanMessage(null); // Zatvorite poruku
   };
 
   useEffect(() => {
@@ -43,12 +38,7 @@ const Stjuardesa = () => {
           ))}
         </ul>
       </div>
-
       {showQRScanner && <QRScanner onScanSuccess={handleQRScanSuccess} />}
-
-      {scanMessage && (
-        <QRScanMessage message={scanMessage} onClose={handleScanMessageClose} />
-      )}
 
       {!showQRScanner && (
         <button onClick={handleQRScan}>Skeniraj QR kod</button>

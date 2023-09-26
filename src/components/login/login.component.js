@@ -52,11 +52,11 @@ const LoginComponent = () => {
             </div>
             <div>
               <div>
-                <br />
+              <div className="red-1"></div>
                 <p className="naslov">
                   <Trans i18nKey="description.part124">Logovanje</Trans>
                 </p>{" "}
-                <br />
+                <div className="red-1"></div>
                 <div>
                   <img src={user} alt="user" className="user" />
                   <input
@@ -90,7 +90,7 @@ const LoginComponent = () => {
                       Zaboravljena šifra
                     </Trans>{" "}
                   </Link>{" "}
-                  <br />
+                  <div className="red-1"></div>
                   <Link
                     to="/registration.component"
                     className=" naslov-srednji"

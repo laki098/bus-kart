@@ -409,8 +409,8 @@ const LineForm = ({ mode, id, state }) => {
                       );
                     })}
                   </select>
-                  <br />
-                  <br />
+                  <div className="red-1"></div>
+                  <div className="red-1"></div>
                   <button type="submit" className="button">
                     <Trans i18nKey="description.part128">"Dodaj"</Trans>
                   </button>
