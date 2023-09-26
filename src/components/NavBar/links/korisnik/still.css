@@ -23,3 +23,7 @@
 .lista-stavka:nth-child(even) {
   background-color: #e5e5e5;
 }
+
+.Grupa {
+  display: inline-flex;
+}
