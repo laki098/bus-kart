@@ -26,7 +26,7 @@ import Stjuardesa from "./components/stjuardesa/stjuardesa";
 import StaniceInitial from "./components/admin/stanica/stanice.initial";
 import StaniceAdd from "./components/admin/stanica/stanice.add";
 import StaniceEdit from "./components/admin/stanica/stanice.edit";
-
+import StjuardesaLinija from "./components/stjuardesa/stjuardesaLinija";
 
 function App() {
   return (
@@ -41,6 +41,9 @@ function App() {
             </Route>
             <Route path="/stjuardesa">
               <Stjuardesa />
+            </Route>
+            <Route path="/:id/stjuardesalinija">
+              <StjuardesaLinija />
             </Route>
             <Route path="/pocetna">
               <Pocetna />
