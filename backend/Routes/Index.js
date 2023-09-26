@@ -150,7 +150,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const linijaId = req.params.id;
-    console.log(linijaId, "-----------------------------------");
     const {
       pocetnaStanica,
       medjustanice,
@@ -446,11 +445,10 @@ router.post("/rezervacija", async (req, res) => {
       osvezenje,
     });
 
-    /* const idRezervacije = ;
-    console.log(idRezervacije); */
-
+    console.log(linijaId);
     const qrCodeText = `
     oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
+    LinijaId: ${linijaId + 1}
     Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
       kreiranjeRezervacije.id + 1
     }
@@ -538,23 +536,33 @@ router.post(
     try {
       //?dobijanje id rezervacije
       const { id } = req.params;
+      const { linijaId, idLinijaFront } = req.body;
+
       //?izvlacimo Rezervaciju po id-u
       const izvlacenjeRezervacije = await Rezervacija.findByPk(id);
+      const linijaIdInt = parseInt(linijaId, 10);
+
+      if (linijaIdInt != idLinijaFront) {
+        console.log(linijaIdInt, idLinijaFront, "-------");
+        res.status(404).json({ message: "Ova karta nije na za ovu liniju" });
+        return;
+      }
 
       //?Provera da li rezervacija postoji
       if (!izvlacenjeRezervacije) {
-        return res.status(404).json({ message: "Nepostojeca rezervacija" });
+        res.status(404).json({ message: "Nepostojeca rezervacija" });
+        return;
       }
 
       //?provera da li je karta vec cekirana
       if (izvlacenjeRezervacije.cekiran === true) {
         res.status(409).json({ message: "Karta je već čekirana" });
-      } else {
-        // Ako nije čekirana, postavite cekiran na true i vratite status 200
-        izvlacenjeRezervacije.cekiran = true;
-        await izvlacenjeRezervacije.save();
-        res.status(200).json({ message: "Uspešno čekiranje" });
+        return;
       }
+
+      izvlacenjeRezervacije.cekiran = true;
+      await izvlacenjeRezervacije.save();
+      res.status(200).json({ message: "Uspešno čekiranje" });
     } catch (error) {
       res.status(500).json({ message: "An error occurred", error });
     }

@@ -91,7 +91,7 @@ const RezervacijaComponent = ({ id, state }) => {
 
   // const [studentska, setStudentska]=useState(false);
   const [pom, setPom] = useState(false);
-  const [pom1, setPom1] =useState(false);
+  const [pom1, setPom1] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleChange = (event) => {
@@ -225,272 +225,328 @@ const RezervacijaComponent = ({ id, state }) => {
 
   //prevodjenje
   const lngs = {
-      en: { nativeName: "Engleski" },
-      de: { nativeName: "Srpski" },
-    };
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
   const { t, i18n } = useTranslation();
   // prevodjenje
   return (
     <>
       <div className="red-1"></div>
-      <form onSubmit={confirmeHandler} className="forma">  {/* className={`${classes.form} side`}  */}
-        <div  > {/* className="flex-container"  */}
+      <form onSubmit={confirmeHandler} className="forma">
+        {" "}
+        {/* className={`${classes.form} side`}  */}
+        <div>
+          {" "}
+          {/* className="flex-container"  */}
+          <div className="flex-container">
+            <div className="flex-clan">
+              {" "}
+              {/* levi deo sa prikazom podataka u formi */}
+              <div className="red-1"></div>
+              <div className="deoForme">
+                <div className="levo">
+                  <label className="labela-velika">Putnik</label>
+                </div>
+                <div className="red-1"></div>
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.name ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Ime i prezime
+                  </label>
+                  <input
+                    className="test"
+                    type="text"
+                    name="ime"
+                    value={
+                      userPars.ime == undefined
+                        ? ""
+                        : userPars.ime + " " + userPars.prezime
+                    }
+                    onChange={rezervacijaLogic.changeHandler}
+                    ref={fNameInputRef}
+                  />
+                  {!formInputsValid.name && <p>Unesite ime i prezime</p>}
+                </div>
 
-        
-        <div className="flex-container">
-          <div className="flex-clan" > {/* levi deo sa prikazom podataka u formi */}
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.email ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    className="test"
+                    name="email"
+                    value={userPars.email == undefined ? "" : userPars.email}
+                    ref={emailInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.email && <p>Unesite E-mail</p>}
+                </div>
 
-            <div className="red-1"></div>
-            <div className="deoForme">
-            <div className="levo"><label className="labela-velika">Putnik</label></div>
-            <div className="red-1"></div>
-            <div className={`${classes.control} ${
-                formInputsValid.name ? "" : classes.invalid
-                }`}
-            >
-                <label className="labela" style={{paddingLeft:"2.3rem"}}>Ime i prezime</label>
-                <input
-                  className="test"
-                  type="text"
-                  name="ime"
-                  value={
-                   userPars.ime == undefined
-                    ? ""
-                    : userPars.ime + " " + userPars.prezime
-                  }
-                  onChange={rezervacijaLogic.changeHandler}
-                  ref={fNameInputRef}
-                />
-                {!formInputsValid.name && <p>Unesite ime i prezime</p>}
-            </div>
-
-            <div className={`${classes.control} ${
-              formInputsValid.email ? "" : classes.invalid
-              }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}}>Email</label>
-              <input
-                type="text"
-                className="test"
-                name="email"
-                value={userPars.email == undefined ? "" : userPars.email}
-                ref={emailInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-              {!formInputsValid.email && <p>Unesite E-mail</p>}
-            </div>
-              
-            <div className={`${classes.control} ${
-              formInputsValid.email ? "" : classes.invalid
-              }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}} >Telefon</label>
-              <input
-                type="text"
-                className="test"
-                name="telefon"
-                value={
-                  userPars.brojTelefona == undefined ? "" : userPars.brojTelefona
-                }
-                ref={telefonInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-              {!formInputsValid.telefon && <p>Unesite telefon</p>}
-            </div>  
-            </div>
-
-            <div className="red-1"></div>
-
-            <div className="deoForme">
-            <div className="levo"><label className="labela-velika">Linija</label></div>
-            <div className="red-1"></div>
-
-            <div className={`${classes.control} ${
-                formInputsValid.mesto ? "" : classes.invalid
-                }`}
-            >
-                <label className="labela" style={{paddingLeft:"2.3rem"}}>Mesto polaska</label>
-                <input
-                  defaultValue={state.pocetnaStanica}
-                  className="test"
-                  type="text"
-                  name="mesto"
-                  ref={mestoInputRef}
-                  onChange={rezervacijaLogic.changeHandler}
-                />
-                {!formInputsValid.mesto && <p>Unesite mesto</p>}
-            </div>
-
-            <div className={`${classes.control} ${
-                formInputsValid.mesto ? "" : classes.invalid
-                }`}
-            >
-                <label className="labela" style={{paddingLeft:"2.3rem"}}>Mesto dolaska</label>
-                <input
-                  defaultValue={state.krajnjaStanica}
-                  className="test"
-                  type="text"
-                  name="mestoD"
-                  ref={mestoDInputRef}
-                  onChange={rezervacijaLogic.changeHandler}
-                />
-                {!formInputsValid.mestoD && <p>Unesite mesto</p>}
-            </div>  
-
-            <div className={`${classes.control} ${
-                formInputsValid.datum ? "" : classes.invalid
-                }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}}>Datum polaska</label>
-
-              <input
-                defaultValue={state.datumPolaska}
-                className="test"
-                name="datum"
-                ref={datumInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-
-              {!formInputsValid.datum && <p>Unesite datum</p>}
-            </div>
-
-            <div className={`${classes.control} ${
-              formInputsValid.datum ? "" : classes.invalid
-              }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}}>Datum dolaska</label>
-
-              <input
-                defaultValue={state.datumDolaska}
-                className="test"
-                name="datum"
-                ref={datumDInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-
-              {!formInputsValid.datumD && <p>Unesite datum</p>}
-            </div>
-
-            <div className={`${classes.control} ${
-              formInputsValid.vreme ? "" : classes.invalid
-              }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}}>Vreme polaska</label>
-              <input
-                defaultValue={state.vremePolaska}
-                className="test"
-                name="vreme"
-                ref={vremeInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-              {!formInputsValid.vreme && <p>Unesite vreme</p>}
-            </div>
-
-            <div className={`${classes.control} ${
-              formInputsValid.vreme ? "" : classes.invalid
-              }`}
-            >
-              <label className="labela" style={{paddingLeft:"2.3rem"}}>Vreme dolaska</label>
-              <input
-                defaultValue={state.vremeDolaska}
-                className="test"
-                name="vremeD"
-                ref={vremeDInputRef}
-                onChange={rezervacijaLogic.changeHandler}
-              />
-              {!formInputsValid.vremeD && <p>Unesite vreme</p>}
-            </div>
-            </div>
-
-            <div className="red-1"></div>
-            <div className="deoForme sirina-3polja">
-            <div className="levo"><label className="labela-velika">Dodaci</label></div>
-            <div className="red-1"></div>
-
-            <div className="radio">
-              <select
-                className="select"
-                type="text"
-                name="osvezenje"
-                value={osvezenje}
-                required
-                onChange={(event) => {
-                  setOsvezenje(event.target.value);
-                }}
-              >
-                <option disabled={false} value="">
-                  Izaberite osveženje
-                </option>
-                <option>Kafa</option>
-                <option>Čaj</option>
-                <option>Nes</option>
-              </select>
-            </div>
-
-            <div className="radio">   {/*  className="radio1"   */}
-              <select
-                className="select"
-                type="text"
-                name="Izaberi kartu"
-                required
-                value={selectedValue}
-                onChange={(event) => {
-                  setSelectedValue(event.target.value);
-
-                if (event.target.value === "Povratna") {
-                  setShowReturnDate(true);
-                } else {
-                  setShowReturnDate(false);
-                }
-                if (event.target.value === "Studentska") {
-                  setPom(true);
-                } else {
-                  setPom(false);
-                }
-
-                if (event.target.value === "Students") {
-                  setPom1(true);
-                } else {
-                  setPom1(false);
-                }
-              }}
-              >
-
-                <option disabled={false} value="">
-                  Izaberite kartu
-                </option>
-                <option>Jednosmerna</option>
-                <option>Povratna</option>
-                <option>Besplatna</option>
-                <option>Studentska</option>
-                <option>Vikend</option>
-                <option>Nedeljna</option>
-              </select>
-
-          {/* studentska karta   */}
-          <div  >
-          { pom ? <div className="ograda1">
-            <p> <Trans i18nKey="description.part137">Važi za studente do 27 god. uz index u suprotnom plaća se puna cena karte</Trans></p> </div>
-          :" "}
-          
-          {pom1 ? <div className="ograda1" > <p > <Trans i18nKey="description.part137">Valid for students up to 27 years old. with the index, otherwise the full price of the ticket is paid </Trans></p></div> 
-          : " "}
-            
-          </div>
-          {/* kraj studentska karta   */}  
-
-            {showReturnDate && (
-              <div>
-                <label htmlFor="returnDate">Datum povratka:</label>
-                <input
-                  type="date"
-                  id="returnDate"
-                  name="returnDate"
-                  min={new Date().toISOString().split("T")[0]}
-                />
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.email ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Telefon
+                  </label>
+                  <input
+                    type="text"
+                    className="test"
+                    name="telefon"
+                    value={
+                      userPars.brojTelefona == undefined
+                        ? ""
+                        : userPars.brojTelefona
+                    }
+                    ref={telefonInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.telefon && <p>Unesite telefon</p>}
+                </div>
               </div>
-            )}
-{/*
+              <div className="red-1"></div>
+              <div className="deoForme">
+                <div className="levo">
+                  <label className="labela-velika">Linija</label>
+                </div>
+                <div className="red-1"></div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.mesto ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Mesto polaska
+                  </label>
+                  <input
+                    defaultValue={state.pocetnaStanica}
+                    className="test"
+                    type="text"
+                    name="mesto"
+                    ref={mestoInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.mesto && <p>Unesite mesto</p>}
+                </div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.mesto ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Mesto dolaska
+                  </label>
+                  <input
+                    defaultValue={state.krajnjaStanica}
+                    className="test"
+                    type="text"
+                    name="mestoD"
+                    ref={mestoDInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.mestoD && <p>Unesite mesto</p>}
+                </div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.datum ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Datum polaska
+                  </label>
+
+                  <input
+                    defaultValue={state.datumPolaska}
+                    className="test"
+                    name="datum"
+                    ref={datumInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+
+                  {!formInputsValid.datum && <p>Unesite datum</p>}
+                </div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.datum ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Datum dolaska
+                  </label>
+
+                  <input
+                    defaultValue={state.datumDolaska}
+                    className="test"
+                    name="datum"
+                    ref={datumDInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+
+                  {!formInputsValid.datumD && <p>Unesite datum</p>}
+                </div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.vreme ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Vreme polaska
+                  </label>
+                  <input
+                    defaultValue={state.vremePolaska}
+                    className="test"
+                    name="vreme"
+                    ref={vremeInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.vreme && <p>Unesite vreme</p>}
+                </div>
+
+                <div
+                  className={`${classes.control} ${
+                    formInputsValid.vreme ? "" : classes.invalid
+                  }`}
+                >
+                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                    Vreme dolaska
+                  </label>
+                  <input
+                    defaultValue={state.vremeDolaska}
+                    className="test"
+                    name="vremeD"
+                    ref={vremeDInputRef}
+                    onChange={rezervacijaLogic.changeHandler}
+                  />
+                  {!formInputsValid.vremeD && <p>Unesite vreme</p>}
+                </div>
+              </div>
+              <div className="red-1"></div>
+              <div className="deoForme sirina-3polja">
+                <div className="levo">
+                  <label className="labela-velika">Dodaci</label>
+                </div>
+                <div className="red-1"></div>
+
+                <div className="radio">
+                  <select
+                    className="select"
+                    type="text"
+                    name="osvezenje"
+                    value={osvezenje}
+                    required
+                    onChange={(event) => {
+                      setOsvezenje(event.target.value);
+                    }}
+                  >
+                    <option disabled={false} value="">
+                      Izaberite osveženje
+                    </option>
+                    <option>Kafa</option>
+                    <option>Čaj</option>
+                    <option>Nes</option>
+                  </select>
+                </div>
+
+                <div className="radio">
+                  {" "}
+                  {/*  className="radio1"   */}
+                  <select
+                    className="select"
+                    type="text"
+                    name="Izaberi kartu"
+                    required
+                    value={selectedValue}
+                    onChange={(event) => {
+                      setSelectedValue(event.target.value);
+
+                      if (event.target.value === "Povratna") {
+                        setShowReturnDate(true);
+                      } else {
+                        setShowReturnDate(false);
+                      }
+                      if (event.target.value === "Studentska") {
+                        setPom(true);
+                      } else {
+                        setPom(false);
+                      }
+
+                      if (event.target.value === "Students") {
+                        setPom1(true);
+                      } else {
+                        setPom1(false);
+                      }
+                    }}
+                  >
+                    <option disabled={false} value="">
+                      Izaberite kartu
+                    </option>
+                    <option>Jednosmerna</option>
+                    <option>Povratna</option>
+                    <option>Besplatna</option>
+                    <option>Studentska</option>
+                    <option>Vikend</option>
+                    <option>Nedeljna</option>
+                  </select>
+                  {/* studentska karta   */}
+                  <div>
+                    {pom ? (
+                      <div className="ograda1">
+                        <p>
+                          {" "}
+                          <Trans i18nKey="description.part137">
+                            Važi za studente do 27 god. uz index u suprotnom
+                            plaća se puna cena karte
+                          </Trans>
+                        </p>{" "}
+                      </div>
+                    ) : (
+                      " "
+                    )}
+
+                    {pom1 ? (
+                      <div className="ograda1">
+                        {" "}
+                        <p>
+                          {" "}
+                          <Trans i18nKey="description.part137">
+                            Valid for students up to 27 years old. with the
+                            index, otherwise the full price of the ticket is
+                            paid{" "}
+                          </Trans>
+                        </p>
+                      </div>
+                    ) : (
+                      " "
+                    )}
+                  </div>
+                  {/* kraj studentska karta   */}
+                  {showReturnDate && (
+                    <div>
+                      <label htmlFor="returnDate">Datum povratka:</label>
+                      <input
+                        type="date"
+                        id="returnDate"
+                        name="returnDate"
+                        min={new Date().toISOString().split("T")[0]}
+                      />
+                    </div>
+                  )}
+                  {/*
             {pom ? (
               <div className="maliCrveni">
                 <p>
@@ -502,29 +558,43 @@ const RezervacijaComponent = ({ id, state }) => {
             ) : (
               " "
             )}
-*/}            
-            <div className="red-1"></div>
-            </div>
+*/}
+                  <div className="red-1"></div>
+                </div>
+              </div>
+              <div className="red-1"></div>
+              <div className="red-1"></div>
+              <div className="deoForme sirina-3polja">
+                <div className="levo">
+                  <label className="labela-velika ">Izabrali ste</label>
+                </div>
+                <div className="red-1"></div>
+                <div className="vasIzbor">
+                  <p>
+                    Cena karte:{" "}
+                    <strong>
+                      {" "}
+                      {calculateTicketPrice(selectedValue)} dinara
+                    </strong>
+                  </p>
+                  <p>
+                    Broj izabranih sedišta:
+                    <strong> {brojIzabranihSedista}</strong>
+                  </p>
+                  <p>
+                    Ukupna cena: <strong> {ukupnaCena} dinara</strong>
+                  </p>
+                </div>
+              </div>
+              <div className="red-1"></div>
             </div>
 
-            <div className="red-1"></div>
-            <div className="red-1"></div>
-            <div className="deoForme sirina-3polja">
-            <div className="levo"><label className="labela-velika ">Izabrali ste</label></div>
-            <div className="red-1"></div>
-            <div className="vasIzbor">
-              <p>Cena karte: <strong> {calculateTicketPrice(selectedValue)} dinara</strong></p>
-              <p>Broj izabranih sedišta:<strong> {brojIzabranihSedista}</strong></p>
-              <p>Ukupna cena: <strong> {ukupnaCena} dinara</strong></p>
-            </div>
-            </div>
-            <div className="red-1"></div>
-          </div>
-
-              <div className="flex-clan">  {/* desni deo sa prikazom autobusa */}
-                <div className="autobus">
-                  <div>
-                    {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
+            <div className="flex-clan">
+              {" "}
+              {/* desni deo sa prikazom autobusa */}
+              <div className="autobus">
+                <div>
+                  {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
                     (linija.oznakaBusa != "MAN" ? "" : <MAN />) ||
                     (linija.oznakaBusa != "MK91" ? "" : <MK91 />) ||
                     (linija.oznakaBusa != "MB1" ? "" : <MB1 />) ||
@@ -532,15 +602,13 @@ const RezervacijaComponent = ({ id, state }) => {
                     (linija.oznakaBusa != "MB4" ? "" : <MB4 />) ||
                     (linija.oznakaBusa != "VL" ? "" : <VL />) ||
                     (linija.oznakaBusa != "S1" ? "" : <S1 />)}
-                  </div>
+                </div>
                 <p className="plavo">
                   U slučaju izmene tipa autobusa, moguće je doći do promene
                   rezervacije sedišta, o čemu ćete biti obavešteni.{" "}
                 </p>
               </div>
-
               <div className="red-1"></div>
-
               <label>Broj sedišta</label> &emsp;
               <input
                 type="number"
@@ -548,19 +616,20 @@ const RezervacijaComponent = ({ id, state }) => {
                 className="brSedista"
                 onChange={(e) => setBrojSedista(e.target.value)}
               ></input>
-
               <div className="red-1"></div>
-              </div>
-
-        </div> 
-        <div className="red-1"></div>
-        <div >
-        <button className={classes.submit}  onClick={novaRezervacija}><p className="slovaDugme">Rezerviši kartu </p></button>
-        &emsp;
-        <button className={classes.submit}><p className="slovaDugme">&ensp; &nbsp; Kupi kartu &ensp;</p></button>
-        </div>
-        <div className="red-1"></div>
-
+            </div>
+          </div>
+          <div className="red-1"></div>
+          <div>
+            <button className={classes.submit} onClick={novaRezervacija}>
+              <p className="slovaDugme">Rezerviši kartu </p>
+            </button>
+            &emsp;
+            <button className={classes.submit}>
+              <p className="slovaDugme">&ensp; &nbsp; Kupi kartu &ensp;</p>
+            </button>
+          </div>
+          <div className="red-1"></div>
         </div>
       </form>
       <div className="red-1"></div>

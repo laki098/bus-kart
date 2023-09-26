@@ -371,6 +371,7 @@ router.post("/karta", async (req, res) => {
       where: { korisnikId },
     });
 
+    console.log(karte);
     res.status(200).json({ message: "izvucen korsnik", karte });
   } catch (error) {
     console.log(error);

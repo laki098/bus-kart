@@ -7,18 +7,28 @@ class QRScanner extends Component {
     this.state = {
       result: "", //? Stanje koje će sadržati rezultat skeniranja QR koda
       oznakaRezervacije: null, //? Stanje koje će sadržati oznaku rezervacije
+      linijaId: null, //? Stanje koje će sadržati linijaId
     };
   }
 
   //? Ova funkcija će se pozvati kada se QR kod uspešno skenira(kada kamera očita qr)
   handleScan = (data) => {
     if (data) {
+      //? iz skeniranog qr dobijam oznaku busa
       const regex = /oznakaRezervacije:\s*(\d+)/;
       const match = data.text.match(regex);
 
-      if (match) {
+      //? iz skeniranog qr dobijam linijuId na kojoj je rezervisana
+      const linijaIdRegex = /LinijaId:\s*(\d+)/;
+      const linijaIdMatch = data.text.match(linijaIdRegex);
+
+      const idLinijaFront = this.props.idLinije;
+
+      if (match && linijaIdMatch) {
         //? Izvlačenje broja rezervacije iz teksta QR koda
         const novaOznakaRezervacije = match[1];
+        //? Izvlačenje broja linije id
+        const linijaId = linijaIdMatch[1];
 
         //? Formiranje URL-a za slanje HTTP zahteva
         const url = `http://localhost:5000/linija/cekiranje/${novaOznakaRezervacije}`;
@@ -26,6 +36,8 @@ class QRScanner extends Component {
         //? Kreiranje tela HTTP zahteva
         const requestBody = {
           qrCodeData: data,
+          linijaId: linijaId,
+          idLinijaFront: idLinijaFront,
         };
 
         //? Slanje HTTP zahteva
@@ -36,14 +48,20 @@ class QRScanner extends Component {
           credentials: "include",
         })
           .then((response) => {
-            this.props.onScanSuccess("Uspješno ste skenirali QR kod.");
-            /* alert("Uspesno cekirana karta"); */
-            if (!response.ok) {
-              alert("Karta je iskoriscena");
-              throw new Error("HTTP zahtev nije uspio");
+            if (response.ok) {
+              return response.json();
             } else {
-              alert("Karta je uspesno cekirana");
+              //? u slucaju da nije tacno, da dolazi do greske ovde ispise
+              return response.json().then((data) => {
+                alert(data.message);
+                throw new Error("HTTP zahtjev nije uspio");
+              });
             }
+          })
+          .then((data) => {
+            //? ovde rukujemo sa uspesnim cekiranjem
+            console.log(data);
+            alert(data.message);
           })
           .catch((error) => {
             console.error(error);
@@ -56,6 +74,7 @@ class QRScanner extends Component {
         this.setState({
           result: data,
           oznakaRezervacije: novaOznakaRezervacije,
+          linijaId: linijaId,
         });
       } else {
         console.error("Nije moguće izdvojiti broj iz očitanog QR koda.");
