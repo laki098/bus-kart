@@ -40,19 +40,7 @@ const Karta = () => {
         cekiranje: item.cekiran,
       };
     });
-
-    sveKarte.forEach((karta) => {
-      if (karta.iskoriscena) {
-        iskorisceneKarte.push(karta);
-      } else {
-        neiskorisceneKarte.push(karta);
-      }
-    });
-    console.log(iskorisceneKarte);
-
-    setSveKarte(sveKarte);
-    setNeiskorisceneKarte(neiskorisceneKarte); // Postavite neiskoriscene karte
-    setIskorisceneKarte(iskorisceneKarte); // Postavite iskoriscene karte
+    setSveKarte(a1);
   };
 
   console.log(neiskorisceneKarte);
