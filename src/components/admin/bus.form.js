@@ -59,7 +59,7 @@ const BusForm = ({ mode, idAutobusa }) => {
   return (
     <div className="pozadina">
       <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
@@ -84,11 +84,11 @@ const BusForm = ({ mode, idAutobusa }) => {
                   <Trans i18nKey="description.part127">Dodajte autobus</Trans>
                 </p>
               ) : (
-                <p className="naslov">Edituj autobus</p>
+                <p className="naslov"><Trans i18nKey="description.part143">Edituj autobus</Trans></p>
               )}
               <br />
               <label>
-                <Trans>Oznaka autobusa</Trans>
+              <Trans i18nKey="description.part144">Oznaka autobusa</Trans>
               </label>
               <br />
               <input

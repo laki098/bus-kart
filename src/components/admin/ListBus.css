@@ -37,6 +37,11 @@
     font-weight: bold;
     background-color: rgb(228, 233, 244);
 }
+.podaci-korisnik{
+  font-weight: bold;
+  background-color: rgb(228, 233, 244);
+  width: 10rem;
+}
 
 .podaci2{
     width: 4rem;
@@ -181,6 +186,7 @@
    border-bottom: 1px solid #afa2fa;
    display: flex;
    flex-wrap: wrap;     /* zbog responsive uloge        */
+  /* grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto;    */
    margin: auto;
    padding: 10px;  
  /*   align-content: center;
