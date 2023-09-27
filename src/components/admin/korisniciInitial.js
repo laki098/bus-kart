@@ -66,17 +66,19 @@ const KorisniciInitial = () => {
 
       <div className="red-1"></div>  
       <div className="stampajLiniju">    
-      <div className="rowTabela korisniciTabela">
+      <div className="rowTabela korisniciTabela" >
+        <ul>
         {korisnici.map((korisnik) => {
           return (
             <li key={korisnik.idKorisnik}>
-              <div>
-                <div class="column centar"> Korisničko ime:</div><div class="column centar podaci">{korisnik.korisnickoIme}</div>
-                <div class="column centar"> Ime: </div><div class="column centar podaci"> {korisnik.ime}</div>
-                <div class="column centar"> Prezime: </div><div class="column centar podaci"> {korisnik.prezime} </div>
-                <div class="column centar"> Broj telefona:{" "}</div><div class="column centar podaci">{korisnik.brojTelefona}</div>
-                <div class="column centar"> Email:</div><div class="column centar podaci"> {korisnik.email}</div>
-                <div class="column centar"> Role:{" "} </div><div class="column centar podaci">{korisnik.role}</div>
+              {/* kod podataka nije valjalo sa klasama column-2 centar podaci-sirina */}
+              <div className="jedan-red-stanica">  {/* kod podataka bila je klasa "column podaci" a sada je  "column-2 podaci-sirina"  */}
+                <div class="column centar"> Korisničko ime</div><div class="column-2 centar podaci-sirina">{korisnik.korisnickoIme}</div>
+                <div class="column centar"> Ime</div><div class="column-2 centar podaci-sirina"> {korisnik.ime}</div>
+                <div class="column centar"> Prezime</div><div class="column-2 centar podaci-sirina"> {korisnik.prezime} </div>
+                <div class="column centar"> Broj telefona</div><div class="column-2 centar podaci-sirina">{korisnik.brojTelefona}</div>
+                <div class="column centar"> Email</div><div class="column-2 centar podaci-sirina" style={{width:"17rem"}}> {korisnik.email}</div>
+                <div class="column centar"> Role</div><div class="column-2 centar podaci-sirina">{korisnik.role}</div>
                 <div class="column"><Link to={`${korisnik.idKorisnik}/korisnikChange`}>
                   <button className="buttonSwitch">Izmeni</button>
                 </Link>
@@ -94,6 +96,7 @@ const KorisniciInitial = () => {
             
           );
         })}
+        </ul>
       </div>
       </div>
 

@@ -77,6 +77,9 @@ const StaniceForm = ({ mode, id }) => {
         </div>
       </header>
 
+      <div className="red-1"></div>
+      <div className="red-1"></div>
+
     <form onSubmit={submitHandler} className="tabela-stanica">
       
       <div>
@@ -111,6 +114,7 @@ const StaniceForm = ({ mode, id }) => {
           {mode === "add" ? <><Trans i18nKey="description.part128">Dodaj</Trans></> : <><Trans i18nKey="description.part133">Zameni</Trans></>}
         </button>
         </div>
+        <div className="red-1"></div>
       </div>
     </form>
     </div>

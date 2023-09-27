@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 import QRScanner from "./QRScanner";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
+  const [autobus, setAutobus] = useState([]);
 
-  //?dobijanje id-a preko url-a
-  const { id } = useParams();
-
-  //?primanje podataka sa pocetne za bas odredjenu liniju
+  //?primanje podataka sa stjuardese za baš odredjenu liniju
   const location = useLocation();
   const state = location.state;
 
-  console.log(state.linija.id);
+  const dobavljanjeBrojaMesta = async () => {
+    const response = await fetch(
+      `http://localhost:5000/autobusi/oznaka/${state.linija.oznakaBusa}`
+    );
+    const data = await response.json();
+    setAutobus(data.autobusi);
+  };
+
+  useEffect(() => {
+    dobavljanjeBrojaMesta();
+  }, []);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
