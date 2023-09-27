@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import StaniceApi from "../../../api/stanice.api";
 
+import "./stanica.css";
+
 import "../../NavBar/links/i18n";
 import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
@@ -67,6 +69,7 @@ const StaniceInitial = () => {
       </header>
 
       <div className="red-1"></div>
+      <div className="stampajLiniju"> 
       <div className="tabela-stanica spisak-stanica">
         <ul>
           {stanice.map((stanica) => {
@@ -87,6 +90,7 @@ const StaniceInitial = () => {
             );
           })}
         </ul>
+      </div>
       </div>
       
       

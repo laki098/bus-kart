@@ -125,6 +125,9 @@ i18n
             part143: 'Edit bus',
             part144: 'Bus sign',
 
+            part150: 'Time of departure',
+            part151: 'Add a way station',
+
 
           }
         }
@@ -239,6 +242,9 @@ i18n
             part142: 'Naziv',
             part143: 'Edituj autobus',
             part144: 'Oznaka autobusa',
+
+            part150: 'Vreme odlaska (polaska)',
+            part151: 'Dodaj usputnu stanicu',
 
 
           }
