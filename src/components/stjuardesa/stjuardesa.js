@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import QRScanner from "./QRScanner";
+import { Link } from "react-router-dom";
+import cookies from "js-cookie";
 
 const Stjuardesa = () => {
   const [stjuardesaLinija, setStjuardesaLinija] = useState([]);
-  const [showQRScanner, setShowQRScanner] = useState(false);
+
+  //? izvlacenje korisnika iz cookisa
+  let userData = cookies.get("userData");
+  let userPars = {};
+
+  //? pitamo ga da li je prijvljen, ako nije da ne odradi to parsiranje u json.
+  if (userData != undefined) {
+    userPars = JSON.parse(userData);
+  }
+  console.log(userPars);
 
   const getStjuardesaLinija = async () => {
-    const response = await fetch("http://localhost:5000/linija");
+    const response = await fetch(
+      `http://localhost:5000/stjuardesa/${userPars.idKorisnika}`
+    );
     const data = await response.json();
-    setStjuardesaLinija(data.linija);
-  };
-
-  //?kada kliknemo dugme da otvori skenerQrCode
-  const handleQRScan = () => {
-    setShowQRScanner(true);
-  };
-
-  //?kada skeniramo qrCode da se kamera sama zatvori
-  const handleQRScanSuccess = (message) => {
-    console.log("Uspešno skeniranje:", message);
-    setShowQRScanner(false);
+    console.log(data.izvlacenjeLinija);
+    setStjuardesaLinija(data.izvlacenjeLinija);
   };
 
   useEffect(() => {
@@ -33,16 +35,24 @@ const Stjuardesa = () => {
         <ul>
           {stjuardesaLinija.map((linija) => (
             <div key={linija.id}>
-              <li>{linija.stjuardesa}</li>
+              <li>{linija.pocetnaStanica.naziv}</li>
+              <li>{linija.krajnjaStanica.naziv}</li>
+              <li>{linija.vremePolaska}</li>
+              <li>{linija.datumPolaska}</li>
+              <Link
+                to={{
+                  pathname: `${linija.id}/stjuardesaLinija`,
+                  state: {
+                    linija: linija, // Prosleđujemo ceo objekat linije kao stanje
+                  },
+                }}
+              >
+                <button>Cekiranje</button>
+              </Link>
             </div>
           ))}
         </ul>
       </div>
-      {showQRScanner && <QRScanner onScanSuccess={handleQRScanSuccess} />}
-
-      {!showQRScanner && (
-        <button onClick={handleQRScan}>Skeniraj QR kod</button>
-      )}
     </>
   );
 };
