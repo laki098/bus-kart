@@ -207,6 +207,8 @@ img {
   position: absolute;
   width: 10.5rem;
   text-align: center;
+  left: -1.75rem;
+  top: 2.7rem;
 }
 
 
@@ -285,7 +287,7 @@ nav ul li a:not(.active):hover {
 }
 
 
-
+/* 
 nav .menu {
   display: none;
   position: absolute;
@@ -296,31 +298,35 @@ nav .menu {
   width: 2.25rem;
   height: 2rem;
 }
-
-nav .menu span {
+ */
+/* nav .menu span {
   height: 0.4rem;
   width: 100%;
   background-color: #fff;
   border-radius: 0.2rem;
-}
+} */
 
 
 
 
-ul {
+/* ul {
   list-style: none;
   padding: 0;
   margin: 0;
-}
+} */
 
-li {
+.item-li {
   display: inline-block;
   margin-right: 20px;
   position: relative;
 }
+.item-lii {
+  display: inline-block;
+  position: relative;
+}
 
-a {
+/* a {
   text-decoration: none;
   color: #31cfeb;
   cursor: pointer;
-}
+} */
