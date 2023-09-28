@@ -33,6 +33,21 @@ router.get("/:idAutobusa", async (req, res) => {
   }
 });
 
+router.get("/oznaka/:oznakaBusa", async (req, res) => {
+  const { oznakaBusa } = req.params;
+  console.log(oznakaBusa);
+  try {
+    const autobusi = await Bus.findOne({
+      where: { oznakaBusa: oznakaBusa },
+    });
+    res
+      .status(200)
+      .json({ message: "uspesno dobavljeni svi autobusi", autobusi });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { oznakaBusa, tablice, brojSedista } = req.body;

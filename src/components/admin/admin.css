@@ -322,6 +322,7 @@
   font-size: medium;
   color: darkblue;
 }
+<<<<<<< HEAD
 
 .info-stanica-1{
   width: 7.6rem;
@@ -333,4 +334,12 @@
   font-weight: bold;
   text-align: center;   /* left   */
  /* flex-wrap: wrap;    */
+=======
+.input-search {
+  height: 3rem;
+  width: 12rem;
+  text-align: start;
+  font-size: larger;
+  margin-bottom: 1rem;
+>>>>>>> 26f1ffd7996653b7ccd1ea789f6d5eecb2bba2e1
 }
