@@ -308,3 +308,10 @@
   font-size: medium;
   color: darkblue;
 }
+.input-search {
+  height: 3rem;
+  width: 12rem;
+  text-align: start;
+  font-size: larger;
+  margin-bottom: 1rem;
+}

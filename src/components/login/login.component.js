@@ -58,7 +58,7 @@ const LoginComponent = () => {
                 </p>{" "}
                 <div className="red-1"></div>
                 <div>
-                  <img src={user} alt="user" className="user" />
+                  {/* <img src={user} alt="user" className="user" /> */}
                   <input
                     type="text"
                     placeholder="Korisničko ime"
@@ -68,7 +68,7 @@ const LoginComponent = () => {
                   />
                 </div>
                 <div className="second-input">
-                  <img src={password} alt="password" className="user1" />
+                 {/*  <img src={password} alt="password" className="user1" /> */}
                   <input
                     type="password"
                     placeholder="Lozinka"

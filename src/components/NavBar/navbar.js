@@ -83,9 +83,9 @@ const Navbar = () => {
         </li>
         <div className="login-style ">
           {Object.keys(userPars).length === 0 ? (
-            <li >
+            <li className="item-li" >
               <Link to="/login.component">
-                <i className="fa fa-user-circle nav-links"></i>Prijavi se
+                <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi se
               </Link>
             </li>
           ) : (
