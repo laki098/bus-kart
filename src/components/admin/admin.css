@@ -267,28 +267,42 @@
     position: relative;
     display: block;
     /* width: 90vw; */
-    max-width: 120vw;   /* menjala sam    */
+   /* max-width: 120vw;   /* menjala sam    */
+    width: fit-content; 
     background: #fff;
     border: 1px solid grey;
     box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;
     border-radius: 0.3rem;
-    z-index: 2;
+   /* z-index: 2;   */
     /* padding: 2.6rem 5rem;   */
     padding: 1rem 2rem;
     /* margin-left: 15vw; */
     margin-bottom: 1rem;
-    text-align: justify; /* dodala sn    */
-
+  /*  text-align: justify; /* dodala sn    */
+    text-align: left;   
     display: flex;
     flex-wrap: wrap;
 }
 
+.admin-jedan-red{
+  width: fit-content;   /* 33rem    */
+  line-height: 45px; 
+  background-color: #fff;
+  border: 1px solid rgb(151, 192, 246);
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  display: flex;
+  flex-wrap: wrap;  
+
+}
 .admin-tebela{
-    position: relative;
+  /*  position: relative;   */
     margin: 0 auto;
-    width: 80%;
+    width: 90%;   /*bila je 80%   */
     max-width: 80rem;
-    display: block;
+    display: flex;   /* bilo blok    */
+    flex-wrap: wrap;
     background: #d2dff5;
     border: 2px solid grey;
     box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;
@@ -307,4 +321,16 @@
 .admin-dugme-slova{
   font-size: medium;
   color: darkblue;
+}
+
+.info-stanica-1{
+  width: 7.6rem;
+  border: 1px solid rgb(156, 198, 253);
+  background-color: rgb(221, 234, 250);
+  padding: 0.5rem;
+  color: darkblue;
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;   /* left   */
+ /* flex-wrap: wrap;    */
 }

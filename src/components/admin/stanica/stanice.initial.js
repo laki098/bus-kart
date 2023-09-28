@@ -70,14 +70,14 @@ const StaniceInitial = () => {
 
       <div className="red-1"></div>
       <div className="stampajLiniju"> 
-      <div className="tabela-stanica spisak-stanica">
+      <div className="tabela-stanica spisak-stanica"> 
         <ul>
           {stanice.map((stanica) => {
             return (
               <li key={stanica.id}>
                 <div className="jedan-red-stanica">
-                 <div className="polje-stanica">Naziv </div> <div className="info-stanica"> {stanica.naziv}</div> 
-                 <div className="polje-stanica">Adresa</div><div className="info-stanica">{stanica.adresa}</div>
+                 <div className="polje-stanica">Naziv </div> <div className="info-stanica sirina-info-stanica"> {stanica.naziv}</div> 
+                 <div className="polje-stanica">Adresa</div><div className="info-stanica sirina-info-stanica">{stanica.adresa}</div>
                  <div className="polje-stanica"><Link to={`${stanica.id}/stanice.edit`}>
                     <button className="buttonSwitch">Izmeni</button>
                   </Link> </div>

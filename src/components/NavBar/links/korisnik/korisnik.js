@@ -53,7 +53,7 @@ const Korisnik = () => {
 
 
     return ( 
-      <form onSubmit={submitHandler} className="form-user">
+      <form onSubmit={submitHandler} className="form-user">   {/* className="form-user"   */}
       <div className="user-control">
        <label className="user-label">Korisnicko Ime:</label>
         <input

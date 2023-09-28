@@ -170,7 +170,7 @@ const LineForm = ({ mode, id, state }) => {
 
       {/*<div className="red-1"></div>    */}
       <div >                                         {/* className="main"          */}
-        <div className="tabela-stanica">             {/*  className=" sub-main"    */}
+        <div className="tabela-stanica prosiri-tabela-stanica">             {/*  className=" sub-main"    */}
           <form onSubmit={submitHandler}>
             {mode === "add" ? (
               <div>

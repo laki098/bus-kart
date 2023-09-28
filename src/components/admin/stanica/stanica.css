@@ -30,11 +30,14 @@
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    padding: 3rem;    /* 1rem   */
+    padding: 1rem;    /* 3rem   */
     background-color: aliceblue;
   }
   .spisak-stanica{
-    width: 40rem;
+    width: 45rem;   /* 40rem  */
+  }
+  .prosiri-tabela-stanica{
+    padding: 3rem;
   }
 
     /* prikaz podataka jedne stanice    */
@@ -48,7 +51,9 @@
     margin: 0.2rem;
     display: flex;
     flex-wrap: wrap;  
-
+  }
+  .jedan-red-visina{
+    line-height: 35px ;
   }
 
   .input-stanica{
@@ -102,6 +107,22 @@
     font-weight: bold;
     text-align: left;
    /* flex-wrap: wrap;    */
+  }
+
+  .sirina-info-stanica{
+    width: 8rem;
+  }
+  .sirina-info-15{
+    width: 15rem;
+  }
+  .sirina-info-10{
+    width: 10rem;
+  }
+  .sirina-info-7{
+    width: 7rem;
+  }
+  .sirina-info-6{
+    width: 6rem;
   }
 
   .ograda-medjustanice{

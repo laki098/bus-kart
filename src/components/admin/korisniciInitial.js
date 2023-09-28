@@ -72,18 +72,19 @@ const KorisniciInitial = () => {
           return (
             <li key={korisnik.idKorisnik}>
               {/* kod podataka nije valjalo sa klasama column-2 centar podaci-sirina */}
-              <div className="jedan-red-stanica">  {/* kod podataka bila je klasa "column podaci" a sada je  "column-2 podaci-sirina"  */}
-                <div class="column centar"> Korisničko ime</div><div class="column-2 centar podaci-sirina">{korisnik.korisnickoIme}</div>
-                <div class="column centar"> Ime</div><div class="column-2 centar podaci-sirina"> {korisnik.ime}</div>
-                <div class="column centar"> Prezime</div><div class="column-2 centar podaci-sirina"> {korisnik.prezime} </div>
-                <div class="column centar"> Broj telefona</div><div class="column-2 centar podaci-sirina">{korisnik.brojTelefona}</div>
-                <div class="column centar"> Email</div><div class="column-2 centar podaci-sirina" style={{width:"17rem"}}> {korisnik.email}</div>
-                <div class="column centar"> Role</div><div class="column-2 centar podaci-sirina">{korisnik.role}</div>
-                <div class="column"><Link to={`${korisnik.idKorisnik}/korisnikChange`}>
+              <div className="jedan-red-stanica ">  {/* kod podataka bila je klasa "column podaci" a sada je  "column-2 podaci-sirina"  */}
+                {/* bilo class="column centar" i --> class="column-2 centar podaci-sirina"  */}
+                <div className="polje-stanica"> Korisničko ime</div><div className="info-stanica sirina-info-stanica">{korisnik.korisnickoIme}</div>
+                <div className="polje-stanica"> Ime</div><div className="info-stanica sirina-info-7"> {korisnik.ime}</div>
+                <div className="polje-stanica"> Prezime</div><div className="info-stanica sirina-info-7"> {korisnik.prezime} </div>
+                <div className="polje-stanica"> Broj telefona</div><div className="info-stanica sirina-info-7">{korisnik.brojTelefona}</div>
+                <div className="polje-stanica"> Email</div><div className="info-stanica sirina-info-15 email-polje" > {korisnik.email}</div>
+                <div className="polje-stanica"> Role</div><div className="info-stanica">{korisnik.role}</div>
+                <div className="polje-stanica"><Link to={`${korisnik.idKorisnik}/korisnikChange`}>
                   <button className="buttonSwitch">Izmeni</button>
                 </Link>
                 </div>
-                <div class="column"><button className="buttonSwitch"
+                <div class="polje-stanica"><button className="buttonSwitch"
                   onClick={() => {
                     brisanjeKorisnika(korisnik.idKorisnik);
                   }}

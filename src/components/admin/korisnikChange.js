@@ -82,59 +82,59 @@ const KorisnikChange = () => {
 
     <form onSubmit={submitHandler}>
       <div className="stampajLiniju">
-      <div className="rowTabela korisniciTabela">
-      <div class="column-1 centar-1"><label>Korisničko ime</label></div>
+      <div className="rowTabela korisniciTabelaPromena">
+      <div className="column-1 centar-1"><label >Korisničko ime</label></div>
         <div class="column-1 centar-1 podaci"><input
           defaultValue={korisnik.korisnickoIme}
           type="text"
           required
           name="korisnickoIme"
-          style={{width: "6rem"}}
+          className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}
         ></input></div>
-        <div class="column-1 centar-1 "><label>Ime</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1 "><label>Ime</label></div>
+        <div className="column-1 centar-1 podaci">
 		    <input
           defaultValue={korisnik.ime}
           type="text"
           required
           name="ime"
-          style={{width: "6rem"}}
-          className="inputVelicina"
+          
+          className="inputVelicina sirina-info-6"
           onChange={korisnikLogic.changeHandler}>
 		    </input></div>
-        <div class="column-1 centar-1"><label>Prezime</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1"><label>Prezime</label></div>
+        <div className="column-1 centar-1 podaci">
           <input
           defaultValue={korisnik.prezime}
           type="text"
           required
           name="prezime"
-          style={{width: "6rem"}}
+          className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}>
           </input></div>
-        <div class="column-1 centar-1"><label>Broj telefona</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1"><label>Broj telefona</label></div>
+        <div className="column-1 centar-1 podaci">
           <input
           defaultValue={korisnik.brojTelefona}
           type="text"
           required
           name="brojTelefona"
-          style={{width: "6rem"}}
+          className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}>
           </input></div>
-        <div class="column-1 centar-1"><label>Email</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1"><label>Email</label></div>
+        <div className="column-1 centar-1 podaci">
           <input
           defaultValue={korisnik.email}
           type="text"
           required
           name="email"
-          style={{width: "10rem"}}
+          className="sirina-info-10"
           onChange={korisnikLogic.changeHandler}>
           </input></div>
-        <div class="column-1 centar-1 "><label>Privremena rola</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1 "><label>Privremena rola</label></div>
+        <div className="column-1 centar-1 podaci">
         <input type="checkbox" onChange={handleChange} value={privremenaRola} />
         {privremenaRola && (
           <>
@@ -147,8 +147,8 @@ const KorisnikChange = () => {
           </>
         )}
         </div>
-        <div class="column-1 centar-1 "><label>Role</label></div>
-        <div class="column-1 centar-1 podaci">
+        <div className="column-1 centar-1 "><label>Role</label></div>
+        <div className="column-1 centar-1 podaci">
         <select
           defaultValue={korisnik.role}
           type="text"
