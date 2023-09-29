@@ -73,11 +73,22 @@ const BusInitional = () => {
             {busevi.map((bus) => {
               return (
                 <li key={bus.idAutobusa}>                
-                   <div class="column centar"> Oznaka: </div><div className="column podaci centar" style={{width: "4rem"}}> {bus.oznakaBusa}</div>
-                   <div class="column centar" style={{textAlign: "center"}}> Tablice:</div><div className="column podaci centar"> {bus.tablice} </div>
-                   <div class="column centar"> Broj mesta:{" "} </div><div className="column podaci centar"> {bus.brojSedista} </div>
+                   <div class="column centar"> 
+                   Oznaka: 
+                   </div>
+                   <div className="column podaci centar" style={{width: "4rem"}}> {bus.oznakaBusa}</div>
+                   <div class="column centar" style={{textAlign: "center"}}> 
+                   Tablice:
+                   </div>
+                   <div className="column podaci centar"> {bus.tablice} </div>
+                   <div class="column centar"> 
+                   Broj mesta:
+                   {" "} </div>
+                   <div className="column podaci centar"> {bus.brojSedista} </div>
                    <div class="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
-                      <button className="buttonSwitch">Izmeni</button>  {/* dugme  */}
+                      <button className="buttonSwitch">
+                        Izmeni
+                      </button>  {/* dugme  */}
                     </Link></div>
                    <div class="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
                       Obriši
@@ -92,7 +103,9 @@ const BusInitional = () => {
       <div className="red-1"></div>
       <div>
       <Link to={"/bus.add"}>
-        <button className="buttonSwitch">Dodajte novi autobus</button>  {/* dugme veceDugme */}
+        <button className="buttonSwitch">
+          Dodajte novi autobus
+        </button>  {/* dugme veceDugme */}
       </Link>
       </div>
 

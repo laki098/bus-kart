@@ -83,7 +83,9 @@ const KorisnikChange = () => {
     <form onSubmit={submitHandler}>
       <div className="stampajLiniju">
       <div className="rowTabela korisniciTabelaPromena">
-      <div className="column-1 centar-1"><label >Korisničko ime</label></div>
+      <div className="column-1 centar-1">
+        <label ><Trans i18nKey="description.part44"> Korisničko ime </Trans>
+        </label></div>
         <div class="column-1 centar-1 podaci"><input
           defaultValue={korisnik.korisnickoIme}
           type="text"
@@ -92,7 +94,9 @@ const KorisnikChange = () => {
           className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}
         ></input></div>
-        <div className="column-1 centar-1 "><label>Ime</label></div>
+        <div className="column-1 centar-1 ">
+          <label><Trans i18nKey="description.part40">Ime</Trans></label>
+        </div>
         <div className="column-1 centar-1 podaci">
 		    <input
           defaultValue={korisnik.ime}
@@ -103,7 +107,9 @@ const KorisnikChange = () => {
           className="inputVelicina sirina-info-6"
           onChange={korisnikLogic.changeHandler}>
 		    </input></div>
-        <div className="column-1 centar-1"><label>Prezime</label></div>
+        <div className="column-1 centar-1">
+          <label><Trans i18nKey="description.part42">Prezime</Trans></label>
+        </div>
         <div className="column-1 centar-1 podaci">
           <input
           defaultValue={korisnik.prezime}
@@ -113,7 +119,9 @@ const KorisnikChange = () => {
           className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}>
           </input></div>
-        <div className="column-1 centar-1"><label>Broj telefona</label></div>
+        <div className="column-1 centar-1">
+          <label><Trans i18nKey="description.part48">Broj telefona</Trans></label>
+        </div>
         <div className="column-1 centar-1 podaci">
           <input
           defaultValue={korisnik.brojTelefona}
@@ -133,12 +141,16 @@ const KorisnikChange = () => {
           className="sirina-info-10"
           onChange={korisnikLogic.changeHandler}>
           </input></div>
-        <div className="column-1 centar-1 "><label>Privremena rola</label></div>
+        <div className="column-1 centar-1 "><label>
+        <Trans i18nKey="description.part157">Privremena rola </Trans>
+        </label></div>
         <div className="column-1 centar-1 podaci">
         <input type="checkbox" onChange={handleChange} value={privremenaRola} />
         {privremenaRola && (
           <>
-            &ensp;  <label>Vreme trajanja role</label> &ensp;
+            &ensp;  <label>
+            <Trans i18nKey="description.part158">Vreme trajanja role  </Trans>
+            </label> &ensp;
             <input
               type="number"
               name="vremeTrajanjaRole"
@@ -156,17 +168,17 @@ const KorisnikChange = () => {
           name="role"
           onChange={korisnikLogic.changeHandler}
         >
-          <option value="korisnik">korisnik</option>
-          <option value="menadzer">menadzer</option>
-          <option value="admin">admin</option>
-          <option value="stjuardesa">stjuardesa</option>
-          <option value="biletar">biletar</option>
-          <option value="vozac">vozac</option>
+          <option value="korisnik"><Trans i18nKey="description.part159">Korisnik</Trans></option>
+          <option value="menadzer"><Trans i18nKey="description.part160">Menadžer</Trans></option>
+          <option value="admin">Admin</option>
+          <option value="stjuardesa"><Trans i18nKey="description.part161">Stjuardesa</Trans></option>
+          <option value="biletar"><Trans i18nKey="description.part162">Biletar</Trans></option>
+          <option value="vozac"><Trans i18nKey="description.part163">Vozač</Trans></option>
         </select>
         </div>
         <div className="column-1"><button onClick={back} type="submit" class="buttonSwitch">   {/* bila je klasa dugme */}
           {" "}
-          Sačuvaj
+          <Trans i18nKey="description.part129">Sačuvaj  </Trans>
         </button></div>
       </div>
       </div>

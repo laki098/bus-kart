@@ -322,7 +322,6 @@
   font-size: medium;
   color: darkblue;
 }
-<<<<<<< HEAD
 
 .info-stanica-1{
   width: 7.6rem;
@@ -334,12 +333,20 @@
   font-weight: bold;
   text-align: center;   /* left   */
  /* flex-wrap: wrap;    */
-=======
-.input-search {
-  height: 3rem;
-  width: 12rem;
-  text-align: start;
-  font-size: larger;
-  margin-bottom: 1rem;
->>>>>>> 26f1ffd7996653b7ccd1ea789f6d5eecb2bba2e1
+}
+
+.input-search{
+  width: 15rem;
+  height: auto;
+  padding: 0.5rem;
+  justify-content: center;
+  margin: auto;
+  border: 1px solid darkblue;
+  border-radius: 0.2rem;
+  text-align: center;
+}
+.input-search::placeholder{
+  text-align: center;
+  padding-left: -4rem;
+  color: blue;
 }
