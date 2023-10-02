@@ -148,6 +148,13 @@ i18n
             part168: 'Select driver',
             part169: 'Price',
             part170: 'Mark',
+            part171: 'License plate',
+            part172: 'Are you sure that you want to delete this item?',
+
+            part173: 'Stations',
+            part174: 'Buses',
+            part175: 'Users',
+            part176: 'Lines',
 
 
           }
@@ -287,6 +294,14 @@ i18n
             part168: 'Izaberite vozača',
             part169: 'Cena',
             part170: 'Oznaka',
+            part171: 'Tablice',
+            part172: 'Da li ste sigurni da želite da obrišete ovu stavku?',
+
+            part173: 'Stanice',
+            part174: 'Autobusi',
+            part175: 'Korisnici',
+            part176: 'Linije',
+
 
           }
         }
