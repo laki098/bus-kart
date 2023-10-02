@@ -82,7 +82,7 @@ const BusForm = ({ mode, idAutobusa }) => {
       <div className="red-1"></div>
 
       <div >                                    {/*  className="main"   */}
-        <div className="tabela-stanica">        {/* sub-main */}
+        <div className="tabela-stanica prosiri-tabela-stanica">        {/* sub-main */}
           <form onSubmit={submitHandler}>
             <div>
             

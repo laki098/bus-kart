@@ -224,7 +224,20 @@
   }
 
   .korisniciTabela{
-    width: max-content;
+    width: 95rem;         /* bilo je max-content    */
+    background-color: #fbfafa;
+  }
+  .korisniciTabelaPromena{
+    width: 98rem;         /* bilo je max-content    */
+    background-color: #fbfafa;
+  }
+
+
+  .email-polje{
+    width: 20rem;
+    word-wrap: break-word;
+   /* overflow: auto;   */
+    line-height: 1;   /* razmak izmedju linija    */
   }
 
   .jezici{

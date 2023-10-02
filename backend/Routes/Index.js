@@ -601,7 +601,6 @@ router.post("/filterLinija", async (req, res) => {
 
       let najmanjiBroj;
       let brojSlobodnihMesta1 = [];
-      console.log(linija.pocetnaStanica.naziv);
       if (nazivPocetneStanice == linija.pocetnaStanica.naziv) {
         brojSlobodnihMesta1.push(linija.brojSlobodnihMesta);
       }

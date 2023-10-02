@@ -62,7 +62,7 @@ const Navbar = () => {
           )}
         </li>
         {userPars.rola === "stjuardesa" ? (
-          <li>
+          <li className="item-li">
             <Link to="/stjuardesa">
               <i className="fa-solid fa-users nav-links"></i>Cekiranje
             </Link>
@@ -83,9 +83,9 @@ const Navbar = () => {
         </li>
         <div className="login-style ">
           {Object.keys(userPars).length === 0 ? (
-            <li>
+            <li className="item-li" >
               <Link to="/login.component">
-                <i className="fa fa-user-circle nav-links"></i>Prijavi se
+                <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi se
               </Link>
             </li>
           ) : (
@@ -95,7 +95,7 @@ const Navbar = () => {
                 onClick={() => setMenuOpen(!menuOpen)}
               ></div>
               <ul className={menuOpen ? "open" : ""}>
-                <li onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
+                <li className="item-lii " onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
                   {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
                   <div>
                     <i className="fa fa-user-circle nav-links"></i>
@@ -103,19 +103,19 @@ const Navbar = () => {
                   </div>
                   {menuOpen && (
                     <ul className="dropdown">
-                      <li className="dropdown-item">
+                      <li className="dropdown-item item-li">
                         <Link to="/korisnik">
                           <i className="fa-regular fa-user nav-links "></i>
-                          <li>Profil</li>
+                          <li className="item-li">Profil</li>
                         </Link>
                       </li>
-                      <li className="dropdown-item">
+                      <li className="dropdown-item item-li">
                         <Link to="/karta">
                           <i className="fa-solid fa-ticket nav-links "></i>
-                          <li>Karte</li>
+                          <li className="item-li">Karte</li>
                         </Link>
                       </li>
-                      <li className="dropdown-item">
+                      <li className="dropdown-item item-li">
                         {/* stavi sta hoces samo ne LINK!!! umesto ovog diva ispod*/}
                         <div className="test-dropdown">
                           <p onClick={clickBaitLogout}>

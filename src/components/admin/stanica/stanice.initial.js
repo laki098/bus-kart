@@ -70,20 +70,28 @@ const StaniceInitial = () => {
 
       <div className="red-1"></div>
       <div className="stampajLiniju"> 
-      <div className="tabela-stanica spisak-stanica">
+      <div className="tabela-stanica spisak-stanica"> 
         <ul>
           {stanice.map((stanica) => {
             return (
               <li key={stanica.id}>
                 <div className="jedan-red-stanica">
-                 <div className="polje-stanica">Naziv </div> <div className="info-stanica"> {stanica.naziv}</div> 
-                 <div className="polje-stanica">Adresa</div><div className="info-stanica">{stanica.adresa}</div>
-                 <div className="polje-stanica"><Link to={`${stanica.id}/stanice.edit`}>
-                    <button className="buttonSwitch">Izmeni</button>
+                  <div className="polje-stanica">
+                  <Trans i18nKey="description.part142">Naziv </Trans>
+                  </div> 
+                  <div className="info-stanica sirina-info-stanica"> {stanica.naziv}</div> 
+                  <div className="polje-stanica">
+                  <Trans i18nKey="description.part111">Adresa   </Trans>
+                  </div>
+                  <div className="info-stanica sirina-info-stanica">{stanica.adresa}</div>
+                  <div className="polje-stanica"><Link to={`${stanica.id}/stanice.edit`}>
+                    <button className="buttonSwitch">
+                    <Trans i18nKey="description.part145">Izmeni</Trans>
+                    </button>
                   </Link> </div>
-                 <div className="polje-stanica"> 
+                  <div className="polje-stanica"> 
                     <button onClick={() => brisanjeStanice(stanica.id)} className="buttonSwitch">
-                    Obriši
+                    <Trans i18nKey="description.part134">Obriši</Trans>
                   </button></div>
                 </div>
               </li>
@@ -96,18 +104,24 @@ const StaniceInitial = () => {
       
       <div className="red-1"></div>
       <Link to={"/stanice.add"}>
-        <button className="buttonSwitch">Dodaj novu stanicu</button>
+        <button className="buttonSwitch">
+        <Trans i18nKey="description.part152">Dodaj novu stanicu</Trans>
+        </button>
       </Link>
+
+      <div className="red-1"></div>
 
       <div className="confirm-dialog-container">
         {isConfirmationOpen && (
           <div className="confirm-dialog-box">
-            <p>Da li ste sigurni da želite da obrišete ovu liniju?</p>
+            <div className="red-05">
+            <Trans i18nKey="description.part155">Da li ste sigurni da želite da obrišete ovu liniju?  </Trans>
+            </div>
             <button className="confirm-dialog-yes" onClick={confirmDelete}>
-              Da
+            <Trans i18nKey="description.part153">Da</Trans>
             </button>
             <button className="confirm-dialog-no" onClick={cancelDelete}>
-              Ne
+            <Trans i18nKey="description.part154">Ne</Trans>
             </button>
           </div>
         )}

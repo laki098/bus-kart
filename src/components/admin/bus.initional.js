@@ -73,14 +73,25 @@ const BusInitional = () => {
             {busevi.map((bus) => {
               return (
                 <li key={bus.idAutobusa}>                
-                   <div class="column centar"> Oznaka: </div><div className="column podaci centar" style={{width: "4rem"}}> {bus.oznakaBusa}</div>
-                   <div class="column centar" style={{textAlign: "center"}}> Tablice:</div><div className="column podaci centar"> {bus.tablice} </div>
-                   <div class="column centar"> Broj mesta:{" "} </div><div className="column podaci centar"> {bus.brojSedista} </div>
+                   <div class="column centar"> 
+                   <Trans i18nKey="description.part170">Oznaka  </Trans>
+                   </div>
+                   <div className="column podaci centar sirina-info-4" > {bus.oznakaBusa}</div>  {/*  style={{width: "4rem"}}  */}
+                   <div class="column centar" style={{textAlign: "center"}}> 
+                   <Trans i18nKey="description.part171">Tablice </Trans>
+                   </div>
+                   <div className="column podaci centar"> {bus.tablice} </div>
+                   <div class="column centar"> 
+                   <Trans i18nKey="description.part36">Broj mesta </Trans>
+                   {" "} </div>
+                   <div className="column podaci centar"> {bus.brojSedista} </div>
                    <div class="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
-                      <button className="buttonSwitch">Izmeni</button>  {/* dugme  */}
+                      <button className="buttonSwitch">
+                      <Trans i18nKey="description.part145">Izmeni </Trans>
+                      </button>  {/* dugme  */}
                     </Link></div>
                    <div class="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
-                      Obriši
+                   <Trans i18nKey="description.part134">Obriši  </Trans>
                     </button></div>
                 </li> 
               );
@@ -92,19 +103,23 @@ const BusInitional = () => {
       <div className="red-1"></div>
       <div>
       <Link to={"/bus.add"}>
-        <button className="buttonSwitch">Dodajte novi autobus</button>  {/* dugme veceDugme */}
+        <button className="buttonSwitch">
+        <Trans i18nKey="description.part127">Dodajte autobus  </Trans>
+        </button>  {/* dugme veceDugme */}
       </Link>
       </div>
 
-      <div className="confirm-dialog-container">
+      <div className="confirm-dialog-container red-1">
         {isConfirmationOpen && (
           <div className="confirm-dialog-box">
-            <p>Da li ste sigurni da želite da obrišete ovu stavku?</p>
+            <div className="red-05" >
+            <Trans i18nKey="description.part172">Da li ste sigurni da želite da obrišete ovu stavku?  </Trans>
+            </div>
             <button className="confirm-dialog-yes" onClick={confirmDelete}>
-              Da
+            <Trans i18nKey="description.part153"> Da </Trans>
             </button>
             <button className="confirm-dialog-no" onClick={cancelDelete}>
-              Ne
+            <Trans i18nKey="description.part154"> Ne  </Trans>
             </button>
           </div>
         )}
