@@ -1,12 +1,17 @@
 import "./seat.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import volan from "./../../images/volan.png";
 import ulaz from "./../../images/ulaz.jpg";
 import wc from "./../../images/wc.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 
-const MB4 = () => {
+const MB4 = ({ onReservation })=> {
   const [selectedSeats, setSelectedSeats] = useState([]);
+
+  useEffect(() => {
+    // Kada se sedišta promene, pozovi funkciju onReservation sa selektovanim sedištima
+    onReservation(selectedSeats);
+  }, [selectedSeats, onReservation]);
 
   const handleSeatClick = (seatNumber) => {
     if (selectedSeats.includes(seatNumber)) {
@@ -15,6 +20,7 @@ const MB4 = () => {
       setSelectedSeats([...selectedSeats, seatNumber]);
     }
   };
+
 
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
@@ -31,6 +37,8 @@ const MB4 = () => {
   const isSeat1Selected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
   };
+
+  console.log(selectedSeats)
 
   return (
     <div className="container-seat">
@@ -359,7 +367,7 @@ const MB4 = () => {
       </div>
       {selectedSeats.length > 0 && (
         <div>
-          <p>Korisnik je izabrao sedišta: {selectedSeats.join(", ")}</p>
+          <p>Korisnik je izabrao sedišta:  {selectedSeats.join(", ")}</p>
         </div>
       )}
 
