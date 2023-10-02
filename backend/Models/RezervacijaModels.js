@@ -43,6 +43,10 @@ const Rezervacija = db.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    oznakaSedista: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     tableName: "rezervacija",
