@@ -46,7 +46,8 @@ const RezervacijaComponent = ({ id, state }) => {
         state.id,
         state.pocetnaStanicaId,
         state.krajnjaStanicaId,
-        userPars.idKorisnika
+        userPars.idKorisnika,
+        parseInt(selectedSeats),
       )
       .then((response) => {
         console.log(response);

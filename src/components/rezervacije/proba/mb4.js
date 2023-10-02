@@ -7,6 +7,7 @@ import stepenice from "./../../images/stepenice.jpg";
 
 const MB4 = ({ onReservation })=> {
   const [selectedSeats, setSelectedSeats] = useState([]);
+  
 
   useEffect(() => {
     // Kada se sedišta promene, pozovi funkciju onReservation sa selektovanim sedištima
@@ -14,13 +15,16 @@ const MB4 = ({ onReservation })=> {
   }, [selectedSeats, onReservation]);
 
   const handleSeatClick = (seatNumber) => {
+    const updatedSelectedSeats = [...selectedSeats];
     if (selectedSeats.includes(seatNumber)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+      updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
     } else {
-      setSelectedSeats([...selectedSeats, seatNumber]);
+      updatedSelectedSeats.push(seatNumber);
     }
+    setSelectedSeats(updatedSelectedSeats);
+    // Pozivamo onReservation sa novim selektovanim sedištima
+    onReservation(updatedSelectedSeats);
   };
-
 
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
