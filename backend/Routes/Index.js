@@ -207,10 +207,10 @@ router.put("/:id", async (req, res) => {
     // Sada ažurirajte medjustanice
     for (let i = 0; i < medjustanice.length; i++) {
       const medjustanicaData = medjustanice[i];
-      const stanicaNaziv = medjustanicaData.stanica;
+      const stanicaIdFr = medjustanicaData.stanicaId;
 
       const stanicaId1 = await Stanica.findOne({
-        where: { naziv: stanicaNaziv },
+        where: { id: stanicaIdFr },
       });
 
       console.log(stanicaId1.id);
@@ -266,6 +266,7 @@ router.post("/rezervacija", async (req, res) => {
       krajnjaStanicaId,
       korisnikId,
       osvezenje,
+      oznakaSedista,
     } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
@@ -443,12 +444,13 @@ router.post("/rezervacija", async (req, res) => {
       krajnjaStanicaId,
       korisnikId,
       osvezenje,
+      oznakaSedista,
     });
 
     console.log(linijaId);
     const qrCodeText = `
-    oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
-    LinijaId: ${linijaId + 1}
+    oznakaRezervacije: ${kreiranjeRezervacije.id}
+    LinijaId: ${linijaId}
     Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
       kreiranjeRezervacije.id + 1
     }

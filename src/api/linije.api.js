@@ -70,17 +70,19 @@ const LinijeApi = () => {
     id,
     pocetnaStanica,
     medjustanice,
-      krajnjaStanica,
-      vremePolaska,
-      vremeDolaska,
-      datumPolaska,
-      datumDolaska,
-      oznakaBusa,
-      vozac,
-      stjuardesa
-      
+    krajnjaStanica,
+    vremePolaska,
+    vremeDolaska,
+    datumPolaska,
+    datumDolaska,
+    oznakaBusa,
+    pocetakRute,
+    krajRute,
+    vozac,
+    stjuardesa
   ) => {
-    console.log(pocetnaStanica,
+    console.log(
+      pocetnaStanica,
       medjustanice,
       krajnjaStanica,
       vremePolaska,
@@ -88,8 +90,11 @@ const LinijeApi = () => {
       datumPolaska,
       datumDolaska,
       oznakaBusa,
+      pocetakRute,
+      krajRute,
       vozac,
-      stjuardesa)
+      stjuardesa
+    );
     return await axios.put(`http://localhost:5000/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
       pocetnaStanica,
@@ -100,8 +105,10 @@ const LinijeApi = () => {
       datumPolaska,
       datumDolaska,
       oznakaBusa,
+      pocetakRute,
+      krajRute,
       vozac,
-      stjuardesa
+      stjuardesa,
     });
   };
 
