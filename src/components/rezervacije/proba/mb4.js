@@ -6,14 +6,16 @@ import wc from "./../../images/wc.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 
 const MB4 = ({ onReservation })=> {
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  
+  const savedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+  const [selectedSeats, setSelectedSeats] = useState(savedSeats);
 
   useEffect(() => {
-    // Kada se sedišta promene, pozovi funkciju onReservation sa selektovanim sedištima
-    onReservation(selectedSeats);
-  }, [selectedSeats, onReservation]);
+    // Čuvanje selektovanih sedišta u localStorage svaki put kad se ažurira selectedSeats
+    localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+  }, [selectedSeats]);
 
+
+  
   const handleSeatClick = (seatNumber) => {
     const updatedSelectedSeats = [...selectedSeats];
     if (selectedSeats.includes(seatNumber)) {
@@ -27,6 +29,12 @@ const MB4 = ({ onReservation })=> {
   };
 
   const isSeatSelected = (seatNumber) => {
+    return selectedSeats.includes(seatNumber);
+  };
+  const isSeatReserved = (seatNumber) => {
+    // Implementirajte funkciju za proveru da li je sedište rezervisano
+    // Vratite true ako je sedište rezervisano, inače false
+    // Primer implementacije ako imate niz reservedSeats:
     return selectedSeats.includes(seatNumber);
   };
 
@@ -51,25 +59,25 @@ const MB4 = ({ onReservation })=> {
       </div>
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(1) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(1) || isSeatReserved(1) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(1)}
         >
           <span className="seat-number2">{isSeatSelected(1) ? "" : "1"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(2) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(2) || isSeatReserved(2) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(2)}
         >
           <span className="seat-number2">{isSeatSelected(2) ? "" : "2"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(3) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(3) || isSeatReserved(3) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(3)}
         >
           <span className="seat-number2">{isSeatSelected(3) ? "" : "3"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(4) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(4) || isSeatReserved(4) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(4)}
         >
           <span className="seat-number2">{isSeatSelected(4) ? "" : "4"}</span>
@@ -77,52 +85,52 @@ const MB4 = ({ onReservation })=> {
       </div>
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(5) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(5) || isSeatReserved(5) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(5)}
         >
           <span className="seat-number2">{isSeatSelected(5) ? "" : "5"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(6) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(6) || isSeatReserved(6) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(6)}
         >
           <span className="seat-number2">{isSeatSelected(6) ? "" : "6"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(7) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(7) || isSeatReserved(7) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(7)}
         >
           <span className="seat-number2">{isSeatSelected(7) ? "" : "7"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(8) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(8) || isSeatReserved(8) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(8)}
         >
-          <span className="seat-number2">{isSeatSelected(8) ? "✓" : "8"}</span>
+          <span className="seat-number2">{isSeatSelected(8) ? "" : "8"}</span>
         </div>
       </div>
 
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(9) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(9) || isSeatReserved(9) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(9)}
         >
           <span className="seat-number2">{isSeatSelected(9) ? "" : "9"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(10) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(10) || isSeatReserved(10) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(10)}
         >
           <span className="seat-number">{isSeatSelected(10) ? "" : "10"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(11) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(11) || isSeatReserved(11) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(11)}
         >
           <span className="seat-number">{isSeatSelected(11) ? "" : "11"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(12) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(12) || isSeatReserved(12) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(12)}
         >
           <span className="seat-number">{isSeatSelected(12) ? "" : "12"}</span>
@@ -131,13 +139,13 @@ const MB4 = ({ onReservation })=> {
 
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(13) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(13) || isSeatReserved(13) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(13)}
         >
           <span className="seat-number">{isSeatSelected(13) ? "" : "13"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(14) ? "selected" : ""}`}
+          className={`seat ${isSeatSelected(14) || isSeatReserved(14) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(14)}
         >
           <span className="seat-number">{isSeatSelected(14) ? "" : "14"}</span>

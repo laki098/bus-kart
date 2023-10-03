@@ -215,3 +215,7 @@ p.text span {
 .left1 {
   left: -3px;
 }
+.disabled {
+  background-color: red; /* Promeni boju pozadine na sivu za onemogućena sedišta */
+  pointer-events: none; /* Onemogući interakciju sa sedištima */
+}
