@@ -6,14 +6,7 @@ import wc from "./../../images/wc.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 
 const MB4 = ({ onReservation })=> {
-  const savedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
-  const [selectedSeats, setSelectedSeats] = useState(savedSeats);
-
-  useEffect(() => {
-    // Čuvanje selektovanih sedišta u localStorage svaki put kad se ažurira selectedSeats
-    localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
-  }, [selectedSeats]);
-
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   
   const handleSeatClick = (seatNumber) => {

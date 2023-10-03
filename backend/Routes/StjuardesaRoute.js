@@ -10,7 +10,6 @@ router.get("/:idKorisnika", async (req, res) => {
     const idStjuardese = req.params.idKorisnika;
 
     const oznakaBusa = req.params.oznakaBusa;
-    console.log();
     const izvlacenjeLinija = await Linija.findAll({
       where: {
         stjuardesa: idStjuardese,
@@ -34,4 +33,5 @@ router.get("/:idKorisnika", async (req, res) => {
     res.status(500).json({ message: "bag" });
   }
 });
+
 export default router;
