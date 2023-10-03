@@ -252,7 +252,7 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/rezervacija", async (req, res) => {
-  try {
+  try { console.log(req.body)
     const {
       brojMesta,
       polaznaStanicaR,

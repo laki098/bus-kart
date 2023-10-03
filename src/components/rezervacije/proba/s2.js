@@ -300,6 +300,7 @@ const S2 = () => {
           onClick={() => handleSeat1Click(55)}
         ><span className="seat-number1">{isSeatSelected(55) ? "" : "55"}</span></div>
       </div>
+      
       {selectedSeats.length > 0 && (
         <div>
           <p>Korisnik je izabrao sedište broj: {selectedSeats.join(", ")}</p>
