@@ -97,7 +97,7 @@ class QRScanner extends Component {
           onError={this.handleError}
           onScan={this.handleScan}
         />
-        <p>QR Kod rezultat: {textResult}</p>
+        <p className="labela-stanica">QR Kod rezultat: {textResult}</p>
       </div>
     );
   }

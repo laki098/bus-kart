@@ -26,7 +26,7 @@ const LoginComponent = () => {
     <div className="pozadina">
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}

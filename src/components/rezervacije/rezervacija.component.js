@@ -232,6 +232,23 @@ const RezervacijaComponent = ({ id, state }) => {
   // prevodjenje
   return (
     <>
+      <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
       <div className="red-1"></div>
       <form onSubmit={confirmeHandler} className="forma">
         {" "}
@@ -246,7 +263,9 @@ const RezervacijaComponent = ({ id, state }) => {
               <div className="red-1"></div>
               <div className="deoForme">
                 <div className="levo">
-                  <label className="labela-velika">Putnik</label>
+                  <label className="labela-velika">
+                  <Trans i18nKey="description.part178">Putnik </Trans>
+                  </label>
                 </div>
                 <div className="red-1"></div>
                 <div
@@ -254,8 +273,8 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.name ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Ime i prezime
+                  <label className="labela levo-23" >
+                  <Trans i18nKey="description.part1">Ime i prezime</Trans>
                   </label>
                   <input
                     className="test"
@@ -277,7 +296,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.email ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
+                  <label className="labela levo-23" >
                     Email
                   </label>
                   <input
@@ -297,7 +316,7 @@ const RezervacijaComponent = ({ id, state }) => {
                   }`}
                 >
                   <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Telefon
+                  <Trans i18nKey="description.part17">Telefon</Trans>
                   </label>
                   <input
                     type="text"
@@ -317,7 +336,9 @@ const RezervacijaComponent = ({ id, state }) => {
               <div className="red-1"></div>
               <div className="deoForme">
                 <div className="levo">
-                  <label className="labela-velika">Linija</label>
+                  <label className="labela-velika">
+                  <Trans i18nKey="description.part176">Linija </Trans>
+                  </label>
                 </div>
                 <div className="red-1"></div>
 
@@ -326,8 +347,8 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.mesto ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Mesto polaska
+                  <label className="labela levo-23" >
+                  <Trans i18nKey="description.part3">Mesto polaska</Trans>
                   </label>
                   <input
                     defaultValue={state.pocetnaStanica}
@@ -345,8 +366,8 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.mesto ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Mesto dolaska
+                  <label className="labela levo-23" >
+                  <Trans i18nKey="description.part5">Mesto dolaska</Trans>
                   </label>
                   <input
                     defaultValue={state.krajnjaStanica}
@@ -364,8 +385,8 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.datum ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Datum polaska
+                  <label className="labela levo-23" >
+                  <Trans i18nKey="description.part7">Datum polaska</Trans>
                   </label>
 
                   <input
@@ -385,7 +406,7 @@ const RezervacijaComponent = ({ id, state }) => {
                   }`}
                 >
                   <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Datum dolaska
+                  <Trans i18nKey="description.part9">Datum dolaska</Trans>
                   </label>
 
                   <input
@@ -405,7 +426,7 @@ const RezervacijaComponent = ({ id, state }) => {
                   }`}
                 >
                   <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Vreme polaska
+                  <Trans i18nKey="description.part11">Vreme polaska</Trans>
                   </label>
                   <input
                     defaultValue={state.vremePolaska}
@@ -422,8 +443,8 @@ const RezervacijaComponent = ({ id, state }) => {
                     formInputsValid.vreme ? "" : classes.invalid
                   }`}
                 >
-                  <label className="labela" style={{ paddingLeft: "2.3rem" }}>
-                    Vreme dolaska
+                  <label className="labela levo-23" >
+                  <Trans i18nKey="description.part13">Vreme dolaska</Trans>
                   </label>
                   <input
                     defaultValue={state.vremeDolaska}
@@ -438,7 +459,9 @@ const RezervacijaComponent = ({ id, state }) => {
               <div className="red-1"></div>
               <div className="deoForme sirina-3polja">
                 <div className="levo">
-                  <label className="labela-velika">Dodaci</label>
+                  <label className="labela-velika">
+                  <Trans i18nKey="description.part177">Dodaci </Trans>
+                  </label>
                 </div>
                 <div className="red-1"></div>
 
@@ -454,10 +477,10 @@ const RezervacijaComponent = ({ id, state }) => {
                     }}
                   >
                     <option disabled={false} value="">
-                      Izaberite osveženje
+                    <Trans i18nKey="description.part19">Izaberite osveženje </Trans>
                     </option>
-                    <option>Kafa</option>
-                    <option>Čaj</option>
+                    <option><Trans i18nKey="description.part21">Kafa</Trans></option>
+                    <option><Trans i18nKey="description.part22">Čaj</Trans></option>
                     <option>Nes</option>
                   </select>
                 </div>
@@ -493,14 +516,14 @@ const RezervacijaComponent = ({ id, state }) => {
                     }}
                   >
                     <option disabled={false} value="">
-                      Izaberite kartu
+                    <Trans i18nKey="description.part23">Izaberite kartu</Trans>
                     </option>
-                    <option>Jednosmerna</option>
-                    <option>Povratna</option>
-                    <option>Besplatna</option>
-                    <option>Studentska</option>
-                    <option>Vikend</option>
-                    <option>Nedeljna</option>
+                    <option><Trans i18nKey="description.part24">Jednosmerna</Trans></option>
+                    <option><Trans i18nKey="description.part25">Povratna</Trans></option>
+                    <option><Trans i18nKey="description.part26">Besplatna</Trans></option>
+                    <option><Trans i18nKey="description.part27">Studentska</Trans></option>
+                    <option><Trans i18nKey="description.part28">Vikend</Trans></option>
+                    <option><Trans i18nKey="description.part29">Nedeljna</Trans></option>
                   </select>
                   {/* studentska karta   */}
                   <div>
@@ -566,23 +589,30 @@ const RezervacijaComponent = ({ id, state }) => {
               <div className="red-1"></div>
               <div className="deoForme sirina-3polja">
                 <div className="levo">
-                  <label className="labela-velika ">Izabrali ste</label>
+                  <label className="labela-velika ">
+                  <Trans i18nKey="description.part179">Izabrali ste </Trans>
+                  </label>
                 </div>
                 <div className="red-1"></div>
                 <div className="vasIzbor">
                   <p>
-                    Cena karte:{" "}
+                  <Trans i18nKey="description.part60">Cena karte:</Trans>{" "}
                     <strong>
                       {" "}
-                      {calculateTicketPrice(selectedValue)} dinara
+                      {calculateTicketPrice(selectedValue)} 
+                      &nbsp; <Trans i18nKey="description.part61">  dinara</Trans>
                     </strong>
                   </p>
                   <p>
-                    Broj izabranih sedišta:
+                  <Trans i18nKey="description.part62">Broj izabranih sedišta:</Trans>
                     <strong> {brojIzabranihSedista}</strong>
                   </p>
                   <p>
-                    Ukupna cena: <strong> {ukupnaCena} dinara</strong>
+                  <Trans i18nKey="description.part63">Ukupna cena:</Trans>
+                   <strong> {ukupnaCena} 
+                   &nbsp;
+                  <Trans i18nKey="description.part61">  dinara</Trans>
+                   </strong>
                   </p>
                 </div>
               </div>
@@ -590,9 +620,36 @@ const RezervacijaComponent = ({ id, state }) => {
             </div>
 
             <div className="flex-clan">
-              {" "}
+              
+              
               {/* desni deo sa prikazom autobusa */}
               <div className="autobus">
+              <div className="centar">
+                
+                {/*------------------------------ Dopisala SN po Vulicevom predlogu ovaj blok */}
+                <div >
+                  <div >      
+                    <label className="labela mestoPozovi">
+                    <Trans i18nKey="description.part3">Mesto polaska</Trans>
+                    </label>   
+                    <strong>
+                    {state.pocetnaStanica}   
+                    </strong>                          
+                                     
+                  </div>
+                  <div>   
+                    <label className="labela mestoPozovi" >
+                    <Trans i18nKey="description.part5">Mesto dolaska</Trans>
+                    </label> 
+
+                    <strong>
+                    {state.krajnjaStanica}   
+                    </strong>
+                    
+                  </div>
+                </div>  
+                {/*------------------------------  */}
+              </div>
                 <div>
                   {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
                     (linija.oznakaBusa != "MAN" ? "" : <MAN />) ||
@@ -604,12 +661,16 @@ const RezervacijaComponent = ({ id, state }) => {
                     (linija.oznakaBusa != "S1" ? "" : <S1 />)}
                 </div>
                 <p className="plavo">
+                <Trans i18nKey="description.part183">
                   U slučaju izmene tipa autobusa, moguće je doći do promene
-                  rezervacije sedišta, o čemu ćete biti obavešteni.{" "}
+                  rezervacije sedišta, o čemu ćete biti obavešteni.
+                </Trans>{" "}
                 </p>
               </div>
               <div className="red-1"></div>
-              <label>Broj sedišta</label> &emsp;
+              <label>
+              <Trans i18nKey="description.part180">Broj sedišta </Trans>
+              </label> &emsp;
               <input
                 type="number"
                 value={brojSedista}
@@ -622,11 +683,15 @@ const RezervacijaComponent = ({ id, state }) => {
           <div className="red-1"></div>
           <div>
             <button className={classes.submit} onClick={novaRezervacija}>
-              <p className="slovaDugme">Rezerviši kartu </p>
+              <p className="slovaDugme">
+              <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
+              </p>
             </button>
             &emsp;
             <button className={classes.submit}>
-              <p className="slovaDugme">&ensp; &nbsp; Kupi kartu &ensp;</p>
+              <p className="slovaDugme">&ensp; &nbsp; 
+              <Trans i18nKey="description.part182">Kupi kartu </Trans>&ensp;
+              </p>
             </button>
           </div>
           <div className="red-1"></div>

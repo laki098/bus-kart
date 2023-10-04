@@ -36,7 +36,7 @@ const StjuardesaLinija = ({}) => {
   return (
     <>
       <div>
-        <>RADIIII</>
+        <div className="labela-stanica labela-stanica-naslov red-1">Čekiranje stjuardese</div>
       </div>
       {showQRScanner && (
         <QRScanner
@@ -46,7 +46,7 @@ const StjuardesaLinija = ({}) => {
       )}
 
       {!showQRScanner && (
-        <button onClick={handleQRScan}>Skeniraj QR kod</button>
+        <button onClick={handleQRScan} className="buttonSwitch"><p className="admin-dugme-slova">Skeniraj QR kod </p></button>
       )}
     </>
   );
