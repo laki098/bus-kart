@@ -296,7 +296,7 @@ i18n
             part163: 'Vozač',
 
             part164: 'Edituj liniju',
-            part165: 'USputna stanica',
+            part165: 'Usputna stanica',
             part166: 'Izaberite autobus',
             part167: 'Izaberite stjuardesu',
             part168: 'Izaberite vozača',
