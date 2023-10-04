@@ -667,33 +667,80 @@ const LineForm = ({ mode, id, state }) => {
                     })}
                   </select>
                   <div className="red-1"></div>
+                  {/* ------------------------------    */}
                   <div>
-                  <div className="red-05"><label className="labela-stanica">
-                  <Trans i18nKey="description.part168">Izaberite vozača </Trans>
-                  </label>
-                  &emsp;&ensp;&emsp;
-                  <select value={adminLogic.selectedVozac} name="vozac" onChange={adminLogic.changeHandler}>
-                    {vozac.map((korisnik) => (
-                      <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
-                      {korisnik.ime} {korisnik.prezime}
-                   </option>
-                     ))}
-                  </select></div>
+                    <div className="pisi-levo">
+                    <div className="red-05">
+                      <label className="labela-stanica">
+                      <Trans i18nKey="description.part168">Izaberite vozača </Trans>
+                      </label>
+                    </div>
+                    <div className="red-05">
+                      <label className="labela-stanica">
+                      <Trans i18nKey="description.part167">Izaberite stjuardesu </Trans>
+                      </label>
+                    </div>
+                    </div>
+
+                    <div className="pisi-desno">
+                      <div className="red-05">
+                        <select value={adminLogic.selectedVozac} name="vozac" onChange={adminLogic.changeHandler}>
+                        {vozac.map((korisnik) => (
+                          <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
+                          {korisnik.ime} {korisnik.prezime}
+                        </option>
+                        ))}
+                        </select>
+                      </div>
+
+                      <div className="red-05">
+                        <select value={adminLogic.selectedStjuardesa} name="stjuardesa" onChange={adminLogic.changeHandler}>
+                          {stjuardesa.map((korisnik) => (
+                          <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
+                          {korisnik.ime} {korisnik.prezime}
+                          </option>
+                          ))}
+                        </select>
+                      </div>
+
+                    </div>
                   </div>
+
+                  {/* ------------------------------   
                   <div>
-                  <div className="red-05"><label className="labela-stanica">
-                  <Trans i18nKey="description.part167">Izaberite stjuardesu </Trans>
-                  </label>
-                  &emsp;
-                  <select value={adminLogic.selectedStjuardesa} name="stjuardesa" onChange={adminLogic.changeHandler}>
-                    {stjuardesa.map((korisnik) => (
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                    <Trans i18nKey="description.part168">Izaberite vozača </Trans>
+                    </label>
+                    &emsp;&ensp;&emsp;
+
+                    <select value={adminLogic.selectedVozac} name="vozac" onChange={adminLogic.changeHandler}>
+                      {vozac.map((korisnik) => (
                         <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
-                         {korisnik.ime} {korisnik.prezime}
-                   </option>
-                     ))}
+                        {korisnik.ime} {korisnik.prezime}
+                    </option>
+                    ))}
                     </select>
                   </div>
                   </div>
+
+                  <div>
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                    <Trans i18nKey="description.part167">Izaberite stjuardesu </Trans>
+                    </label>
+                    &emsp;
+                    <select value={adminLogic.selectedStjuardesa} name="stjuardesa" onChange={adminLogic.changeHandler}>
+                      {stjuardesa.map((korisnik) => (
+                        <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
+                         {korisnik.ime} {korisnik.prezime}
+                    </option>
+                    ))}
+                    </select>
+                  </div>
+                  </div>
+
+                     -------------------------------       */}
                   <div className="red-1">
                   <button type="submit" className="buttonSwitch">   {/* bilo je button    */}
                     {mode === "add" ? (

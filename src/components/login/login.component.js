@@ -26,7 +26,7 @@ const LoginComponent = () => {
     <div className="pozadina">
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
@@ -43,7 +43,7 @@ const LoginComponent = () => {
       </header>
 
       <div className="main">
-        <div className="sub-main" style={{ width: "20rem" }}>
+        <div className="sub-main sirina-20" >
           <div>
             <div className="imgs">
               <div className="container-image">

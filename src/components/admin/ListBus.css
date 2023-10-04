@@ -207,7 +207,7 @@
   .rowTabela{
     overflow-x: auto;     /* ovim dajem responsive tabeli */
   /* width: max-content;        */
-   width: 50rem;               /* ubacila sam ovu dim da bi se stampao samo 1 bus u vrsti      */
+   width: 43rem;               /* bilo je 50rem---> ubacila sam ovu dim da bi se stampao samo 1 bus u vrsti      */
    border: 1px solid darkblue;       
    border-collapse: collapse;
    border-bottom: 1px solid #afa2fa;
@@ -232,6 +232,10 @@
     background-color: #fbfafa;
   }
 
+  .korisniciStjuardesa{
+    width: 66rem;
+  }
+
 
   .email-polje{
     width: 20rem;
@@ -240,6 +244,7 @@
     line-height: 1;   /* razmak izmedju linija    */
   }
 
+    /* kod header dela koji se primenjuje kod prevoda */
   .jezici{
     text-align: right;
     margin-right: 3rem;

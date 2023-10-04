@@ -64,7 +64,7 @@ const Navbar = () => {
         {userPars.rola === "stjuardesa" ? (
           <li className="item-li">
             <Link to="/stjuardesa">
-              <i className="fa-solid fa-users nav-links"></i>Cekiranje
+              <i className="fa-solid fa-users nav-links"></i>Čekiranje
             </Link>
           </li>
         ) : (
