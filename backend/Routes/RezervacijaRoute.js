@@ -4,9 +4,10 @@ import Rezervacija from "../Models/RezervacijaModels.js";
 const router = express.Router();
 
 //? dobijanje rezervacija po bas odredjenoj liniji
-router.get("/linija", async (req, res) => {
+router.get("/linija/:linijaId", async (req, res) => {
   try {
-    const linijaId = req.body.linijaId;
+    const linijaId = req.params.linijaId;
+    console.log(req.params.linijaId)
 
     const rezervacije = await Rezervacija.findAll({
       where: { linijaId },

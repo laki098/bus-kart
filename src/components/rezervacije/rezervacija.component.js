@@ -609,7 +609,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     (linija.oznakaBusa != "MK91" ? "" : <MK91 />) ||
                     (linija.oznakaBusa != "MB1" ? "" : <MB1 />) ||
                     (linija.oznakaBusa != "MB3" ? "" : <MB3 />) ||
-                    (linija.oznakaBusa != "MB4" ? "" :  <MB4 onReservation={handleReservation} />) ||
+                    (linija.oznakaBusa != "MB4" ? "" :  <MB4 onReservation={handleReservation} linijaId = {state.id} />) ||
                     (linija.oznakaBusa != "VL" ? "" : <VL />) ||
                     (linija.oznakaBusa != "S1" ? "" : <S1 />)}
                 </div>

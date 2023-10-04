@@ -217,5 +217,5 @@ p.text span {
 }
 .disabled {
   background-color: red; /* Promeni boju pozadine na sivu za onemogućena sedišta */
-  /* pointer-events: none; /* Onemogući interakciju sa sedištima */ 
+   /* pointer-events: none; /* Onemogući interakciju sa sedištima */ 
 }

@@ -280,8 +280,8 @@ const S2 = () => {
       </div>
       <div className="row">
         <div
-          className={`seat1 ${isSeat1Selected(51) ? "selected" : ""}`}
-          onClick={() => handleSeat1Click(51)}
+          className={`seat1 ${isSeatSelected(51) ? "selected" : ""}`}
+          onClick={() => handleSeatClick(51)}
         ><span className="seat-number1">{isSeatSelected(51) ? "" : "51"}</span></div>
         <div
           className={`seat1 ${isSeat1Selected(52) ? "selected" : ""}`}
