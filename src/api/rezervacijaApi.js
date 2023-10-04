@@ -12,7 +12,8 @@ const RezervacijaApi = () => {
     linijaId,
     pocetnaStanicaId,
     krajnjaStanicaId,
-    korisnikId
+    korisnikId,
+    oznakaSedista
   ) => {
     console.log(
       brojMesta,
@@ -39,6 +40,7 @@ const RezervacijaApi = () => {
       pocetnaStanicaId,
       krajnjaStanicaId,
       korisnikId,
+      oznakaSedista
     });
   };
   return { rezervacija };

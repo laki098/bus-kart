@@ -19,7 +19,7 @@ const AdminLogic = () => {
       medjustanice: novaMedjustanica,
     });
   };
-  console.log(data)
+
   const dodajMedjustanicu = () => {
     setData({
       ...data,
@@ -67,10 +67,9 @@ const AdminLogic = () => {
         console.log(error);
       });
   };
-  
+
   const editLinije = (data, id) => {
     LinijeApi()
-    
       .editLinije(
         id,
         data.pocetnaStanica,
@@ -81,9 +80,10 @@ const AdminLogic = () => {
         data.datumPolaska,
         data.datumDolaska,
         data.oznakaBusa,
+        data.pocetakRute,
+        data.krajRute,
         data.vozac,
         data.stjuardesa
-        
       )
       .then((response) => {
         console.log(response);

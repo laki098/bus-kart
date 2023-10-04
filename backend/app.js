@@ -9,6 +9,7 @@ import GradRouter from "./Routes/GradRoute.js";
 import LinijaRoute from "./Routes/Index.js";
 import StanicaRouter from "./Routes/StanicaRoute.js";
 import StjuardesaRouter from "./Routes/StjuardesaRoute.js";
+import RezervacijaRoute from "./Routes/RezervacijaRoute.js";
 
 //? Kreiranje server
 export const app = express();
@@ -31,6 +32,7 @@ app.use("/gradovi", GradRouter);
 app.use("/linija", LinijaRoute);
 app.use("/stanica", StanicaRouter);
 app.use("/stjuardesa", StjuardesaRouter);
+app.use("/rezervacije", RezervacijaRoute);
 
 const PORT = process.env.port || 5000;
 app.listen(PORT, () => {
