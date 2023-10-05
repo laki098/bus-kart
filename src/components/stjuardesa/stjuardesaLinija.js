@@ -7,11 +7,22 @@ import AdminLogic from "../admin/admin.logic";
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [autobus, setAutobus] = useState([]);
-  const [linijaState, setLinijaState] = useState(null); // Dodajte stanje za liniju
+  const [linija, setLinija] = useState([]);
+
+  //? dobavljanje liniju koja se koristi direktno ovde
+  const dobavljanjeLinije = async () => {
+    const response = await fetch(
+      `http://localhost:5000/stjuardesa/filterLinija/${linijaId}`
+    );
+    const data = await response.json();
+    setLinija(data.izvlacenjeLinija);
+  };
 
   //?primanje podataka sa stjuardese za baš odredjenu liniju
   const location = useLocation();
   const state = location.state;
+
+  const linijaId = location.state.linija.id;
 
   //? dobavljanje autobusa koji je postavljen na toj liniji. kako bi prikayali sedista stjuardesi
   const dobavljanjeBrojaMesta = async () => {
@@ -21,11 +32,10 @@ const StjuardesaLinija = ({}) => {
     const data = await response.json();
     setAutobus(data.autobusi);
   };
-
   useEffect(() => {
+    dobavljanjeLinije();
     dobavljanjeBrojaMesta();
-    setLinijaState(location.state);
-  }, [location.state]);
+  }, []);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
@@ -102,26 +112,26 @@ const StjuardesaLinija = ({}) => {
     );
     const updatedAutobusData = await updatedData.json();
     setAutobus(updatedAutobusData.autobusi);
-    console.log(updatedAutobusData.autobusi);
   };
 
+  console.log(linija?.pocetnaStanica?.naziv);
   return (
     <>
       <div>
         <h2>Informacije o Ruti</h2>
         <div>
-          <p>Polazna Tačka: {state.linija.pocetnaStanica.naziv}</p>
+          <p>Polazna Tačka: {linija?.pocetnaStanica?.naziv}</p>
           <button onClick={() => handleDatumAkcije("pocetak")}>Krenuli</button>
         </div>
 
         <div>
-          <p>Krajnja Tačka: {state.linija.krajnjaStanica.naziv}</p>
+          <p>Krajnja Tačka: {linija?.krajnjaStanica?.naziv}</p>
           <button onClick={() => handleDatumAkcije("kraj")}>Stigli</button>
         </div>
 
         <p>Međustanice:</p>
         <ul>
-          {state.linija.Stanicas.map((stanica) => (
+          {linija?.Stanicas?.map((stanica) => (
             <div key={stanica.id}>
               <li>{stanica.naziv}</li>
               <button
