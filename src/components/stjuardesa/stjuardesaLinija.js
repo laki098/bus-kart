@@ -20,6 +20,7 @@ const StjuardesaLinija = ({}) => {
     );
     const data = await response.json();
     setLinija(data.izvlacenjeLinija);
+    console.log("-------------------------------------------11-1-1-1");
   };
 
   //?primanje podataka sa stjuardese za baš odredjenu liniju
@@ -36,6 +37,8 @@ const StjuardesaLinija = ({}) => {
     const data = await response.json();
     setAutobus(data.autobusi);
   };
+
+  console.log(linija?.Stanicas);
   useEffect(() => {
     dobavljanjeLinije();
     dobavljanjeBrojaMesta();
@@ -118,7 +121,6 @@ const StjuardesaLinija = ({}) => {
     setAutobus(updatedAutobusData.autobusi);
   };
 
-  console.log(linija?.pocetnaStanica?.naziv);
   return (
     <>
       <div>
@@ -127,23 +129,6 @@ const StjuardesaLinija = ({}) => {
           <p>Polazna Tačka: {linija?.pocetnaStanica?.naziv}</p>
           <button onClick={() => handleDatumAkcije("pocetak")}>Krenuli</button>
         </div>
-
-        <header>
-          <div className="jezici">
-            {Object.keys(lngs).map((lng) => (
-              <button
-                key={lng}
-                style={{
-                  fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-                }}
-                type="submit"
-                onClick={() => i18n.changeLanguage(lng)}
-              >
-                {lngs[lng].nativeName}
-              </button>
-            ))}
-          </div>
-        </header>
 
         <div className="labela-stanica labela-stanica-naslov red-1">
           Informacije o ruti
@@ -182,8 +167,8 @@ const StjuardesaLinija = ({}) => {
             </div>
             {/*
         <div>
-          <p>Krajnja Tačka: {state.linija.krajnjaStanica.naziv}</p>
-          <button onClick={() => handleDatumAkcije("kraj")} className="buttonSwitch">Stigli</button>
+          <p>Krajnja Tačka: {linija?.krajnjaStanica?.naziv}</p>
+          <button onClick={() => handleDatumAkcije("kraj")}>Stigli</button>
         </div>
         */}
             <div className="admin-jedan-red ">
@@ -197,9 +182,11 @@ const StjuardesaLinija = ({}) => {
                       </li>
                       <div className="polje-stanica sirina-info-8">
                         <button
-                          onClick={() =>
-                            updateMedjustanicaVremePolaska(stanica.id)
-                          }
+                          onClick={() => {
+                            updateMedjustanicaVremePolaska(stanica.id);
+                            dobavljanjeLinije();
+                            console.log("-------------------");
+                          }}
                           className="buttonSwitch"
                         >
                           Krenuli
