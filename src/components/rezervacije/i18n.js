@@ -154,7 +154,15 @@ i18n
             part173: 'Stations',
             part174: 'Buses',
             part175: 'Users',
-            part176: 'Lines',
+            part176: 'Line',
+
+            part177: 'Appendices',
+            part178: 'Passenger',
+            part179: 'You chose',
+            part180: 'Number of seats',
+            part181: 'Make a reservation ticket',
+            part182: 'Bay ticket',
+            part183: 'In case of changing the bus type, it is possible to change the seat reservation, which you will be informed about.',
 
 
           }
@@ -288,7 +296,7 @@ i18n
             part163: 'Vozač',
 
             part164: 'Edituj liniju',
-            part165: 'USputna stanica',
+            part165: 'Usputna stanica',
             part166: 'Izaberite autobus',
             part167: 'Izaberite stjuardesu',
             part168: 'Izaberite vozača',
@@ -300,7 +308,16 @@ i18n
             part173: 'Stanice',
             part174: 'Autobusi',
             part175: 'Korisnici',
-            part176: 'Linije',
+            part176: 'Linija',
+
+            part177: 'Dodaci',
+            part178: 'Putnik',
+            part179: 'Izabrali ste',
+            part180: 'Broj sedišta',
+            part181: 'Rezerviši kartu',
+            part182: 'Kupi kartu',
+            part183: 'U slučaju izmene tipa autobusa, moguće je doći do promene rezervacije sedišta, o čemu ćete biti obavešteni.',
+
 
 
           }

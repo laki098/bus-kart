@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MB3 from './mb3';
 import MB4 from './mb4';
-import MK91 from './mk91';
+import VH from './vh';
 import MB1 from './mb1';
 import VL from './vl';
 import MAN from './man';
@@ -26,8 +26,8 @@ function SeatSabiranje() {
         uvezenaKomponenta = MB3;
       } else if (izabranFajl === 'MB4') {
         uvezenaKomponenta = MB4;
-      } else if (izabranFajl === 'MK91') {
-        uvezenaKomponenta = MK91;
+      } else if (izabranFajl === 'VH') {
+        uvezenaKomponenta = VH;
       }  else if (izabranFajl === 'MB1') {
       uvezenaKomponenta = MB1;
     } else if (izabranFajl === 'VL') {
@@ -60,7 +60,7 @@ function SeatSabiranje() {
         <option value="MAN">MAN</option>
         <option value="S1">S1</option>
         <option value="S2">S2</option>
-        <option value="MK91">MK91</option>
+        <option value="VH">VH</option>
       </select>
       <button onClick={handleSelect}>Izaberi bus</button>
 

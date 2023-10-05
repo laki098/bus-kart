@@ -13,6 +13,13 @@
    /* font-weight: ;    */
     align-items: center;
   }
+  .labela-stanica-naslov{
+    font-weight: bold;
+    font-size: larger;
+  }
+  .veliki-naslov{
+    font-size: 25px ;
+  }
   .red-05{
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
@@ -118,15 +125,33 @@
   .sirina-info-10{
     width: 10rem;
   }
+  .sirina-info-8{
+    width: 8rem;
+  }
   .sirina-info-7{
     width: 7rem;
   }
   .sirina-info-6{
     width: 6rem;
   }
+  .sirina-info-5{
+    width: 5rem;
+  }
   .sirina-info-4{
     width: 4rem;
   }
+  .sirina-info-3{
+    width: 3rem;
+  }
+  .sirina-20{
+    width: 20rem;
+  }
+  .sirina-39{
+    width: 39rem;
+  }
+
+
+  
 
   .ograda-medjustanice{
     border:1px solid darkgreen;
@@ -143,4 +168,17 @@
     width: max-content;
     padding: 0.5rem;
     margin: 0.5rem;
+  }
+
+  .pisi-levo{
+    justify-content: left;
+    text-align: left;
+    width: 10rem;  
+  }
+  .pisi-desno{
+    justify-content: left;
+    text-align: left;
+    width: 10rem;
+    margin-left: 11rem;
+    margin-top: -3.5rem;
   }

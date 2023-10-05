@@ -30,15 +30,21 @@ const Stjuardesa = () => {
 
   return (
     <>
-      <div>
-        <h1>Aktivne linije:</h1>
+      <div className="labela-stanica labela-stanica-naslov red-1">Aktivne linije</div>
+      <div className="stampajLiniju">
+      <div class="rowTabela korisniciStjuardesa">
         <ul>
           {stjuardesaLinija.map((linija) => (
             <div key={linija.id}>
-              <li>{linija.pocetnaStanica.naziv}</li>
-              <li>{linija.krajnjaStanica.naziv}</li>
-              <li>{linija.vremePolaska}</li>
-              <li>{linija.datumPolaska}</li>
+              <li class="column centar">Početna stanica</li>
+              <li className="column podaci centar">{linija.pocetnaStanica.naziv}</li>
+              <li class="column centar">Krajnja stanica</li>
+              <li className="column podaci centar">{linija.krajnjaStanica.naziv}</li>
+              <li class="column centar">Vreme polaska</li>
+              <li className="column podaci centar">{linija.vremePolaska}</li>
+              <li class="column centar">Datum polaska</li>
+              <li className="column podaci centar">{linija.datumPolaska}</li>
+              <li class="column centar">
               <Link
                 to={{
                   pathname: `${linija.id}/stjuardesaLinija`,
@@ -47,11 +53,13 @@ const Stjuardesa = () => {
                   },
                 }}
               >
-                <button>Cekiranje</button>
+                <button className="buttonSwitch"><p >Čekiranje </p></button>
               </Link>
+              </li>
             </div>
           ))}
         </ul>
+      </div>
       </div>
     </>
   );

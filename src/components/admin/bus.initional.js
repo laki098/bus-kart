@@ -77,20 +77,20 @@ const BusInitional = () => {
                    <Trans i18nKey="description.part170">Oznaka  </Trans>
                    </div>
                    <div className="column podaci centar sirina-info-4" > {bus.oznakaBusa}</div>  {/*  style={{width: "4rem"}}  */}
-                   <div class="column centar" style={{textAlign: "center"}}> 
+                   <div className="column centar" style={{textAlign: "center"}}> 
                    <Trans i18nKey="description.part171">Tablice </Trans>
                    </div>
                    <div className="column podaci centar"> {bus.tablice} </div>
-                   <div class="column centar"> 
+                   <div className="column centar"> 
                    <Trans i18nKey="description.part36">Broj mesta </Trans>
                    {" "} </div>
                    <div className="column podaci centar"> {bus.brojSedista} </div>
-                   <div class="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
+                   <div className="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
                       <button className="buttonSwitch">
                       <Trans i18nKey="description.part145">Izmeni </Trans>
                       </button>  {/* dugme  */}
                     </Link></div>
-                   <div class="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
+                   <div className="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
                    <Trans i18nKey="description.part134">Obriši  </Trans>
                     </button></div>
                 </li> 
