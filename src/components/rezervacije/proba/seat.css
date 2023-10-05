@@ -200,14 +200,14 @@ p.text span {
   left: 23px;
   height: 46px;
   width: 74px;
-  top: 206px;
+  top: 214px
 }
 .sto2 {
   position: absolute;
   left: 114px;
   height: 46px;
   width: 74px;
-  top: 206px;
+  top: 214px
 }
 .left {
   left: -15px;
@@ -218,4 +218,8 @@ p.text span {
 .disabled {
   background-color: red; /* Promeni boju pozadine na sivu za onemogućena sedišta */
    /* pointer-events: none; /* Onemogući interakciju sa sedištima */ 
+}
+.dugma-spratovi {
+  justify-content: end;
+  display: grid;
 }
