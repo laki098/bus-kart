@@ -53,41 +53,45 @@ const Karta = () => {
   return (
     <>
       <div>
-        <div>Moje karte</div>
+        <div className="labela-stanica labela-stanica-naslov veliki-naslov red-1">Moje karte</div>
         <div>
           <div>
-            <h2>Aktivne karte</h2>
-            <div className="Grupa">
+            <div className="labela-stanica labela-stanica-naslov red-1">Aktivne karte</div>
+            <div className="stampajLiniju">   {/* Grupa   */}
+              <div className="rowTabela rowTabela-dorada" >
               {sveKarte
                 .filter((karte) => karte.cekiranje === false)
                 .map((karte) => (
                   <div key={karte.id}>
-                    <li className="lista-stavka">
-                      <p className="naslov">Broj rezervisanih mesta</p>
-                      <div className="vrednost">{karte.brojMesta}</div>
-                      <p className="naslov">Polazna stanica</p>
-                      <div className="vrednost">{karte.pocetna}</div>
-                      <p className="naslov">Dolazna stanica</p>
-                      <div className="vrednost">{karte.krajnja}</div>
-                      <p className="naslov">Datum Polaska</p>
-                      <div className="vrednost">{karte.datumP}</div>
-                      <p className="naslov">Datum dolaska</p>
-                      <div className="vrednost">{karte.datumD}</div>
-                      <p className="naslov">Vreme Polaska</p>
-                      <div className="vrednost">{karte.vremeP}</div>
-                      <p className="naslov">Vreme dolaska</p>
-                      <div className="vrednost">{karte.vremeD}</div>
-                      <p className="naslov">Cekiran</p>
-                      <div className="vrednost">
+                    
+                    <li className="admin-jedan-red">    {/* lista-stavka">    */}
+                      <div className="polje-stanica sirina-info-7 email-polje">Broj rezervisanih mesta</div>    {/* className="naslov"  */}
+                      <div className="info-stanica sirina-info-3">{karte.brojMesta}</div>           {/* className="vrednost"  */}
+                      <div className="polje-stanica sirina-info-5 email-polje">Polazna stanica</div>
+                      <div className="info-stanica sirina-info-10">{karte.pocetna}</div>
+                      <div className="polje-stanica sirina-info-5 email-polje">Dolazna stanica</div>
+                      <div className="info-stanica sirina-info-10">{karte.krajnja}</div>
+                      <div className="polje-stanica sirina-info-5 email-polje">Datum polaska</div>
+                      <div className="info-stanica sirina-info-7">{karte.datumP}</div>
+                      <div className="polje-stanica sirina-info-5 email-polje">Datum dolaska</div>
+                      <div className="info-stanica sirina-info-7">{karte.datumD}</div>
+                      <div className="polje-stanica sirina-info-5 email-polje">Vreme polaska</div>
+                      <div className="info-stanica">{karte.vremeP}</div>
+                      <div className="polje-stanica sirina-info-5 email-polje">Vreme dolaska</div>
+                      <div className="info-stanica">{karte.vremeD}</div>
+                      <div className="polje-stanica">Čekiran</div>
+                      <div className="info-stanica sirina-info-3">
                         {karte.cekiranje === false ? <p>NE</p> : <>da</>}
                       </div>
                     </li>
+                    
                   </div>
                 ))}
+              </div>  
             </div>
           </div>
           <div>
-            <h2>Neaktivne karte</h2>
+            <div className="labela-stanica labela-stanica-naslov red-1">Neaktivne karte</div>
             <div className="Grupa">
               {sveKarte
                 .filter((karte) => karte.cekiranje === true)
@@ -100,15 +104,15 @@ const Karta = () => {
                       <div className="vrednost">{karte.pocetna}</div>
                       <p className="naslov">Dolazna stanica</p>
                       <div className="vrednost">{karte.krajnja}</div>
-                      <p className="naslov">Datum Polaska</p>
+                      <p className="naslov">Datum polaska</p>
                       <div className="vrednost">{karte.datumP}</div>
                       <p className="naslov">Datum dolaska</p>
                       <div className="vrednost">{karte.datumD}</div>
-                      <p className="naslov">Vreme Polaska</p>
+                      <p className="naslov">Vreme polaska</p>
                       <div className="vrednost">{karte.vremeP}</div>
                       <p className="naslov">Vreme dolaska</p>
                       <div className="vrednost">{karte.vremeD}</div>
-                      <p className="naslov">Cekiran</p>
+                      <p className="naslov">Čekiran</p>
                       <div className="vrednost">
                         {karte.cekiranje === false ? <p>NE</p> : <>DA</>}
                       </div>

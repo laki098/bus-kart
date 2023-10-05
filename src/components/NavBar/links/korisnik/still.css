@@ -1,22 +1,29 @@
 /* Stil za naslove */
 .naslov {
-  font-weight: bold;
-  color: #333; /* Boja teksta za naslove */
+ /* font-weight:bold ;    /*  bold    */
+  color: #3b3a3a; /* Boja teksta za naslove bila #333 */
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
 }
 
 /* Stil za vrednosti */
 .vrednost {
-  font-size: 16px;
-  color: #666; /* Boja teksta za vrednosti */
+  font-size: large;   /* 16px   */
+  color: darkblue; /* Boja teksta za vrednosti bila  #666*/
   margin-top: 5px;
+  font-weight: bold;
 }
 /* Stil za li elemente */
 .lista-stavka {
   list-style-type: none;
-  margin-bottom: 20px;
+ /* margin-bottom: 20px;    */
   padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  margin: 10px;
+  border: 1px solid darkblue;
+  background-color: rgb(236, 246, 251);
+ /* border: 1px solid #ddd;   
+  background-color: #f9f9f9;  */
 }
 
 /* Stil za parne li elemente */
@@ -26,4 +33,5 @@
 
 .Grupa {
   display: inline-flex;
+  flex-wrap: wrap;    /* dodala   */
 }

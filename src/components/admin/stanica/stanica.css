@@ -17,6 +17,9 @@
     font-weight: bold;
     font-size: larger;
   }
+  .veliki-naslov{
+    font-size: 25px ;
+  }
   .red-05{
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
@@ -131,8 +134,14 @@
   .sirina-info-6{
     width: 6rem;
   }
+  .sirina-info-5{
+    width: 5rem;
+  }
   .sirina-info-4{
     width: 4rem;
+  }
+  .sirina-info-3{
+    width: 3rem;
   }
   .sirina-20{
     width: 20rem;
@@ -140,6 +149,8 @@
   .sirina-39{
     width: 39rem;
   }
+
+
   
 
   .ograda-medjustanice{

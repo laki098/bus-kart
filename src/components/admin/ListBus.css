@@ -223,6 +223,11 @@
     align-items: center;        */
   }
 
+  .rowTabela-dorada{
+    width: 95rem;
+    background-color: #e8e6f2;
+  }
+
   .korisniciTabela{
     width: 95rem;         /* bilo je max-content    */
     background-color: #fbfafa;
@@ -242,6 +247,7 @@
     word-wrap: break-word;
    /* overflow: auto;   */
     line-height: 1;   /* razmak izmedju linija    */
+    text-align: justify;
   }
 
     /* kod header dela koji se primenjuje kod prevoda */
