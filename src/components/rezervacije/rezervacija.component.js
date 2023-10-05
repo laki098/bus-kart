@@ -9,7 +9,7 @@ import "../rezervacije/index1.css";
 import "./sedista/sedista.css";
 import S2 from "../rezervacije/proba/s2";
 import MAN from "./proba/man";
-import MK91 from "./proba/mk91";
+import VH from "./proba/vh";
 import MB1 from "./proba/mb1";
 import MB3 from "./proba/mb3";
 import MB4 from "./proba/mb4";
@@ -47,6 +47,7 @@ const RezervacijaComponent = ({ id, state }) => {
         state.pocetnaStanicaId,
         state.krajnjaStanicaId,
         userPars.idKorisnika,
+        osvezenje,
         parseInt(selectedSeats),
       )
       .then((response) => {
@@ -83,6 +84,11 @@ const RezervacijaComponent = ({ id, state }) => {
   }, []);
 
   const [osvezenje, setOsvezenje] = useState("");
+  console.log(osvezenje)
+
+  const handleOsvezenje = (e) => {
+    setOsvezenje(e.target.value)
+  };
 
 
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -93,13 +99,19 @@ const RezervacijaComponent = ({ id, state }) => {
     console.log("Selektovana sedišta:", selectedSeats);
   };
 
-  /* const [isOpen, setIsOpen] = useState(false);
+  const clickRezervisi = () => {
+    novaRezervacija();
+  
+    // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi način)
+    alert("Vaša karta je uspešno rezervisana!");
+  
+    // Sačekaj nekoliko sekundi pre nego što se preusmeriš na početnu stranicu
+    setTimeout(() => {
+      window.location.href = "/pocetna";
+    }, 1500); // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 3 sekunde)
+  };
 
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  } */
 
-  // const [studentska, setStudentska]=useState(false);
   const [pom, setPom] = useState(false);
   const [pom1, setPom1] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
@@ -108,28 +120,11 @@ const RezervacijaComponent = ({ id, state }) => {
     setSelectedValue(event.target.value);
   };
 
-  const [selectedKarta, setSelectedKarta] = useState("");
-  const handleKarte = (event) => {
-    setSelectedKarta(event.target.value);
-  };
-
-  const [rezervacije, setRezervacije] = useState(Array(57).fill(false));
-  const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
+ 
   const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
   const [ukupnaCena, setUkupnaCena] = useState(0);
 
-  function handleClick(index) {
-    const noviNiz = [...rezervacije];
-    noviNiz[index] = !noviNiz[index];
-
-    setRezervacije(noviNiz);
-    const noviNizRezervacija = noviNiz
-      .map((rezervisano, index) => (rezervisano ? index + 1 : null))
-      .filter((sediste) => sediste !== null);
-    setTrenutnaRezervacija(noviNizRezervacija);
-    const brojIzabranih = noviNiz.filter((s) => s).length;
-    setBrojIzabranihSedista(brojIzabranih);
-  } // kod za pravljenje divova za autobus
+ 
 
   useEffect(() => {
     const novaCena = calculateTicketPrice(selectedValue) * brojIzabranihSedista;
@@ -167,18 +162,7 @@ const RezervacijaComponent = ({ id, state }) => {
     return price;
   };
 
-  const code = {
-    mestoPolaska: linija.mestoPolaska,
-    mestoDolaska: linija.mestoDolaska,
-    datumPolaska: linija.datumPolaska,
-    datumDolaska: linija.datumDolaska,
-    vremePolaska: linija.vremePolaska,
-    vremeDolaska: linija.vremeDolaska,
-    osvezenje: osvezenje,
-    radio: selectedValue,
-    sediste: trenutnaRezervacija,
-    cena: ukupnaCena,
-  }; // vrednosti koje se prosledjuju u QRcodu da bi se on generisao
+
 
   let [formInputsValid, setFormInputsValid] = useState({
     name: true,
@@ -482,9 +466,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     name="osvezenje"
                     value={osvezenje}
                     required
-                    onChange={(event) => {
-                      setOsvezenje(event.target.value);
-                    }}
+                    onChange={handleOsvezenje }
                   >
                     <option disabled={false} value="">
                     <Trans i18nKey="description.part19">Izaberite osveženje </Trans>
@@ -661,14 +643,14 @@ const RezervacijaComponent = ({ id, state }) => {
                 {/*------------------------------  */}
               </div>
                 <div>
-                  {(linija.oznakaBusa != "S2" ? "" : <S2 />) ||
-                    (linija.oznakaBusa != "MAN" ? "" : <MAN />) ||
-                    (linija.oznakaBusa != "MK91" ? "" : <MK91 />) ||
-                    (linija.oznakaBusa != "MB1" ? "" : <MB1 />) ||
-                    (linija.oznakaBusa != "MB3" ? "" : <MB3 />) ||
+                  {(linija.oznakaBusa != "S2" ? "" : <S2 onReservation={handleReservation} linijaId = {state.id} />) ||
+                    (linija.oznakaBusa != "MAN" ? "" : <MAN onReservation={handleReservation} linijaId = {state.id} />) ||
+                    (linija.oznakaBusa != "VH" ? "" : <VH onReservation={handleReservation} linijaId = {state.id} />) ||
+                    (linija.oznakaBusa != "MB1" ? "" : <MB1 onReservation={handleReservation} linijaId = {state.id} />) ||
+                    (linija.oznakaBusa != "MB3" ? "" : <MB3 onReservation={handleReservation} linijaId = {state.id} />) ||
                     (linija.oznakaBusa != "MB4" ? "" :  <MB4 onReservation={handleReservation} linijaId = {state.id} />) ||
-                    (linija.oznakaBusa != "VL" ? "" : <VL />) ||
-                    (linija.oznakaBusa != "S1" ? "" : <S1 />)}
+                    (linija.oznakaBusa != "VL" ? "" : <VL onReservation={handleReservation} linijaId = {state.id} />) ||
+                    (linija.oznakaBusa != "S1" ? "" : <S1 onReservation={handleReservation} linijaId = {state.id} />)}
                 </div>
                 <p className="plavo">
                 <Trans i18nKey="description.part183">
@@ -692,7 +674,7 @@ const RezervacijaComponent = ({ id, state }) => {
           </div>
           <div className="red-1"></div>
           <div>
-            <button className={classes.submit} onClick={novaRezervacija}>
+            <button className={classes.submit} onClick={clickRezervisi}>
               <p className="slovaDugme">
               <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
               </p>
@@ -708,8 +690,6 @@ const RezervacijaComponent = ({ id, state }) => {
         </div>
       </form>
       <div className="red-1"></div>
-      <Qrcode code={code} />
-      {/* <BusSedista /> */}
     </>
   );
 };

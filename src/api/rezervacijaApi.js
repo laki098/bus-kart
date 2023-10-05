@@ -13,6 +13,7 @@ const RezervacijaApi = () => {
     pocetnaStanicaId,
     krajnjaStanicaId,
     korisnikId,
+    osvezenje,
     oznakaSedista
   ) => {
     console.log(
@@ -26,7 +27,8 @@ const RezervacijaApi = () => {
       linijaId,
       pocetnaStanicaId,
       krajnjaStanicaId,
-      korisnikId
+      korisnikId,
+      osvezenje,
     );
     return await axios.post("http://localhost:5000/linija/rezervacija", {
       brojMesta,
@@ -40,6 +42,7 @@ const RezervacijaApi = () => {
       pocetnaStanicaId,
       krajnjaStanicaId,
       korisnikId,
+      osvezenje,
       oznakaSedista
     });
   };
