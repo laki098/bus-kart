@@ -156,7 +156,7 @@ const StjuardesaLinija = ({}) => {
         </div>
 
         <div className="labela-stanica labela-stanica-naslov red-1">
-          Informacije o ruti
+        <Trans i18nKey="description.part194"> Informacije o ruti    </Trans>
         </div>
         <div className="stampajLiniju">
           <div className="rowTabela sirina-39">
@@ -173,7 +173,7 @@ const StjuardesaLinija = ({}) => {
                   onClick={() => handleDatumAkcije("pocetak")}
                   className="buttonSwitch"
                 >
-                  Krenuli
+                  <Trans i18nKey="description.part193"> Krenuli   </Trans>
                 </button>
               </div>
             </div>
@@ -190,7 +190,7 @@ const StjuardesaLinija = ({}) => {
                   onClick={() => handleDatumAkcije("kraj")}
                   className="buttonSwitch"
                 >
-                  Stigli
+                  <Trans i18nKey="description.part192"> Stigli    </Trans>
                 </button>
               </div>
             </div>
@@ -220,12 +220,14 @@ const StjuardesaLinija = ({}) => {
                           }}
                           className="buttonSwitch"
                         >
-                          Krenuli
+                          <Trans i18nKey="description.part193"> Krenuli   </Trans>
                         </button>
                       </div>
                       <div className="polje-stanica sirina-info-8">
                         <button className="buttonSwitch">
-                          &nbsp; Stigli &nbsp;
+                          &nbsp; 
+                          <Trans i18nKey="description.part192">Stigli   </Trans>
+                          &nbsp;
                         </button>
                       </div>
                     </div>

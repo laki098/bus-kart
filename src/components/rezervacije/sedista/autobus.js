@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./sedista.css";
 
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../../NavBar/links/i18n";
+import "../i18n";
+
 function Autobus({ autobusData }) {
   const [rezervacije, setRezervacije] = useState([]);
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
@@ -48,15 +52,19 @@ function Autobus({ autobusData }) {
             {index + 1}
           </div>
         ))}
-        <div>
-          Trenutno rezervisano mesto broj:{" "}
+        <div className="labela-stanica">
+        <Trans i18nKey="description.part195">  Trenutno rezervisano mesto broj:    </Trans>
+        {" "}
+          &ensp;
           {trenutnaRezervacija.length > 0
             ? trenutnaRezervacija.join(", ")
             : "Nijedno"}
         </div>
+        &emsp;&ensp;&emsp;&ensp;
         <button
           onClick={handlePotvrdi}
           disabled={trenutnaRezervacija.length === 0}
+          className="buttonSwitch"
         >
           Potvrdi izbor
         </button>

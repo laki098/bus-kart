@@ -173,6 +173,11 @@ i18n
             part190: 'Checking in',
             part191: 'Intermediate stations',
 
+            part192: 'Arrived',
+            part193: 'Started',
+            part194: 'Route information',
+            part195: 'Currently reserved seat',
+
           }
         }
       },
@@ -334,6 +339,11 @@ i18n
             part189: 'Aktivne linije',
             part190: 'Čekiranje',
             part191: 'Međustanice',
+
+            part192: 'Stigli',
+            part193: 'Krenuli',
+            part194: 'Informacije o ruti',
+            part195: 'Trenutno rezervisano mesto',
 
 
           }
