@@ -121,8 +121,33 @@ const StjuardesaLinija = ({}) => {
     setAutobus(updatedAutobusData.autobusi);
   };
 
+  //prevodjenje start
+  const lngs = {
+      en: { nativeName: "Engleski" },
+      de: { nativeName: "Srpski" },
+    };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
   return (
     <>
+      <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
       <div>
         <h2>Informacije o Ruti</h2>
         <div>
@@ -136,7 +161,9 @@ const StjuardesaLinija = ({}) => {
         <div className="stampajLiniju">
           <div className="rowTabela sirina-39">
             <div className="admin-jedan-red ">
-              <div className="polje-stanica sirina-info-10">Polazna tačka</div>
+              <div className="polje-stanica sirina-info-10">
+              <Trans i18nKey="description.part31">  Početna stanica   </Trans>
+              </div>   {/*  Polazna tačka    */}
               <div className="info-stanica sirina-info-10">
                 {" "}
                 {state.linija.pocetnaStanica.naziv}
@@ -151,7 +178,9 @@ const StjuardesaLinija = ({}) => {
               </div>
             </div>
             <div className="admin-jedan-red ">
-              <div className="polje-stanica sirina-info-10">Krajnja tačka</div>
+              <div className="polje-stanica sirina-info-10">
+              <Trans i18nKey="description.part32">  Dolazna stanica   </Trans>  {/*  Krajnja tačka   */}
+              </div>
               <div className="info-stanica sirina-info-10">
                 {" "}
                 {state.linija.krajnjaStanica.naziv}
@@ -172,7 +201,9 @@ const StjuardesaLinija = ({}) => {
         </div>
         */}
             <div className="admin-jedan-red ">
-              <div className="polje-stanica sirina-info-10">Međustanice</div>
+              <div className="polje-stanica sirina-info-10">
+              <Trans i18nKey="description.part191">  Međustanice   </Trans>
+              </div>
               <ul>
                 {linija?.Stanicas?.map((stanica) => (
                   <div key={stanica.id}>

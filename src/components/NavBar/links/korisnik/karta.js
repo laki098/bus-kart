@@ -83,10 +83,14 @@ const Karta = () => {
       </header>
 
 
-        <div className="labela-stanica labela-stanica-naslov veliki-naslov red-1">Moje karte</div>
+        <div className="labela-stanica labela-stanica-naslov veliki-naslov red-1">
+        <Trans i18nKey="description.part186">Moje karte </Trans>
+        </div>
         <div>
           <div>
-            <div className="labela-stanica labela-stanica-naslov red-1">Aktivne karte</div>
+            <div className="labela-stanica labela-stanica-naslov red-1">
+            <Trans i18nKey="description.part187"> Aktivne karte </Trans>
+            </div>
             <div className="stampajLiniju">   {/* Grupa   */}
               <div className="rowTabela rowTabela-dorada-1" >
               {sveKarte
@@ -142,7 +146,9 @@ const Karta = () => {
             </div>
           </div>
           <div>
-            <div className="labela-stanica labela-stanica-naslov red-1">Neaktivne karte</div>
+            <div className="labela-stanica labela-stanica-naslov red-1">
+            <Trans i18nKey="description.part188">Neaktivne karte  </Trans>
+            </div>
             <div className="Grupa">
               {sveKarte
                 .filter((karte) => karte.cekiranje === true)
@@ -150,38 +156,40 @@ const Karta = () => {
                   <div key={karte.id}>
                     <li className="lista-stavka">
                       <div className="naslov">
-                        Broj rezervisanih mesta
+                      <Trans i18nKey="description.part184"> Broj rezervisanih mesta   </Trans>
                       </div>
                       <div className="vrednost">{karte.brojMesta}</div>
                       <div className="naslov">
-                        Polazna stanica
+                      <Trans i18nKey="description.part31"> Polazna stanica   </Trans>
                       </div>
                       <div className="vrednost">{karte.pocetna}</div>
                       <div className="naslov">
-                        Dolazna stanica
+                      <Trans i18nKey="description.part32"> Dolazna stanica   </Trans>
                       </div>
                       <div className="vrednost">{karte.krajnja}</div>
                       <div className="naslov">
-                        Datum polaska
+                      <Trans i18nKey="description.part33"> Datum polaska   </Trans>
                       </div>
                       <div className="vrednost">{karte.datumP}</div>
                       <div className="naslov">
-                        Datum dolaska
+                      <Trans i18nKey="description.part9">  Datum dolaska  </Trans>
                       </div>
                       <div className="vrednost">{karte.datumD}</div>
                       <div className="naslov">
-                        Vreme polaska
+                      <Trans i18nKey="description.part11"> Vreme polaska   </Trans>
                       </div>
                       <div className="vrednost">{karte.vremeP}</div>
                       <div className="naslov">
-                        Vreme dolaska
+                      <Trans i18nKey="description.part13"> Vreme dolaska   </Trans>
                       </div>
                       <div className="vrednost">{karte.vremeD}</div>
                       <div className="naslov">
-                        Čekiran
+                      <Trans i18nKey="description.part185"> Čekiran   </Trans>
                       </div>
                       <div className="vrednost">
-                        {karte.cekiranje === false ? <p>NE</p> : <>DA</>}
+                        {karte.cekiranje === false ? 
+                        <>  <Trans i18nKey="description.part154"> NE    </Trans>  </> : 
+                        <>  <Trans i18nKey="description.part153"> DA    </Trans> </>}
                       </div>
                     </li>
                   </div>

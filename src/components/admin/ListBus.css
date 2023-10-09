@@ -37,6 +37,11 @@
     font-weight: bold;
     background-color: rgb(228, 233, 244);
 }
+.podaci-stjuardesa{
+  font-weight: bold;
+  color: darkblue;
+
+}
 .podaci-korisnik{
   font-weight: bold;
   background-color: rgb(228, 233, 244);
@@ -243,7 +248,7 @@
   }
 
   .korisniciStjuardesa{
-    width: 66rem;
+    width: 70rem;   /*  66rem   */
   }
 
 

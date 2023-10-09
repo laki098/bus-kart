@@ -166,6 +166,13 @@ i18n
             part184: 'Number of reserved seats',
             part185: 'Checked',
 
+            part186: 'My tickets',
+            part187: 'Active tickets',
+            part188: 'Inactive tickets',
+            part189: 'Active lines',
+            part190: 'Checking in',
+            part191: 'Intermediate stations',
+
           }
         }
       },
@@ -320,6 +327,13 @@ i18n
             part183: 'U slučaju izmene tipa autobusa, moguće je doći do promene rezervacije sedišta, o čemu ćete biti obavešteni.',
             part184: 'Broj rezervisanih mesta',
             part185: 'Čekiran',
+
+            part186: 'Moje karte',
+            part187: 'Aktivne karte',
+            part188: 'Neaktivne karte',
+            part189: 'Aktivne linije',
+            part190: 'Čekiranje',
+            part191: 'Međustanice',
 
 
           }
