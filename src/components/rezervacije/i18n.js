@@ -176,7 +176,7 @@ i18n
             part192: 'Arrived',
             part193: 'Started',
             part194: 'Route information',
-            part195: 'Currently reserved seat',
+            part195: 'Currently reserved seat number',
 
           }
         }
@@ -343,7 +343,7 @@ i18n
             part192: 'Stigli',
             part193: 'Krenuli',
             part194: 'Informacije o ruti',
-            part195: 'Trenutno rezervisano mesto',
+            part195: 'Trenutno rezervisano mesto broj',
 
 
           }
