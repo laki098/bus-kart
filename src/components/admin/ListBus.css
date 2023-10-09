@@ -228,8 +228,13 @@
     background-color: #e8e6f2;
   }
 
+  .rowTabela-dorada-1{
+    width: 98rem;
+    background-color: #e8e6f2;
+  }
+
   .korisniciTabela{
-    width: 95rem;         /* bilo je max-content    */
+    width: 97rem;         /* bilo je max-content 95rem   */
     background-color: #fbfafa;
   }
   .korisniciTabelaPromena{
@@ -258,6 +263,16 @@
 
   .red-1{
     margin: 2rem;
+  }
+  .red-5{
+    margin: 5rem;
+  }
+  .otklon-1{
+    padding: 3rem;
+  }
+
+  .sirina-48{
+    width: 48rem;
   }
 
   .inputVelicna{
