@@ -34,4 +34,32 @@ router.get("/:idKorisnika", async (req, res) => {
   }
 });
 
+router.get("/filterLinija/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    //!USLOV DA PITAM DA LI JE BAS TA STJUARDESA
+
+    const izvlacenjeLinija = await Linija.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: Stanica,
+          as: "pocetnaStanica",
+        },
+        {
+          model: Stanica,
+          as: "krajnjaStanica",
+        },
+
+        Stanica,
+      ],
+    });
+
+    res.status(200).json({ message: "uspesno izvadjena st", izvlacenjeLinija });
+  } catch (error) {
+    res.status(500).json({ message: "bag" });
+  }
+});
+
 export default router;

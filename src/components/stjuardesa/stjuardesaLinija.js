@@ -11,11 +11,23 @@ import "../../components/NavBar/links/i18n";
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [autobus, setAutobus] = useState([]);
-  const [linijaState, setLinijaState] = useState(null); // Dodajte stanje za liniju
+  const [linija, setLinija] = useState([]);
+
+  //? dobavljanje liniju koja se koristi direktno ovde
+  const dobavljanjeLinije = async () => {
+    const response = await fetch(
+      `http://localhost:5000/stjuardesa/filterLinija/${linijaId}`
+    );
+    const data = await response.json();
+    setLinija(data.izvlacenjeLinija);
+    console.log("-------------------------------------------11-1-1-1");
+  };
 
   //?primanje podataka sa stjuardese za baš odredjenu liniju
   const location = useLocation();
   const state = location.state;
+
+  const linijaId = location.state.linija.id;
 
   //? dobavljanje autobusa koji je postavljen na toj liniji. kako bi prikayali sedista stjuardesi
   const dobavljanjeBrojaMesta = async () => {
@@ -26,10 +38,11 @@ const StjuardesaLinija = ({}) => {
     setAutobus(data.autobusi);
   };
 
+  console.log(linija?.Stanicas);
   useEffect(() => {
+    dobavljanjeLinije();
     dobavljanjeBrojaMesta();
-    setLinijaState(location.state);
-  }, [location.state]);
+  }, []);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
@@ -106,87 +119,91 @@ const StjuardesaLinija = ({}) => {
     );
     const updatedAutobusData = await updatedData.json();
     setAutobus(updatedAutobusData.autobusi);
-    console.log(updatedAutobusData.autobusi);
   };
-
-  //prevodjenje start
-  const lngs = {
-      en: { nativeName: "Engleski" },
-      de: { nativeName: "Srpski" },
-  };
-  const { t, i18n } = useTranslation();
-  // prevodjenje end
 
   return (
     <>
-      <div >  
-
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
-        
-      <div className="labela-stanica labela-stanica-naslov red-1">Informacije o ruti</div>
-    <div className="stampajLiniju">
-      <div className="rowTabela sirina-39" > 
-        <div className="admin-jedan-red ">
-          <div className="polje-stanica sirina-info-10">Polazna tačka</div>
-          <div className="info-stanica sirina-info-10"> {state.linija.pocetnaStanica.naziv}</div>
-          <div className="polje-stanica sirina-info-8">
-          <button onClick={() => handleDatumAkcije("pocetak")} className="buttonSwitch">Krenuli</button>
-          </div>
-        </div>
-        <div className="admin-jedan-red ">  
-          <div className="polje-stanica sirina-info-10">Krajnja tačka</div>
-          <div className="info-stanica sirina-info-10"> {state.linija.krajnjaStanica.naziv}</div>
-          <div className="polje-stanica sirina-info-8" >
-          <button onClick={() => handleDatumAkcije("kraj")} className="buttonSwitch">Stigli</button>
-          </div>
-
-        </div>
-        {/*
+      <div>
+        <h2>Informacije o Ruti</h2>
         <div>
-          <p>Krajnja Tačka: {state.linija.krajnjaStanica.naziv}</p>
-          <button onClick={() => handleDatumAkcije("kraj")} className="buttonSwitch">Stigli</button>
+          <p>Polazna Tačka: {linija?.pocetnaStanica?.naziv}</p>
+          <button onClick={() => handleDatumAkcije("pocetak")}>Krenuli</button>
         </div>
-        */}
-        <div className="admin-jedan-red " >
-        <div className="polje-stanica sirina-info-10">Međustanice</div>
-        <ul>
-          {state.linija.Stanicas.map((stanica) => (
-            <div key={stanica.id}>
-              <div className="stampajLiniju">
-                <li className="info-stanica sirina-info-10">{stanica.naziv}</li>
-                <div className="polje-stanica sirina-info-8">
+
+        <div className="labela-stanica labela-stanica-naslov red-1">
+          Informacije o ruti
+        </div>
+        <div className="stampajLiniju">
+          <div className="rowTabela sirina-39">
+            <div className="admin-jedan-red ">
+              <div className="polje-stanica sirina-info-10">Polazna tačka</div>
+              <div className="info-stanica sirina-info-10">
+                {" "}
+                {state.linija.pocetnaStanica.naziv}
+              </div>
+              <div className="polje-stanica sirina-info-8">
                 <button
-                  onClick={() => updateMedjustanicaVremePolaska(stanica.id)}
+                  onClick={() => handleDatumAkcije("pocetak")}
                   className="buttonSwitch"
                 >
-                   Krenuli
+                  Krenuli
                 </button>
-                </div>
-                <div className="polje-stanica sirina-info-8">
-                <button className="buttonSwitch">&nbsp;  Stigli   &nbsp;</button>
-                </div>
               </div>
             </div>
-          ))}
-        </ul>
+            <div className="admin-jedan-red ">
+              <div className="polje-stanica sirina-info-10">Krajnja tačka</div>
+              <div className="info-stanica sirina-info-10">
+                {" "}
+                {state.linija.krajnjaStanica.naziv}
+              </div>
+              <div className="polje-stanica sirina-info-8">
+                <button
+                  onClick={() => handleDatumAkcije("kraj")}
+                  className="buttonSwitch"
+                >
+                  Stigli
+                </button>
+              </div>
+            </div>
+            {/*
+        <div>
+          <p>Krajnja Tačka: {linija?.krajnjaStanica?.naziv}</p>
+          <button onClick={() => handleDatumAkcije("kraj")}>Stigli</button>
         </div>
-      </div>
-    </div>
+        */}
+            <div className="admin-jedan-red ">
+              <div className="polje-stanica sirina-info-10">Međustanice</div>
+              <ul>
+                {linija?.Stanicas?.map((stanica) => (
+                  <div key={stanica.id}>
+                    <div className="stampajLiniju">
+                      <li className="info-stanica sirina-info-10">
+                        {stanica.naziv}
+                      </li>
+                      <div className="polje-stanica sirina-info-8">
+                        <button
+                          onClick={() => {
+                            updateMedjustanicaVremePolaska(stanica.id);
+                            dobavljanjeLinije();
+                            console.log("-------------------");
+                          }}
+                          className="buttonSwitch"
+                        >
+                          Krenuli
+                        </button>
+                      </div>
+                      <div className="polje-stanica sirina-info-8">
+                        <button className="buttonSwitch">
+                          &nbsp; Stigli &nbsp;
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Autobus autobusData={autobus} />
@@ -199,7 +216,9 @@ const StjuardesaLinija = ({}) => {
       )}
 
       {!showQRScanner && (
-        <button onClick={handleQRScan} className="buttonSwitch"><p className="admin-dugme-slova">Skeniraj QR kod </p></button>
+        <button onClick={handleQRScan} className="buttonSwitch">
+          <p className="admin-dugme-slova">Skeniraj QR kod </p>
+        </button>
       )}
     </>
   );
