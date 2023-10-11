@@ -6,7 +6,8 @@ import ulaz from "./../../images/ulaz.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 import sto from "./../../images/sto.jpg";
 
-const VH =  ({ onReservation, linijaId })=> {
+const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
+  krajnjaStanicaId, })=> {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [trenutniSprat, setTrenutniSprat] = useState("gornji");
   const [rezervacija, setRezervacija] = useState([]);
@@ -14,11 +15,17 @@ const VH =  ({ onReservation, linijaId })=> {
 
   const getLinije = async () => {
     const response = await fetch(
-      `http://localhost:5000/rezervacije/linija/${linijaId}`
+      `http://localhost:5000/rezervacije/linija/${linijaId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pocetnaStanicaId, krajnjaStanicaId }),
+      }
     );
     const data = await response.json();
-    setRezervacija(data.rezervacije)
-    
+    setRezervacija(data.rezervacije);
   };
   
   console.log(rezervacija)
@@ -27,26 +34,27 @@ const VH =  ({ onReservation, linijaId })=> {
   }, []);
   
   const handleSeatClick = (seatNumber) => {
-    if (isSeatReserved(seatNumber)) {
-      alert("Ovo sedište je već rezervisano. Molimo izaberite drugo sedište.");
-      return;
-    }
+     
   
-    // Proverite da li korisnik već ima selektovano sedište
-    if (selectedSeats.length > 0) {
+   // Proverite da li korisnik već ima selektovano sedište
+   if (selectedSeats.length > 0) {
+    if(selectedSeats != seatNumber) {
       alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
-      return;
+    return;
     }
-    const updatedSelectedSeats = [...selectedSeats];
-    if (selectedSeats.includes(seatNumber)) {
-      updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
-    } else {
-      updatedSelectedSeats.push(seatNumber);
-    }
-    setSelectedSeats(updatedSelectedSeats);
-    // Pozivamo onReservation sa novim selektovanim sedištima
-    onReservation(updatedSelectedSeats);
-  };
+    
+  } 
+  const updatedSelectedSeats = [...selectedSeats];
+  if (selectedSeats.includes(seatNumber)) {
+    updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
+  } else {
+    updatedSelectedSeats.push(seatNumber);
+  }
+  setSelectedSeats(updatedSelectedSeats);
+  // Pozivamo onReservation sa novim selektovanim sedištima
+  onReservation(updatedSelectedSeats);
+};
+
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
   };

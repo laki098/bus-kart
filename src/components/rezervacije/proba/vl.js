@@ -14,7 +14,6 @@ const VL = ({
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [rezervacija, setRezervacija] = useState([]);
 
-  console.log(pocetnaStanicaId, krajnjaStanicaId);
   const getLinije = async () => {
     const response = await fetch(
       `http://localhost:5000/rezervacije/linija/${linijaId}`,
@@ -35,16 +34,25 @@ const VL = ({
   }, []);
 
   const handleSeatClick = (seatNumber) => {
-    const updatedSelectedSeats = [...selectedSeats];
-    if (selectedSeats.includes(seatNumber)) {
-      updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
-    } else {
-      updatedSelectedSeats.push(seatNumber);
+    
+   // Proverite da li korisnik već ima selektovano sedište
+   if (selectedSeats.length > 0) {
+    if(selectedSeats != seatNumber) {
+      alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
+    return;
     }
-    setSelectedSeats(updatedSelectedSeats);
-    // Pozivamo onReservation sa novim selektovanim sedištima
-    onReservation(updatedSelectedSeats);
-  };
+    
+  } 
+  const updatedSelectedSeats = [...selectedSeats];
+  if (selectedSeats.includes(seatNumber)) {
+    updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
+  } else {
+    updatedSelectedSeats.push(seatNumber);
+  }
+  setSelectedSeats(updatedSelectedSeats);
+  // Pozivamo onReservation sa novim selektovanim sedištima
+  onReservation(updatedSelectedSeats);
+};
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
   };
