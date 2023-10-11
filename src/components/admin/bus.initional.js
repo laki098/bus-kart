@@ -65,7 +65,7 @@ const BusInitional = () => {
     </header> 
 
     <div className="stampajLiniju">
-      <div class="rowTabela ">
+      <div class="rowTabela sirina-48" >
         <ul>
           {" "}
           <div>

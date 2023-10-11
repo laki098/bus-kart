@@ -124,7 +124,7 @@ const KorisniciInitial = () => {
                 </div>
                 <div className="info-stanica sirina-info-7">{korisnik.brojTelefona}</div>
                 <div className="polje-stanica"> Email</div><div className="info-stanica sirina-info-15 email-polje" > {korisnik.email}</div>
-                <div className="polje-stanica"> Role</div><div className="info-stanica">{korisnik.role}</div>
+                <div className="polje-stanica"> Role</div><div className="info-stanica sirina-info-6">{korisnik.role}</div>
                 <div className="polje-stanica"><Link to={`${korisnik.idKorisnik}/korisnikChange`}>
                   <button className="buttonSwitch">
                   <Trans i18nKey="description.part145">Izmeni</Trans>

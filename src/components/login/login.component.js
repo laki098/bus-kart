@@ -53,7 +53,7 @@ const LoginComponent = () => {
             <div>
               <div>
               <div className="red-1"></div>
-                <p className="naslov">
+                <p className="naslovLogin">
                   <Trans i18nKey="description.part124">Logovanje</Trans>
                 </p>{" "}
                 <div className="red-1"></div>

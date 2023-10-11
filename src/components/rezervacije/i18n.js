@@ -51,7 +51,7 @@ i18n
             part30: 'Find bus line',
             part31: 'Start bus station',
             part32: 'End bus station',
-            part33: 'Date',
+            part33: 'Date of departure',
             part34: 'Timetable',
             part35: 'Reservation',
             part36: 'Number of seats',
@@ -163,7 +163,20 @@ i18n
             part181: 'Make a reservation ticket',
             part182: 'Bay ticket',
             part183: 'In case of changing the bus type, it is possible to change the seat reservation, which you will be informed about.',
+            part184: 'Number of reserved seats',
+            part185: 'Checked',
 
+            part186: 'My tickets',
+            part187: 'Active tickets',
+            part188: 'Inactive tickets',
+            part189: 'Active lines',
+            part190: 'Checking in',
+            part191: 'Intermediate stations',
+
+            part192: 'Arrived',
+            part193: 'Started',
+            part194: 'Route information',
+            part195: 'Currently reserved seat number',
 
           }
         }
@@ -317,7 +330,20 @@ i18n
             part181: 'Rezerviši kartu',
             part182: 'Kupi kartu',
             part183: 'U slučaju izmene tipa autobusa, moguće je doći do promene rezervacije sedišta, o čemu ćete biti obavešteni.',
+            part184: 'Broj rezervisanih mesta',
+            part185: 'Čekiran',
 
+            part186: 'Moje karte',
+            part187: 'Aktivne karte',
+            part188: 'Neaktivne karte',
+            part189: 'Aktivne linije',
+            part190: 'Čekiranje',
+            part191: 'Međustanice',
+
+            part192: 'Stigli',
+            part193: 'Krenuli',
+            part194: 'Informacije o ruti',
+            part195: 'Trenutno rezervisano mesto broj',
 
 
           }
