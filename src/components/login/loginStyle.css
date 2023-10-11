@@ -176,6 +176,13 @@ input::placeholder {
   font-weight: bold;
 }
 
+.naslovLogin {
+  /* text-size-adjust: 35px;   */
+  font-size: large;
+  color: darkblue;
+  font-weight: bold;
+}
+
 .naslov-srednji {
   font-size: medium;
   color: darkblue;

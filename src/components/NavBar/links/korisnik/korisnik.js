@@ -4,6 +4,12 @@ import KorisnikApi from "../../../../api/korisnikApi";
 import KorisnikLogic from "../../../admin/korisnikLogic";
 import "../korisnik/korisnik.css";
 
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../../../NavBar/links/i18n";
+import "../../../../components/NavBar/links/i18n";
+//import "../NavBar/links/i18n";
+//import "../../components/NavBar/links/i18n";
+
 import cookies from "js-cookie";
 
 const Korisnik = () => {
@@ -51,69 +57,143 @@ const Korisnik = () => {
     setKorisnik(data.korisnik);
   };
 
+  //prevodjenje start
+  const lngs = {
+      en: { nativeName: "Engleski" },
+      de: { nativeName: "Srpski" },
+    };
+  const { t, i18n } = useTranslation();
+  // prevodjenje end
+
 
     return ( 
-      <form onSubmit={submitHandler} className="form-user">   {/* className="form-user"   */}
-      <div className="user-control">
-       <label className="user-label">Korisnicko Ime:</label>
-        <input
-        className="user-input"
-          defaultValue={korisnik.korisnickoIme}
-          type="text"
-          required
-          name="korisnickoIme"
-          onChange={korisnikLogic.changeHandler}
-        ></input>
+      <div  >
+      <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
+
+        <div className="red-5"></div>
+
+      <div className="stampajLiniju " >
+      <div className="tabela-stanica ">
+      <form onSubmit={submitHandler} >   {/* className="form-user"   */}
+        <div className="user-control">
+
+          <div className="red-1"></div>
+          <label className="labela-stanica labela-stanica-vece veliki-naslov">
+          <Trans i18nKey="description.part159"> Korisik  </Trans>
+          </label>
+          <div className="red-1"></div>
+          <div className="red-1"></div>
+
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part44"> Korisničko ime </Trans>
+            </label> {/*  className="user-label"    */}
+          </div>
+          {/* className="user-input"   */}
+          <input
+            className="user-input"
+            defaultValue={korisnik.korisnickoIme}
+            type="text"
+            required
+            name="korisnickoIme"
+            onChange={korisnikLogic.changeHandler}  > 
+          </input>
+          
+          <div className="red-05"></div>
         </div>
         <div className="user-control">
-        <label className="user-label">Ime:</label>
-        <input
-        className="user-input"
-          defaultValue={korisnik.ime}
-          type="text"
-          required
-          name="ime"
-          onChange={korisnikLogic.changeHandler}
-        ></input>
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part40"> Ime  </Trans>
+          </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.ime}
+            type="text"
+            required
+            name="ime"
+            onChange={korisnikLogic.changeHandler}  >
+          </input>
+        </div>
+
+        <div className="red-05"></div>
+
+        <div className="user-control">
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part42"> Prezime  </Trans>
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.prezime}
+            type="text"
+            required
+            name="prezime"
+            onChange={korisnikLogic.changeHandler}  > 
+          </input>
         </div>
 
         <div className="user-control">
-        <label className="user-label">Prezime:</label>
-        <input
-        className="user-input"
-          defaultValue={korisnik.prezime}
-          type="text"
-          required
-          name="prezime"
-          onChange={korisnikLogic.changeHandler}
-        ></input>
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part48"> Broj telefona </Trans>
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.brojTelefona}
+            type="text"
+            required
+            name="brojTelefona"
+            onChange={korisnikLogic.changeHandler}  >
+          </input>
         </div>
+
         <div className="user-control">
-        <label className="user-label">Broj Telefona:</label>
-        <input
-        className="user-input"
-          defaultValue={korisnik.brojTelefona}
-          type="text"
-          required
-          name="brojTelefona"
-          onChange={korisnikLogic.changeHandler}
-        ></input>
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+            Email
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.email}
+            type="text"
+            required
+            name="email"
+            onChange={korisnikLogic.changeHandler} >
+          </input>
         </div>
-        <div className="user-control">
-        <label className="user-label">Email:</label>
-        <input
-        className="user-input"
-          defaultValue={korisnik.email}
-          type="text"
-          required
-          name="email"
-          onChange={korisnikLogic.changeHandler}
-        ></input>
-        </div>
-         <button  type="submit" className="user-button ">
-          Sacuvaj
+
+        <div className="red-1"></div>
+        <div >
+        <button  type="submit" className="buttonSwitch"> {/*  user-button   */}
+        <Trans i18nKey="description.part129"> Sačuvaj </Trans>
         </button>
+        </div>
+        
     </form>
+    </div>
+    </div>
+    </div>
      );
 }
  
