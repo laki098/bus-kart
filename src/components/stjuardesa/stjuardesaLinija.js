@@ -7,11 +7,14 @@ import AdminLogic from "../admin/admin.logic";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
+import StjuardesaApi from "../../api/stjuardesaApi.js";
 
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [autobus, setAutobus] = useState([]);
   const [linija, setLinija] = useState([]);
+  const [pocetnaStanica, setPocetnaStanica] = useState([]);
+  const [krajnjaStanica, setKrajnjaStanica] = useState([]);
 
   //? dobavljanje liniju koja se koristi direktno ovde
   const dobavljanjeLinije = async () => {
@@ -19,8 +22,9 @@ const StjuardesaLinija = ({}) => {
       `http://localhost:5000/stjuardesa/filterLinija/${linijaId}`
     );
     const data = await response.json();
+    setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica.naziv);
     setLinija(data.izvlacenjeLinija);
-    console.log("-------------------------------------------11-1-1-1");
+    setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica.naziv);
   };
 
   //?primanje podataka sa stjuardese za baš odredjenu liniju
@@ -38,7 +42,6 @@ const StjuardesaLinija = ({}) => {
     setAutobus(data.autobusi);
   };
 
-  console.log(linija?.Stanicas);
   useEffect(() => {
     dobavljanjeLinije();
     dobavljanjeBrojaMesta();
@@ -55,81 +58,39 @@ const StjuardesaLinija = ({}) => {
     setShowQRScanner(false);
   };
 
-  const adminLogic = AdminLogic();
+  const stjuardesaApi = StjuardesaApi();
 
-  const medjustanice = [];
-
-  //? Funkcija za ažuriranje linije kraj linije (datum i vreme azurira)
-  const handleDatumAkcije = (akcija) => {
-    const trenutniDatum = new Date();
-    const formattedDatum = trenutniDatum.toISOString();
-    const dataToUpdate = {
-      pocetnaStanica: state.linija.pocetnaStanica.naziv,
-      medjustanice: medjustanice,
-      krajnjaStanica: state.linija.krajnjaStanica.naziv,
-      vremePolaska: state.linija.vremePolaska,
-      vremeDolaska: state.linija.vremeDolaska,
-      datumPolaska: state.linija.datumPolaska,
-      datumDolaska: state.linija.datumDolaska,
-      oznakaBusa: state.linija.oznakaBusa,
-      [`${akcija}Rute`]: formattedDatum, //? prosledjujem preko dugmeta akciju
-      vozac: state.linija.vozac,
-      stjuardesa: state.linija.stjuardesa,
-    };
-
-    adminLogic.editLinije(dataToUpdate, state.linija.id);
+  //?promena vremena na medjustanici pocetak ili kraj rute
+  const handelePromenaVremena = async (
+    linijaId,
+    redosled,
+    promeniPocetakRute,
+    promeniKrajRute
+  ) => {
+    const response = await stjuardesaApi.promenaVremena(
+      linijaId,
+      redosled,
+      promeniPocetakRute,
+      promeniKrajRute
+    );
   };
 
-  // Funkcija za ažuriranje vremena polaska medjustanice
-  const updateMedjustanicaVremePolaska = async (medjustanicaId) => {
-    const trenutniDatum = new Date();
-    const trenutnoVreme = trenutniDatum.toISOString();
-
-    // Pripremite podatke za ažuriranje u bazi podataka
-
-    const dataToUpdate = {
-      pocetnaStanica: state.linija.pocetnaStanica.naziv,
-      medjustanice: state.linija.Stanicas.map((stanica) => {
-        if (stanica.id === medjustanicaId) {
-          return {
-            ...stanica.Medjustanica,
-            pocetakRute: trenutnoVreme,
-          };
-        }
-        return stanica.Medjustanica;
-      }),
-      krajnjaStanica: state.linija.krajnjaStanica.naziv,
-      vremePolaska: state.linija.vremePolaska,
-      vremeDolaska: state.linija.vremeDolaska,
-      datumPolaska: state.linija.datumPolaska,
-      datumDolaska: state.linija.datumDolaska,
-      oznakaBusa: state.linija.oznakaBusa,
-      pocetakRute: state.linija.pocetakRute,
-      krajRute: state.linija.krajRute,
-      vozac: state.linija.vozac,
-      stjuardesa: state.linija.stjuardesa,
-    };
-
-    // Pozovite funkciju za ažuriranje linije
-    adminLogic.editLinije(dataToUpdate, state.linija.id);
-
-    // Nakon ažuriranja u bazi podataka, dohvatite ažurirane podatke ponovo
-    const updatedData = await fetch(
-      `http://localhost:5000/autobusi/oznaka/${state.linija.oznakaBusa}`
+  //?promena vremena na liniji pocetak ili kraj rute
+  const handelePromenaVremenaLinija = async (
+    linijaId,
+    promeniPocetakRute,
+    promeniKrajRute
+  ) => {
+    const response = await stjuardesaApi.promenaVremenaLinija(
+      linijaId,
+      promeniPocetakRute,
+      promeniKrajRute
     );
-    const updatedAutobusData = await updatedData.json();
-    setAutobus(updatedAutobusData.autobusi);
   };
 
   return (
     <>
       <div>
-        <h2>Informacije o Ruti</h2>
-        <div>
-          <p>Polazna Tačka: {linija?.pocetnaStanica?.naziv}</p>
-          <button onClick={() => handleDatumAkcije("pocetak")}>Krenuli</button>
-        </div>
-
         <div className="labela-stanica labela-stanica-naslov red-1">
           Informacije o ruti
         </div>
@@ -143,7 +104,9 @@ const StjuardesaLinija = ({}) => {
               </div>
               <div className="polje-stanica sirina-info-8">
                 <button
-                  onClick={() => handleDatumAkcije("pocetak")}
+                  onClick={() => {
+                    handelePromenaVremenaLinija(state.linija.id, true, false);
+                  }}
                   className="buttonSwitch"
                 >
                   Krenuli
@@ -158,19 +121,15 @@ const StjuardesaLinija = ({}) => {
               </div>
               <div className="polje-stanica sirina-info-8">
                 <button
-                  onClick={() => handleDatumAkcije("kraj")}
+                  onClick={() => {
+                    handelePromenaVremenaLinija(state.linija.id, false, true);
+                  }}
                   className="buttonSwitch"
                 >
                   Stigli
                 </button>
               </div>
             </div>
-            {/*
-        <div>
-          <p>Krajnja Tačka: {linija?.krajnjaStanica?.naziv}</p>
-          <button onClick={() => handleDatumAkcije("kraj")}>Stigli</button>
-        </div>
-        */}
             <div className="admin-jedan-red ">
               <div className="polje-stanica sirina-info-10">Međustanice</div>
               <ul>
@@ -183,9 +142,13 @@ const StjuardesaLinija = ({}) => {
                       <div className="polje-stanica sirina-info-8">
                         <button
                           onClick={() => {
-                            updateMedjustanicaVremePolaska(stanica.id);
-                            dobavljanjeLinije();
-                            console.log("-------------------");
+                            handelePromenaVremena(
+                              state.linija.id,
+                              stanica.Medjustanica.redosled,
+                              true,
+                              false
+                            );
+                            setPocetnaStanica(stanica.naziv);
                           }}
                           className="buttonSwitch"
                         >
@@ -193,7 +156,17 @@ const StjuardesaLinija = ({}) => {
                         </button>
                       </div>
                       <div className="polje-stanica sirina-info-8">
-                        <button className="buttonSwitch">
+                        <button
+                          onClick={() => {
+                            handelePromenaVremena(
+                              state.linija.id,
+                              stanica.Medjustanica.redosled,
+                              false,
+                              true
+                            );
+                          }}
+                          className="buttonSwitch"
+                        >
                           &nbsp; Stigli &nbsp;
                         </button>
                       </div>
@@ -204,6 +177,10 @@ const StjuardesaLinija = ({}) => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <p>Ruta:</p>
+        <div>{pocetnaStanica} -</div> <div>{krajnjaStanica}</div>
       </div>
 
       <Autobus autobusData={autobus} />
