@@ -226,9 +226,7 @@ router.post("/zaboravljena-sifra", async (req, res) => {
     await korisnik.save();
 
     //? kreiranje html dugmeta i slanje na mejl
-    const resetButtonHtml = `<a href=${req.protocol}://${req.get(
-      "host"
-    )}/reset-sifra/${resetToken} style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Resetuj šifru</a>`;
+    const resetButtonHtml = `<a href=http://localhost:3000/passwordreset/${resetToken} style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Resetuj šifru</a>`;
 
     const resetLinkHtml = `Kliknite na link ispod da biste resetovali vašu šifru:<br><br>${resetButtonHtml}`;
 
@@ -254,12 +252,13 @@ router.post("/zaboravljena-sifra", async (req, res) => {
 router.get("/reset-sifra/:token", (req, res) => {
   const { token } = req.params;
 
-  res.render("reset-sifra", { token }); //! promeniti rutu kada povezemo sa reactom
+  res.render("http://localhost:3000/passwordreset", { token }); 
 });
 
 router.post("/reset-sifra/:token", async (req, res) => {
   const { token } = req.params;
   const { novaSifra, potvrdaSifre } = req.body;
+console.log(novaSifra, potvrdaSifre )
 
   //? provera tokena u bazi sa tokenom na emailu
   const korisnik = await Korisnik.findOne({ where: { resetToken: token } });

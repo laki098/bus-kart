@@ -24,6 +24,16 @@ const MB4 = ({ onReservation, linijaId })=> {
   }, []);
   
   const handleSeatClick = (seatNumber) => {
+    
+  
+   // Proverite da li korisnik već ima selektovano sedište
+    if (selectedSeats.length > 0) {
+      if(selectedSeats != seatNumber) {
+        alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
+      return;
+      }
+      
+    } 
     const updatedSelectedSeats = [...selectedSeats];
     if (selectedSeats.includes(seatNumber)) {
       updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
