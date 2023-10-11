@@ -66,6 +66,13 @@
   .jedan-red-visina{
     line-height: 35px ;
   }
+  .jedan-red-prikaz{
+    border: 1.5px solid grey;
+   
+    margin: 3px;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
   .input-stanica{
     width: 10rem;

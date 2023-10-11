@@ -299,7 +299,7 @@
 .admin-tebela{
   /*  position: relative;   */
     margin: 0 auto;
-    width: 90%;   /*bila je 80%   */
+    width: 90%;   /*bila je 80% pa 90%  */
     max-width: 81rem;   /* bila je 80rem    */
     display: flex;   /* bilo blok    */
     flex-wrap: wrap;

@@ -292,13 +292,13 @@ const AdminInitial = () => {
               className="confirm-dialog-yes"
               onClick={() => confirmDelete()}
             >
-              <Trans i18nKey="description.part137">Da</Trans>
+              <Trans i18nKey="description.part153">Da</Trans>
             </button>
             <button
               className="confirm-dialog-no"
               onClick={() => cancelDelete()}
             >
-              <Trans i18nKey="description.part138">Ne</Trans>
+              <Trans i18nKey="description.part154">Ne</Trans>
             </button>
           </div>
         </div>
