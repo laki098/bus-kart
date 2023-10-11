@@ -13,9 +13,6 @@ const LineForm = ({ mode, id, state }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
   const [stanice, setStanice] = useState([]);
-
-  
-
   const [waypoints, setWaypoints] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [cene, setCene] = useState([]);
@@ -31,6 +28,7 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
+  
 
   const getStanice = async () => {
     const response = await fetch("http://localhost:5000/stanica");
@@ -402,13 +400,13 @@ const LineForm = ({ mode, id, state }) => {
               </select>
               <br /> */}
                   <div className="red-05"><label className="labela-stanica">Izaberite autobus</label></div>
-                  
                   <select
                     value={linija.oznakaBusa}
                     name="oznakaBusa"
                     className="odaberiBus"
                     onChange={adminLogic.changeHandler}
                   >
+                    <option value="">Izaberite autobus</option>
                     {autobusi.map((autobusi) => {
                       return (
                         <option
@@ -652,6 +650,7 @@ const LineForm = ({ mode, id, state }) => {
                   
                   <select
                     value={state.oznakaBusa}
+                    defaultValue={state.oznakaBusa}
                     name="oznakaBusa"
                     onChange={adminLogic.changeHandler}
                   >
