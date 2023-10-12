@@ -33,7 +33,9 @@ const BusInitional = () => {
   const confirmDelete = async () => {
     if (busToDelete !== null) {
       const response = await BusApi().brisanjeBus(busToDelete);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.href = "/bus.initial";
+      }, 2000);
     }
     setIsConfirmationOpen(false);
   };
@@ -65,14 +67,15 @@ const BusInitional = () => {
     </header> 
 
     <div className="stampajLiniju">
-      <div class="rowTabela sirina-48" >
+      <div class="rowTabela  podesi-sirinu" >    {/* sirina-48  */}
         <ul>
           {" "}
           <div>
             {" "} 
             {busevi.map((bus) => {
               return (
-                <li key={bus.idAutobusa}>                
+                <li key={bus.idAutobusa}>  
+                   <div className="jedan-red-prikaz">             
                    <div class="column centar"> 
                    <Trans i18nKey="description.part170">Oznaka  </Trans>
                    </div>
@@ -90,9 +93,10 @@ const BusInitional = () => {
                       <Trans i18nKey="description.part145">Izmeni </Trans>
                       </button>  {/* dugme  */}
                     </Link></div>
-                   <div className="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
+                   <div className="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch ">  {/* dugme  */}
                    <Trans i18nKey="description.part134">Obriši  </Trans>
                     </button></div>
+                   </div>
                 </li> 
               );
       })} 
@@ -111,6 +115,7 @@ const BusInitional = () => {
 
       <div className="confirm-dialog-container red-1">
         {isConfirmationOpen && (
+          <div className="confirm-dialog-overlay">
           <div className="confirm-dialog-box">
             <div className="red-05" >
             <Trans i18nKey="description.part172">Da li ste sigurni da želite da obrišete ovu stavku?  </Trans>
@@ -121,6 +126,7 @@ const BusInitional = () => {
             <button className="confirm-dialog-no" onClick={cancelDelete}>
             <Trans i18nKey="description.part154"> Ne  </Trans>
             </button>
+          </div>
           </div>
         )}
       </div>

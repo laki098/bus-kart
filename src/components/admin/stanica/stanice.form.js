@@ -30,8 +30,9 @@ const StaniceForm = ({ mode, id }) => {
   }, []);
 
   const back = () => {
-    window.history.back();
-  };
+    setTimeout(() => {
+      window.location.href = "/stanice.initial";
+    }, 2000);  };
 
   const submitHandler = (event) => {
     event.preventDefault();

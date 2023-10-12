@@ -100,14 +100,14 @@ const RezervacijaComponent = ({ id, state }) => {
 
   const clickRezervisi = () => {
     novaRezervacija();
-
-    // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi način)
-    alert("Vaša karta je uspešno rezervisana!");
+  
+    /* // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi način)
+    alert("Vaša karta je uspešno rezervisana!"); */
 
     // Sačekaj nekoliko sekundi pre nego što se preusmeriš na početnu stranicu
     setTimeout(() => {
       window.location.href = "/pocetna";
-    }, 1500); // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 3 sekunde)
+    }, 2000); // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 1,5 sekunde) 
   };
 
   const [pom, setPom] = useState(false);
@@ -208,6 +208,9 @@ const RezervacijaComponent = ({ id, state }) => {
     if (!formValidation.isFormValid) {
       return;
     }
+    else {
+      clickRezervisi();
+    }
   };
 
   //prevodjenje
@@ -268,9 +271,9 @@ const RezervacijaComponent = ({ id, state }) => {
                     type="text"
                     name="ime"
                     value={
-                      userPars.ime == undefined
-                        ? ""
-                        : userPars.ime + " " + userPars.prezime
+                      userPars.ime != undefined
+                        ? userPars.ime + " " + userPars.prezime
+                        : undefined
                     }
                     onChange={rezervacijaLogic.changeHandler}
                     ref={fNameInputRef}
@@ -288,7 +291,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     type="text"
                     className="test"
                     name="email"
-                    value={userPars.email == undefined ? "" : userPars.email}
+                    value={userPars.email == undefined ? undefined : userPars.email}
                     ref={emailInputRef}
                     onChange={rezervacijaLogic.changeHandler}
                   />
@@ -309,7 +312,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     name="telefon"
                     value={
                       userPars.brojTelefona == undefined
-                        ? ""
+                        ? undefined
                         : userPars.brojTelefona
                     }
                     ref={telefonInputRef}
@@ -656,6 +659,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <S2
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "MAN" ? (
@@ -664,6 +669,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <MAN
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "VH" ? (
@@ -672,6 +679,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <VH
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "MB1" ? (
@@ -680,6 +689,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <MB1
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "MB3" ? (
@@ -688,6 +699,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <MB3
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "MB4" ? (
@@ -696,6 +709,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <MB4
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
                     (linija.oznakaBusa != "VL" ? (
@@ -714,6 +729,8 @@ const RezervacijaComponent = ({ id, state }) => {
                       <S1
                         onReservation={handleReservation}
                         linijaId={state.id}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     ))}
                 </div>
@@ -726,33 +743,32 @@ const RezervacijaComponent = ({ id, state }) => {
                 </p>
               </div>
               <div className="red-1"></div>
-              <label>
-                <Trans i18nKey="description.part180">Broj sedišta </Trans>
-              </label>{" "}
-              &emsp;
+              {/* <label>
+              <Trans i18nKey="description.part180">Broj sedišta </Trans>
+              </label> &emsp;
               <input
                 type="number"
                 value={brojSedista}
                 className="brSedista"
                 onChange={(e) => setBrojSedista(e.target.value)}
-              ></input>
+              ></input> */}
               <div className="red-1"></div>
             </div>
           </div>
           <div className="red-1"></div>
           <div>
-            <button className={classes.submit} onClick={clickRezervisi}>
+            <button className={classes.submit}>Rezerviši kartu </button>
+            {/* <button className={classes.submit} onClick={clickRezervisi}>
               <p className="slovaDugme">
                 <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
               </p>
             </button>
-            &emsp;
-            <button className={classes.submit}>
-              <p className="slovaDugme">
-                &ensp; &nbsp;
-                <Trans i18nKey="description.part182">Kupi kartu </Trans>&ensp;
+            &emsp; */}
+            {/* <button className={classes.submit}>
+              <p className="slovaDugme">&ensp; &nbsp; 
+              <Trans i18nKey="description.part182">Kupi kartu </Trans>&ensp;
               </p>
-            </button>
+            </button> */}
           </div>
           <div className="red-1"></div>
         </div>

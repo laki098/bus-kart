@@ -131,7 +131,8 @@ const KorisniciInitial = () => {
                   </button>
                 </Link>
                 </div>
-                <div class="polje-stanica">< button className="buttonSwitch"
+                {/* buttonSwitch-crveno  */}
+                <div class="polje-stanica">< button className="buttonSwitch "
                   onClick={() => {
                     brisanjeKorisnika(korisnik.idKorisnik);
                   }}
@@ -150,6 +151,7 @@ const KorisniciInitial = () => {
       <div className="red-1"></div>
       <div className="confirm-dialog-container">
         {isConfirmationOpen && (
+           <div className="confirm-dialog-overlay">
           <div className="confirm-dialog-box">
             <div className="red-05">  
             <Trans i18nKey="description.part155">
@@ -161,6 +163,7 @@ const KorisniciInitial = () => {
             <button className="confirm-dialog-no" onClick={cancelDelete}>
             <Trans i18nKey="description.part154"> Ne  </Trans>
             </button>
+          </div>
           </div>
         )}
       </div>

@@ -119,7 +119,7 @@ function Autobus({
           disabled={trenutnaRezervacija.length === 0}
           className="buttonSwitch"
         >
-          Potvrdi izbor
+          <Trans i18nKey="description.part121"> Potvrdite    </Trans>   {/* Potvrdi izbor   */}
         </button>
       </div>
     </div>

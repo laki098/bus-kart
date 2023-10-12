@@ -5,17 +5,24 @@ import ulaz from "./../../images/ulaz.jpg";
 import wc from "./../../images/wc.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 
-const MB4 = ({ onReservation, linijaId })=> {
+const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
+  krajnjaStanicaId, })=> {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [rezervacija, setRezervacija] = useState([]);
   
   const getLinije = async () => {
     const response = await fetch(
-      `http://localhost:5000/rezervacije/linija/${linijaId}`
+      `http://localhost:5000/rezervacije/linija/${linijaId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pocetnaStanicaId, krajnjaStanicaId }),
+      }
     );
     const data = await response.json();
-    setRezervacija(data.rezervacije)
-    
+    setRezervacija(data.rezervacije);
   };
  
 
@@ -24,6 +31,16 @@ const MB4 = ({ onReservation, linijaId })=> {
   }, []);
   
   const handleSeatClick = (seatNumber) => {
+    
+  
+   // Proverite da li korisnik već ima selektovano sedište
+    if (selectedSeats.length > 0) {
+      if(selectedSeats != seatNumber) {
+        alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
+      return;
+      }
+      
+    } 
     const updatedSelectedSeats = [...selectedSeats];
     if (selectedSeats.includes(seatNumber)) {
       updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);

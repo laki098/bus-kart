@@ -8,18 +8,25 @@ import stepenice from './../../images/stepenice.jpg';
 
 
 
-const S1 =  ({ onReservation, linijaId })=> {
+const S1 =  ({ onReservation, linijaId, pocetnaStanicaId,
+  krajnjaStanicaId, })=> {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [rezervacija, setRezervacija] = useState([]);
  
   const getLinije = async () => {
-   const response = await fetch(
-     `http://localhost:5000/rezervacije/linija/${linijaId}`
-   );
-   const data = await response.json();
-   setRezervacija(data.rezervacije)
-   
- };
+    const response = await fetch(
+      `http://localhost:5000/rezervacije/linija/${linijaId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pocetnaStanicaId, krajnjaStanicaId }),
+      }
+    );
+    const data = await response.json();
+    setRezervacija(data.rezervacije);
+  };
  
  
  useEffect(() => {
@@ -27,16 +34,25 @@ const S1 =  ({ onReservation, linijaId })=> {
  }, []);
  
  const handleSeatClick = (seatNumber) => {
-   const updatedSelectedSeats = [...selectedSeats];
-   if (selectedSeats.includes(seatNumber)) {
-     updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
-   } else {
-     updatedSelectedSeats.push(seatNumber);
-   }
-   setSelectedSeats(updatedSelectedSeats);
-   // Pozivamo onReservation sa novim selektovanim sedištima
-   onReservation(updatedSelectedSeats);
- };
+  
+   // Proverite da li korisnik već ima selektovano sedište
+   if (selectedSeats.length > 0) {
+    if(selectedSeats != seatNumber) {
+      alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
+    return;
+    }
+    
+  } 
+  const updatedSelectedSeats = [...selectedSeats];
+  if (selectedSeats.includes(seatNumber)) {
+    updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
+  } else {
+    updatedSelectedSeats.push(seatNumber);
+  }
+  setSelectedSeats(updatedSelectedSeats);
+  // Pozivamo onReservation sa novim selektovanim sedištima
+  onReservation(updatedSelectedSeats);
+};
  const isSeatSelected = (seatNumber) => {
    return selectedSeats.includes(seatNumber);
  };

@@ -27,6 +27,7 @@ import StaniceInitial from "./components/admin/stanica/stanice.initial";
 import StaniceAdd from "./components/admin/stanica/stanice.add";
 import StaniceEdit from "./components/admin/stanica/stanice.edit";
 import StjuardesaLinija from "./components/stjuardesa/stjuardesaLinija";
+import PasswordReset from "./components/login/passwordReset";
 
 function App() {
   return (
@@ -109,6 +110,9 @@ function App() {
           </Route>
           <Route path="/:id/stanice.edit">
             <StaniceEdit />
+          </Route>
+          <Route path="/passwordreset/:token">
+            <PasswordReset />
           </Route>
         </div>
 

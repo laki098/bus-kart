@@ -3,12 +3,7 @@ import "./reset.css";
 import "./loginStyle.css"; //preuzimam stil iz login.component.js
 import bus from "../images/bus.jpg";
 
-import bus1 from "../images/bus1.jpg";
-import "../admin/admin.css";
-
-import emailjs from "@emailjs/browser"; //za mailove
-
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../admin/admin.css";import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 
@@ -20,25 +15,31 @@ const ResetPassword = () => {
     e.preventDefault();
   };
 
-  const poruka = "http://localhost:3000/informacije";
-  //const poruka='http://localhost:3000/noviPassword';
-  //const message=email+poruka;
-  //const poruka='http://localhost:3000/new.password';
-  const message =
-    "Promenite lozinku klikom na link: " + "\n" + "&emsp;&emsp;" + poruka;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    emailjs.send(
-      "service_sl566is",
-      "template_93iebo1",
-      {
-        from_name: "slobodanka.nedeljkovic@skysoft.rs",
-        to_name: "slobodanka.nedeljkovic@skysoft.rs",
-        message,
+  const getResetPassword = async () => {
+    const response = await fetch(
+      `http://localhost:5000/korisnik/zaboravljena-sifra`,{method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      "4fpBl5nDp2tlEnqsp"
+      body: JSON.stringify({ email }),}
     );
+    const data = await response.json();
+
+    if(response.ok) {
+      if(response.status == 200) {
+        alert(data.message)
+        window.location.href = "/pocetna";
+      }
+    } else {
+      if(response.status == 404) {
+        alert(data.message)
+      }
+    }
   };
+
+  console.log(email)
+
+  
 
   //prevodjenje start
   const lngs = {
@@ -94,14 +95,13 @@ const ResetPassword = () => {
                   className="input-new name1"
                   name="email"
                   required
-                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>{" "}
               <br />
               <br />
               <div className="login-button">
-                <button className="button" onClick={handleSubmit}>
+                <button className="button" onClick={getResetPassword}>
                   <Trans i18nKey="description.part121">Potvrdi</Trans>
                 </button>
               </div>

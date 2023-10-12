@@ -280,29 +280,24 @@ const AdminInitial = () => {
           <Trans i18nKey="description.part135">Nema Linije...</Trans>
         </p>
       )}
-      {isDeleteConfirmationOpen && (            // izbacuje da pita korisnika da li je siguran da zeli da izbrise liniju
-        <div className="confirm-dialog-container">
+      <div className="confirm-dialog-container">
+        {isDeleteConfirmationOpen && (
+           <div className="confirm-dialog-overlay">
           <div className="confirm-dialog-box">
-            <p>
-              <Trans i18nKey="description.part136">
-                Da li ste sigurni da želite da izbrišete liniju?
-              </Trans>
-            </p>
-            <button
-              className="confirm-dialog-yes"
-              onClick={() => confirmDelete()}
-            >
-              <Trans i18nKey="description.part137">Da</Trans>
+            <div className="red-05">  
+            <Trans i18nKey="description.part155">
+            Da li ste sigurni da želite da obrišete ovog korisnika? </Trans>
+            </div>
+            <button className="confirm-dialog-yes" onClick={confirmDelete}>
+            <Trans i18nKey="description.part153">Da </Trans>
             </button>
-            <button
-              className="confirm-dialog-no"
-              onClick={() => cancelDelete()}
-            >
-              <Trans i18nKey="description.part138">Ne</Trans>
+            <button className="confirm-dialog-no" onClick={cancelDelete}>
+            <Trans i18nKey="description.part154"> Ne  </Trans>
             </button>
           </div>
-        </div>
+          </div>
       )}
+       </div>
     </div>
   );
 };

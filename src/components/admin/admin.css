@@ -237,6 +237,21 @@
   font-size: medium;
 }
 
+
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Poluprozirna crna pozadina */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+
 .admin-initial-polje{
   background-color: #f5f5f8;
   border: 2px solid grey;
@@ -299,7 +314,7 @@
 .admin-tebela{
   /*  position: relative;   */
     margin: 0 auto;
-    width: 90%;   /*bila je 80%   */
+    width: 90%;   /*bila je 80% pa 90%  */
     max-width: 81rem;   /* bila je 80rem    */
     display: flex;   /* bilo blok    */
     flex-wrap: wrap;
