@@ -200,7 +200,8 @@ const StjuardesaLinija = ({}) => {
                           }}
                           className="buttonSwitch"
                         >
-                          &nbsp; Stigli &nbsp;
+                          <Trans i18nKey="description.part192"> Stigli </Trans>
+                          
                         </button>
                       </div>
                     </div>

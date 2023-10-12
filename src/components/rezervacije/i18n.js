@@ -111,7 +111,7 @@ i18n
             part132: 'Select a operater',
 
             part133: 'Change',
-            part134: 'Delite',
+            part134: 'Delete',
             part135: 'No line',
 
             part136: 'You will be notified if the reservation changes',

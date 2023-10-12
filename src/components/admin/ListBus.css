@@ -251,6 +251,10 @@
     width: 70rem;   /*  66rem   */
   }
 
+  .podesi-sirinu{
+    width: fit-content;
+  }
+
 
   .email-polje{
     width: 20rem;
@@ -332,6 +336,10 @@
   .buttonSwitch:active {
     box-shadow: #d6d6e7 0 3px 7px inset;
     transform: translateY(2px);
+  }
+  .buttonSwitch-crveno{
+    background-color: #df1a1a;
+    color:#fff;
   }
 
   .stampajLiniju{

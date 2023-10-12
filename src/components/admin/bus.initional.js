@@ -67,14 +67,15 @@ const BusInitional = () => {
     </header> 
 
     <div className="stampajLiniju">
-      <div class="rowTabela sirina-48" >
+      <div class="rowTabela  podesi-sirinu" >    {/* sirina-48  */}
         <ul>
           {" "}
           <div>
             {" "} 
             {busevi.map((bus) => {
               return (
-                <li key={bus.idAutobusa}>                
+                <li key={bus.idAutobusa}>  
+                   <div className="jedan-red-prikaz">             
                    <div class="column centar"> 
                    <Trans i18nKey="description.part170">Oznaka  </Trans>
                    </div>
@@ -92,9 +93,10 @@ const BusInitional = () => {
                       <Trans i18nKey="description.part145">Izmeni </Trans>
                       </button>  {/* dugme  */}
                     </Link></div>
-                   <div className="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch">  {/* dugme  */}
+                   <div className="column"> <button onClick={() => brisanjeBusa(bus.idAutobusa)} className="buttonSwitch ">  {/* dugme  */}
                    <Trans i18nKey="description.part134">Obriši  </Trans>
                     </button></div>
+                   </div>
                 </li> 
               );
       })} 

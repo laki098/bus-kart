@@ -131,7 +131,8 @@ const KorisniciInitial = () => {
                   </button>
                 </Link>
                 </div>
-                <div class="polje-stanica">< button className="buttonSwitch"
+                {/* buttonSwitch-crveno  */}
+                <div class="polje-stanica">< button className="buttonSwitch "
                   onClick={() => {
                     brisanjeKorisnika(korisnik.idKorisnik);
                   }}
