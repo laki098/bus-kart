@@ -33,7 +33,9 @@ const BusInitional = () => {
   const confirmDelete = async () => {
     if (busToDelete !== null) {
       const response = await BusApi().brisanjeBus(busToDelete);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.href = "/bus.initial";
+      }, 2000);
     }
     setIsConfirmationOpen(false);
   };
@@ -111,6 +113,7 @@ const BusInitional = () => {
 
       <div className="confirm-dialog-container red-1">
         {isConfirmationOpen && (
+          <div className="confirm-dialog-overlay">
           <div className="confirm-dialog-box">
             <div className="red-05" >
             <Trans i18nKey="description.part172">Da li ste sigurni da želite da obrišete ovu stavku?  </Trans>
@@ -121,6 +124,7 @@ const BusInitional = () => {
             <button className="confirm-dialog-no" onClick={cancelDelete}>
             <Trans i18nKey="description.part154"> Ne  </Trans>
             </button>
+          </div>
           </div>
         )}
       </div>

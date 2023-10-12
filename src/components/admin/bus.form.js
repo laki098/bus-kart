@@ -28,7 +28,9 @@ const BusForm = ({ mode, idAutobusa }) => {
   }, []);
 
   const back = () => {
-    window.history.back();
+    setTimeout(() => {
+      window.location.href = "/bus.initial";
+    }, 2000);
   };
 
   const submitHandler = (event) => {

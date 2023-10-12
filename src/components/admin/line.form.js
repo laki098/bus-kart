@@ -116,6 +116,9 @@ const LineForm = ({ mode, id, state }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    setTimeout(() => {
+      window.location.href = "/admin.initial";
+    }, 2000);
 
     if (mode === "add") {
       adminLogic.upisLinije();
