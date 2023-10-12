@@ -29,7 +29,7 @@ const VL = ({
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };
-
+  console.log(rezervacija);
   useEffect(() => {
     getLinije();
   }, []);
