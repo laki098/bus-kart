@@ -5,6 +5,7 @@ import volan from "./../../images/volan.png";
 import ulaz from "./../../images/ulaz.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 import sto from "./../../images/sto.jpg";
+import wc from "./../../images/wc.jpg";
 
 const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
   krajnjaStanicaId, })=> {
@@ -108,18 +109,18 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           <span className="seat-number2">{isSeatSelected(3) ? "" : "3"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(2) || isSeatReserved(2) ? "disabled" : ""}`}
-          onClick={() => handleSeatClick(2)}
-          style={{ pointerEvents: isSeatReserved(2) ? "none" : "auto" }}
-        >
-          <span className="seat-number2">{isSeatSelected(2) ? "" : "2"}</span>
-        </div>
-        <div
           className={`seat ${isSeatSelected(1) || isSeatReserved(1) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(1)}
           style={{ pointerEvents: isSeatReserved(1) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(1) ? "" : "1"}</span>
+        </div>
+        <div
+          className={`seat ${isSeatSelected(2) || isSeatReserved(2) ? "disabled" : ""}`}
+          onClick={() => handleSeatClick(2)}
+          style={{ pointerEvents: isSeatReserved(2) ? "none" : "auto" }}
+        >
+          <span className="seat-number2">{isSeatSelected(2) ? "" : "2"}</span>
         </div>
           </div>
           <div className="row">
@@ -565,6 +566,13 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           <span className="seat-number1">{isSeatSelected(62) ? "" : "62"}</span>
         </div>
         <div
+          className={`seat1 ${isSeatSelected(65) || isSeatReserved(65) ? "disabled" : ""}`}
+          onClick={() => handleSeatClick(65)}
+          style={{ pointerEvents: isSeatReserved(65) ? "none" : "auto" }}
+        >
+          <span className="seat-number1">{isSeatSelected(65) ? "" : "65"}</span>
+        </div>
+        <div
           className={`seat1 ${isSeatSelected(63) || isSeatReserved(63) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(63)}
           style={{ pointerEvents: isSeatReserved(63) ? "none" : "auto" }}
@@ -577,13 +585,6 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           style={{ pointerEvents: isSeatReserved(64) ? "none" : "auto" }}
         >
           <span className="seat-number1">{isSeatSelected(64) ? "" : "64"}</span>
-        </div>
-        <div
-          className={`seat1 ${isSeatSelected(65) || isSeatReserved(65) ? "disabled" : ""}`}
-          onClick={() => handleSeatClick(65)}
-          style={{ pointerEvents: isSeatReserved(65) ? "none" : "auto" }}
-        >
-          <span className="seat-number1">{isSeatSelected(65) ? "" : "65"}</span>
         </div>
           </div>
           <img
@@ -605,18 +606,18 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           </div>
           <div className="row">
           <div
-          className={`seat left ${isSeatSelected(91) || isSeatReserved(91) ? "disabled" : ""}`}
-          onClick={() => handleSeatClick(91)}
-          style={{ pointerEvents: isSeatReserved(91) ? "none" : "auto" }}
-        >
-          <span className="seat-number">{isSeatSelected(91) ? "" : "91"}</span>
-        </div>
-        <div
           className={`seat left ${isSeatSelected(90) || isSeatReserved(90) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(90)}
           style={{ pointerEvents: isSeatReserved(90) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(90) ? "" : "90"}</span>
+        </div>
+        <div
+          className={`seat left ${isSeatSelected(91) || isSeatReserved(91) ? "disabled" : ""}`}
+          onClick={() => handleSeatClick(91)}
+          style={{ pointerEvents: isSeatReserved(91) ? "none" : "auto" }}
+        >
+          <span className="seat-number">{isSeatSelected(91) ? "" : "91"}</span>
         </div>
           </div>
           <div className="row">
@@ -775,7 +776,7 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           <span className="seat-number">{isSeatSelected(73) ? "" : "73"}</span>
         </div>
           </div>
-          <div className="row">
+          <div className="row margin">
           <div
           className={`seat ${isSeatSelected(66) || isSeatReserved(66) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(66)}
@@ -813,6 +814,11 @@ const VH =  ({ onReservation, linijaId,pocetnaStanicaId,
           <img src={sto} alt="sto" className="sto1" />
           <img src={sto} alt="sto" className="sto2" />
           <img src={ulaz} alt="ulaz-bus2 " className="ulaz-bus2 " />
+          <img src={ulaz} alt="ulaz" className="ulaz-vh" />
+          <img src={wc} alt="wc" className="wc-vh" />
+          <img src={stepenice} alt="stepenice" className="stepenice-vh" />
+          <img src={stepenice} alt="stepenice" className="stepenice-vh1" />
+
         </div>
       )}
     </>

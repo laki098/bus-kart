@@ -437,6 +437,13 @@ const isSeatReserved = (seatNumber) => {
           <span className="seat-number1">{isSeatSelected(48) ? "" : "48"}</span>
         </div>
         <div
+          className={`seat1 ${isSeatSelected(51) || isSeatReserved(51) ? "disabled" : ""}`}
+          onClick={() => handleSeatClick(51)}
+          style={{ pointerEvents: isSeatReserved(51) ? "none" : "auto" }}
+        >
+          <span className="seat-number1">{isSeatSelected(51) ? "" : "51"}</span>
+        </div>
+        <div
           className={`seat1 ${isSeatSelected(49) || isSeatReserved(49) ? "disabled" : ""}`}
           onClick={() => handleSeatClick(49)}
           style={{ pointerEvents: isSeatReserved(49) ? "none" : "auto" }}
@@ -449,13 +456,6 @@ const isSeatReserved = (seatNumber) => {
           style={{ pointerEvents: isSeatReserved(50) ? "none" : "auto" }}
         >
           <span className="seat-number1">{isSeatSelected(50) ? "" : "50"}</span>
-        </div>
-        <div
-          className={`seat1 ${isSeatSelected(51) || isSeatReserved(51) ? "disabled" : ""}`}
-          onClick={() => handleSeatClick(51)}
-          style={{ pointerEvents: isSeatReserved(51) ? "none" : "auto" }}
-        >
-          <span className="seat-number1">{isSeatSelected(51) ? "" : "51"}</span>
         </div>
       </div>
 

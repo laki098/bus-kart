@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QRScanner from "./QRScanner";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Autobus from "../rezervacije/sedista/autobus";
-import AdminLogic from "../admin/admin.logic";
 
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
@@ -16,27 +15,63 @@ const StjuardesaLinija = ({}) => {
   const [pocetnaStanica, setPocetnaStanica] = useState([]);
   const [krajnjaStanica, setKrajnjaStanica] = useState([]);
 
+  console.log(pocetnaStanica);
+  //? Pristupite celom query string-u
+  const queryString = window.location.search;
+
+  //? Kreirajte objekat sa vrednostima iz query string-a
+  const queryParams = new URLSearchParams(queryString);
+
+  //? Izvucite vrednost pocetnaStanicaId
+  const linijaId = queryParams.get("linijaId");
+
+  //? Izvucite vrednost pocetnaStanicaId
+  const pocetnaStanicaId = queryParams.get("pocetnaStanicaId");
+
+  //? Izvucite vrednost krajnjaStanicaId
+  const krajnjaStanicaId = queryParams.get("krajnjaStanicaId");
+  const location = useLocation();
+  const history = useHistory();
+  //? Dodeljivanje novog url
+  const dodeljivanjeUrl = (stanica) => {
+    const novaPocetnaStanicaId = stanica.id;
+
+    //? Kreirajte objekat sa vrednostima iz trenutnog query string-a
+    const queryParams = new URLSearchParams(location.search);
+
+    //? Postavite novu vrednost za pocetnaStanicaId
+    queryParams.set("pocetnaStanicaId", novaPocetnaStanicaId);
+
+    //? Kreirajte novi URL sa ažuriranim query string-om
+    const noviURL = `${location.pathname}?${queryParams.toString()}`;
+
+    //? Postavite novi URL kako biste promenili adresu stranice
+    history.push(noviURL);
+  };
+
+  console.log(pocetnaStanica);
   //? dobavljanje liniju koja se koristi direktno ovde
   const dobavljanjeLinije = async () => {
     const response = await fetch(
       `http://localhost:5000/stjuardesa/filterLinija/${linijaId}`
     );
     const data = await response.json();
-    setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica.naziv);
+    /* setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica); */
     setLinija(data.izvlacenjeLinija);
-    setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica.naziv);
+    setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica);
   };
 
+  console.log(linija);
   //?primanje podataka sa stjuardese za baš odredjenu liniju
-  const location = useLocation();
+  /* const location = useLocation();
   const state = location.state;
 
-  const linijaId = location.state.linija.id;
+  const linijaId = location.state.linija.id; */
 
   //? dobavljanje autobusa koji je postavljen na toj liniji. kako bi prikayali sedista stjuardesi
   const dobavljanjeBrojaMesta = async () => {
     const response = await fetch(
-      `http://localhost:5000/autobusi/oznaka/${state.linija.oznakaBusa}`
+      `http://localhost:5000/autobusi/oznaka/${linija.oznakaBusa}`
     );
     const data = await response.json();
     setAutobus(data.autobusi);
@@ -45,7 +80,7 @@ const StjuardesaLinija = ({}) => {
   useEffect(() => {
     dobavljanjeLinije();
     dobavljanjeBrojaMesta();
-  }, []);
+  }, [pocetnaStanica]);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
@@ -128,12 +163,13 @@ const StjuardesaLinija = ({}) => {
               {/*  Polazna tačka    */}
               <div className="info-stanica sirina-info-10">
                 {" "}
-                {state.linija.pocetnaStanica.naziv}
+                {linija.pocetnaStanica?.naziv}
               </div>
               <div className="polje-stanica sirina-info-8">
                 <button
                   onClick={() => {
-                    handelePromenaVremenaLinija(state.linija.id, true, false);
+                    handelePromenaVremenaLinija(linija.id, true, false);
+                    setPocetnaStanica(linija.pocetnaStanica);
                   }}
                   className="buttonSwitch"
                 >
@@ -148,12 +184,12 @@ const StjuardesaLinija = ({}) => {
               </div>
               <div className="info-stanica sirina-info-10">
                 {" "}
-                {state.linija.krajnjaStanica.naziv}
+                {linija.krajnjaStanica?.naziv}
               </div>
               <div className="polje-stanica sirina-info-8">
                 <button
                   onClick={() => {
-                    handelePromenaVremenaLinija(state.linija.id, false, true);
+                    handelePromenaVremenaLinija(linija.id, false, true);
                   }}
                   className="buttonSwitch"
                 >
@@ -176,12 +212,11 @@ const StjuardesaLinija = ({}) => {
                         <button
                           onClick={() => {
                             handelePromenaVremena(
-                              state.linija.id,
+                              linija.id,
                               stanica.Medjustanica.redosled,
                               true,
                               false
                             );
-                            setPocetnaStanica(stanica.naziv);
                           }}
                           className="buttonSwitch"
                         >
@@ -192,11 +227,13 @@ const StjuardesaLinija = ({}) => {
                         <button
                           onClick={() => {
                             handelePromenaVremena(
-                              state.linija.id,
+                              linija.id,
                               stanica.Medjustanica.redosled,
                               false,
                               true
                             );
+                            setPocetnaStanica(stanica);
+                            dodeljivanjeUrl(stanica);
                           }}
                           className="buttonSwitch"
                         >
@@ -214,16 +251,18 @@ const StjuardesaLinija = ({}) => {
       </div>
       <div>
         <p>Ruta:</p>
-        <div>{pocetnaStanica} -</div> <div>{krajnjaStanica}</div>
+        <div>{pocetnaStanica?.naziv} -</div> <div>{krajnjaStanica?.naziv}</div>
       </div>
 
-      <Autobus autobusData={autobus} />
+      <Autobus
+        autobusData={autobus}
+        linijaId={linija.id}
+        pocetnaStanicaId={pocetnaStanica.id}
+        krajnjaStanicaId={krajnjaStanica.id}
+      />
       <div className="red-1"></div>
       {showQRScanner && (
-        <QRScanner
-          onScanSuccess={handleQRScanSuccess}
-          idLinije={state.linija.id}
-        />
+        <QRScanner onScanSuccess={handleQRScanSuccess} idLinije={linija.id} />
       )}
 
       {!showQRScanner && (

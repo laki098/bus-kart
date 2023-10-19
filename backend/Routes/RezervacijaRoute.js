@@ -13,6 +13,7 @@ router.post("/linija/:linijaId", async (req, res) => {
     const pocetnaStanicaId = req.body.pocetnaStanicaId;
     const krajnjaLinijaId = req.body.krajnjaStanicaId;
 
+    console.log(linijaId, pocetnaStanicaId, krajnjaLinijaId);
     const linija = await Linija.findByPk(linijaId, { include: Stanica });
 
     let rezervacije = [];
@@ -129,7 +130,6 @@ router.post("/linija/:linijaId", async (req, res) => {
             medjustanicaPocetnaSve.redosled <= medjustanicaPocetna.redosled &&
             medjustanicaKrajnjaSve.redosled > medjustanicaKrajnja.redosled
           ) {
-            console.log("------1");
             rezervacija.push(element);
             continue;
           }
@@ -137,7 +137,6 @@ router.post("/linija/:linijaId", async (req, res) => {
             medjustanicaPocetnaSve.redosled <= medjustanicaPocetna.redosled &&
             medjustanicaKrajnjaSve.redosled > medjustanicaPocetna.redosled
           ) {
-            console.log("------2");
             rezervacija.push(element);
             continue;
           }
@@ -145,7 +144,6 @@ router.post("/linija/:linijaId", async (req, res) => {
             medjustanicaPocetnaSve.redosled >= medjustanicaPocetna.redosled &&
             medjustanicaKrajnjaSve.redosled < medjustanicaKrajnja.redosled
           ) {
-            console.log("------3");
             rezervacija.push(element);
             continue;
           }
@@ -153,7 +151,6 @@ router.post("/linija/:linijaId", async (req, res) => {
             medjustanicaPocetnaSve.redosled < medjustanicaKrajnja.redosled &&
             medjustanicaKrajnjaSve.redosled >= medjustanicaKrajnja.redosled
           ) {
-            console.log("------4");
             rezervacija.push(element);
             continue;
           }
