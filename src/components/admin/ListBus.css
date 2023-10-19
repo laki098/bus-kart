@@ -136,13 +136,14 @@
     line-height: 55px;      /* dodato zbog horizontalnog centriranja        */
 }
 
+
 .centar-1{
     text-align: center;      
     line-height: 45px;      /* dodato zbog horizontalnog centriranja        */
 }
 
 .column {
-    float: left;
+    float: left;    
     width: fit-content;
     padding: 10px;
     height: 80px; 
@@ -152,6 +153,15 @@
   /*  margin: auto;  */
   /*  align-items: center;
     text-align: center;*/
+}
+
+.kolona-bus{
+    width: fit-content;
+    padding: 10px;
+    height: 80px; 
+    border: 1px solid #c2bddf;
+    text-align: center;      
+    line-height: 55px
 }
 
 .column-1 {

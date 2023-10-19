@@ -68,8 +68,11 @@
   }
   .jedan-red-prikaz{
     border: 1.5px solid grey;
-   
-    margin: 3px;
+    width: fit-content;
+    line-height: 45px; 
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    margin: 0.3rem;
     display: flex;
     flex-wrap: wrap;
   }

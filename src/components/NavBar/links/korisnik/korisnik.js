@@ -7,12 +7,24 @@ import "../korisnik/korisnik.css";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../../../NavBar/links/i18n";
 import "../../../../components/NavBar/links/i18n";
-//import "../NavBar/links/i18n";
-//import "../../components/NavBar/links/i18n";
+
 
 import cookies from "js-cookie";
 
+import { useAlert } from 'react-alert';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 const Korisnik = () => {
+
+  const sacuvaoSiPodatke = () => {
+    toast('Uspešno ste sačuvali podatke', {
+      position: toast.POSITION.BOTTOM_CENTER,
+      className: 'toast-message'
+  });
+  };
 
   const [korisnik, setKorisnik] = useState({});
 
@@ -65,7 +77,17 @@ const Korisnik = () => {
   const { t, i18n } = useTranslation();
   // prevodjenje end
 
+  {/*
+  const [showAlert, setShowAlert] = useState(false);
 
+  const handleShowAlert = () => {
+    setShowAlert(true);
+  };
+
+  const handleHideAlert = () => {
+    setShowAlert(false);
+  };
+*/}
     return ( 
       <div  >
       <header>
@@ -86,7 +108,7 @@ const Korisnik = () => {
       </header>
 
 
-        <div className="red-5"></div>
+      <div className="red-5"></div>
 
       <div className="stampajLiniju " >
       <div className="tabela-stanica ">
@@ -185,10 +207,14 @@ const Korisnik = () => {
 
         <div className="red-1"></div>
         <div >
-        <button  type="submit" className="buttonSwitch"> {/*  user-button   */}
+        <button  type="submit" className="buttonSwitch"
+        onClick={sacuvaoSiPodatke}> {/*  user-button   */}
         <Trans i18nKey="description.part129"> Sačuvaj </Trans>
         </button>
+        <ToastContainer />
         </div>
+
+      
         
     </form>
     </div>
