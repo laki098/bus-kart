@@ -75,19 +75,19 @@ const BusInitional = () => {
             {busevi.map((bus) => {
               return (
                 <li key={bus.idAutobusa}>  
-                   <div className="jedan-red-prikaz">             
-                   <div class="column centar"> 
+                   <div className="jedan-red-prikaz ">             
+                   <div class="kolona-bus"> {/*  column centar   */}
                    <Trans i18nKey="description.part170">Oznaka  </Trans>
                    </div>
-                   <div className="column podaci centar sirina-info-4" > {bus.oznakaBusa}</div>  {/*  style={{width: "4rem"}}  */}
-                   <div className="column centar" style={{textAlign: "center"}}> 
+                   <div className="kolona-bus podaci  sirina-info-4" > {bus.oznakaBusa}</div>  {/*  style={{width: "4rem"}}  */}
+                   <div className="kolona-bus" style={{textAlign: "center"}}> 
                    <Trans i18nKey="description.part171">Tablice </Trans>
                    </div>
-                   <div className="column podaci centar"> {bus.tablice} </div>
-                   <div className="column centar"> 
+                   <div className="kolona-bus podaci"> {bus.tablice} </div>
+                   <div className="kolona-bus"> 
                    <Trans i18nKey="description.part36">Broj mesta </Trans>
                    {" "} </div>
-                   <div className="column podaci centar"> {bus.brojSedista} </div>
+                   <div className="kolona-bus podaci "> {bus.brojSedista} </div>
                    <div className="column"> <Link to={`${bus.idAutobusa}/bus.change.line`}>
                       <button className="buttonSwitch">
                       <Trans i18nKey="description.part145">Izmeni </Trans>

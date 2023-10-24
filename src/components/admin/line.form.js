@@ -9,6 +9,10 @@ import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
+import { useAlert } from 'react-alert';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 const LineForm = ({ mode, id, state }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
@@ -140,6 +144,13 @@ const LineForm = ({ mode, id, state }) => {
 
       adminLogic.editLinije(data, id);
     }
+  };
+
+  const sacuvaniPodaci = () => {
+    toast('Uspešno ste sačuvali podatke', {
+      position: toast.POSITION.BOTTOM_CENTER,
+      className: 'toast-message'
+  });
   };
 
   //prevodjenje start
@@ -423,9 +434,11 @@ const LineForm = ({ mode, id, state }) => {
                   </select>
                   <div className="red-1"></div>
                   <div className="red-1"></div>
-                  <button type="submit" className="button">
+                  <button type="submit" className="button"
+                  onClick={sacuvaniPodaci}>
                     <Trans i18nKey="description.part128">"Dodaj"</Trans>
                   </button>
+                  <ToastContainer/>
                 </div>
               </div>
             ) : (
@@ -744,13 +757,15 @@ const LineForm = ({ mode, id, state }) => {
 
                      -------------------------------       */}
                   <div className="red-1">
-                  <button type="submit" className="buttonSwitch">   {/* bilo je button    */}
+                  <button type="submit" className="buttonSwitch"
+                    onClick={sacuvaniPodaci}>   {/* bilo je button    */}
                     {mode === "add" ? (
                       <Trans i18nKey="description.part128">"Dodaj"</Trans>
                     ) : (
                       <Trans i18nKey="description.part129">"Sačuvaj"</Trans>
                     )}
                   </button>
+                  <ToastContainer />
                   </div>
                 </div>
               </div>
