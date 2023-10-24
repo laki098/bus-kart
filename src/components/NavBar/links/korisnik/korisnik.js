@@ -11,7 +11,7 @@ import "../../../../components/NavBar/links/i18n";
 
 import cookies from "js-cookie";
 
-import { useAlert } from 'react-alert';
+
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
