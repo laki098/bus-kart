@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import "./reset.css";
 
 const PasswordReset = () => {
   const [novaSifra, setNovaSifra] = useState();
@@ -37,14 +38,18 @@ const PasswordReset = () => {
       }
     }
   };
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
-    <div>
-      <label>Nova Sifra</label>
-      <input onChange={(e) => setNovaSifra(e.target.value)}></input>
-      <label>Potvrda nove sifre</label>
-      <input onChange={(e) => setPotvrdaNoveSifre(e.target.value)}></input>
-      <button onClick={getResetPassword}>Resetuj lozinku</button>
+    <div className="container-reset">
+      <form onSubmit={handleSubmit} className="form-reset">
+        <label className="label-reset">Nova Sifra</label>
+        <input  className="input-reset" onChange={(e) => setNovaSifra(e.target.value)}></input>
+        <label className="label-reset">Potvrda nove sifre</label>
+        <input className="input-reset" onChange={(e) => setPotvrdaNoveSifre(e.target.value)}></input>
+        <button className="button-reset" onClick={getResetPassword}>Resetuj lozinku</button>
+      </form>
     </div>
   );
 };
