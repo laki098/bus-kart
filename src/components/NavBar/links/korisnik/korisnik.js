@@ -11,7 +11,11 @@ import "../../../../components/NavBar/links/i18n";
 
 import cookies from "js-cookie";
 
+<<<<<<< HEAD
 //import { useAlert } from 'react-alert';
+=======
+
+>>>>>>> 868a1c9ae761a60851be423132ac95d59823ce5a
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 

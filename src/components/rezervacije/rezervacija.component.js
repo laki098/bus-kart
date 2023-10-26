@@ -605,19 +605,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     </div>
                     </div>
                   )}
-                  {/*
-            {pom ? (
-              <div className="maliCrveni">
-                <p>
-                  {" "}
-                  Važi za studente do 27 god. uz index u suprotnom plaća se puna cena
-                  cena
-                </p>{" "}
-              </div>
-            ) : (
-              " "
-            )}
-*/}
+             
                   <div className="red-1"></div>
                 </div>
               </div>
