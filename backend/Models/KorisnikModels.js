@@ -102,6 +102,14 @@ const Korisnik = db.define(
       type: DataTypes.STRING,
       defaultValue: false,
     },
+    brojDolazaka: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    brojNeDolazaka: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
 
   {

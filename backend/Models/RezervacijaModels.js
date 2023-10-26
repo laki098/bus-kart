@@ -47,6 +47,10 @@ const Rezervacija = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    tipKarte: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: "rezervacija",
