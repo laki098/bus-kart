@@ -18,7 +18,6 @@ function Autobus({
   const [pocetnaStanicaIdS, setPocetnaStanicaIdS] = useState();
 
   const getLinije = async () => {
-    console.log(linijaId);
     const response = await fetch(
       `http://localhost:5000/rezervacije/linija/${linijaId}`,
       {
@@ -39,7 +38,7 @@ function Autobus({
 
   useEffect(() => {
     if (autobusData) {
-      // Postavljamo sediste kada se dobiju podaci o autobusu
+      //?Postavljamo sediste kada se dobiju podaci o autobusu
       const brojSedista = autobusData.brojSedista;
       setSediste(Array(brojSedista).fill(false));
       setTrenutnaRezervacija([]);
@@ -49,7 +48,7 @@ function Autobus({
       getLinije();
       setPocetnaStanicaIdS(pocetnaStanicaId);
     }
-  }, [autobusData]);
+  }, [autobusData, pocetnaStanicaId]);
 
   function handleClick(index) {
     const noviNiz = [...sediste];
@@ -80,7 +79,6 @@ function Autobus({
     );
   };
 
-  console.log(rezervacija);
   return (
     <div>
       <div className="autobus-stujardesa">
@@ -88,7 +86,7 @@ function Autobus({
           <div
             key={index}
             className={`sediste ${
-              isSeatReserved(index) ? "rezervisano" : "unreserved"
+              isSeatReserved(index) ? "rezervisano" : "nije"
             }`}
             onClick={() => handleClick(index)}
           >
@@ -119,7 +117,7 @@ function Autobus({
           disabled={trenutnaRezervacija.length === 0}
           className="buttonSwitch"
         >
-          <Trans i18nKey="description.part121"> Potvrdite    </Trans>   {/* Potvrdi izbor   */}
+          Potvrdi izbor
         </button>
       </div>
     </div>

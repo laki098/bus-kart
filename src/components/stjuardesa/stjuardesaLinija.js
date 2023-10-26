@@ -14,8 +14,8 @@ const StjuardesaLinija = ({}) => {
   const [linija, setLinija] = useState([]);
   const [pocetnaStanica, setPocetnaStanica] = useState([]);
   const [krajnjaStanica, setKrajnjaStanica] = useState([]);
+  const [okidanje, setOkidanje] = useState([]);
 
-  console.log(pocetnaStanica);
   //? Pristupite celom query string-u
   const queryString = window.location.search;
 
@@ -30,8 +30,10 @@ const StjuardesaLinija = ({}) => {
 
   //? Izvucite vrednost krajnjaStanicaId
   const krajnjaStanicaId = queryParams.get("krajnjaStanicaId");
+
   const location = useLocation();
   const history = useHistory();
+
   //? Dodeljivanje novog url
   const dodeljivanjeUrl = (stanica) => {
     const novaPocetnaStanicaId = stanica.id;
@@ -49,7 +51,6 @@ const StjuardesaLinija = ({}) => {
     history.push(noviURL);
   };
 
-  console.log(pocetnaStanica);
   //? dobavljanje liniju koja se koristi direktno ovde
   const dobavljanjeLinije = async () => {
     const response = await fetch(
@@ -59,28 +60,31 @@ const StjuardesaLinija = ({}) => {
     /* setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica); */
     setLinija(data.izvlacenjeLinija);
     setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica);
+
+    const responseBus = await fetch(
+      `http://localhost:5000/autobusi/oznaka/${data.izvlacenjeLinija.oznakaBusa}`
+    );
+    const dataBus = await responseBus.json();
+    setAutobus(dataBus.autobusi);
   };
-
-  console.log(linija);
-  //?primanje podataka sa stjuardese za baš odredjenu liniju
-  /* const location = useLocation();
-  const state = location.state;
-
-  const linijaId = location.state.linija.id; */
 
   //? dobavljanje autobusa koji je postavljen na toj liniji. kako bi prikayali sedista stjuardesi
   const dobavljanjeBrojaMesta = async () => {
-    const response = await fetch(
-      `http://localhost:5000/autobusi/oznaka/${linija.oznakaBusa}`
+    const responsePocetnaStanica = await fetch(
+      `http://localhost:5000/stanica/${pocetnaStanicaId}`
     );
-    const data = await response.json();
-    setAutobus(data.autobusi);
+    const dataPocetnaStanica = await responsePocetnaStanica.json();
+    setPocetnaStanica(dataPocetnaStanica.stanica);
   };
+
+  console.log(pocetnaStanica);
+  useEffect(() => {
+    dobavljanjeBrojaMesta();
+  }, [okidanje]);
 
   useEffect(() => {
     dobavljanjeLinije();
-    dobavljanjeBrojaMesta();
-  }, [pocetnaStanica]);
+  }, []);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
@@ -234,11 +238,11 @@ const StjuardesaLinija = ({}) => {
                             );
                             setPocetnaStanica(stanica);
                             dodeljivanjeUrl(stanica);
+                            setOkidanje(stanica);
                           }}
                           className="buttonSwitch"
                         >
                           <Trans i18nKey="description.part192"> Stigli </Trans>
-                          
                         </button>
                       </div>
                     </div>
@@ -260,6 +264,7 @@ const StjuardesaLinija = ({}) => {
         pocetnaStanicaId={pocetnaStanica.id}
         krajnjaStanicaId={krajnjaStanica.id}
       />
+
       <div className="red-1"></div>
       {showQRScanner && (
         <QRScanner onScanSuccess={handleQRScanSuccess} idLinije={linija.id} />

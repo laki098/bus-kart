@@ -22,7 +22,8 @@ const AdminInitial = () => {
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
   const [stanice, setStanice] = useState([]);
-  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
+    useState(false);
   const [lineToDelete, setLineToDelete] = useState(null);
 
   const getStanice = async () => {
@@ -79,7 +80,9 @@ const AdminInitial = () => {
       await adminLogic.brisanjeLinije(lineToDelete);
       // Dodajte kod za osvežavanje prikaza linija nakon brisanja ako je brisanje uspešno.
       // Možete koristiti setState za osvežavanje filteredLinije stanja ili bilo koju drugu metodu koja osvežava prikaz.
-      const updatedLinije = filteredLinije.filter((linija) => linija.id !== lineToDelete);
+      const updatedLinije = filteredLinije.filter(
+        (linija) => linija.id !== lineToDelete
+      );
       setFilteredLinije(updatedLinije);
     }
     setIsDeleteConfirmationOpen(false);
@@ -103,7 +106,7 @@ const AdminInitial = () => {
       {/*  dodala klasu iz registration komponent*/}
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div className="jezici">
+        <div Name="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
@@ -118,7 +121,9 @@ const AdminInitial = () => {
           ))}
         </div>
       </header>
-      <div className="admin-initial-polje">  {/* className={classes.form}  */}
+      <div className="admin-initial-polje">
+        {" "}
+        {/* className={classes.form}  */}
         {/* className={classes.form}   className="home" */}
         <div className="admin-centar">
           {/* className="prvi"  */}
@@ -142,7 +147,6 @@ const AdminInitial = () => {
             })}
           </select>
         </div>
-        
         <div className="admin-centar">
           {/* className="prvi"  */}
           <label className="admin-labela">
@@ -179,21 +183,34 @@ const AdminInitial = () => {
         </div>{" "}
         <br />
         <button className={classes.submit} onClick={clickButton}>
-        <p className="admin-slovaDugme"><Trans i18nKey="description.part34">Red vožnje</Trans></p>
+          <p className="admin-slovaDugme">
+            <Trans i18nKey="description.part34">Red vožnje</Trans>
+          </p>
         </button>
-        <Link to="/admin.component"> {/* className="button-admin" */}
-          <button className={classes.submit}> 
-            <p className="admin-slovaDugme"> <Trans i18nKey="description.part37">Dododavanje linije</Trans></p>
+        <Link to="/admin.component">
+          {" "}
+          {/* className="button-admin" */}
+          <button className={classes.submit}>
+            <p className="admin-slovaDugme">
+              {" "}
+              <Trans i18nKey="description.part37">Dododavanje linije</Trans>
+            </p>
           </button>
         </Link>
       </div>
 
       {/* Blok koji ispisuje red voznje  */}
-      
+
       {filteredLinije.length > 0 ? (
         <div>
-          <ul>  {/* admin-tebela je zamenila home1  */}
-            <div className={`admin-tebela .admin-tebela ${showClass ? "show" : ""}`}>
+          <ul>
+            {" "}
+            {/* admin-tebela je zamenila home1  */}
+            <div
+              className={`admin-tebela .admin-tebela ${
+                showClass ? "show" : ""
+              }`}
+            >
               <style>{`
             .admin-tebela {
               display: none;
@@ -206,21 +223,43 @@ const AdminInitial = () => {
                 console.log(linija);
                 return (
                   <li key={linija.id}>
-                    <div className="admin-jedan-red">   {/* admin-pod-tabela    bela pozadina */}
-                      <div className="polje-stanica"> <Trans i18nKey="description.part11">
-                        Vreme polaska{" "} </Trans>{" "}</div>  {/* bilo className="column centar"  */}
-                      <div className="info-stanica">{linija.vremePolaska} </div> {/* className="column centar podaci"   */}
-                      <div className="polje-stanica"><Trans i18nKey="description.part13">
-                        Vreme dolaska</Trans>{" "}</div>
+                    <div className="admin-jedan-red">
+                      {" "}
+                      {/* admin-pod-tabela    bela pozadina */}
+                      <div className="polje-stanica">
+                        {" "}
+                        <Trans i18nKey="description.part11">
+                          Vreme polaska{" "}
+                        </Trans>{" "}
+                      </div>{" "}
+                      {/* bilo className="column centar"  */}
+                      <div className="info-stanica">
+                        {linija.vremePolaska}{" "}
+                      </div>{" "}
+                      {/* className="column centar podaci"   */}
+                      <div className="polje-stanica">
+                        <Trans i18nKey="description.part13">
+                          Vreme dolaska
+                        </Trans>{" "}
+                      </div>
                       <div className="info-stanica">{linija.vremeDolaska}</div>
-                      <div className="polje-stanica"><Trans i18nKey="description.part3">
-                        Mesto polaska </Trans>{" "}</div>
-                      <div className="info-stanica-1">{linija.pocetnaStanica}</div>
-                      <div className="polje-stanica"><Trans i18nKey="description.part5">
-                        Mesto dolaska </Trans>{" "}</div>
-                      <div className="info-stanica-1">{linija.krajnjaStanica}</div>
-                     {/* &nbsp;&nbsp;   */}
-                      
+                      <div className="polje-stanica">
+                        <Trans i18nKey="description.part3">
+                          Mesto polaska{" "}
+                        </Trans>{" "}
+                      </div>
+                      <div className="info-stanica-1">
+                        {linija.pocetnaStanica}
+                      </div>
+                      <div className="polje-stanica">
+                        <Trans i18nKey="description.part5">
+                          Mesto dolaska{" "}
+                        </Trans>{" "}
+                      </div>
+                      <div className="info-stanica-1">
+                        {linija.krajnjaStanica}
+                      </div>
+                      {/* &nbsp;&nbsp;   */}
                       <Link
                         to={{
                           //? prosledjivanje id-a linije kroz url
@@ -238,7 +277,7 @@ const AdminInitial = () => {
                           },
                         }}
                       >
-                      {/*  <button
+                        {/*  <button
                           style={{
                             backgroundColor: "lightblue",
                             borderBlockColor: "blue",
@@ -248,9 +287,13 @@ const AdminInitial = () => {
                         >
                       */}
                         <div className="polje-stanica">
-                        <button className={classes.submit}><p className="admin-dugme-slova">
-                          <Trans i18nKey="description.part133">Zameni</Trans></p>
-                        </button>
+                          <button className={classes.submit}>
+                            <p className="admin-dugme-slova">
+                              <Trans i18nKey="description.part133">
+                                Zameni
+                              </Trans>
+                            </p>
+                          </button>
                         </div>
                       </Link>
                       {/*  {" "} &emsp;   */}
@@ -261,12 +304,15 @@ const AdminInitial = () => {
                         }}
                       */}
                       <div className="polje-stanica">
-                      <button
-                        onClick={() => brisanjeLinije(linija.id)}
-                        className={classes.submit}
-                      > <p className="admin-dugme-slova">
-                        <Trans i18nKey="description.part134">Obriši</Trans></p>
-                      </button>
+                        <button
+                          onClick={() => brisanjeLinije(linija.id)}
+                          className={classes.submit}
+                        >
+                          {" "}
+                          <p className="admin-dugme-slova">
+                            <Trans i18nKey="description.part134">Obriši</Trans>
+                          </p>
+                        </button>
                       </div>
                     </div>
                   </li>
@@ -282,22 +328,23 @@ const AdminInitial = () => {
       )}
       <div className="confirm-dialog-container">
         {isDeleteConfirmationOpen && (
-           <div className="confirm-dialog-overlay">
-          <div className="confirm-dialog-box">
-            <div className="red-05">  
-            <Trans i18nKey="description.part155">
-            Da li ste sigurni da želite da obrišete ovog korisnika? </Trans>
+          <div className="confirm-dialog-overlay">
+            <div className="confirm-dialog-box">
+              <div className="red-05">
+                <Trans i18nKey="description.part155">
+                  Da li ste sigurni da želite da obrišete ovog korisnika?{" "}
+                </Trans>
+              </div>
+              <button className="confirm-dialog-yes" onClick={confirmDelete}>
+                <Trans i18nKey="description.part153">Da </Trans>
+              </button>
+              <button className="confirm-dialog-no" onClick={cancelDelete}>
+                <Trans i18nKey="description.part154"> Ne </Trans>
+              </button>
             </div>
-            <button className="confirm-dialog-yes" onClick={confirmDelete}>
-            <Trans i18nKey="description.part153">Da </Trans>
-            </button>
-            <button className="confirm-dialog-no" onClick={cancelDelete}>
-            <Trans i18nKey="description.part154"> Ne  </Trans>
-            </button>
           </div>
-          </div>
-      )}
-       </div>
+        )}
+      </div>
     </div>
   );
 };
