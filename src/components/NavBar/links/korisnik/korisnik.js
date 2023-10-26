@@ -11,7 +11,7 @@ import "../../../../components/NavBar/links/i18n";
 
 import cookies from "js-cookie";
 
-import { useAlert } from 'react-alert';
+//import { useAlert } from 'react-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,7 +22,8 @@ const Korisnik = () => {
   const sacuvaoSiPodatke = () => {
     toast('Uspešno ste sačuvali podatke', {
       position: toast.POSITION.BOTTOM_CENTER,
-      className: 'toast-message'
+      className: 'toast-message',
+      
   });
   };
 
@@ -77,17 +78,7 @@ const Korisnik = () => {
   const { t, i18n } = useTranslation();
   // prevodjenje end
 
-  {/*
-  const [showAlert, setShowAlert] = useState(false);
 
-  const handleShowAlert = () => {
-    setShowAlert(true);
-  };
-
-  const handleHideAlert = () => {
-    setShowAlert(false);
-  };
-*/}
     return ( 
       <div  >
       <header>
