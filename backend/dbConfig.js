@@ -9,16 +9,7 @@ const sequelize = new Sequelize({
   port: process.env.DB_PORT,
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Sequilize connected successfully");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to Sequelize", err);
-  });
-
-//? pravi Modele(tabele u bazi) ako ne postoje
-sequelize.sync();
+/* //? pravi Modele(tabele u bazi) ako ne postoje
+sequelize.sync(); */
 
 export default sequelize;
