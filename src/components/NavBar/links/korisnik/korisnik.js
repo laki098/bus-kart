@@ -7,12 +7,33 @@ import "../korisnik/korisnik.css";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../../../NavBar/links/i18n";
 import "../../../../components/NavBar/links/i18n";
-//import "../NavBar/links/i18n";
-//import "../../components/NavBar/links/i18n";
+
 
 import cookies from "js-cookie";
 
+<<<<<<< HEAD
+//import { useAlert } from 'react-alert';
+=======
+
+>>>>>>> 868a1c9ae761a60851be423132ac95d59823ce5a
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 const Korisnik = () => {
+<<<<<<< HEAD
+=======
+
+  const sacuvaoSiPodatke = () => {
+    toast('Uspešno ste sačuvali podatke', {
+      position: toast.POSITION.BOTTOM_CENTER,
+      className: 'toast-message',
+      
+  });
+  };
+
+>>>>>>> f704e4bc17cf2874f3f165412e8919b4b25b3a06
   const [korisnik, setKorisnik] = useState({});
 
   //? izvlacenje korisnika iz cookisa
@@ -83,6 +104,7 @@ const Korisnik = () => {
 
       <div className="red-5"></div>
 
+<<<<<<< HEAD
       <div className="stampajLiniju ">
         <div className="tabela-stanica ">
           <form onSubmit={submitHandler}>
@@ -95,6 +117,9 @@ const Korisnik = () => {
               </label>
               <div className="red-1"></div>
               <div className="red-1"></div>
+=======
+      <div className="red-5"></div>
+>>>>>>> f704e4bc17cf2874f3f165412e8919b4b25b3a06
 
               <div className="red-05">
                 <label className="labela-stanica labela-stanica-vece">
@@ -185,7 +210,88 @@ const Korisnik = () => {
             </div>
           </form>
         </div>
+<<<<<<< HEAD
       </div>
+=======
+        <div className="user-control">
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part40"> Ime  </Trans>
+          </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.ime}
+            type="text"
+            required
+            name="ime"
+            onChange={korisnikLogic.changeHandler}  >
+          </input>
+        </div>
+
+        <div className="red-05"></div>
+
+        <div className="user-control">
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part42"> Prezime  </Trans>
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.prezime}
+            type="text"
+            required
+            name="prezime"
+            onChange={korisnikLogic.changeHandler}  > 
+          </input>
+        </div>
+
+        <div className="user-control">
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+          <Trans i18nKey="description.part48"> Broj telefona </Trans>
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.brojTelefona}
+            type="text"
+            required
+            name="brojTelefona"
+            onChange={korisnikLogic.changeHandler}  >
+          </input>
+        </div>
+
+        <div className="user-control">
+          <div className="red-05">
+          <label className="labela-stanica labela-stanica-vece">
+            Email
+            </label>
+          </div>
+          <input
+            className="user-input"
+            defaultValue={korisnik.email}
+            type="text"
+            required
+            name="email"
+            onChange={korisnikLogic.changeHandler} >
+          </input>
+        </div>
+
+        <div className="red-1"></div>
+        <div >
+        <button  type="submit" className="buttonSwitch"
+        onClick={sacuvaoSiPodatke}> {/*  user-button   */}
+        <Trans i18nKey="description.part129"> Sačuvaj </Trans>
+        </button>
+        <ToastContainer />
+        </div>
+
+      
+        
+    </form>
+>>>>>>> f704e4bc17cf2874f3f165412e8919b4b25b3a06
     </div>
   );
 };

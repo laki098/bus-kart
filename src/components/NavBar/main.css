@@ -14,6 +14,17 @@
   /* transform: translate(-50%); */
   margin: 1rem;
 }
+
+/* kad smanjimo dimenziju da nam slova u nav baru budu u jednom redu    */
+@media (min-width: 890px) and (max-width: 1010px) {
+  .navbar{
+    font-size: 1rem;    /* 0.85rem;   */
+    padding: 0 0.1rem;    
+  }
+  .nav-menu{
+    grid-gap: 0.025rem ;
+  }
+}
 .navbar {
   background: rgba(232, 244, 248, 1);
   background: -moz-linear-gradient(
@@ -150,7 +161,7 @@ img {
     );
     left: 0;
     top: 4.688rem;
-    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;    /*  ease-out  bilo */
     width: 95%;
     margin: 1rem;
     z-index: 10;
@@ -167,7 +178,7 @@ img {
     display: block;
     position: absolute;
     font-size: 1.875rem;
-    background-color: rgb(4, 92, 133);
+    background-color:  rgb(4, 92, 133);   
     color: white;
     background-color: inherit;
     border: none;
@@ -183,6 +194,7 @@ img {
     width: 91.5vw;
     border-radius: 1rem;
   }
+ 
 }
 
 @media (min-width: 690px) {
@@ -190,6 +202,7 @@ img {
     width: 94.2vw;
     border-radius: 1rem;
   }
+  
 }
 
 @media (min-width: 890px) {
@@ -205,9 +218,9 @@ img {
 .dropdown {
   z-index: 10;
   position: absolute;
-  width: 10.5rem;
+  width: 9.5rem;    /*  10.5    */
   text-align: center;
-  left: -1.75rem;
+  left: -1.75rem;   
   top: 2.7rem;
 }
 
@@ -215,7 +228,12 @@ img {
 
 li:hover .dropdown {
   display: block;
-  background-color: rgb(152, 226, 248);
+  background-color:  rgb(96, 182, 216)  ; /* rgb(152, 226, 248);    */
+  border-radius: 0.35rem;                   /* sa ova tri parametra sam podesila poziciju   */
+  margin-top: -0.35rem;                      /* sa 0.5rem bilo lepo ali pravi probleme oko ulaska i sa -0.01rem bilo Ok  */
+  margin-left: 1.5rem;
+  padding-bottom: 0.05rem;
+ /* transition-duration: 0.5s;    */
 }
 
 
@@ -230,7 +248,7 @@ li:hover .dropdown .dropdown-item {
 
 
 .active{
-  background-color: #1d4ed8;
+  background-color: #1d4ed8 ;       /* #1d4ed8;   */
 }
 
 nav .title {
@@ -269,7 +287,7 @@ nav ul li a:not(.active):hover {
     cursor: pointer;
 }
 .test-dropdown:not(.active):hover {
-  background-color:#2a59f1 ;
+  background-color:  #2a59f1 ;   
 }
 
 .login-style:not(.active):hover {

@@ -22,6 +22,7 @@ import "./i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 const RezervacijaComponent = ({ id, state }) => {
+ // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
   const [brojSedista, setBrojSedista] = useState();
 
@@ -32,6 +33,18 @@ const RezervacijaComponent = ({ id, state }) => {
   if (userData != undefined) {
     userPars = JSON.parse(userData);
   }
+
+{/*
+  const filterLinija = async () => {
+    if (!valueDate) return;
+    const response = await LinijeApi().filterLinija(val1, val2, returnDate);
+
+    const data = await response.json();
+
+    console.log(data.rezultat);
+    setFilteredLinije(data.rezultat);
+  };
+*/}
 
   const novaRezervacija = () => {
     RezervacijaApi()
@@ -220,6 +233,8 @@ const RezervacijaComponent = ({ id, state }) => {
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
+
+
   return (
     <>
       <header>
@@ -489,7 +504,7 @@ const RezervacijaComponent = ({ id, state }) => {
                     onChange={(event) => {
                       setSelectedValue(event.target.value);
 
-                      if (event.target.value === "Povratna") {
+                      if ((event.target.value === "Povratna") | (event.target.value ==="Return")) {
                         setShowReturnDate(true);
                       } else {
                         setShowReturnDate(false);
@@ -565,8 +580,12 @@ const RezervacijaComponent = ({ id, state }) => {
                   </div>
                   {/* kraj studentska karta   */}
                   {showReturnDate && (
-                    <div>
-                      <label htmlFor="returnDate">Datum povratka:</label>
+                    <div className="ograda1">
+                    <div >
+                      <label htmlFor="returnDate">
+                      <Trans i18nKey="description.part70">  Datum povratka  </Trans>
+                      </label>
+                      &emsp; &ensp;
                       <input
                         type="date"
                         id="returnDate"
@@ -574,20 +593,19 @@ const RezervacijaComponent = ({ id, state }) => {
                         min={new Date().toISOString().split("T")[0]}
                       />
                     </div>
+                    <div style={{textAlign: "left", paddingLeft:"2rem"}}>
+                      <label >  
+                      <Trans i18nKey="description.part11">  Vreme polaska  </Trans>
+                      </label>
+                    </div>
+                    {/* prikazi vremena  */}
+                    <div>
+
+
+                    </div>
+                    </div>
                   )}
-                  {/*
-            {pom ? (
-              <div className="maliCrveni">
-                <p>
-                  {" "}
-                  Važi za studente do 27 god. uz index u suprotnom plaća se puna cena
-                  cena
-                </p>{" "}
-              </div>
-            ) : (
-              " "
-            )}
-*/}
+             
                   <div className="red-1"></div>
                 </div>
               </div>

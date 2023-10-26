@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
 import cookies from "js-cookie";
 import logo from "./../images/logo.png";
+import { useMediaQuery } from "react-responsive";
+
+//import { useMediaQuery } from "react-responsive"; // responsive
+//import MediaQuery from "react-responsive";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
+ //const isMobile = useMediaQuery({ maxWidth: 480 });
+ //const setIsMobile = useMediaQuery({ maxWidth: 480 });
+ const malaDimenzija = useMediaQuery ({ maxWidth: 890 });
+  
 
   //?dropdown za logovanog korisnika
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

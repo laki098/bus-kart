@@ -6,7 +6,6 @@ import "../login/loginStyle.css"; /* koristim stil kao ize dela za logovanje */
 //import "../NavBar/links/pocetna.css";
 import "./stanica/stanica.css";
 
-
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";

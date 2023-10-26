@@ -223,3 +223,41 @@ p.text span {
   justify-content: end;
   display: grid;
 }
+.margin {
+  margin-bottom: 2.5rem;
+}
+.ulaz-vh {
+  position: absolute;
+  left: 185px;
+  height: 66px;
+  width: 54px;
+  top: 527px;
+}
+.wc-vh {
+  position: absolute;
+  left: 15px;
+  height: 49px;
+  width: 93px;
+  top: 536px;
+}
+.stepenice-vh {
+  position: absolute;
+    left: 106px;
+    height: 51px;
+    width: 93px;
+    top: 534px;
+}
+.stepenice-vh1 {
+  position: absolute;
+  left: 106px;
+  height: 51px;
+  width: 93px;
+  top: 104px;
+}
+.stepenice-s2 {
+  position: absolute;
+  left: 106px;
+  height: 51px;
+  width: 93px;
+  top: 104px;
+}
