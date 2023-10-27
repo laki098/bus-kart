@@ -8,6 +8,7 @@ import "./ListBus.css";
 import { useTranslation, Trans } from 'react-i18next';    //prevodjenje
 import '../../components/NavBar/links/i18n';
 import '../../components/rezervacije/i18n';
+import { ToastContainer } from "react-toastify";
 
 
 const KorisnikChange = () => {
@@ -185,6 +186,7 @@ const KorisnikChange = () => {
       </div>
       </div>
     </form>
+    <ToastContainer/>
     </div>
   );
 };

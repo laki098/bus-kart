@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
   port: process.env.DB_PORT,
 });
 
-/* //? pravi Modele(tabele u bazi) ako ne postoje
-sequelize.sync(); */
+//? pravi Modele(tabele u bazi) ako ne postoje
+sequelize.sync();
 
 export default sequelize;

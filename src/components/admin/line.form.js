@@ -775,6 +775,7 @@ const LineForm = ({ mode, id, state }) => {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

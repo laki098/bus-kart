@@ -1,5 +1,6 @@
 import loginApi from "../../api/login.api";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const LoginLogic = () => {
   /* const [korisnikB, setKorisnikB] = useState({}); */
@@ -9,14 +10,42 @@ const LoginLogic = () => {
       .login(data.korisnickoIme, data.lozinka)
       .then((response) => {
         /* setKorisnikB(response.data.korisnickiPodaci); */
-        alert("Konacccno");
-        window.location.href = "pocetna";
+        notifySuccest(); // Prikazuje notifikaciju o uspešnom logovanju
+        setTimeout(() => {
+          window.location.href = "/pocetna"; // Preusmerava korisnika na pocetna nakon nekoliko sekundi
+        }, 3000);
         console.log(response);
       })
       .catch((error) => {
         console.log(error);
-        alert("uneti su pogresni podaci");
+        notifyWarn();
       });
+  };
+
+  const notifySuccest = () => {
+    toast.success("Uspešno ste se logovali!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notifyWarn = () => {
+    toast.warn("Uneti su pogresni podaci!", {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const changeHandler = (e) =>

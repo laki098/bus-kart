@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LinijeApi from "../../api/linije.api";
+import { toast } from "react-toastify";
 
 const AdminLogic = () => {
   let [data, setData] = useState({ medjustanice: [] });
@@ -61,7 +62,7 @@ const AdminLogic = () => {
       )
       .then((response) => {
         console.log(response);
-        alert("Konacccno");
+        notifySuccest(); // Prikazuje notifikaciju o uspešnom pravljenju linije
       })
       .catch((error) => {
         console.log(error);
@@ -87,11 +88,24 @@ const AdminLogic = () => {
       )
       .then((response) => {
         console.log(response);
-        alert("Konacccno");
+        notifySuccest(); // Prikazuje notifikaciju o uspešnom editovanju linije
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const notifySuccest = () => {
+    toast.success("Uspešno!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const brisanjeLinije = async (id) => {
