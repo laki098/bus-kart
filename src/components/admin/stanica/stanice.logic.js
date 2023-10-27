@@ -1,6 +1,6 @@
 import { useState } from "react";
 import StaniceApi from "../../../api/stanice.api";
-
+import { toast } from "react-toastify";
 const StaniceLogic = () => {
   let [data, setData] = useState({});
 
@@ -15,7 +15,7 @@ const StaniceLogic = () => {
     StaniceApi()
       .upisStanice(data.naziv, data.adresa)
       .then((response) => {
-        alert("Konacno");
+        notifySuccest(); // Prikazuje notifikacije
       })
       .catch((error) => {
         console.log(error);
@@ -26,11 +26,24 @@ const StaniceLogic = () => {
     StaniceApi()
       .editStanice(data.id, data.naziv, data.adresa)
       .then((response) => {
-        alert("Konacno");
+        notifySuccest(); // Prikazuje notifikacije
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const notifySuccest = () => {
+    toast.success("Uspešno", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return { changeHandler, setData, upisStanice, editStanice };
