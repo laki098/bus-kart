@@ -24,7 +24,7 @@ const StaniceLogic = () => {
 
   const editStanice = (data) => {
     StaniceApi()
-      .editStanice(data.naziv, data.adresa)
+      .editStanice(data.id, data.naziv, data.adresa)
       .then((response) => {
         alert("Konacno");
       })

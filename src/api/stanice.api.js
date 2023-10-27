@@ -27,8 +27,8 @@ const StaniceApi = () => {
   };
 
   const editStanice = async (id, naziv, adresa) => {
+    console.log(id, naziv, adresa);
     return await axios.put(`http://localhost:5000/stanica/${id}`, {
-      id: id,
       naziv: naziv,
       adresa: adresa,
     });

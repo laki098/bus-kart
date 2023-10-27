@@ -3,7 +3,6 @@ import StaniceLogic from "./stanice.logic";
 import StaniceApi from "../../../api/stanice.api";
 import "./stanica.css";
 
-
 import "../../NavBar/links/i18n";
 import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
@@ -11,7 +10,6 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 const StaniceForm = ({ mode, id }) => {
   const [stanice, setStanice] = useState({});
   const staniceLogic = StaniceLogic();
-
   const izmeniStanice = async () => {
     try {
       const response = await StaniceApi().filterStaniceId(id);
@@ -32,7 +30,8 @@ const StaniceForm = ({ mode, id }) => {
   const back = () => {
     setTimeout(() => {
       window.location.href = "/stanice.initial";
-    }, 2000);  };
+    }, 2000);
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -42,20 +41,19 @@ const StaniceForm = ({ mode, id }) => {
     } else if (mode === "edit") {
       const formData = new FormData(event.target);
       const data = {
-        id,
+        id: id,
         naziv: formData.get("naziv"),
         adresa: formData.get("adresa"),
       };
-
       staniceLogic.editStanice(data);
     }
   };
 
   //prevodjenje
   const lngs = {
-      en: { nativeName: "Engleski" },
-      de: { nativeName: "Srpski" },
-    };
+    en: { nativeName: "Engleski" },
+    de: { nativeName: "Srpski" },
+  };
   const { t, i18n } = useTranslation();
   // prevodjenje
 
@@ -81,43 +79,66 @@ const StaniceForm = ({ mode, id }) => {
       <div className="red-1"></div>
       <div className="red-1"></div>
 
-    <form onSubmit={submitHandler} className="tabela-stanica">
-      
-      <div>
-        <div className="naslovStanica">
-        {mode === "add" ? <p><Trans i18nKey="description.part140">Nova stanica</Trans></p> : <p><Trans i18nKey="description.part141">Izmena stanica</Trans></p>}
-        </div>
+      <form onSubmit={submitHandler} className="tabela-stanica">
         <div>
-        <div><label className="labela-stanica"><Trans i18nKey="description.part142">Naziv</Trans></label></div> 
-        {/* za input bilo je className="test"  */}
-        <input
-          defaultValue={stanice.naziv}
-          type="text"
-          name="naziv"
-          className="input-stanica"
-          onChange={staniceLogic.changeHandler}
-        ></input>
+          <div className="naslovStanica">
+            {mode === "add" ? (
+              <p>
+                <Trans i18nKey="description.part140">Nova stanica</Trans>
+              </p>
+            ) : (
+              <p>
+                <Trans i18nKey="description.part141">Izmena stanica</Trans>
+              </p>
+            )}
+          </div>
+          <div>
+            <div>
+              <label className="labela-stanica">
+                <Trans i18nKey="description.part142">Naziv</Trans>
+              </label>
+            </div>
+            {/* za input bilo je className="test"  */}
+            <input
+              defaultValue={stanice.naziv}
+              type="text"
+              name="naziv"
+              className="input-stanica"
+              onChange={staniceLogic.changeHandler}
+            ></input>
+          </div>
+          <div className="red-1"></div>
+          <div>
+            <div>
+              <label className="labela-stanica">
+                <Trans i18nKey="description.part111">Adresa</Trans>
+              </label>
+            </div>
+            <input
+              defaultValue={stanice.adresa}
+              type="text"
+              name="adresa"
+              className="input-stanica"
+              onChange={staniceLogic.changeHandler}
+            ></input>
+          </div>
+          <div>
+            <div className="red-1"></div>
+            <button onClick={back} type="submit" class="buttonSwitch">
+              {mode === "add" ? (
+                <>
+                  <Trans i18nKey="description.part128">Dodaj</Trans>
+                </>
+              ) : (
+                <>
+                  <Trans i18nKey="description.part133">Zameni</Trans>
+                </>
+              )}
+            </button>
+          </div>
+          <div className="red-1"></div>
         </div>
-        <div className="red-1"></div>
-        <div>
-        <div><label className="labela-stanica"><Trans i18nKey="description.part111">Adresa</Trans></label></div>
-        <input
-          defaultValue={stanice.adresa}
-          type="text"
-          name="adresa"
-          className="input-stanica"
-          onChange={staniceLogic.changeHandler}
-        ></input>
-        </div>
-        <div>
-        <div className="red-1"></div>
-        <button onClick={back} type="submit" class="buttonSwitch">
-          {mode === "add" ? <><Trans i18nKey="description.part128">Dodaj</Trans></> : <><Trans i18nKey="description.part133">Zameni</Trans></>}
-        </button>
-        </div>
-        <div className="red-1"></div>
-      </div>
-    </form>
+      </form>
     </div>
   );
 };
