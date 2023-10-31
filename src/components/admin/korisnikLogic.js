@@ -28,9 +28,7 @@ const KorisnikLogic = () => {
       )
       .then((response) => {
         notifySuccest(); // Prikazuje notifikaciju o uspešnoj promeni
-        setTimeout(() => {
-          window.location.href = "/korisniciInitial"; // Preusmerava na odredjenoj stranici
-        }, 2500);
+        
       })
       .catch((error) => {
         console.log(error);

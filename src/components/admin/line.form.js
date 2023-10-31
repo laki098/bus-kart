@@ -146,12 +146,7 @@ const LineForm = ({ mode, id, state }) => {
     }
   };
 
-  const sacuvaniPodaci = () => {
-    toast('Uspešno ste sačuvali podatke', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      className: 'toast-message'
-  });
-  };
+  
 
   //prevodjenje start
   const lngs = {
@@ -434,8 +429,7 @@ const LineForm = ({ mode, id, state }) => {
                   </select>
                   <div className="red-1"></div>
                   <div className="red-1"></div>
-                  <button type="submit" className="button"
-                  onClick={sacuvaniPodaci}>
+                  <button type="submit" className="button">
                     <Trans i18nKey="description.part128">"Dodaj"</Trans>
                   </button>
                   <ToastContainer/>
@@ -758,7 +752,7 @@ const LineForm = ({ mode, id, state }) => {
                      -------------------------------       */}
                   <div className="red-1">
                   <button type="submit" className="buttonSwitch"
-                    onClick={sacuvaniPodaci}>   {/* bilo je button    */}
+                    >   {/* bilo je button    */}
                     {mode === "add" ? (
                       <Trans i18nKey="description.part128">"Dodaj"</Trans>
                     ) : (
