@@ -290,21 +290,6 @@ nav ul li a:not(.active):hover {
   background-color:  #2a59f1 ;   
 }
 
-.login-style:not(.active):hover {
-  background-color:#2a59f1 ;
-}
-
-.login-style {
-  color: white;
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  padding: 0.5rem;
-  margin: 0 0.5rem;
-  border-radius: 0.5rem;
-}
-
-
 
 .logins {
   cursor: pointer;

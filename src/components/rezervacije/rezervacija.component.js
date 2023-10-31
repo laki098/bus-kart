@@ -16,7 +16,7 @@ import MB4 from "./proba/mb4";
 import VL from "./proba/vl";
 import S1 from "./proba/s1";
 import RezervacijaApi from "../../api/rezervacijaApi";
-
+import { ToastContainer, toast } from "react-toastify";
 import "./i18n"; // za prevodjenje
 import "./i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
@@ -65,13 +65,39 @@ const RezervacijaComponent = ({ id, state }) => {
       )
       .then((response) => {
         console.log(response);
-        alert("radi");
+        notifySuccest();
       })
       .catch((error) => {
         console.log(error);
-        alert("nece");
+        notifyWarn();
       });
   };
+
+  const notifySuccest = () => {
+    toast.success("Uspešno ste rezervisali kartu", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+  const notifyWarn = () => {
+    toast.warn("Nisu uneti svi podaci", {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   const rezervacija = async () => {
     const response = await LinijeApi().filterLinijaID(id);
     const data = await response.data.linija; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
@@ -791,6 +817,7 @@ const RezervacijaComponent = ({ id, state }) => {
           <div className="red-1"></div>
         </div>
       </form>
+      <ToastContainer/>
       <div className="red-1"></div>
     </>
   );

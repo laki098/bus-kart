@@ -10,7 +10,7 @@ import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 const LineForm = ({ mode, id, state }) => {
@@ -759,7 +759,6 @@ const LineForm = ({ mode, id, state }) => {
                       <Trans i18nKey="description.part129">"Sačuvaj"</Trans>
                     )}
                   </button>
-                  <ToastContainer />
                   </div>
                 </div>
               </div>
