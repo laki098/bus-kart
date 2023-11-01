@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./main.css";
 import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
@@ -15,6 +15,12 @@ const Navbar = () => {
  //const setIsMobile = useMediaQuery({ maxWidth: 480 });
  const malaDimenzija = useMediaQuery ({ maxWidth: 890 });
   
+
+ useEffect(() => {
+  if (isMobile) {
+    setMenuOpen(true); // Otvori mobilni meni automatski na manjim ekranima
+  }
+}, [isMobile]);
 
   //?dropdown za logovanog korisnika
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -91,17 +97,17 @@ const Navbar = () => {
         </li>
         <div className="logins">
           {Object.keys(userPars).length === 0 ? (
-            <li className="item-li" >
+            <li >
               <Link to="/login.component">
                 <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi se
               </Link>
             </li>
           ) : (
             <>
-              <div
+              {/* <div
                 className="menu"
                 onClick={() => setMenuOpen(!menuOpen)}
-              ></div>
+              ></div> */}
               <ul className={menuOpen ? "open" : ""}>
                 <li className="item-lii " onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
                   {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
