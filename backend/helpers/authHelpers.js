@@ -1,6 +1,6 @@
-import { promisify } from "util";
-import jwt from "jsonwebtoken";
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
 
-export const checkToken = async (token) => {
+module.exports.checkToken = async (token) => {
   return await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 };

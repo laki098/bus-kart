@@ -1,5 +1,8 @@
-import { DataTypes } from "sequelize";
-import db from "../dbConfig.js";
+/* import { DataTypes } from "sequelize";
+import db from "../dbConfig.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
 
 const Bus = db.define(
   "autobusi",
@@ -54,4 +57,4 @@ const Bus = db.define(
   }
 );
 
-export default Bus;
+module.exports = Bus;

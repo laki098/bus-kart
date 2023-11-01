@@ -1,6 +1,9 @@
-import express from "express";
+/* import express from "express";
 
-import Bus from "../Models/BusModels.js";
+import Bus from "../Models/BusModels.js"; */
+
+const express = require("express");
+const Bus = require("../Models/BusModels.js");
 
 const router = express.Router();
 
@@ -109,4 +112,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

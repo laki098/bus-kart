@@ -1,8 +1,14 @@
-import { DataTypes } from "sequelize";
+/* import { DataTypes } from "sequelize";
 import db from "../dbConfig.js";
 import Linija from "./LinijaModels.js";
 import Stanica from "./StanicaModels.js";
-import Korisnik from "./KorisnikModels.js";
+import Korisnik from "./KorisnikModels.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
+const Stanica = require("./StanicaModels.js");
+const Linija = require("./LinijaModels.js");
+const Korisnik = require("./KorisnikModels.js");
 
 const Rezervacija = db.define(
   "Rezervacija",
@@ -77,4 +83,4 @@ Stanica.hasMany(Rezervacija, { foreignKey: "krajnjaStanicaId" });
 Rezervacija.belongsTo(Korisnik, { foreignKey: "korisnikId" });
 Korisnik.hasMany(Rezervacija, { foreignKey: "korisnikId" });
 
-export default Rezervacija;
+module.exports = Rezervacija;

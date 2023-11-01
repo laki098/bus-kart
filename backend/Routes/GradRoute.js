@@ -1,7 +1,11 @@
-import express from "express";
+/* import express from "express";
 
 import Grad from "../Models/GradModels.js";
-import Stanica from "../Models/StanicaModels.js";
+import Stanica from "../Models/StanicaModels.js"; */
+
+const express = require("express");
+const Grad = require("../Models/GradModels.js");
+const Stanica = require("../Models/StanicaModels.js");
 
 const router = express.Router();
 
@@ -103,4 +107,4 @@ router.post("/linije", async (req, res) => {
   }
 }); */
 
-export default router;
+module.exports = router;

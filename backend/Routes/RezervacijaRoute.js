@@ -1,8 +1,14 @@
-import express from "express";
+/* import express from "express";
 import Rezervacija from "../Models/RezervacijaModels.js";
 import Linija from "../Models/LinijaModels.js";
 import Stanica from "../Models/StanicaModels.js";
-import Medjustanica from "../Models/MedjustanicaModels.js";
+import Medjustanica from "../Models/MedjustanicaModels.js"; */
+
+const express = require("express");
+const Rezervacija = require("../Models/RezervacijaModels.js");
+const Linija = require("../Models/LinijaModels.js");
+const Stanica = require("../Models/StanicaModels.js");
+const Medjustanica = require("../Models/MedjustanicaModels.js");
 
 const router = express.Router();
 
@@ -264,4 +270,4 @@ router.post("/linija/:linijaId", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

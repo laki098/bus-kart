@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -13,10 +13,27 @@ import StjuardesaRouter from "./Routes/StjuardesaRoute.js";
 import RezervacijaRoute from "./Routes/RezervacijaRoute.js";
 import Korisnik from "./Models/KorisnikModels.js";
 import bc from "bcrypt";
-import CenaRouter from "./Routes/CenaRoute.js";
+import CenaRouter from "./Routes/CenaRoute.js"; */
+
+const express = require("express");
+require("dotenv/config");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const database = require("./dbConfig.js");
+
+const BusRouter = require("./Routes/BusRoute.js");
+const KorisnikRouter = require("./Routes/KorisnikRoute.js");
+const GradRouter = require("./Routes/GradRoute.js");
+const LinijaRoute = require("./Routes/Index.js");
+const StanicaRouter = require("./Routes/StanicaRoute.js");
+const StjuardesaRouter = require("./Routes/StjuardesaRoute.js");
+const RezervacijaRoute = require("./Routes/RezervacijaRoute.js");
+const Korisnik = require("./Models/KorisnikModels.js");
+const bc = require("bcrypt");
+const CenaRouter = require("./Routes/CenaRoute.js");
 
 //? Kreiranje server
-export const app = express();
+const app = express();
 
 //? Middleware za koriscenje JSON podataka (kad prosledis sa postman-om BODY)
 app.use(express.json());
@@ -65,4 +82,4 @@ app.listen(PORT, () => {
   console.log("Server je pokenut na portu 5000");
 });
 
-export default app;
+module.exports = app;

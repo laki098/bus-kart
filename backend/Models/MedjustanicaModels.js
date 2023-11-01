@@ -1,7 +1,12 @@
-import { DataTypes } from "sequelize";
+/* import { DataTypes } from "sequelize";
 import db from "../dbConfig.js";
 import Stanica from "./StanicaModels.js";
-import Linija from "./LinijaModels.js";
+import Linija from "./LinijaModels.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
+const Stanica = require("./StanicaModels.js");
+const Linija = require("./LinijaModels.js");
 
 const Medjustanica = db.define(
   "Medjustanica",
@@ -58,4 +63,4 @@ Stanica.belongsToMany(Linija, {
   otherKey: "linijaId",
 });
 
-export default Medjustanica;
+module.exports = Medjustanica;

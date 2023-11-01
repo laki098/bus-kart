@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import Linija from "../Models/LinijaModels.js";
 import Medjustanica from "../Models/MedjustanicaModels.js";
 import Stanica from "../Models/StanicaModels.js";
@@ -9,7 +9,20 @@ import qrcode from "qrcode";
 import fs from "fs";
 import nodemailer from "nodemailer";
 import Korisnik from "../Models/KorisnikModels.js";
-import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js";
+import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js"; */
+
+const express = require("express");
+const { isAuthenticated, isAuthorized } = require("../Middlewares/auth.js");
+const Korisnik = require("../Models/KorisnikModels.js");
+const Bus = require("../Models/BusModels.js");
+const Rezervacija = require("../Models/RezervacijaModels.js");
+const Stanica = require("../Models/StanicaModels.js");
+const Medjustanica = require("../Models/MedjustanicaModels.js");
+const Linija = require("../Models/LinijaModels.js");
+
+const qrcode = require("qrcode");
+const fs = require("fs");
+const nodemailer = require("nodemailer");
 
 const router = express.Router();
 
@@ -252,7 +265,8 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/rezervacija", async (req, res) => {
-  try { console.log(req.body)
+  try {
+    console.log(req.body);
     const {
       brojMesta,
       polaznaStanicaR,
@@ -822,4 +836,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,5 +1,9 @@
-import express from "express";
-import Cena from "../Models/Cena.js";
+/* import express from "express";
+import Cena from "../Models/Cena.js"; */
+
+const express = require("express");
+const Cena = require("../Models/Cena.js");
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -15,4 +19,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
