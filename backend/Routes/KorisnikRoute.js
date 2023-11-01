@@ -1,14 +1,20 @@
-import express from "express";
+/* import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
 
 import Korisnik from "../Models/KorisnikModels.js";
-import Rezervacija from "../Models/RezervacijaModels.js";
-import Linija from "../Models/LinijaModels.js";
-import Stanica from "../Models/StanicaModels.js";
-import Medjustanica from "../Models/MedjustanicaModels.js";
+import Rezervacija from "../Models/RezervacijaModels.js"; */
+
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
+
+const Korisnik = require("../Models/KorisnikModels.js");
+const Rezervacija = require("../Models/RezervacijaModels.js");
 
 const router = express.Router();
 
@@ -252,13 +258,13 @@ router.post("/zaboravljena-sifra", async (req, res) => {
 router.get("/reset-sifra/:token", (req, res) => {
   const { token } = req.params;
 
-  res.render("http://localhost:3000/passwordreset", { token }); 
+  res.render("http://localhost:3000/passwordreset", { token });
 });
 
 router.post("/reset-sifra/:token", async (req, res) => {
   const { token } = req.params;
   const { novaSifra, potvrdaSifre } = req.body;
-console.log(novaSifra, potvrdaSifre )
+  console.log(novaSifra, potvrdaSifre);
 
   //? provera tokena u bazi sa tokenom na emailu
   const korisnik = await Korisnik.findOne({ where: { resetToken: token } });
@@ -380,4 +386,4 @@ router.post("/karta", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

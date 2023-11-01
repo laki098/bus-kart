@@ -1,5 +1,8 @@
-import express from "express";
+/* import express from "express";
 import bc from "bcrypt";
+ */
+const express = require("express");
+const bc = require("bcrypt");
 
 //? Ovo je middleware, on takodje dobije req i res, koji ima iste podatke kao i taj endpoint na kome ga koristimo. Moze da se koristi da proverimo da li je korisnik admin npr.
 import { testMiddleware } from "../Middlewares/testMiddleware.js";
@@ -30,4 +33,4 @@ router.post("/autobusi", async function (req, res) {
   res.status(200).json({ message: kodiranaSifra });
 });
 
-export default router;
+module.exports = router;

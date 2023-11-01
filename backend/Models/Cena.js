@@ -1,5 +1,8 @@
-import { DataTypes } from "sequelize";
-import db from "../dbConfig.js";
+/* import { DataTypes } from "sequelize";
+import db from "../dbConfig.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
 
 const Cena = db.define(
   "Cena",
@@ -22,4 +25,4 @@ const Cena = db.define(
   }
 );
 
-export default Cena;
+module.exports = Cena;

@@ -1,6 +1,10 @@
-import express from "express";
+/* import express from "express";
 import Stanica from "../Models/StanicaModels.js";
-import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js";
+import { isAuthenticated, isAuthorized } from "../Middlewares/auth.js"; */
+
+const express = require("express");
+const Stanica = require("../Models/StanicaModels.js");
+const { isAuthenticated, isAuthorized } = require("../Middlewares/auth.js");
 
 const router = express.Router();
 
@@ -96,4 +100,4 @@ router.delete("/:id", async (req, res) => {
       .json({ message: "Doslo je do greske prilikom ocitavanja baze", error });
   }
 });
-export default router;
+module.exports = router;

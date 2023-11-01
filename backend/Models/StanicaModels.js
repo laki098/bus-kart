@@ -1,5 +1,8 @@
-import { DataTypes } from "sequelize";
-import db from "../dbConfig.js";
+/* import { DataTypes } from "sequelize";
+import db from "../dbConfig.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
 
 const Stanica = db.define(
   "Stanica",
@@ -19,4 +22,4 @@ const Stanica = db.define(
   }
 );
 
-export default Stanica;
+module.exports = Stanica;

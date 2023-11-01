@@ -1,5 +1,8 @@
-import { DataTypes } from "sequelize";
-import db from "../dbConfig.js";
+/* import { DataTypes } from "sequelize";
+import db from "../dbConfig.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
 
 const Korisnik = db.define(
   "korisnik",
@@ -117,4 +120,4 @@ const Korisnik = db.define(
   }
 );
 
-export default Korisnik;
+module.exports = Korisnik;

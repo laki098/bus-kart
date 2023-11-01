@@ -1,10 +1,9 @@
-import Korisnik from "../Models/KorisnikModels.js";
-import { checkToken } from "../helpers/authHelpers.js";
-import jwt from "jsonwebtoken";
+const Korisnik = require("../Models/KorisnikModels.js");
+const { checkToken } = require("../helpers/authHelpers.js");
+const jwt = require("jsonwebtoken");
 
-//?Sprecavanje pristupa endpointu ako korisnik nema odredjenu rolu
-
-export const isAuthorized = (role) => {
+// Sprecavanje pristupa endpointu ako korisnik nema određenu ulogu
+exports.isAuthorized = (role) => {
   return (req, res, next) => {
     const korisnik = req.korisnik;
 
@@ -16,32 +15,32 @@ export const isAuthorized = (role) => {
   };
 };
 
-//?Sprecavanje korisnika da pristupi stranici kada nije prijavljen
-export const isAuthenticated = async (req, res, next) => {
+// Sprecavanje korisnika da pristupi stranici kada nije prijavljen
+exports.isAuthenticated = async (req, res, next) => {
   try {
-    //?uzimanje i provera tokena
+    // Uzimanje i provera tokena
     if (!req.cookies.token) {
       return res.status(403).json({ message: "Korisnik nije prijavljen" });
     }
 
     const token = req.cookies.token;
 
-    //?potvrda(verifikacija)tokena
+    // Potvrda (verifikacija) tokena
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    //?provera da li korisnik postoji
+    // Provera da li korisnik postoji
     const user = await Korisnik.findByPk(decodedToken.idKorisnik);
-    /*  console.log(user); */
-    if (!user) return res.status(401).json({ message: "korisnik ne postoji" });
 
-    //?postavljanje korisnika u request
+    if (!user) return res.status(401).json({ message: "Korisnik ne postoji" });
+
+    // Postavljanje korisnika u zahtev (request)
     req.korisnik = {
       email: user.email,
       role: user.role,
     };
 
-    //? provera da li je korisnik promenio lozinku nakon sto je jwt izdat
-    //!DA PROVERIMO DATUM UPDATE SA TRENUTNIM
+    // Provera da li je korisnik promenio lozinku nakon što je JWT izdat
+    //! DA PROVERIMO DATUM UPDATE SA TRENUTNIM
 
     next();
   } catch (error) {

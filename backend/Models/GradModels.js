@@ -1,6 +1,9 @@
-import { DataTypes } from "sequelize";
+/* import { DataTypes } from "sequelize";
 
-import db from "../dbConfig.js";
+import db from "../dbConfig.js"; */
+
+const { DataTypes } = require("sequelize");
+const db = require("../dbConfig.js");
 
 const Grad = db.define(
   "grad",
@@ -31,4 +34,4 @@ const Grad = db.define(
   }
 );
 
-export default Grad;
+module.exports = Grad;

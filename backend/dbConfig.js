@@ -1,4 +1,6 @@
-import { Sequelize } from "sequelize";
+/* import { Sequelize } from "sequelize"; */
+
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize({
   dialect: "mysql",
@@ -12,4 +14,4 @@ const sequelize = new Sequelize({
 //? pravi Modele(tabele u bazi) ako ne postoje
 sequelize.sync();
 
-export default sequelize;
+module.exports = sequelize;
