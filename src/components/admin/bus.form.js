@@ -9,6 +9,7 @@ import "./stanica/stanica.css";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
+import { ToastContainer } from "react-toastify";
 
 const BusForm = ({ mode, idAutobusa }) => {
   const [bus, setBus] = useState({});
@@ -156,7 +157,9 @@ const BusForm = ({ mode, idAutobusa }) => {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
+    
   );
 };
 

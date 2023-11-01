@@ -10,7 +10,7 @@ import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 const LineForm = ({ mode, id, state }) => {
@@ -146,12 +146,7 @@ const LineForm = ({ mode, id, state }) => {
     }
   };
 
-  const sacuvaniPodaci = () => {
-    toast('Uspešno ste sačuvali podatke', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      className: 'toast-message'
-  });
-  };
+  
 
   //prevodjenje start
   const lngs = {
@@ -434,8 +429,7 @@ const LineForm = ({ mode, id, state }) => {
                   </select>
                   <div className="red-1"></div>
                   <div className="red-1"></div>
-                  <button type="submit" className="button"
-                  onClick={sacuvaniPodaci}>
+                  <button type="submit" className="button">
                     <Trans i18nKey="description.part128">"Dodaj"</Trans>
                   </button>
                   <ToastContainer/>
@@ -758,14 +752,13 @@ const LineForm = ({ mode, id, state }) => {
                      -------------------------------       */}
                   <div className="red-1">
                   <button type="submit" className="buttonSwitch"
-                    onClick={sacuvaniPodaci}>   {/* bilo je button    */}
+                    >   {/* bilo je button    */}
                     {mode === "add" ? (
                       <Trans i18nKey="description.part128">"Dodaj"</Trans>
                     ) : (
                       <Trans i18nKey="description.part129">"Sačuvaj"</Trans>
                     )}
                   </button>
-                  <ToastContainer />
                   </div>
                 </div>
               </div>
@@ -775,6 +768,7 @@ const LineForm = ({ mode, id, state }) => {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

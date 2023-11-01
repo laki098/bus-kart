@@ -6,6 +6,7 @@ import "./stanica.css";
 import "../../NavBar/links/i18n";
 import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { ToastContainer } from "react-toastify";
 
 const StaniceForm = ({ mode, id }) => {
   const [stanice, setStanice] = useState({});
@@ -139,6 +140,7 @@ const StaniceForm = ({ mode, id }) => {
           <div className="red-1"></div>
         </div>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

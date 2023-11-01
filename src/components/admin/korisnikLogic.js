@@ -1,5 +1,7 @@
 import { useState } from "react";
 import KorisnikApi from "../../api/korisnikApi";
+import { toast } from "react-toastify";
+
 
 const KorisnikLogic = () => {
   let [data, setData] = useState({});
@@ -25,12 +27,25 @@ const KorisnikLogic = () => {
         data.privremenaRola
       )
       .then((response) => {
-        alert("radi");
-        window.history.back();
+        notifySuccest(); // Prikazuje notifikaciju o uspešnoj promeni
+        
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const notifySuccest = () => {
+    toast.success("Uspešno ste promenili podatak!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return { changeHandler, editKorisnik, setData };

@@ -10,6 +10,7 @@ import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 
 import "../admin/admin.css";
+import { ToastContainer } from "react-toastify";
 
 const LoginComponent = () => {
   const loginLogic = LoginLogic();
@@ -103,6 +104,7 @@ const LoginComponent = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

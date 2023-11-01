@@ -56,6 +56,13 @@ const Korisnik = () => {
   console.log(korisnik);
   console.log(userPars);
 
+
+  const back = () => {
+    setTimeout(() => {
+      window.location.href = "/pocetna";
+    }, 2000);
+  };
+
   //prevodjenje start
   const lngs = {
     en: { nativeName: "Engleski" },
@@ -179,7 +186,7 @@ const Korisnik = () => {
             </div>
             <div className="red-1"></div>
             <div>
-              <button type="submit" className="buttonSwitch">
+              <button type="submit" onClick={back}  className="buttonSwitch">
                 {" "}
                 {/*  user-button   */}
                 <Trans i18nKey="description.part129"> Sačuvaj </Trans>
@@ -188,6 +195,7 @@ const Korisnik = () => {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

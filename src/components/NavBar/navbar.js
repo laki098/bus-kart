@@ -89,7 +89,7 @@ const Navbar = () => {
             <i className="fa-solid fa-address-book nav-links"></i>Kontakt
           </Link>
         </li>
-        <div className="login-style ">
+        <div className="logins">
           {Object.keys(userPars).length === 0 ? (
             <li className="item-li" >
               <Link to="/login.component">
