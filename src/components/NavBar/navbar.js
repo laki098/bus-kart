@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./main.css";
 import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
 import cookies from "js-cookie";
 import logo from "./../images/logo.png";
-import { useMediaQuery } from "react-responsive";
 
-//import { useMediaQuery } from "react-responsive"; // responsive
-//import MediaQuery from "react-responsive";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
- //const isMobile = useMediaQuery({ maxWidth: 480 });
- //const setIsMobile = useMediaQuery({ maxWidth: 480 });
- const malaDimenzija = useMediaQuery ({ maxWidth: 890 });
   
-
   //?dropdown za logovanog korisnika
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
+    event.stopPropagation();
     setIsDropdownOpen(!isDropdownOpen);
   };
 
@@ -31,7 +25,9 @@ const Navbar = () => {
 
   const handleMenuLeave = () => {
     setMenuOpen(false);
+    setIsDropdownOpen(false);
   };
+  
 
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
   const clickBaitLogout = () => {
@@ -91,26 +87,26 @@ const Navbar = () => {
         </li>
         <div className="logins">
           {Object.keys(userPars).length === 0 ? (
-            <li className="item-li" >
+            <li >
               <Link to="/login.component">
                 <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi se
               </Link>
             </li>
           ) : (
             <>
-              <div
+              {/* <div
                 className="menu"
                 onClick={() => setMenuOpen(!menuOpen)}
-              ></div>
+              ></div> */}
               <ul className={menuOpen ? "open" : ""}>
                 <li className="item-lii " onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
                   {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
-                  <div>
+                  <div onClick={toggleDropdown}>
                     <i className="fa fa-user-circle nav-links"></i>
                     {userPars.ime}
                   </div>
-                  {menuOpen && (
-                    <ul className="dropdown">
+                  {isDropdownOpen && (
+                    <ul className="dropdown" onMouseLeave={handleMenuLeave}>
                       <li className="dropdown-item item-li">
                         <Link to="/korisnik">
                           <i className="fa-regular fa-user nav-links "></i>

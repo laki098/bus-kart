@@ -24,6 +24,9 @@ const RegistrationLogic = () => {
       .then((rasponse) => {
         console.log(rasponse);
         notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/pocetna"; // Preusmerava korisnika na pocetna nakon nekoliko sekundi
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
