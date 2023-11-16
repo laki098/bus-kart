@@ -659,7 +659,6 @@ const LineForm = ({ mode, id, state }) => {
                   </label></div>
                   
                   <select
-                    value={state.oznakaBusa}
                     defaultValue={state.oznakaBusa}
                     name="oznakaBusa"
                     onChange={adminLogic.changeHandler}
