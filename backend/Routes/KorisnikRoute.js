@@ -184,6 +184,7 @@ router.post("/login", async (req, res) => {
     //? slanje korisnicke podatke u cookies
     res.cookie("userData", JSON.stringify(userData), {
       expires: cookieExp,
+      httpOnly: true,
       path: "/",
       secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     });
