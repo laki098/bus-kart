@@ -38,6 +38,7 @@ const Navbar = () => {
   //? izvlacenje korisnika iz cookisa
   let userData = cookies.get("userData");
   let userPars = {};
+  
 
   //? pitamo ga da li je prijvljen, ako nije da ne odradi to parsiranje u json.
   if (userData != undefined) {
