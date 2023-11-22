@@ -154,6 +154,7 @@ const Pocetna = () => {
 
       {isDesktop && (
         <div className="home-page">
+          <p className="p-style">Korak 1/3</p>
           <h2 className="h2-card">
             <i className="fa fa-bus"></i>
             <span className="span">
@@ -231,6 +232,7 @@ const Pocetna = () => {
 
       {!isDesktop && (
         <div className="home-page">
+           <p className="p-style">Korak 1/3</p>
           <h2 className="h2-card">
             <i className="fa fa-bus"></i>
             <span className="span">
@@ -325,6 +327,7 @@ const Pocetna = () => {
               display: block;
             }
           `}</style>
+           <p className="p-style1">Korak 2/3</p>
           <h2 className="card-header">
             <i className="fa-solid fa-bus"></i>
             <span className="span">

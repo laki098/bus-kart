@@ -284,9 +284,11 @@ const RezervacijaComponent = ({ id, state }) => {
       <form onSubmit={confirmeHandler} className="forma">
         {" "}
         {/* className={`${classes.form} side`}  */}
+        <p className="p-style2">Korak 3/3</p>
         <div>
           {" "}
-          {/* className="flex-container"  */}
+          {/* className="flex-container"  */} 
+          
           <div className="flex-container">
             <div className="flex-clan">
               {" "}
