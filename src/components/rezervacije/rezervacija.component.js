@@ -285,6 +285,9 @@ const RezervacijaComponent = ({ id, state }) => {
         {" "}
         {/* className={`${classes.form} side`}  */}
         <p className="p-style2">Korak 3/3</p>
+        <div className="margin">
+
+        </div>
         <div>
           {" "}
           {/* className="flex-container"  */} 
