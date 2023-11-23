@@ -30,6 +30,7 @@ import StjuardesaLinija from "./components/stjuardesa/stjuardesaLinija";
 import PasswordReset from "./components/login/passwordReset";
 import { AuthProvider } from "./components/autentifikacija/AuthContext";
 import ProtectedRoute from "./components/autentifikacija/ProtectedRoute";
+import CeneInitial from "./components/admin/cena/cene.initial";
 
 function App() {
   return (
@@ -88,6 +89,9 @@ function App() {
           <ProtectedRoute path="/:id/stanice.edit" component={StaniceEdit} adminOnly />
           <Route path="/passwordreset/:token">
             <PasswordReset />
+          </Route>
+          <Route path="/cene.initial">
+            <CeneInitial />
           </Route>
         </div>
 

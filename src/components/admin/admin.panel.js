@@ -58,6 +58,11 @@ const AdminPanel = () => {
         <Trans i18nKey="description.part173"> Stanice </Trans>
         </button>
       </Link>
+      <Link to={"/cene.initial"}>
+        <button className="button-panel">
+       Cene 
+        </button>
+      </Link>
     </div>
   );
 };
