@@ -510,21 +510,61 @@ router.post("/rezervacija", async (req, res) => {
     ];
 
     const emailText = `
-      Hvala što ste rezervisali putovanje!
-      Broj Mesta: ${brojMesta}
-      Polazna Stanica: ${polaznaStanicaR}
-      Krajnja Stanica: ${krajnjaStanicaR}
-      Datum Polaska: ${datumPolaska}
-      Datum Dolaska: ${datumDolaska}
-      Vreme Polaska: ${vremePolaska}
-      Vreme Dolaska: ${vremeDolaska}
-      Linija ID: ${linijaId}
-      Osveženje: ${osvezenje}
-      idRezzervacije: ${kreiranjeRezervacije.id}
-    
-      Molimo vas da skenirate QR kod za više detalja:
-      <img src="cid:qr-code" alt="QR Code" />
-    `;
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+  
+          .card {
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+          }
+  
+          h1 {
+            color: #3498db;
+          }
+  
+          p {
+            color: #555;
+          }
+  
+          img {
+            width: 100%;
+            border-radius: 5px;
+          }
+  
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>Hvala što ste rezervisali putovanje!</h1>
+          <p>Oznaka sedišta: ${oznakaSedista}</p>
+          <p>Polazna Stanica: ${polaznaStanicaR}</p>
+          <p>Krajnja Stanica: ${krajnjaStanicaR}</p>
+          <p>Datum Polaska: ${datumPolaska}</p>
+          <p>Datum Dolaska: ${datumDolaska}</p>
+          <p>Vreme Polaska: ${vremePolaska}</p>
+          <p>Vreme Dolaska: ${vremeDolaska}</p>
+          <p>Osveženje: ${osvezenje}</p>
+          
+        
+          <p>Molimo vas da skenirate QR kod za više detalja:</p>
+          <img src="cid:qr-code" alt="QR Code" />
+        </div>
+      </body>
+    </html>
+  `;
 
     // Unutar vašeg postojećeg koda za slanje e-maila
     const mailOptions = {

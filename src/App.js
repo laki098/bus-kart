@@ -28,24 +28,22 @@ import StaniceAdd from "./components/admin/stanica/stanice.add";
 import StaniceEdit from "./components/admin/stanica/stanice.edit";
 import StjuardesaLinija from "./components/stjuardesa/stjuardesaLinija";
 import PasswordReset from "./components/login/passwordReset";
+import { AuthProvider } from "./components/autentifikacija/AuthContext";
+import ProtectedRoute from "./components/autentifikacija/ProtectedRoute";
+import CeneInitial from "./components/admin/cena/cene.initial";
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <div className="App">
         <Navbar />
 
         <div className="content">
           <Switch>
-            <Route path="/adminpanel">
-              <AdminPanel />
-            </Route>
-            <Route path="/stjuardesa">
-              <Stjuardesa />
-            </Route>
-            <Route path="/:id/stjuardesalinija">
-              <StjuardesaLinija />
-            </Route>
+          <ProtectedRoute path="/adminpanel" component={AdminPanel} adminOnly />
+          <ProtectedRoute path="/stjuardesa" component={Stjuardesa} stjuardesaOnly />
+          <ProtectedRoute path="/:id/stjuardesalinija" component={StjuardesaLinija} stjuardesaOnly />
             <Route path="/pocetna">
               <Pocetna />
             </Route>
@@ -78,47 +76,29 @@ function App() {
           <Route path="/reset.password">
             <ResetPassword />
           </Route>
-          <Route path="/:id/admin.change.line">
-            <AdminChangeLine />
-          </Route>
-          <Route path="/admin.component">
-            <AdminComponent />
-          </Route>
-          <Route path="/admin.initial">
-            <AdminInitial />
-          </Route>
-          <Route path="/bus.initial">
-            <BusInitional />
-          </Route>
-          <Route path="/stanice.initial">
-            <StaniceInitial />
-          </Route>
-          <Route path="/bus.add">
-            <BusAdd />
-          </Route>
-          <Route path="/:idAutobusa/bus.change.line">
-            <BusChangeLine />
-          </Route>
-          <Route path="/korisniciInitial">
-            <KorisniciInitial />
-          </Route>
-          <Route path="/:idKorisnik/korisnikChange">
-            <KorisnikChange />
-          </Route>
-          <Route path="/stanice.add">
-            <StaniceAdd />
-          </Route>
-          <Route path="/:id/stanice.edit">
-            <StaniceEdit />
-          </Route>
+          <ProtectedRoute path="/:id/admin.change.line" component={AdminChangeLine} adminOnly />
+          <ProtectedRoute path="/admin.component" component={AdminComponent} adminOnly />
+          <ProtectedRoute path="/admin.initial" component={AdminInitial} adminOnly />
+          <ProtectedRoute path="/bus.initial" component={BusInitional} adminOnly />
+          <ProtectedRoute path="/stanice.initial" component={StaniceInitial} adminOnly />
+          <ProtectedRoute path="/bus.add" component={BusAdd} adminOnly />
+          <ProtectedRoute path="/:idAutobusa/bus.change.line" component={BusChangeLine} adminOnly />
+          <ProtectedRoute path="/korisniciInitial" component={KorisniciInitial} adminOnly />
+          <ProtectedRoute path="/:idKorisnik/korisnikChange" component={KorisnikChange} adminOnly />
+          <ProtectedRoute path="/stanice.add" component={StaniceAdd} adminOnly />
+          <ProtectedRoute path="/:id/stanice.edit" component={StaniceEdit} adminOnly />
           <Route path="/passwordreset/:token">
             <PasswordReset />
+          </Route>
+          <Route path="/cene.initial">
+            <CeneInitial />
           </Route>
         </div>
 
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 
