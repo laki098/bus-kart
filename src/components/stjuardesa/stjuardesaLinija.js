@@ -50,6 +50,22 @@ const StjuardesaLinija = ({}) => {
     //? Postavite novi URL kako biste promenili adresu stranice
     history.push(noviURL);
   };
+  //? Dodeljivanje novog url
+  const dodeljivanjeUrlDo = (stanica) => {
+    const novaKrajnjaStanicaId = stanica.id;
+
+    //? Kreirajte objekat sa vrednostima iz trenutnog query string-a
+    const queryParams = new URLSearchParams(location.search);
+
+    //? Postavite novu vrednost za pocetnaStanicaId
+    queryParams.set("krajnjaStanicaId", novaKrajnjaStanicaId);
+
+    //? Kreirajte novi URL sa ažuriranim query string-om
+    const noviURL = `${location.pathname}?${queryParams.toString()}`;
+
+    //? Postavite novi URL kako biste promenili adresu stranice
+    history.push(noviURL);
+  };
 
   //? dobavljanje liniju koja se koristi direktno ovde
   const dobavljanjeLinije = async () => {
@@ -174,6 +190,8 @@ const StjuardesaLinija = ({}) => {
                   onClick={() => {
                     handelePromenaVremenaLinija(linija.id, true, false);
                     setPocetnaStanica(linija.pocetnaStanica);
+                    dodeljivanjeUrl(linija.pocetnaStanica);
+                    setOkidanje(linija.pocetnaStanica);
                   }}
                   className="buttonSwitch"
                 >
@@ -198,6 +216,16 @@ const StjuardesaLinija = ({}) => {
                   className="buttonSwitch"
                 >
                   <Trans i18nKey="description.part192"> Stigli </Trans>
+                </button>
+                <button
+                  onClick={() => {
+                    setKrajnjaStanica(linija.krajnjaStanica);
+                    dodeljivanjeUrlDo(linija.krajnjaStanica);
+                    setOkidanje(linija.krajnjaStanica);
+                  }}
+                  className="buttonSwitch"
+                >
+                  <Trans /* i18nKey="description.part192" */> Dovde </Trans>
                 </button>
               </div>
             </div>
@@ -243,6 +271,19 @@ const StjuardesaLinija = ({}) => {
                           className="buttonSwitch"
                         >
                           <Trans i18nKey="description.part192"> Stigli </Trans>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setKrajnjaStanica(stanica);
+                            dodeljivanjeUrlDo(stanica);
+                            setOkidanje(stanica);
+                          }}
+                          className="buttonSwitch"
+                        >
+                          <Trans /* i18nKey="description.part192" */>
+                            {" "}
+                            Dovde{" "}
+                          </Trans>
                         </button>
                       </div>
                     </div>
