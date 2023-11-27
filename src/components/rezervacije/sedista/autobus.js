@@ -35,7 +35,7 @@ function Autobus({
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };
-
+  console.log(pocetnaStanicaId, krajnjaStanicaId);
   useEffect(() => {
     if (autobusData) {
       //?Postavljamo sediste kada se dobiju podaci o autobusu
@@ -48,7 +48,11 @@ function Autobus({
       getLinije();
       setPocetnaStanicaIdS(pocetnaStanicaId);
     }
-  }, [autobusData, pocetnaStanicaId]);
+    if (krajnjaStanicaId != undefined) {
+      getLinije();
+      setPocetnaStanicaIdS(krajnjaStanicaId);
+    }
+  }, [autobusData, pocetnaStanicaId, krajnjaStanicaId]);
 
   function handleClick(index) {
     const noviNiz = [...sediste];
