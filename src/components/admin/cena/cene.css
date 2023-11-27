@@ -1,0 +1,35 @@
+.cene-form{
+      width: max-content;   
+      border: 1px solid darkblue;
+      border-radius: 0.3rem;
+      border-collapse: collapse;
+      display: flex;
+      flex-wrap: wrap;
+      margin: auto;
+      padding: 2rem;    /* 3rem   */
+      background-color: aliceblue;
+}
+
+.cene-labela {
+    color: darkblue;
+    font-size: medium;
+    align-items: center;
+}
+.naslov-cene{
+    text-align: center;
+    color: darkblue;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 2rem;
+  }
+  .input-cene{
+    width: 10rem;
+    height: 2rem;
+    border-color: darkblue;
+    border-radius: 0.3rem;
+    margin: 0.2rem;
+    margin: 1rem;
+    text-align: center;   /* dodala da bi placeholder bio centriran a i sami unoseni podaci   */
+  }
+ 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CeneLogic from "./cene.logic";
 import CeneApi from "../../../api/cene.api";
+import "./cene.css";
+import { ToastContainer } from "react-toastify";
 
 
 const CeneForm = ({mode, id}) => {
@@ -39,7 +41,7 @@ const CeneForm = ({mode, id}) => {
             const data = {
                 id:id,
                 pocetnaStanica: formData.get("pocetnaStanica"),
-                kranjeStaniceR: formData.get("kranjeStaniceR"),
+                krajnjaStanicaR: formData.get("krajnjaStanicaR"),
                 cenaKarte: formData.get("cenaKarte"),
             };
             ceneLogic.editCene(data);
@@ -51,9 +53,10 @@ const CeneForm = ({mode, id}) => {
 
 
     return (
-        <form onSubmit={submitHandler}>
+        <>
+        <form onSubmit={submitHandler} className="cene-form">
         <div>
-            <div>
+            <div className="naslov-cene"> 
                 {mode === "add" ? (
                     <>Nova cena</>
                 ) : (
@@ -61,34 +64,34 @@ const CeneForm = ({mode, id}) => {
                 )}
             </div>
             <div>
-            <label>Pocetna Stanica</label>
+            <div><label className="cene-labela">Pocetna Stanica</label></div>
             <input 
             defaultValue={cene.pocetnaStanica}
             type="text"
             name="pocetnaStanica"
-            className=""
+            className="input-cene"
             onChange={ceneLogic.changeHandler}/>
             </div>
             <div>
-                <label>Krajnja Stanica</label>
+                <div><label className="cene-labela">Krajnja Stanica</label></div>
                 <input
                 defaultValue={cene.krajnjaStanicaR}
                 type="text"
                 name="krajnjaStanicaR"
-                className=""
+                className="input-cene"
                 onChange={ceneLogic.changeHandler} />
             </div>
             <div>
-                <label>Cena</label>
+               <div> <label className="cene-labela">Cena</label></div>
                 <input
                 defaultValue={cene.cenaKarte}
-                type="text"
+                type="number"
                 name="cenaKarte"
-                className=""
+                className="input-cene"
                 onChange={ceneLogic.changeHandler} />
             </div>
             <div>
-                <button onClick={back} type="submit">
+                <button /* onClick={back} */ type="submit" className="buttonSwitch">
                     {mode === "add" ? (
                         <>Dodaj</>
                     ) : (
@@ -98,6 +101,8 @@ const CeneForm = ({mode, id}) => {
             </div>
         </div>
         </form>
+        <ToastContainer />
+        </>
      );
 }
  

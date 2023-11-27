@@ -31,6 +31,8 @@ import PasswordReset from "./components/login/passwordReset";
 import { AuthProvider } from "./components/autentifikacija/AuthContext";
 import ProtectedRoute from "./components/autentifikacija/ProtectedRoute";
 import CeneInitial from "./components/admin/cena/cene.initial";
+import CeneAdd from "./components/admin/cena/cene.add";
+import CeneEdit from "./components/admin/cena/cene.edit";
 
 function App() {
   return (
@@ -93,6 +95,13 @@ function App() {
           <Route path="/cene.initial">
             <CeneInitial />
           </Route>
+          <Route path="/cene.add">
+            <CeneAdd/>
+          </Route>
+          <Route path="/:id/cene.edit">
+            <CeneEdit />
+          </Route>
+            
         </div>
 
         <Footer />

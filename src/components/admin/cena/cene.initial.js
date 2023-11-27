@@ -38,7 +38,28 @@ const CeneInitial = () => {
 
       return (
         <>
-        
+       <div>
+        <Link to={"/cene.add"}>
+          <button className="buttonSwitch">Dodaj novu cenu</button>
+        </Link>
+       </div>
+       <div className="confirm-dialog-container">
+        {isConfirmationOpen && (
+          <div className="confirm-dialog-overlay">
+          <div className="confirm-dialog-box">
+            <div >
+            Da li ste sigurni da želite da obrišete ovu cenu? 
+            </div>
+            <button className="confirm-dialog-yes" onClick={confirmDelete}>
+            Da
+            </button>
+            <button className="confirm-dialog-no" onClick={cancelDelete}>
+            Ne
+            </button>
+          </div>
+          </div>
+        )}
+      </div>
         </>
       );
 

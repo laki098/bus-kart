@@ -125,7 +125,7 @@ const StaniceForm = ({ mode, id }) => {
           </div>
           <div>
             <div className="red-1"></div>
-            <button onClick={back} type="submit" class="buttonSwitch">
+            <button onClick={back} type="submit" className="buttonSwitch">
               {mode === "add" ? (
                 <>
                   <Trans i18nKey="description.part128">Dodaj</Trans>
