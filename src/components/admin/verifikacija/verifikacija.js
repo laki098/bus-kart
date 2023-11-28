@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import "./verifikacija.css";
+import './verifikacija.css'; // Importujte CSS fajl
 
 const Verifikacija = () => {
     const [rezervacija, setRezervacija] = useState(null);
@@ -16,10 +16,17 @@ const Verifikacija = () => {
             console.error("Greška prilikom dohvatanja rezervacije:", error);
         }
     };
-    console.log()
 
     useEffect(() => {
         getRezervacija();
+
+        // Dodajte klasu 'verifikacija-stranica' na body kada se komponenta mountuje
+        document.body.classList.add('verifikacija-stranica');
+
+        // Uklonite klasu 'verifikacija-stranica' kada se komponenta unmountuje
+        return () => {
+            document.body.classList.remove('verifikacija-stranica');
+        };
     }, []);
 
     return (

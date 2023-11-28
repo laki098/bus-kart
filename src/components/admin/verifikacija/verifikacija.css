@@ -21,11 +21,9 @@ body {
     color: white; /* Dodajte belu boju teksta ili drugu boju koja je vidljiva na crvenoj pozadini */
 }
 
-.navbar {
-    display: none;
-}
 
-.footer {
+body.verifikacija-stranica .navbar,
+body.verifikacija-stranica .footer {
     display: none;
 }
 
