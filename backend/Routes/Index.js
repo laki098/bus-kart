@@ -561,6 +561,8 @@ router.post("/rezervacija", async (req, res) => {
         
           <p>Molimo vas da skenirate QR kod za više detalja:</p>
           <img src="cid:qr-code" alt="QR Code" />
+          <p>Provera validnosti karte proveriti na sledećem linku:</p>
+          <a href="http://localhost:3000/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
         </div>
       </body>
     </html>
