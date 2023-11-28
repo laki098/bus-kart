@@ -19,4 +19,35 @@ router.get("/", async (req, res) => {
   }
 });
 
+//? izvlacenje cene po id u
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const autobusi = await Cena.findOne({
+      where: { id },
+    });
+    res
+      .status(200)
+      .json({ message: "uspesno dobavljena rezervacija", autobusi });
+  } catch (error) {
+    res.status(500).json({ message: "doslo je do greske" });
+  }
+});
+
+//? postavljanje novog autobusa
+router.post("/", async (req, res) => {
+  try {
+    const { pocetnaStanica, krajnjaStanicaR, cenaKarte } = req.body;
+
+    const novaCena = await Cena.create({
+      pocetnaStanica,
+      krajnjaStanicaR,
+      cenaKarte,
+    });
+    res.status(201).json({ message: "uspesno kreirana cena", novaCena });
+  } catch (error) {
+    res.status(500).json({ message: error.errors[0].message });
+  }
+});
+
 module.exports = router;
