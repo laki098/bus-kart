@@ -50,4 +50,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+//? izmena cene
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params; // ID cene koji se menja
+    const { pocetnaStanica, krajnjaStanicaR, cenaKarte } = req.body;
+
+    const izmenaCene = await Cena.update(
+      { pocetnaStanica, krajnjaStanicaR, cenaKarte },
+      { where: { id: id }, limit: 1 }
+    );
+
+    if (izmenaCene[0] === 0) {
+      return res.status(404).json({ message: "Cnea nije pronađen" });
+    }
+
+    res.status(200).json({ message: "Cena je uspešno izmenjen" });
+  } catch (error) {
+    res.status(500).json({ message: "Došlo je do greške", error });
+  }
+});
+
 module.exports = router;
