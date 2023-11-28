@@ -102,7 +102,7 @@ function App() {
           <Route path="/:id/cene.edit">
             <CeneEdit />
           </Route>
-          <Route path="/verifikacija">
+          <Route path="/verifikacija/:id">
             <Verifikacija />
           </Route>
             

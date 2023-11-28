@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.zelena-pozadina {
+    background-color: green;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Dodajte belu boju teksta ili drugu boju koja je vidljiva na zelenoj pozadini */
+}
+
+.crvena-pozadina {
+    background-color: red;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Dodajte belu boju teksta ili drugu boju koja je vidljiva na crvenoj pozadini */
+}
+
+.navbar {
+    display: none;
+}
+
+.footer {
+    display: none;
+}
+
+.verifikacija-p {
+    margin: 1rem;
+    font-size: larger;
+}
