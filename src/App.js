@@ -33,6 +33,7 @@ import ProtectedRoute from "./components/autentifikacija/ProtectedRoute";
 import CeneInitial from "./components/admin/cena/cene.initial";
 import CeneAdd from "./components/admin/cena/cene.add";
 import CeneEdit from "./components/admin/cena/cene.edit";
+import Verifikacija from "./components/admin/verifikacija/verifikacija";
 
 function App() {
   return (
@@ -100,6 +101,9 @@ function App() {
           </Route>
           <Route path="/:id/cene.edit">
             <CeneEdit />
+          </Route>
+          <Route path="/verifikacija">
+            <Verifikacija />
           </Route>
             
         </div>
