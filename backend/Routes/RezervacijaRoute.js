@@ -270,4 +270,19 @@ router.post("/linija/:linijaId", async (req, res) => {
   }
 });
 
+//? izvlacenje rezervacije po id u
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const autobusi = await Rezervacija.findOne({
+      where: { id },
+    });
+    res
+      .status(200)
+      .json({ message: "uspesno dobavljena rezervacija", autobusi });
+  } catch (error) {
+    res.status(500).json({ message: "doslo je do greske" });
+  }
+});
+
 module.exports = router;
