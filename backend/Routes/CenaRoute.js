@@ -71,4 +71,24 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//? Brisanje cene
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params; // ID autobusa koji se briše
+
+    const deleteCene = await Cena.destroy({
+      where: { id },
+      limit: 1,
+    });
+
+    if (deleteCene === 0) {
+      return res.status(404).json({ message: "Cena nije pronađen" });
+    }
+
+    res.status(200).json({ message: "Cena je uspešno obrisan" });
+  } catch (error) {
+    res.status(500).json({ message: "Došlo je do greške" });
+  }
+});
+
 module.exports = router;
