@@ -13,11 +13,12 @@ const CeneForm = ({mode, id}) => {
         try {
             const response = await CeneApi().filterCeneId(id);
             const data = response.data;
-            setCene(data.cene);
-        } catch(error) {
-            console.error("Greska prilikom izmene cene:", error);
+        
+            setCene(data.cena);
+        } catch (error) {
+          console.error("Greška prilikom izmene cena:", error);
         }
-    };
+      };
 
     useEffect(() => {
         if (mode == "edit") {
@@ -91,7 +92,7 @@ const CeneForm = ({mode, id}) => {
                 onChange={ceneLogic.changeHandler} />
             </div>
             <div>
-                <button /* onClick={back} */ type="submit" className="buttonSwitch">
+                <button  onClick={back}   type="submit" className="buttonSwitch">
                     {mode === "add" ? (
                         <>Dodaj</>
                     ) : (

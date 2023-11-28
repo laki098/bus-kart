@@ -74,7 +74,7 @@ function Autobus({
     // Ovde dodajte svoju logiku za potvrdu ili slanje podataka
   }
 
-  const isSeatReserved = (seatNumber) => {
+  const isSeatReserved = (seatNumber ) => {
     // Proverite da li rezervacija niz ima podatke
     return (
       rezervacija &&
@@ -88,21 +88,21 @@ function Autobus({
       <div className="autobus-stujardesa">
         {sediste.map((rezervisano, index) => (
           <div
-            key={index}
+            key={index + 1}
             className={`sediste ${
-              isSeatReserved(index) ? "rezervisano" : "nije"
+              isSeatReserved(index + 1) ? "rezervisano" : "nije"
             }`}
-            onClick={() => handleClick(index)}
+            onClick={() => handleClick(index + 1)}
           >
-            {isSeatReserved(index) ? (
+            {isSeatReserved(index + 1) ? (
               <p>
                 osvezenje:{" "}
-                {rezervacija.find((rez) => rez.oznakaSedista === index)
+                {rezervacija.find((rez) => rez.oznakaSedista === index + 1)
                   ?.osvezenje || "Bez osvezenja"}
               </p>
             ) : null}
 
-            {index + 1}
+            {index + 1 }
           </div>
         ))}
         <div className="labela-stanica">

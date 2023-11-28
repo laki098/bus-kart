@@ -22,13 +22,15 @@ router.get("/", async (req, res) => {
 //? izvlacenje cene po id u
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
+
   try {
-    const autobusi = await Cena.findOne({
+    console.log(id)
+    const cena = await Cena.findOne({
       where: { id },
     });
     res
       .status(200)
-      .json({ message: "uspesno dobavljena rezervacija", autobusi });
+      .json({ message: "uspesno dobavljena rezervacija", cena });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske" });
   }

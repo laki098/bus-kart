@@ -26,7 +26,7 @@ const CeneLogic = () => {
 
     const editCene = (data) => {
         CeneApi()
-        .editCene(data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
+        .editCene(data.id,data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
         .then((response) => {
             notifySuccest(); // Prikazuje notifikacije
           }).catch((error) => {
