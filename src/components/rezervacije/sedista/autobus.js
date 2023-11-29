@@ -10,6 +10,7 @@ function Autobus({
   linijaId,
   pocetnaStanicaId,
   krajnjaStanicaId,
+  updateTrenutnaRezervacija,
 }) {
   const [sediste, setSediste] = useState([]);
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
@@ -35,7 +36,7 @@ function Autobus({
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };
-  console.log(pocetnaStanicaId, krajnjaStanicaId);
+
   useEffect(() => {
     if (autobusData) {
       //?Postavljamo sediste kada se dobiju podaci o autobusu
@@ -57,6 +58,7 @@ function Autobus({
   function handleClick(index) {
     const noviNiz = [...sediste];
     noviNiz[index] = !noviNiz[index];
+    updateTrenutnaRezervacija([...trenutnaRezervacija]);
 
     if (noviNiz[index]) {
       setTrenutnaRezervacija([...trenutnaRezervacija, index + 1]);
@@ -72,6 +74,7 @@ function Autobus({
   function handlePotvrdi() {
     console.log("Izabrana sedišta:", trenutnaRezervacija);
     // Ovde dodajte svoju logiku za potvrdu ili slanje podataka
+    updateTrenutnaRezervacija([...trenutnaRezervacija]);
   }
 
   const isSeatReserved = (seatNumber) => {
