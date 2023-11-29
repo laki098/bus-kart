@@ -13,7 +13,7 @@ const LoginLogic = () => {
         notifySuccest(); // Prikazuje notifikaciju o uspešnom logovanju
         setTimeout(() => {
           window.location.href = "/pocetna"; // Preusmerava korisnika na pocetna nakon nekoliko sekundi
-        }, 3000);
+        }, 1500);
         console.log(response);
       })
       .catch((error) => {

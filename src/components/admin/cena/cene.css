@@ -30,6 +30,59 @@
     border-radius: 0.3rem;
     margin: 0.2rem;
     margin: 1rem;
-    text-align: center;   /* dodala da bi placeholder bio centriran a i sami unoseni podaci   */
+    text-align: center;  
   }
- 
+ .cene-okvir {
+    width: max-content;
+    width: 57rem;
+    border: 1px solid darkblue;
+    border-radius: 0.3rem;
+    border-collapse: collapse;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 2rem;
+    background-color: aliceblue;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+ }
+ .cene-red {
+  width: fit-content;
+    line-height: 45px;
+    background-color: rgb(240, 238, 238);
+    border: 1px solid rgb(151, 192, 246);
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    margin: 0.2rem;
+    display: flex;
+    flex-wrap: wrap;
+ }
+ .cene-polja {
+    width: fit-content;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.5rem;
+    background-color: #fff;
+    padding-top: 1rem;
+ }
+ .cene-polja1 {
+  margin: 1rem;
+  width: 4vw;
+ }
+ @media (max-width: 480px) {
+  .cene-okvir {
+      width: auto; 
+      padding: 1rem; 
+  }
+
+  .cene-polja1 {
+      width: 100%; /* srediti za responsive nije sredjeno */
+      box-sizing: border-box; 
+      margin: 0; 
+  }
+}
+@media (max-width: 768px) {
+  .cene-okvir {
+      width: 100%; 
+      padding: 1rem; 
+  }
+}

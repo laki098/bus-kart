@@ -59,9 +59,6 @@ function App() {
             <Route path="/:id/rezervacijakarte">
               <RezervacijaKarte />
             </Route>
-            <Route path="/rezervacijakarte">
-              <RezervacijaKarte />
-            </Route>
             <Route path="/kontakt">
               <Kontakt />
             </Route>
@@ -93,15 +90,9 @@ function App() {
           <Route path="/passwordreset/:token">
             <PasswordReset />
           </Route>
-          <Route path="/cene.initial">
-            <CeneInitial />
-          </Route>
-          <Route path="/cene.add">
-            <CeneAdd/>
-          </Route>
-          <Route path="/:id/cene.edit">
-            <CeneEdit />
-          </Route>
+          <ProtectedRoute path="/cene.initial" component={CeneInitial} adminOnly />
+          <ProtectedRoute path="/cene.add" component={CeneAdd} adminOnly />
+          <ProtectedRoute path="/:id/cene.edit" component={CeneEdit} adminOnly />
           <Route path="/verifikacija/:id">
             <Verifikacija />
           </Route>

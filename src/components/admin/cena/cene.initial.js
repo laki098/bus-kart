@@ -37,28 +37,30 @@ const CeneInitial = () => {
 
   return (
     <>
-      <div>
+      <div className="cene-okvir">
         <ul>
           {cene &&
             Array.isArray(cene) &&
             cene.map((jednaCena) => {
               return (
                 <li key={jednaCena.id}>
-                  <div>Pocetna Stanica</div>
-                  <div>{jednaCena.pocetnaStanica}</div>
-                  <div>Krajnja Stanica</div>
-                  <div>{jednaCena.krajnjaStanicaR}</div>
-                  <div>Cena</div>
-                  <div>{jednaCena.cenaKarte}</div>
-                  <div>
+                  <div className="cene-red">
+                  <div className="cene-polja">Pocetna Stanica</div>
+                  <div className="cene-polja1" >{jednaCena.pocetnaStanica}</div>
+                  <div className="cene-polja">Krajnja Stanica</div>
+                  <div className="cene-polja1" >{jednaCena.krajnjaStanicaR}</div>
+                  <div className="cene-polja">Cena</div>
+                  <div className="cene-polja1" >{jednaCena.cenaKarte}</div>
+                  <div className="cene-polja">
                     <Link to={`${jednaCena.id}/cene.edit`}>
-                      <button>Izmeni</button>
+                      <button className="buttonSwitch">Izmeni</button>
                     </Link>
                   </div>
-                  <div>
-                    <button onClick={() => brisanjeCene(jednaCena.id)}>
+                  <div className="cene-polja">
+                    <button onClick={() => brisanjeCene(jednaCena.id)} className="buttonSwitch">
                       Obriši
                     </button>
+                  </div>
                   </div>
                 </li>
               );
