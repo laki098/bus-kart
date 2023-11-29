@@ -5,6 +5,7 @@ const CeneEdit = () => {
     const { id } = useParams();
     return(
         <>
+
         <CeneForm mode="edit" id={id} />
         </>
     );
