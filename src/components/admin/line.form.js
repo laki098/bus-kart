@@ -85,27 +85,6 @@ const LineForm = ({ mode, id, state }) => {
     newCene[index] = event.target.value;
     setCene(newCene);
   };
-  
-  /* const izmeniLiniju = async () => {
-    const response = await LinijeApi().filterLinijaID(id); // Filter linije za bas taj id koji cemo da menjamo
-    // if (response.error) {
-    //   setError(response.error);
-    //   return;
-    // }
-    const data = await response.data; // kako bi dobili vrednosti koje cemo koristiti za popuvanjavanje input polja
-    let polazak = data.datumPolaska.split(",");
-    let dolazak = data.datumDolaska.split(",");
-    const linija = {
-      ...data,
-      datumPolaska: new Date(+polazak[0], +polazak[1] - 1, +polazak[2] + 1)
-        .toISOString()
-        .substr(0, 10),
-      datumDolaska: new Date(+dolazak[0], +dolazak[1] - 1, +dolazak[2] + 1) //+ prebacuje u int iz stringa
-        .toISOString()
-        .substr(0, 10),
-    };
-    setLinija(linija);
-  }; */
 
   useEffect(() => {
     getStanice();
@@ -157,7 +136,7 @@ const LineForm = ({ mode, id, state }) => {
   // prevodjenje end
 
   return (
-    <div >                              {/* className="pozadina"        */}
+    <div >                            
       <header>
         <div className="jezici">
           {Object.keys(lngs).map((lng) => (
@@ -175,13 +154,12 @@ const LineForm = ({ mode, id, state }) => {
         </div>
       </header>
 
-      {/*<div className="red-1"></div>    */}
-      <div >                                         {/* className="main"          */}
-        <div className="tabela-stanica prosiri-tabela-stanica">             {/*  className=" sub-main"    */}
+      <div >                                        
+        <div className="tabela-stanica prosiri-tabela-stanica">           
           <form onSubmit={submitHandler}>
             {mode === "add" ? (
               <div>
-                <p className="naslovStanica" >        {/* style={{ fontSize: "1.5rem" }} */}
+                <p className="naslovStanica" >        
                   <Trans i18nKey="description.part130">Nova linija</Trans>
                 </p>
                 <div >
@@ -189,17 +167,22 @@ const LineForm = ({ mode, id, state }) => {
                     <Trans i18nKey="description.part3">Mesto polaska</Trans>
                   </label></div>
                   
-                  {/* className="name1 input-new"
-                    style={{ fontSize: "1rem", color: "darkblue" }}  */}
-                  <div><input
-                    defaultValue={linija.pocetnaStanica}
-                    type="text"
-                    placeholder="Mesto polaska"
-                    required
+                  <div><select
+                   
                     name="pocetnaStanica"
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
-                  /></div>
+                  >
+                    <option className="medjustanica"  value="" disabled selected>Izaberite stanicu</option>
+                        {stanice.map((stanica) => {
+                          return (
+                            <option className="medjustanica"  key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        })}
+                  </select>
+                  </div>
                   <div className="red-05"></div>
                   <div >       {/* className="ograda-medjustanice" */}
                   {waypoints.map((waypoint, index) => (
@@ -212,29 +195,26 @@ const LineForm = ({ mode, id, state }) => {
                       
                       <select
                         name="stanica"
+                      className="input-stanica"
                         /* value={medjustanica.stanica} */
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
-                      >
+                      ><option className="medjustanica"  value="" disabled selected>Izaberite medjustanica</option>
                         {stanice.map((stanica) => {
                           return (
-                            <option key={stanica} value={stanica}>
+                            <option className="medjustanica"  key={stanica} value={stanica}>
                               {stanica}
                             </option>
                           );
                         })}
                       </select>
-                      <label className="labela-stanica">
-                      <Trans i18nKey="description.part169">Cena</Trans></label>
 
                       <div className="red-05"><label className="labela-stanica">
                         <Trans i18nKey="description.part150">{/* bilo je vreme polaska  */}
                           Vreme odlaska (polaska)
                         </Trans>
                       </label></div>
-                      {/* className="inputText name1 input-new"
-                       style={{ fontSize: "1rem" }}   */}
                       <input
                         /* defaultValue={linija.vremePolaska} */
                         className="input-stanica"
@@ -304,15 +284,21 @@ const LineForm = ({ mode, id, state }) => {
                     <Trans i18nKey="description.part5">Mesto dolaska</Trans>
                   </label></div>
 
-                  <input
-                    defaultValue={linija.krajnjaStanica}
-                    type="text"
+                  <select
                     name="krajnjaStanica"
-                    placeholder="Mesto dolaska"
                     className="input-stanica"
-                    required
                     onChange={adminLogic.changeHandler}
-                  />
+                  >
+                    <option className="medjustanica"  value="" disabled selected>Izaberite stanicu</option>
+                        {stanice.map((stanica) => {
+                          return (
+                            <option className="medjustanica"  key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        })}
+
+                  </select>
                   {/*<br />*/}
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part7">Datum polaska</Trans>
@@ -325,16 +311,7 @@ const LineForm = ({ mode, id, state }) => {
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
                   />
-                  {/*<br />*/}
-                  {/* <DatePicker className="inputText"
-                 selected={startDate}
-                  value={startDate}
-                  required
-                  scrollableMonthYearDropdownv 
-                  placeholderText="Datum dolaska"
-                   onChange={(date) => 
-                    setStartDate(date)
-                            } />   */}
+            
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part9">Datum dolaska</Trans>
                   </label></div>
@@ -346,15 +323,7 @@ const LineForm = ({ mode, id, state }) => {
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
                   />
-                  {/*<br />*/}
-                  {/* <DatePicker className="inputText"
-                 selected={endDate}
-                  value={endDate}
-                  required
-                  scrollableMonthYearDropdownv 
-                  placeholderText="Datum dolaska"
-                   onChange={(date) =>   
-                            setEndDate(date)} /> */}
+                  
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part11">Vreme polaska</Trans>
                   </label></div>
@@ -387,27 +356,6 @@ const LineForm = ({ mode, id, state }) => {
                     onChange={adminLogic.changeHandler}
                   ></input>
 
-                  {/* <label>
-                <Trans i18nKey="description.part131">Prevoznik</Trans>
-              </label>
-              <br />
-              <select
-                value={linija.prevoznik}
-                name="prevoznik"
-                className="name1 input-new"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              >
-                <option disabled={false} value="">
-                  --
-                  <Trans i18nKey="description.part132">
-                    Izaberite prevoznika
-                  </Trans>
-                  --
-                </option>
-                <option>Eurocompass</option>
-              </select>
-              <br /> */}
                   <div className="red-05"><label className="labela-stanica">Izaberite autobus</label></div>
                   <select
                     value={linija.oznakaBusa}
@@ -415,7 +363,7 @@ const LineForm = ({ mode, id, state }) => {
                     className="odaberiBus"
                     onChange={adminLogic.changeHandler}
                   >
-                    <option value="">Izaberite autobus</option>
+                    <option value="" disabled selected>Izaberite autobus</option>
                     {autobusi.map((autobusi) => {
                       return (
                         <option
@@ -445,7 +393,7 @@ const LineForm = ({ mode, id, state }) => {
                     <Trans i18nKey="description.part3">Mesto polaska</Trans>
                   </label></div>
                   
-                  {/*   name1 input-new   style={{ fontSize: "1rem", color: "darkblue" }} */}
+                 
                   <input
                     defaultValue={state.pocetnaStanica}
                     type="text"
@@ -506,7 +454,6 @@ const LineForm = ({ mode, id, state }) => {
                         </Trans>
                       </label></div>
                       
-                      {/* className="inputText name1 input-new"  style={{ fontSize: "1rem" }}  */}
                       <input
                         /* defaultValue={linija.vremePolaska} */
                         className="input-stanica"
@@ -577,15 +524,6 @@ const LineForm = ({ mode, id, state }) => {
                     onChange={adminLogic.changeHandler}
                   />
                   
-                  {/* <DatePicker className="inputText"
-                 selected={startDate}
-                  value={startDate}
-                  required
-                  scrollableMonthYearDropdownv 
-                  placeholderText="Datum dolaska"
-                   onChange={(date) => 
-                    setStartDate(date)
-                            } />   */}
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part9">Datum dolaska</Trans>
                   </label></div>
@@ -598,14 +536,6 @@ const LineForm = ({ mode, id, state }) => {
                     onChange={adminLogic.changeHandler}
                   />
                   
-                  {/* <DatePicker className="inputText"
-                 selected={endDate}
-                  value={endDate}
-                  required
-                  scrollableMonthYearDropdownv 
-                  placeholderText="Datum dolaska"
-                   onChange={(date) =>   
-                            setEndDate(date)} /> */}
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part11">Vreme polaska</Trans>
                   </label></div>
@@ -632,28 +562,7 @@ const LineForm = ({ mode, id, state }) => {
                     name="vremeDolaska"
                     onChange={adminLogic.changeHandler}
                   ></input>
-                  
-                  {/* <label>
-                <Trans i18nKey="description.part131">Prevoznik</Trans>
-              </label>
-              <br />
-              <select
-                value={linija.prevoznik}
-                name="prevoznik"
-                className="name1 input-new"
-                style={{ fontSize: "1rem" }}
-                onChange={adminLogic.changeHandler}
-              >
-                <option disabled={false} value="">
-                  --
-                  <Trans i18nKey="description.part132">
-                    Izaberite prevoznika
-                  </Trans>
-                  --
-                </option>
-                <option>Eurocompass</option>
-              </select>
-              <br /> */}
+                 
                   <div className="red-05"><label className="labela-stanica">
                   <Trans i18nKey="description.part166">Izaberite autobus  </Trans>
                   </label></div>
@@ -714,41 +623,7 @@ const LineForm = ({ mode, id, state }) => {
                     </div>
                   </div>
 
-                  {/* ------------------------------   
-                  <div>
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                    <Trans i18nKey="description.part168">Izaberite vozača </Trans>
-                    </label>
-                    &emsp;&ensp;&emsp;
-
-                    <select value={adminLogic.selectedVozac} name="vozac" onChange={adminLogic.changeHandler}>
-                      {vozac.map((korisnik) => (
-                        <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
-                        {korisnik.ime} {korisnik.prezime}
-                    </option>
-                    ))}
-                    </select>
-                  </div>
-                  </div>
-
-                  <div>
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                    <Trans i18nKey="description.part167">Izaberite stjuardesu </Trans>
-                    </label>
-                    &emsp;
-                    <select value={adminLogic.selectedStjuardesa} name="stjuardesa" onChange={adminLogic.changeHandler}>
-                      {stjuardesa.map((korisnik) => (
-                        <option key={korisnik.idKorisnik} value={korisnik.idKorisnik}>
-                         {korisnik.ime} {korisnik.prezime}
-                    </option>
-                    ))}
-                    </select>
-                  </div>
-                  </div>
-
-                     -------------------------------       */}
+                 
                   <div className="red-1">
                   <button type="submit" className="buttonSwitch"
                     >   {/* bilo je button    */}
@@ -762,8 +637,7 @@ const LineForm = ({ mode, id, state }) => {
                 </div>
               </div>
             )}{" "}
-            {/* bilo je h2 a ne <>  */}
-            
+           
           </form>
         </div>
       </div>

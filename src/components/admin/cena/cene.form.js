@@ -3,6 +3,7 @@ import CeneLogic from "./cene.logic";
 import CeneApi from "../../../api/cene.api";
 import "./cene.css";
 import { ToastContainer } from "react-toastify";
+import helpers from "../../../helpers/helpers";
 
 
 const CeneForm = ({mode, id}) => {
@@ -25,6 +26,33 @@ const CeneForm = ({mode, id}) => {
             izmeniCene();
         }
     }, []);
+
+    const [val1, setVal1] = useState("");
+    const [val2, setVal2] = useState("");
+    const [stanice, setStanice] = useState([]);
+
+
+    const getStanice = async () => {
+        const response = await fetch("http://localhost:5000/stanica");
+        const data = await response.json();
+        
+    
+        const a1 = data.stanice.map((item) => {
+          return { naziv: item.naziv, id: item.id };
+        });
+    
+        const a2 = a1 //
+          .map((item) => item.naziv) //Uradjen filter da se u selektu ne ponavljaju linije
+          .filter(helpers.filterUnique);
+    
+        setStanice(a2);
+        setVal1(a2[0]);
+        setVal2(a2[1]);
+      };
+    
+      useEffect(() => {
+        getStanice(); //?Prilikom ucitavanja stranice da pozove funkciju get stanice
+      }, []);
 
     const back = () => {
         setTimeout(() => {
@@ -66,21 +94,39 @@ const CeneForm = ({mode, id}) => {
             </div>
             <div>
             <div><label className="cene-labela">Pocetna Stanica</label></div>
-            <input 
-            defaultValue={cene.pocetnaStanica}
-            type="text"
-            name="pocetnaStanica"
-            className="input-cene"
-            onChange={ceneLogic.changeHandler}/>
+            <select
+               name="pocetnaStanica"
+               className="input-cene"
+               value={val1}
+               onChange={(e) => {
+               setVal1(e.target.value);
+                ceneLogic.changeHandler(e); // Pozivamo changeHandler sa event objektom
+            }}
+            >     
+                 {stanice.map((stanica) => (
+                 <option key={stanica} value={stanica}>
+                     {stanica}
+                </option>
+                 ))}
+             </select>
             </div>
             <div>
                 <div><label className="cene-labela">Krajnja Stanica</label></div>
-                <input
-                defaultValue={cene.krajnjaStanicaR}
-                type="text"
-                name="krajnjaStanicaR"
-                className="input-cene"
-                onChange={ceneLogic.changeHandler} />
+                <select
+                   name="krajnjaStanicaR"
+                   className="input-cene"
+                   value={val2}
+                    onChange={(e) => {
+                     setVal2(e.target.value);
+                     ceneLogic.changeHandler(e); // Pozivamo changeHandler sa event objektom
+                  }}
+                 >
+                     {stanice.map((stanica) => (
+                     <option key={stanica} value={stanica}>
+                               {stanica}
+                      </option>
+                      ))}
+                 </select>
             </div>
             <div>
                <div> <label className="cene-labela">Cena</label></div>

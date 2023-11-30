@@ -1,11 +1,9 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import LoginComponent from "./components/login/login.component";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/NavBar/navbar";
 import Pocetna from "./components/NavBar/links/Pocetna";
-/* import Rezervacija from './components/rezervacija/Rezervacija';
-import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje'; */
-
 import RezervacijaKarte from "./components/NavBar/links/RezervacijaKarte";
 import Kontakt from "./components/NavBar/links/Kontakt";
 import Footer from "./components/NavBar/Footer/footer";
@@ -41,7 +39,6 @@ function App() {
       <Router>
         <div className="App">
           <Navbar />
-
           <div className="content">
             <Switch>
               <ProtectedRoute
@@ -54,9 +51,10 @@ function App() {
                 component={Stjuardesa}
                 stjuardesaOnly
               />
-              <Route
+              <ProtectedRoute
                 path="/:id/stjuardesalinija"
                 component={StjuardesaLinija}
+                stjuardesaOnly
               />
               <Route path="/pocetna">
                 <Pocetna />
@@ -68,9 +66,6 @@ function App() {
                 <RezervacijaKarte />
               </Route>
               <Route path="/:id/rezervacijakarte">
-                <RezervacijaKarte />
-              </Route>
-              <Route path="/rezervacijakarte">
                 <RezervacijaKarte />
               </Route>
               <Route path="/kontakt">
@@ -144,21 +139,21 @@ function App() {
             <Route path="/passwordreset/:token">
               <PasswordReset />
             </Route>
-            <Route path="/cene.initial">
-              <CeneInitial />
-            </Route>
-            <Route path="/cene.add">
-              <CeneAdd />
-            </Route>
-            <Route path="/:id/cene.edit">
-              <CeneEdit />
-            </Route>
+            <ProtectedRoute
+              path="/cene.initial"
+              component={CeneInitial}
+              adminOnly
+            />
+            <ProtectedRoute path="/cene.add" component={CeneAdd} adminOnly />
+            <ProtectedRoute
+              path="/:id/cene.edit"
+              component={CeneEdit}
+              adminOnly
+            />
             <Route path="/verifikacija/:id">
               <Verifikacija />
             </Route>
           </div>
-
-          <Footer />
         </div>
       </Router>
     </AuthProvider>

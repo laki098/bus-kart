@@ -301,3 +301,6 @@ input::placeholder {
   box-shadow: #d6d6e7 0 0.188rem 0.438rem inset;
   transform: translateY(0.125rem);
 }
+.medjustanica {
+  text-align: center;
+}
