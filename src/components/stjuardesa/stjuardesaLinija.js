@@ -140,12 +140,13 @@ const StjuardesaLinija = ({}) => {
         filterMedju.id,
         filterMedju.pocetnaStanicaId,
         filterMedju.krajnjaStanicaId,
-        6,
+        3,
         "kafa",
         trenutnaRezervacija
       )
       .then((response) => {
         console.log(response);
+        console.log("-------------------------------------------------");
         notifySuccest();
       })
       .catch((error) => {
@@ -404,6 +405,7 @@ const StjuardesaLinija = ({}) => {
           <p className="admin-dugme-slova">Skeniraj QR kod </p>
         </button>
       )}
+      <ToastContainer />
     </>
   );
 };

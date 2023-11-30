@@ -42,7 +42,6 @@ function Autobus({
       //?Postavljamo sediste kada se dobiju podaci o autobusu
       const brojSedista = autobusData.brojSedista;
       setSediste(Array(brojSedista).fill(false));
-      setTrenutnaRezervacija([]);
       setOdabraniAutobus(autobusData.oznakaBusa);
     }
     if (pocetnaStanicaId != undefined) {
@@ -58,14 +57,15 @@ function Autobus({
   function handleClick(index) {
     const noviNiz = [...sediste];
     noviNiz[index] = !noviNiz[index];
-    updateTrenutnaRezervacija([...trenutnaRezervacija]);
 
     if (noviNiz[index]) {
-      setTrenutnaRezervacija([...trenutnaRezervacija, index + 1]);
+      const novaRezervacija = [...trenutnaRezervacija, index];
+      setTrenutnaRezervacija(novaRezervacija);
+      updateTrenutnaRezervacija(novaRezervacija);
     } else {
-      setTrenutnaRezervacija(
-        trenutnaRezervacija.filter((s) => s !== index + 1)
-      );
+      const novaRezervacija = trenutnaRezervacija.filter((s) => s !== index);
+      setTrenutnaRezervacija(novaRezervacija);
+      updateTrenutnaRezervacija(novaRezervacija);
     }
 
     setSediste(noviNiz);
@@ -77,7 +77,7 @@ function Autobus({
     updateTrenutnaRezervacija([...trenutnaRezervacija]);
   }
 
-  const isSeatReserved = (seatNumber ) => {
+  const isSeatReserved = (seatNumber) => {
     // Proverite da li rezervacija niz ima podatke
     return (
       rezervacija &&
@@ -105,7 +105,7 @@ function Autobus({
               </p>
             ) : null}
 
-            {index + 1 }
+            {index + 1}
           </div>
         ))}
         <div className="labela-stanica">
