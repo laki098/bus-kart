@@ -1,9 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import LoginComponent from "./components/login/login.component";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/NavBar/navbar";
 import Pocetna from "./components/NavBar/links/Pocetna";
+/* import Rezervacija from './components/rezervacija/Rezervacija';
+import UpisiRedVoznje from './components/prevoznik/UpisiRedVoznje'; */
+
 import RezervacijaKarte from "./components/NavBar/links/RezervacijaKarte";
 import Kontakt from "./components/NavBar/links/Kontakt";
 import Footer from "./components/NavBar/Footer/footer";
@@ -39,6 +41,7 @@ function App() {
       <Router>
         <div className="App">
           <Navbar />
+
           <div className="content">
             <Switch>
               <ProtectedRoute
@@ -154,6 +157,8 @@ function App() {
               <Verifikacija />
             </Route>
           </div>
+
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
