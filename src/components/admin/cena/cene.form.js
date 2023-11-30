@@ -97,17 +97,19 @@ const CeneForm = ({mode, id}) => {
             <select
                name="pocetnaStanica"
                className="input-cene"
-               value={val1}
-               onChange={(e) => {
-               setVal1(e.target.value);
-                ceneLogic.changeHandler(e); // Pozivamo changeHandler sa event objektom
-            }}
+               defaultValue={cene.pocetnaStanica}
+               onChange={ceneLogic.changeHandler} 
             >     
-                 {stanice.map((stanica) => (
-                 <option key={stanica} value={stanica}>
-                     {stanica}
-                </option>
-                 ))}
+               <option className="medjustanica">{cene.pocetnaStanica}</option>
+                     {stanice.map((stanica) => {
+                        if(stanica !== cene.pocetnaStanica) {
+                            return (
+                     <option key={stanica} value={stanica}>
+                               {stanica}
+                      </option>
+                   );
+                }
+                })}
              </select>
             </div>
             <div>
@@ -115,17 +117,20 @@ const CeneForm = ({mode, id}) => {
                 <select
                    name="krajnjaStanicaR"
                    className="input-cene"
-                   value={val2}
-                    onChange={(e) => {
-                     setVal2(e.target.value);
-                     ceneLogic.changeHandler(e); // Pozivamo changeHandler sa event objektom
-                  }}
+                   defaultValue={cene.krajnjaStanicaR}
+                   onChange={ceneLogic.changeHandler} 
+                
                  >
-                     {stanice.map((stanica) => (
+                    <option className="medjustanica">{cene.krajnjaStanicaR}</option>
+                     {stanice.map((stanica) => {
+                        if(stanica !== cene.krajnjaStanicaR) {
+                            return (
                      <option key={stanica} value={stanica}>
                                {stanica}
                       </option>
-                      ))}
+                   );
+                }
+                })}
                  </select>
             </div>
             <div>

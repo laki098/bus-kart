@@ -1,31 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 const ProtectedRoute = ({ component: Component, adminOnly, stjuardesaOnly, ...rest }) => {
   const { checkAdminRole, checkStjuardesaRole } = useAuth();
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    if (adminOnly && !checkAdminRole()) {
-      console.log('Nemate ovlasti za pristup ovoj stranici.');
-    }
+    const delay = 9; 
 
-    if (stjuardesaOnly && !checkStjuardesaRole()) {
-      console.log('Nemate ovlasti za pristup ovoj stranici.');
-    }
+    const timeoutId = setTimeout(() => {
+      if (adminOnly && !checkAdminRole()) {
+        console.log('Nemate ovlasti za pristup ovoj stranici.');
+        setRedirect(true);
+      }
+
+      if (stjuardesaOnly && !checkStjuardesaRole()) {
+        console.log('Nemate ovlasti za pristup ovoj stranici.');
+        setRedirect(true);
+      }
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
   }, [adminOnly, stjuardesaOnly, checkAdminRole, checkStjuardesaRole]);
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        (adminOnly && !checkAdminRole()) || (stjuardesaOnly && !checkStjuardesaRole()) ? ( // Vracanje na pocetnoj stranici ako neko proba bez role da ide na druge stranice
-          <Redirect to="/pocetna" />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
+  return redirect ? (
+    <Redirect to="/pocetna" />
+  ) : (
+    <Route {...rest} render={(props) => <Component {...props} />} />
   );
 };
 

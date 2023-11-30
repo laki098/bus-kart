@@ -166,9 +166,8 @@ const LineForm = ({ mode, id, state }) => {
                   <div><label className="labela-stanica">
                     <Trans i18nKey="description.part3">Mesto polaska</Trans>
                   </label></div>
-                  
-                  <div><select
-                   
+                  <div>
+                    <select
                     name="pocetnaStanica"
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
@@ -363,10 +362,11 @@ const LineForm = ({ mode, id, state }) => {
                     className="odaberiBus"
                     onChange={adminLogic.changeHandler}
                   >
-                    <option value="" disabled selected>Izaberite autobus</option>
+                    <option  className="medjustanica" value="" disabled selected>Izaberite autobus</option>
                     {autobusi.map((autobusi) => {
                       return (
                         <option
+                        className="medjustanica"
                           key={autobusi.oznakaBusa}
                           value={autobusi.oznakaBusa}
                         >
@@ -393,16 +393,22 @@ const LineForm = ({ mode, id, state }) => {
                     <Trans i18nKey="description.part3">Mesto polaska</Trans>
                   </label></div>
                   
-                 
-                  <input
-                    defaultValue={state.pocetnaStanica}
-                    type="text"
-                    placeholder="Mesto polaska"
-                    required
+                  <select
                     name="pocetnaStanica"
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
-                  />
+                  >
+                    <option className="medjustanica">{state.pocetnaStanica}</option>
+                        {stanice.map((stanica) => {
+                          if(stanica !== state.pocetnaStanica) {
+                          return (
+                            <option className="medjustanica"  key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        }
+                        })}
+                  </select>
                   <div className="red-1"></div>
                   {waypoints.map((waypoint, index) => (
                     <div key={index}>
@@ -502,15 +508,24 @@ const LineForm = ({ mode, id, state }) => {
                     <Trans i18nKey="description.part5">Mesto dolaska</Trans>
                   </label></div>
                   
-                  <input
-                    defaultValue={state.krajnjaStanica}
-                    type="text"
+                  <select
                     name="krajnjaStanica"
-                    placeholder="Mesto dolaska"
                     className="input-stanica"
-                    required
                     onChange={adminLogic.changeHandler}
-                  />
+                  >
+                    <option className="medjustanica" >{state.krajnjaStanica}</option>
+                        {stanice.map((stanica) => {
+                          if (stanica !== state.krajnjaStanica ) {
+                          return (
+                            <option className="medjustanica"  key={stanica} value={stanica}>
+                              {stanica}
+                            </option>
+                          );
+                        }
+                        return null;
+                        })}
+
+                  </select>
                   
                   <div className="red-05"><label className="labela-stanica">
                     <Trans i18nKey="description.part7">Datum polaska</Trans>
@@ -568,21 +583,23 @@ const LineForm = ({ mode, id, state }) => {
                   </label></div>
                   
                   <select
-                    defaultValue={state.oznakaBusa}
-                    name="oznakaBusa"
-                    onChange={adminLogic.changeHandler}
+                  defaultValue={state.oznakaBusa}
+                  name="oznakaBusa"
+                  onChange={adminLogic.changeHandler}
                   >
-                    {autobusi.map((autobusi) => {
-                      return (
-                        <option
-                          key={autobusi.oznakaBusa}
-                          value={autobusi.oznakaBusa}
-                        >
-                          {autobusi.oznakaBusa}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    <option className="medjustanica" >{state.oznakaBusa}</option>
+                           {autobusi.map((autobus) => {
+                          // Izuzmi trenutnu vrednost iz liste opcija
+                               if (autobus.oznakaBusa !== state.oznakaBusa) {
+                                   return (
+                              <option className="medjustanica" key={autobus.oznakaBusa} value={autobus.oznakaBusa}>
+                                   {autobus.oznakaBusa}
+                             </option>
+                                );
+                               }
+                             return null; // Preskoči trenutnu vrednost
+                             })}
+                      </select>
                   <div className="red-1"></div>
                   {/* ------------------------------    */}
                   <div>
