@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import QRScanner from "./QRScanner";
 import { useLocation, useHistory } from "react-router-dom";
 import Autobus from "../rezervacije/sedista/autobus";
+import RezervacijaApi from "../../api/rezervacijaApi";
+import LinijeApi from "../../api/linije.api.js";
 
+import { ToastContainer, toast } from "react-toastify";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
@@ -15,6 +18,11 @@ const StjuardesaLinija = ({}) => {
   const [pocetnaStanica, setPocetnaStanica] = useState([]);
   const [krajnjaStanica, setKrajnjaStanica] = useState([]);
   const [okidanje, setOkidanje] = useState([]);
+  const [filteredLinije, setFilteredLinije] = useState([]);
+
+  const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
+
+  console.log(trenutnaRezervacija);
 
   //? Pristupite celom query string-u
   const queryString = window.location.search;
@@ -93,14 +101,89 @@ const StjuardesaLinija = ({}) => {
     setPocetnaStanica(dataPocetnaStanica.stanica);
   };
 
-  console.log(pocetnaStanica);
   useEffect(() => {
     dobavljanjeBrojaMesta();
   }, [okidanje]);
 
+  //?filtriram linuju za bas odredjena mesta
+  const filterLinija = async () => {
+    if (!linija.datumPolaska) return;
+    if (!pocetnaStanica.naziv) return;
+    if (!krajnjaStanica.naziv) return;
+    if (!linija.id) return;
+    const response = await LinijeApi().filterLinijaId(
+      pocetnaStanica.naziv,
+      krajnjaStanica.naziv,
+      linija.datumPolaska,
+      linija.id
+    );
+
+    const data = await response.json();
+
+    setFilteredLinije(data.rezultat);
+  };
+
+  const filterMedju = filteredLinije[0];
+  console.log(trenutnaRezervacija);
+
+  //?novo cekiranje
+  const novaRezervacija = () => {
+    RezervacijaApi()
+      .rezervacija(
+        1,
+        filterMedju.pocetnaStanica,
+        filterMedju.krajnjaStanica,
+        filterMedju.datumPolaska,
+        filterMedju.datumDolaska,
+        filterMedju.vremePolaska,
+        filterMedju.vremeDolaska,
+        filterMedju.id,
+        filterMedju.pocetnaStanicaId,
+        filterMedju.krajnjaStanicaId,
+        3,
+        "kafa",
+        trenutnaRezervacija
+      )
+      .then((response) => {
+        console.log(response);
+        console.log("-------------------------------------------------");
+        notifySuccest();
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyWarn();
+      });
+  };
+  const notifySuccest = () => {
+    toast.success("Uspešno ste rezervisali kartu", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+  const notifyWarn = () => {
+    toast.warn("Nisu uneti svi podaci", {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
   useEffect(() => {
     dobavljanjeLinije();
   }, []);
+  useEffect(() => {
+    filterLinija();
+  }, [pocetnaStanica, krajnjaStanica, linija]);
 
   //?kada kliknemo dugme da otvori skenerQrCode
   const handleQRScan = () => {
@@ -304,7 +387,13 @@ const StjuardesaLinija = ({}) => {
         linijaId={linija.id}
         pocetnaStanicaId={pocetnaStanica.id}
         krajnjaStanicaId={krajnjaStanica.id}
+        updateTrenutnaRezervacija={(novaRezervacija) =>
+          setTrenutnaRezervacija(novaRezervacija)
+        }
       />
+      <button onClick={novaRezervacija} className="buttonSwitch">
+        Potvrdi izbor
+      </button>
 
       <div className="red-1"></div>
       {showQRScanner && (
@@ -316,6 +405,7 @@ const StjuardesaLinija = ({}) => {
           <p className="admin-dugme-slova">Skeniraj QR kod </p>
         </button>
       )}
+      <ToastContainer />
     </>
   );
 };

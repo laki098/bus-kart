@@ -10,6 +10,7 @@ function Autobus({
   linijaId,
   pocetnaStanicaId,
   krajnjaStanicaId,
+  updateTrenutnaRezervacija,
 }) {
   const [sediste, setSediste] = useState([]);
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
@@ -35,13 +36,12 @@ function Autobus({
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };
-  console.log(pocetnaStanicaId, krajnjaStanicaId);
+
   useEffect(() => {
     if (autobusData) {
       //?Postavljamo sediste kada se dobiju podaci o autobusu
       const brojSedista = autobusData.brojSedista;
       setSediste(Array(brojSedista).fill(false));
-      setTrenutnaRezervacija([]);
       setOdabraniAutobus(autobusData.oznakaBusa);
     }
     if (pocetnaStanicaId != undefined) {
@@ -59,11 +59,13 @@ function Autobus({
     noviNiz[index] = !noviNiz[index];
 
     if (noviNiz[index]) {
-      setTrenutnaRezervacija([...trenutnaRezervacija, index + 1]);
+      const novaRezervacija = [...trenutnaRezervacija, index];
+      setTrenutnaRezervacija(novaRezervacija);
+      updateTrenutnaRezervacija(novaRezervacija);
     } else {
-      setTrenutnaRezervacija(
-        trenutnaRezervacija.filter((s) => s !== index + 1)
-      );
+      const novaRezervacija = trenutnaRezervacija.filter((s) => s !== index);
+      setTrenutnaRezervacija(novaRezervacija);
+      updateTrenutnaRezervacija(novaRezervacija);
     }
 
     setSediste(noviNiz);
@@ -72,9 +74,10 @@ function Autobus({
   function handlePotvrdi() {
     console.log("Izabrana sedišta:", trenutnaRezervacija);
     // Ovde dodajte svoju logiku za potvrdu ili slanje podataka
+    updateTrenutnaRezervacija([...trenutnaRezervacija]);
   }
 
-  const isSeatReserved = (seatNumber ) => {
+  const isSeatReserved = (seatNumber) => {
     // Proverite da li rezervacija niz ima podatke
     return (
       rezervacija &&
@@ -102,7 +105,7 @@ function Autobus({
               </p>
             ) : null}
 
-            {index + 1 }
+            {index + 1}
           </div>
         ))}
         <div className="labela-stanica">

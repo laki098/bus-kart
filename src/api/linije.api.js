@@ -57,6 +57,29 @@ const LinijeApi = () => {
       }),
     });
   };
+
+  const filterLinijaId = async (
+    nazivPocetneStanice,
+    nazivKrajnjeStanice,
+    datumPolaska,
+    id
+  ) => {
+    console.log(nazivPocetneStanice, nazivKrajnjeStanice, datumPolaska, id);
+    return await fetch("http://localhost:5000/linija/filterLinijaId", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        //filter radi po mestu polaska, mestu dolaska i datumu polaska
+        nazivPocetneStanice, //
+        nazivKrajnjeStanice, //
+        datumPolaska,
+        id, //
+      }),
+    });
+  };
+
   const filterLinijaID = async (id) => {
     return await axios.get(`http://localhost:5000/linija/${id}`, {});
   };
@@ -119,6 +142,7 @@ const LinijeApi = () => {
     brisanjeLinije,
     editLinije,
     filterLinijaID,
+    filterLinijaId,
   };
 };
 
