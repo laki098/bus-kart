@@ -27,8 +27,6 @@ const CeneForm = ({mode, id}) => {
         }
     }, []);
 
-    const [val1, setVal1] = useState("");
-    const [val2, setVal2] = useState("");
     const [stanice, setStanice] = useState([]);
 
 
@@ -46,8 +44,6 @@ const CeneForm = ({mode, id}) => {
           .filter(helpers.filterUnique);
     
         setStanice(a2);
-        setVal1(a2[0]);
-        setVal2(a2[1]);
       };
     
       useEffect(() => {

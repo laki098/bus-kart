@@ -25,6 +25,8 @@ const RezervacijaComponent = ({ id, state }) => {
  // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
   const [brojSedista, setBrojSedista] = useState();
+  const [ceneFilter, setCeneFilter] = useState();
+  const [tipKarte, setTipKarte] = useState();
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -153,48 +155,36 @@ const RezervacijaComponent = ({ id, state }) => {
   const [pom1, setPom1] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
+
+  const cene = async () => {
+    const response = await fetch("http://localhost:5000/cena/filterCena", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pocetnaStanica: state.pocetnaStanica,
+        krajnjaStanicaR: state.krajnjaStanica,
+        tipKarte: tipKarte
+      }),
+    });
+    const data = await response.json();
+    setCeneFilter(data.cenaPovratne)
+    
+    
+  }
+
+
+
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
 
-  const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
-  const [ukupnaCena, setUkupnaCena] = useState(0);
-
   useEffect(() => {
-    const novaCena = calculateTicketPrice(selectedValue) * brojIzabranihSedista;
-    setUkupnaCena(novaCena);
-  }, [selectedValue, brojIzabranihSedista]);
+    cene()
+  }, [tipKarte]);
 
   const [showReturnDate, setShowReturnDate] = useState(false);
-
-  const [ticketPrice, setTicketPrice] = useState(0);
-
-  const calculateTicketPrice = (selectedTicketType) => {
-    let price = 0;
-    switch (selectedTicketType) {
-      case "Jednosmerna":
-        price = 1000;
-        break;
-      case "Povratna":
-        price = 2000;
-        break;
-      case "Besplatna":
-        price = 0;
-        break;
-      case "Studentska":
-        price = 500;
-        break;
-      case "Vikend":
-        price = 1500;
-        break;
-      case "Nedeljna":
-        price = 2500;
-        break;
-      default:
-        price = 0;
-    }
-    return price;
-  };
 
   let [formInputsValid, setFormInputsValid] = useState({
     name: true,
@@ -527,56 +517,59 @@ const RezervacijaComponent = ({ id, state }) => {
                   {" "}
                   {/*  className="radio1"   */}
                   <select
-                    className="select"
-                    type="text"
-                    name="Izaberi kartu"
-                    required
-                    value={selectedValue}
-                    onChange={(event) => {
-                      setSelectedValue(event.target.value);
+  className="select"
+  type="text"
+  name="Izaberi kartu"
+  required
+  value={selectedValue}
+  onChange={(event) => {
+    const selectedOptionValue = event.target.value; // Ovo je vrednost izabranog optiona
 
-                      if ((event.target.value === "Povratna") | (event.target.value ==="Return")) {
-                        setShowReturnDate(true);
-                      } else {
-                        setShowReturnDate(false);
-                      }
-                      if (event.target.value === "Studentska") {
-                        setPom(true);
-                      } else {
-                        setPom(false);
-                      }
+    setSelectedValue(selectedOptionValue);
 
-                      if (event.target.value === "Students") {
-                        setPom1(true);
-                      } else {
-                        setPom1(false);
-                      }
-                    }}
-                  >
-                    <option disabled={false} value="">
-                      <Trans i18nKey="description.part23">
-                        Izaberite kartu
-                      </Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part24">Jednosmerna</Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part25">Povratna</Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part26">Besplatna</Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part27">Studentska</Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part28">Vikend</Trans>
-                    </option>
-                    <option>
-                      <Trans i18nKey="description.part29">Nedeljna</Trans>
-                    </option>
-                  </select>
+    if ((selectedOptionValue === "Povratna") | (selectedOptionValue === "Return")) {
+      setShowReturnDate(true);
+    } else {
+      setShowReturnDate(false);
+    }
+    if (selectedOptionValue === "Studentska") {
+      setPom(true);
+    } else {
+      setPom(false);
+    }
+
+    if (selectedOptionValue === "Students") {
+      setPom1(true);
+    } else {
+      setPom1(false);
+    }
+
+    // Postavljanje vrednosti u state setTipKarte
+    setTipKarte(selectedOptionValue);
+  }}
+>
+  <option disabled={false} value="">
+    <Trans i18nKey="description.part23">Izaberite kartu</Trans>
+  </option>
+  <option value="Jednosmerna">
+    <Trans i18nKey="description.part24">Jednosmerna</Trans>
+  </option>
+  <option value="Povratna">
+    <Trans i18nKey="description.part25">Povratna</Trans>
+  </option>
+  <option value="Besplatna">
+    <Trans i18nKey="description.part26">Besplatna</Trans>
+  </option>
+  <option value="Studentska">
+    <Trans i18nKey="description.part27">Studentska</Trans>
+  </option>
+  <option value="Vikend">
+    <Trans i18nKey="description.part28">Vikend</Trans>
+  </option>
+  <option value="Nedeljna">
+    <Trans i18nKey="description.part29">Nedeljna</Trans>
+  </option>
+</select>
                   {/* studentska karta   */}
                   <div>
                     {pom ? (
@@ -652,26 +645,7 @@ const RezervacijaComponent = ({ id, state }) => {
                 <div className="vasIzbor">
                   <p>
                     <Trans i18nKey="description.part60">Cena karte:</Trans>{" "}
-                    <strong>
-                      {" "}
-                      {calculateTicketPrice(selectedValue)}
-                      &nbsp; <Trans i18nKey="description.part61"> dinara</Trans>
-                    </strong>
-                  </p>
-                  <p>
-                    <Trans i18nKey="description.part62">
-                      Broj izabranih sedišta:
-                    </Trans>
-                    <strong> {brojIzabranihSedista}</strong>
-                  </p>
-                  <p>
-                    <Trans i18nKey="description.part63">Ukupna cena:</Trans>
-                    <strong>
-                      {" "}
-                      {ukupnaCena}
-                      &nbsp;
-                      <Trans i18nKey="description.part61"> dinara</Trans>
-                    </strong>
+                    {ceneFilter}
                   </p>
                 </div>
               </div>
@@ -701,7 +675,7 @@ const RezervacijaComponent = ({ id, state }) => {
                   {/*------------------------------  */}
                 </div>
                 <div>
-                  {console.log(state) ||
+                  {
                     (linija.oznakaBusa != "S2" ? (
                       ""
                     ) : (
