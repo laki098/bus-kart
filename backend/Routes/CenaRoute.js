@@ -24,13 +24,33 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log(id)
+    console.log(id);
     const cena = await Cena.findOne({
       where: { id },
     });
-    res
-      .status(200)
-      .json({ message: "uspesno dobavljena rezervacija", cena });
+    res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
+  } catch (error) {
+    res.status(500).json({ message: "doslo je do greske" });
+  }
+});
+
+//? izvlacenje cene po pocetnom i krajnjem gradu i obracun
+router.post("/filterCena", async (req, res) => {
+  const { pocetnaStanica, krajnjaStanicaR, tipKarte } = req.body;
+
+  try {
+    const cena = await Cena.findOne({
+      where: { pocetnaStanica, krajnjaStanicaR },
+    });
+    if (tipKarte == "Jednosmerna") {
+      res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
+    }
+    if (tipKarte == "Povratna") {
+      const cenaPovratne = cena.cenaKarte + cena.cenaKarte * 0.7;
+      res
+        .status(200)
+        .json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
+    }
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske" });
   }
