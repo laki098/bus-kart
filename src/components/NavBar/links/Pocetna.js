@@ -12,6 +12,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 import { useMediaQuery } from "react-responsive"; // responsive
 import MediaQuery from "react-responsive";
+import Slider from './slider/slider';
 
 const Pocetna = () => {
   //prevodjenje
@@ -36,6 +37,13 @@ const Pocetna = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [bus1, bus2];
   const [showClass, setShowClass] = useState(false);
+
+  const [sliderValue, setSliderValue] = useState(50);
+  const NovaVrednost = 50;
+  const handleNekePromene = () => {
+    // Implementirajte logiku koja će promeniti vrednost slidera kada pređete na drugu stranicu
+    setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
+  };
 
   const filterLinija = async () => {
     if (!valueDate) return;
@@ -151,10 +159,13 @@ const Pocetna = () => {
           ))}
         </div>
       </header>
+              <div>
+              <Slider value={sliderValue} />
+              </div>
+    
 
       {isDesktop && (
         <div className="home-page">
-          <p className="p-style">Korak 1/3</p>
           <h2 className="h2-card">
             <i className="fa fa-bus"></i>
             <span className="span">
@@ -232,7 +243,6 @@ const Pocetna = () => {
 
       {!isDesktop && (
         <div className="home-page">
-           <p className="p-style">Korak 1/3</p>
           <h2 className="h2-card">
             <i className="fa fa-bus"></i>
             <span className="span">
@@ -327,7 +337,6 @@ const Pocetna = () => {
               display: block;
             }
           `}</style>
-           <p className="p-style1">Korak 2/3</p>
           <h2 className="card-header">
             <i className="fa-solid fa-bus"></i>
             <span className="span">

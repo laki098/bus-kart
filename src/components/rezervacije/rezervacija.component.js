@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "./i18n"; // za prevodjenje
 import "./i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import Slider from "../NavBar/links/slider/slider";
 
 const RezervacijaComponent = ({ id, state }) => {
  // const [filteredLinije, setFilteredLinije] = useState([]);
@@ -250,6 +251,13 @@ const RezervacijaComponent = ({ id, state }) => {
   const { t, i18n } = useTranslation();
   // prevodjenje
 
+  const [sliderValue, setSliderValue] = useState(100);
+  const NovaVrednost = 100;
+  const handleNekePromene = () => {
+    // Implementirajte logiku koja će promeniti vrednost slidera kada pređete na drugu stranicu
+    setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
+  };
+
 
   return (
     <>
@@ -269,15 +277,15 @@ const RezervacijaComponent = ({ id, state }) => {
           ))}
         </div>
       </header>
+      <div>
+      <Slider value={sliderValue} />
+      </div>
 
       <div className="red-1"></div>
       <form onSubmit={confirmeHandler} className="forma">
         {" "}
         {/* className={`${classes.form} side`}  */}
-        <p className="p-style2">Korak 3/3</p>
-        <div className="margin">
-
-        </div>
+        
         <div>
           {" "}
           {/* className="flex-container"  */} 
@@ -645,7 +653,7 @@ const RezervacijaComponent = ({ id, state }) => {
                 <div className="vasIzbor">
                   <p>
                     <Trans i18nKey="description.part60">Cena karte:</Trans>{" "}
-                    {ceneFilter}
+                    {ceneFilter} din
                   </p>
                 </div>
               </div>
