@@ -37,19 +37,24 @@ router.get("/:id", async (req, res) => {
 //? izvlacenje cene po pocetnom i krajnjem gradu i obracun
 router.post("/filterCena", async (req, res) => {
   const { pocetnaStanica, krajnjaStanicaR, tipKarte } = req.body;
+  console.log(pocetnaStanica, krajnjaStanicaR, tipKarte)
 
   try {
     const cena = await Cena.findOne({
       where: { pocetnaStanica, krajnjaStanicaR },
     });
+    
     if (tipKarte == "Jednosmerna") {
-      res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
+      const cenaPovratne = cena.cenaKarte ;
+      res.status(200).json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
+      return
     }
     if (tipKarte == "Povratna") {
       const cenaPovratne = cena.cenaKarte + cena.cenaKarte * 0.7;
       res
         .status(200)
         .json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
+       return
     }
     res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
   } catch (error) {
