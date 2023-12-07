@@ -51,6 +51,7 @@ router.post("/filterCena", async (req, res) => {
         .status(200)
         .json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
     }
+    res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske" });
   }
