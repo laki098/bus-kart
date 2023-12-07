@@ -58,7 +58,6 @@ const LineForm = ({ mode, id, state }) => {
     setVozac(vozaci);
     setStjuardesa(stjuardesa);
   };
-  console.log(vozac)
   
   
   

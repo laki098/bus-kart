@@ -53,8 +53,6 @@ const Korisnik = () => {
 
     setKorisnik(data.korisnik);
   };
-  console.log(korisnik);
-  console.log(userPars);
 
 
   const back = () => {
