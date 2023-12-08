@@ -59,7 +59,6 @@ const BusForm = ({ mode, idAutobusa }) => {
   const { t, i18n } = useTranslation();
   // prevodjenje end
 
-  console.log(bus);
   return (
     <div>        {/* className="pozadina"  */}
       <header>

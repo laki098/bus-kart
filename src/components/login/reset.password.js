@@ -37,7 +37,7 @@ const ResetPassword = () => {
     }
   };
 
-  console.log(email)
+  
 
   
 

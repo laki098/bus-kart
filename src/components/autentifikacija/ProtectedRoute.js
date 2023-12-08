@@ -7,17 +7,21 @@ const ProtectedRoute = ({ component: Component, adminOnly, stjuardesaOnly, ...re
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    const delay = 9; 
+    const delay = 9;
 
     const timeoutId = setTimeout(() => {
       if (adminOnly && !checkAdminRole()) {
-        console.log('Nemate ovlasti za pristup ovoj stranici.');
         setRedirect(true);
       }
 
       if (stjuardesaOnly && !checkStjuardesaRole()) {
         console.log('Nemate ovlasti za pristup ovoj stranici.');
         setRedirect(true);
+      }
+
+      // Dodatni uslov za prolazak kroz '/passwordreset/' rute
+      if (window.location.pathname.includes('/passwordreset/')) {
+        setRedirect(false);
       }
     }, delay);
 

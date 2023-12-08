@@ -32,7 +32,7 @@ const Karta = () => {
     const data = await response.json();
 
     const a1 = data.karte.map((item) => {
-      console.log(item.polaznaStanicaR);
+     
       return {
         brojMesta: item.brojMesta,
         pocetna: item.polaznaStanicaR,
@@ -47,8 +47,6 @@ const Karta = () => {
     setSveKarte(a1);
   };
 
-  console.log(neiskorisceneKarte);
-  console.log(iskorisceneKarte);
 
   useEffect(() => {
     getKarte();

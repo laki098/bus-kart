@@ -23,6 +23,10 @@ const LoginComponent = () => {
   const { t, i18n } = useTranslation();
   // prevodjenje end
 
+  const submitHandler = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <div className="pozadina">
       {/*  header je deo za prevodjenje*/}
@@ -42,7 +46,7 @@ const LoginComponent = () => {
           ))}
         </div>
       </header>
-
+      <form onSubmit={submitHandler}>
       <div className="main">
         <div className="sub-main sirina-20" >
           <div>
@@ -66,6 +70,7 @@ const LoginComponent = () => {
                     name="korisnickoIme"
                     className="name1 input-new"
                     onChange={loginLogic.changeHandler}
+                    autoComplete="username"
                   />
                 </div>
                 <div className="second-input">
@@ -76,6 +81,7 @@ const LoginComponent = () => {
                     name="lozinka"
                     className="name1 input-new"
                     onChange={loginLogic.changeHandler}
+                    autoComplete="current-password"
                   />
                 </div>
                 <div className="login-button">
@@ -104,6 +110,7 @@ const LoginComponent = () => {
           </div>
         </div>
       </div>
+      </form>
       <ToastContainer />
     </div>
   );

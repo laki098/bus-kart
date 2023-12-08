@@ -46,7 +46,7 @@ const AdminLogic = () => {
       datumDolaskaM: item.datumDolaskaM,
     };
   });
-  console.log(raspakovanaMedjustanica);
+  
 
   const upisLinije = async () => {
     LinijeApi()
