@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const StjuardesaApi = () => {
   const promenaVremena = async (
@@ -7,7 +8,7 @@ const StjuardesaApi = () => {
     promeniPocetakRute,
     promeniKrajRute
   ) => {
-    return await axios.put("http://localhost:5000/stjuardesa/promenaVremena", {
+    return await axios.put(`${apiUrl}/stjuardesa/promenaVremena`, {
       linijaId,
       redosled,
       promeniPocetakRute,
@@ -19,15 +20,11 @@ const StjuardesaApi = () => {
     promeniPocetakRute,
     promeniKrajRute
   ) => {
-    console.log(linijaId, promeniPocetakRute, promeniKrajRute);
-    return await axios.put(
-      "http://localhost:5000/stjuardesa/promenaVremenaLinija",
-      {
-        linijaId,
-        promeniPocetakRute,
-        promeniKrajRute,
-      }
-    );
+    return await axios.put(`${apiUrl}/stjuardesa/promenaVremenaLinija`, {
+      linijaId,
+      promeniPocetakRute,
+      promeniKrajRute,
+    });
   };
   return { promenaVremena, promenaVremenaLinija };
 };

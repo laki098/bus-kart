@@ -3,6 +3,7 @@ import LinijeApi from "../../api/linije.api";
 import AdminLogic from "./admin.logic";
 import { Link } from "react-router-dom";
 import "./admin.css";
+import apiUrl from "../../apiConfig";
 
 import classes from "../registration/registration.module.css";
 import "../login/loginStyle.css";
@@ -27,7 +28,7 @@ const AdminInitial = () => {
   const [lineToDelete, setLineToDelete] = useState(null);
 
   const getStanice = async () => {
-    const response = await fetch("http://localhost:5000/stanica");
+    const response = await fetch(`${apiUrl}/stanica`);
     const data = await response.json();
 
     const a1 = data.stanice.map((item) => {
@@ -46,7 +47,7 @@ const AdminInitial = () => {
   };
 
   const getLinije = async () => {
-    const response = await fetch("http://localhost:5000/linija");
+    const response = await fetch(`${apiUrl}/linija`);
     const podaci = await response.json();
     const data = podaci.linija;
     console.log(data);

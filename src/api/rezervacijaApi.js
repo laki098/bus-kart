@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const RezervacijaApi = () => {
   const rezervacija = async (
@@ -16,22 +17,7 @@ const RezervacijaApi = () => {
     osvezenje,
     oznakaSedista
   ) => {
-    console.log(
-      brojMesta,
-      polaznaStanicaR,
-      krajnjaStanicaR,
-      datumPolaska,
-      datumDolaska,
-      vremePolaska,
-      vremeDolaska,
-      linijaId,
-      pocetnaStanicaId,
-      krajnjaStanicaId,
-      korisnikId,
-      osvezenje,
-      oznakaSedista
-    );
-    return await axios.post("http://localhost:5000/linija/rezervacija", {
+    return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
       polaznaStanicaR,
       krajnjaStanicaR,

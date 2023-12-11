@@ -5,6 +5,7 @@ import cookies from "js-cookie";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../rezervacije/i18n";
+import apiUrl from "../../apiConfig";
 
 const Stjuardesa = () => {
   const [stjuardesaLinija, setStjuardesaLinija] = useState([]);
@@ -21,7 +22,7 @@ const Stjuardesa = () => {
 
   const getStjuardesaLinija = async () => {
     const response = await fetch(
-      `http://localhost:5000/stjuardesa/${userPars.idKorisnika}`
+      `${apiUrl}/stjuardesa/${userPars.idKorisnika}`
     );
     const data = await response.json();
     console.log(data.izvlacenjeLinija);
