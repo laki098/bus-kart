@@ -1,12 +1,13 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const KorisnikApi = () => {
   const filterKorisnikId = async (idKorisnik) => {
-    return await axios.get(`http://localhost:5000/korisnik/${idKorisnik}`, {});
+    return await axios.get(`${apiUrl}/korisnik/${idKorisnik}`, {});
   };
 
   const brisanjeKorisnika = async (idKorisnik) => {
-    return await axios.delete(`http://localhost:5000/korisnik/${idKorisnik}`);
+    return await axios.delete(`${apiUrl}/korisnik/${idKorisnik}`);
   };
 
   const editKorisnik = async (
@@ -21,7 +22,7 @@ const KorisnikApi = () => {
     privremenaRola
   ) => {
     return await axios.put(
-      `http://localhost:5000/korisnik/${idKorisnik}`,
+      `${apiUrl}/korisnik/${idKorisnik}`,
       {
         idKorisnik,
         korisnickoIme,

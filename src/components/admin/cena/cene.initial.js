@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CeneApi from "../../../api/cene.api";
+import apiUrl from "../../../apiConfig";
 
 const CeneInitial = () => {
   const [cene, setCene] = useState([]);
@@ -8,7 +9,7 @@ const CeneInitial = () => {
   const [ceneToDelete, setCeneToDelete] = useState(null);
 
   const getCene = async () => {
-    const response = await fetch("http://localhost:5000/cena");
+    const response = await fetch(`${apiUrl}/cena`);
     const data = await response.json();
     setCene(data.cena);
   };
@@ -45,22 +46,29 @@ const CeneInitial = () => {
               return (
                 <li key={jednaCena.id}>
                   <div className="cene-red">
-                  <div className="cene-polja">Pocetna Stanica</div>
-                  <div className="cene-polja1" >{jednaCena.pocetnaStanica}</div>
-                  <div className="cene-polja">Krajnja Stanica</div>
-                  <div className="cene-polja1" >{jednaCena.krajnjaStanicaR}</div>
-                  <div className="cene-polja">Cena</div>
-                  <div className="cene-polja1" >{jednaCena.cenaKarte}</div>
-                  <div className="cene-polja">
-                    <Link to={`${jednaCena.id}/cene.edit`}>
-                      <button className="buttonSwitch">Izmeni</button>
-                    </Link>
-                  </div>
-                  <div className="cene-polja">
-                    <button onClick={() => brisanjeCene(jednaCena.id)} className="buttonSwitch">
-                      Obriši
-                    </button>
-                  </div>
+                    <div className="cene-polja">Pocetna Stanica</div>
+                    <div className="cene-polja1">
+                      {jednaCena.pocetnaStanica}
+                    </div>
+                    <div className="cene-polja">Krajnja Stanica</div>
+                    <div className="cene-polja1">
+                      {jednaCena.krajnjaStanicaR}
+                    </div>
+                    <div className="cene-polja">Cena</div>
+                    <div className="cene-polja1">{jednaCena.cenaKarte}</div>
+                    <div className="cene-polja">
+                      <Link to={`${jednaCena.id}/cene.edit`}>
+                        <button className="buttonSwitch">Izmeni</button>
+                      </Link>
+                    </div>
+                    <div className="cene-polja">
+                      <button
+                        onClick={() => brisanjeCene(jednaCena.id)}
+                        className="buttonSwitch"
+                      >
+                        Obriši
+                      </button>
+                    </div>
                   </div>
                 </li>
               );

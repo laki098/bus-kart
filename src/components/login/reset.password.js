@@ -3,9 +3,11 @@ import "./reset.css";
 import "./loginStyle.css"; //preuzimam stil iz login.component.js
 import bus from "../images/bus.jpg";
 
-import "../admin/admin.css";import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "../admin/admin.css";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
+import apiUrl from "../../apiConfig";
 
 const ResetPassword = () => {
   const form = useRef();
@@ -16,30 +18,26 @@ const ResetPassword = () => {
   };
 
   const getResetPassword = async () => {
-    const response = await fetch(
-      `http://localhost:5000/korisnik/zaboravljena-sifra`,{method: "POST",
+    const response = await fetch(`${apiUrl}/korisnik/zaboravljena-sifra`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email }),}
-    );
+      body: JSON.stringify({ email }),
+    });
     const data = await response.json();
 
-    if(response.ok) {
-      if(response.status == 200) {
-        alert(data.message)
+    if (response.ok) {
+      if (response.status == 200) {
+        alert(data.message);
         window.location.href = "/pocetna";
       }
     } else {
-      if(response.status == 404) {
-        alert(data.message)
+      if (response.status == 404) {
+        alert(data.message);
       }
     }
   };
-
-  
-
-  
 
   //prevodjenje start
   const lngs = {

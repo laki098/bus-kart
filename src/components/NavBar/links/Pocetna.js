@@ -12,7 +12,8 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 import { useMediaQuery } from "react-responsive"; // responsive
 import MediaQuery from "react-responsive";
-import Slider from './slider/slider';
+import Slider from "./slider/slider";
+import apiUrl from "../../../apiConfig";
 
 const Pocetna = () => {
   //prevodjenje
@@ -56,9 +57,8 @@ const Pocetna = () => {
   };
 
   const getStanice = async () => {
-    const response = await fetch("http://localhost:5000/stanica");
+    const response = await fetch(`${apiUrl}/stanica`);
     const data = await response.json();
-    
 
     const a1 = data.stanice.map((item) => {
       return { naziv: item.naziv, id: item.id };
@@ -159,10 +159,9 @@ const Pocetna = () => {
           ))}
         </div>
       </header>
-              <div>
-              <Slider value={sliderValue} />
-              </div>
-    
+      <div>
+        <Slider value={sliderValue} />
+      </div>
 
       {isDesktop && (
         <div className="home-page">

@@ -10,6 +10,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import StjuardesaApi from "../../api/stjuardesaApi.js";
+import apiUrl from "../../apiConfig.js";
 
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
@@ -78,7 +79,7 @@ const StjuardesaLinija = ({}) => {
   //? dobavljanje liniju koja se koristi direktno ovde
   const dobavljanjeLinije = async () => {
     const response = await fetch(
-      `http://localhost:5000/stjuardesa/filterLinija/${linijaId}`
+      `${apiUrl}/stjuardesa/filterLinija/${linijaId}`
     );
     const data = await response.json();
     /* setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica); */
@@ -86,7 +87,7 @@ const StjuardesaLinija = ({}) => {
     setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica);
 
     const responseBus = await fetch(
-      `http://localhost:5000/autobusi/oznaka/${data.izvlacenjeLinija.oznakaBusa}`
+      `${apiUrl}/autobusi/oznaka/${data.izvlacenjeLinija.oznakaBusa}`
     );
     const dataBus = await responseBus.json();
     setAutobus(dataBus.autobusi);
@@ -95,7 +96,7 @@ const StjuardesaLinija = ({}) => {
   //? dobavljanje autobusa koji je postavljen na toj liniji. kako bi prikayali sedista stjuardesi
   const dobavljanjeBrojaMesta = async () => {
     const responsePocetnaStanica = await fetch(
-      `http://localhost:5000/stanica/${pocetnaStanicaId}`
+      `${apiUrl}/stanica/${pocetnaStanicaId}`
     );
     const dataPocetnaStanica = await responsePocetnaStanica.json();
     setPocetnaStanica(dataPocetnaStanica.stanica);

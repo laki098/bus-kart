@@ -5,27 +5,28 @@ import ulaz from "./../../images/ulaz.jpg";
 import wc from "./../../images/wc.jpg";
 import stepenice from "./../../images/stepenice.jpg";
 import { toast } from 'react-toastify';
+import apiUrl from "../../../apiConfig";
 
-const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
-  krajnjaStanicaId, })=> {
+const MB4 = ({
+  onReservation,
+  linijaId,
+  pocetnaStanicaId,
+  krajnjaStanicaId,
+}) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [rezervacija, setRezervacija] = useState([]);
-  
+
   const getLinije = async () => {
-    const response = await fetch(
-      `http://localhost:5000/rezervacije/linija/${linijaId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ pocetnaStanicaId, krajnjaStanicaId }),
-      }
-    );
+    const response = await fetch(`${apiUrl}/rezervacije/linija/${linijaId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ pocetnaStanicaId, krajnjaStanicaId }),
+    });
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };
- 
 
   useEffect(() => {
     getLinije();
@@ -45,16 +46,13 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
   }
   
   const handleSeatClick = (seatNumber) => {
-    
-  
-   // Proverite da li korisnik već ima selektovano sedište
+    // Proverite da li korisnik već ima selektovano sedište
     if (selectedSeats.length > 0) {
       if(selectedSeats != seatNumber) {
         notifyWarn();
       return;
       }
-      
-    } 
+    }
     const updatedSelectedSeats = [...selectedSeats];
     if (selectedSeats.includes(seatNumber)) {
       updatedSelectedSeats.splice(updatedSelectedSeats.indexOf(seatNumber), 1);
@@ -69,20 +67,16 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
   };
-  
-  
 
   const isSeatReserved = (seatNumber) => {
-    
     // Proverite da li rezervacija niz ima podatke
     return (
-      rezervacija &&  
+      rezervacija &&
       rezervacija.length > 0 &&
-      rezervacija.some((r) =>   r.oznakaSedista == seatNumber  )
+      rezervacija.some((r) => r.oznakaSedista == seatNumber)
     );
   };
 
-  
   return (
     <div className="container-seat">
       <div className="row">
@@ -90,28 +84,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(1) || isSeatReserved(1) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(1) || isSeatReserved(1) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(1)}
           style={{ pointerEvents: isSeatReserved(1) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(1) ? "" : "1"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(2) || isSeatReserved(2) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(2) || isSeatReserved(2) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(2)}
           style={{ pointerEvents: isSeatReserved(2) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(2) ? "" : "2"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(3) || isSeatReserved(3)  ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(3) || isSeatReserved(3) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(3)}
           style={{ pointerEvents: isSeatReserved(3) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(3) ? "" : "3"}</span>
         </div>
         <div
-          className={`seat ${ isSeatSelected(4) || isSeatReserved(4)  ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(4) || isSeatReserved(4) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(4)}
           style={{ pointerEvents: isSeatReserved(4) ? "none" : "auto" }}
         >
@@ -120,28 +122,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(5) || isSeatReserved(5) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(5) || isSeatReserved(5) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(5)}
           style={{ pointerEvents: isSeatReserved(5) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(5) ? "" : "5"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(6) || isSeatReserved(6) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(6) || isSeatReserved(6) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(6)}
           style={{ pointerEvents: isSeatReserved(6) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(6) ? "" : "6"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(7) || isSeatReserved(7) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(7) || isSeatReserved(7) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(7)}
           style={{ pointerEvents: isSeatReserved(7) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(7) ? "" : "7"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(8) || isSeatReserved(8) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(8) || isSeatReserved(8) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(8)}
           style={{ pointerEvents: isSeatReserved(8) ? "none" : "auto" }}
         >
@@ -151,28 +161,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
 
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(9) || isSeatReserved(9) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(9) || isSeatReserved(9) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(9)}
           style={{ pointerEvents: isSeatReserved(9) ? "none" : "auto" }}
         >
           <span className="seat-number2">{isSeatSelected(9) ? "" : "9"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(10) || isSeatReserved(10) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(10) || isSeatReserved(10) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(10)}
           style={{ pointerEvents: isSeatReserved(10) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(10) ? "" : "10"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(11) || isSeatReserved(11) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(11) || isSeatReserved(11) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(11)}
           style={{ pointerEvents: isSeatReserved(11) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(11) ? "" : "11"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(12) || isSeatReserved(12) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(12) || isSeatReserved(12) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(12)}
           style={{ pointerEvents: isSeatReserved(12) ? "none" : "auto" }}
         >
@@ -182,28 +200,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
 
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(13) || isSeatReserved(13) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(13) || isSeatReserved(13) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(13)}
           style={{ pointerEvents: isSeatReserved(13) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(13) ? "" : "13"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(14) || isSeatReserved(14) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(14) || isSeatReserved(14) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(14)}
           style={{ pointerEvents: isSeatReserved(14) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(14) ? "" : "14"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(15) || isSeatReserved(15) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(15) || isSeatReserved(15) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(15)}
           style={{ pointerEvents: isSeatReserved(15) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(15) ? "" : "15"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(16) || isSeatReserved(16) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(16) || isSeatReserved(16) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(16)}
           style={{ pointerEvents: isSeatReserved(16) ? "none" : "auto" }}
         >
@@ -213,28 +239,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
 
       <div className="row">
         <div
-         className={`seat ${isSeatSelected(17) || isSeatReserved(17) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(17) || isSeatReserved(17) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(17)}
           style={{ pointerEvents: isSeatReserved(17) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(17) ? "" : "17"}</span>
         </div>
         <div
-         className={`seat ${isSeatSelected(18) || isSeatReserved(18) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(18) || isSeatReserved(18) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(18)}
           style={{ pointerEvents: isSeatReserved(18) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(18) ? "" : "18"}</span>
         </div>
         <div
-         className={`seat ${isSeatSelected(19) || isSeatReserved(19) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(19) || isSeatReserved(19) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(19)}
           style={{ pointerEvents: isSeatReserved(19) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(19) ? "" : "19"}</span>
         </div>
         <div
-        className={`seat ${isSeatSelected(20) || isSeatReserved(20) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(20) || isSeatReserved(20) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(20)}
           style={{ pointerEvents: isSeatReserved(20) ? "none" : "auto" }}
         >
@@ -244,14 +278,18 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
 
       <div className="row">
         <div
-          className={`seat1 ${isSeatSelected(21) || isSeatReserved(21) ? "disabled" : ""}`}
+          className={`seat1 ${
+            isSeatSelected(21) || isSeatReserved(21) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(21)}
           style={{ pointerEvents: isSeatReserved(21) ? "none" : "auto" }}
         >
           <span className="seat-number1">{isSeatSelected(21) ? "" : "21"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(22) || isSeatReserved(22) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(22) || isSeatReserved(22) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(22)}
           style={{ pointerEvents: isSeatReserved(22) ? "none" : "auto" }}
         >
@@ -260,14 +298,18 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-         className={`seat ${isSeatSelected(23) || isSeatReserved(23) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(23) || isSeatReserved(23) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(23)}
           style={{ pointerEvents: isSeatReserved(23) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(23) ? "" : "23"}</span>
         </div>
         <div
-          className={`seat left ${isSeatSelected(24) || isSeatReserved(24) ? "disabled" : ""}`}
+          className={`seat left ${
+            isSeatSelected(24) || isSeatReserved(24) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(24)}
           style={{ pointerEvents: isSeatReserved(24) ? "none" : "auto" }}
         >
@@ -277,28 +319,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-         className={`seat1 ${isSeatSelected(25) || isSeatReserved(25) ? "disabled" : ""}`}
+          className={`seat1 ${
+            isSeatSelected(25) || isSeatReserved(25) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(25)}
           style={{ pointerEvents: isSeatReserved(25) ? "none" : "auto" }}
         >
           <span className="seat-number1">{isSeatSelected(25) ? "" : "25"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(26) || isSeatReserved(26) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(26) || isSeatReserved(26) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(26)}
           style={{ pointerEvents: isSeatReserved(26) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(26) ? "" : "26"}</span>
         </div>
         <div
-         className={`seat ${isSeatSelected(27) || isSeatReserved(27) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(27) || isSeatReserved(27) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(27)}
           style={{ pointerEvents: isSeatReserved(27) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(27) ? "" : "27"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(28) || isSeatReserved(28) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(28) || isSeatReserved(28) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(28)}
           style={{ pointerEvents: isSeatReserved(28) ? "none" : "auto" }}
         >
@@ -307,28 +357,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-          className={`seat ${isSeatSelected(29) || isSeatReserved(29) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(29) || isSeatReserved(29) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(29)}
           style={{ pointerEvents: isSeatReserved(29) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(29) ? "" : "29"}</span>
         </div>
         <div
-         className={`seat ${isSeatSelected(30) || isSeatReserved(30) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(30) || isSeatReserved(30) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(30)}
           style={{ pointerEvents: isSeatReserved(30) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(30) ? "" : "30"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(31) || isSeatReserved(31) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(31) || isSeatReserved(31) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(31)}
           style={{ pointerEvents: isSeatReserved(31) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(31) ? "" : "31"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(32) || isSeatReserved(32) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(32) || isSeatReserved(32) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(32)}
           style={{ pointerEvents: isSeatReserved(32) ? "none" : "auto" }}
         >
@@ -337,28 +395,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-         className={`seat ${isSeatSelected(33) || isSeatReserved(33) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(33) || isSeatReserved(33) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(33)}
           style={{ pointerEvents: isSeatReserved(33) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(33) ? "" : "33"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(34) || isSeatReserved(34) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(34) || isSeatReserved(34) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(34)}
           style={{ pointerEvents: isSeatReserved(34) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(34) ? "" : "34"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(35) || isSeatReserved(35) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(35) || isSeatReserved(35) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(35)}
           style={{ pointerEvents: isSeatReserved(35) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(35) ? "" : "35"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(36) || isSeatReserved(36) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(36) || isSeatReserved(36) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(36)}
           style={{ pointerEvents: isSeatReserved(36) ? "none" : "auto" }}
         >
@@ -367,28 +433,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-         className={`seat ${isSeatSelected(37) || isSeatReserved(37) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(37) || isSeatReserved(37) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(37)}
           style={{ pointerEvents: isSeatReserved(37) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(37) ? "" : "37"}</span>
         </div>
         <div
-           className={`seat ${isSeatSelected(38) || isSeatReserved(38) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(38) || isSeatReserved(38) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(38)}
           style={{ pointerEvents: isSeatReserved(38) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(38) ? "" : "38"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(39) || isSeatReserved(39) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(39) || isSeatReserved(39) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(39)}
           style={{ pointerEvents: isSeatReserved(39) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(39) ? "" : "39"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(40) || isSeatReserved(40) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(40) || isSeatReserved(40) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(40)}
           style={{ pointerEvents: isSeatReserved(40) ? "none" : "auto" }}
         >
@@ -398,28 +472,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
 
       <div className="row">
         <div
-           className={`seat ${isSeatSelected(41) || isSeatReserved(41) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(41) || isSeatReserved(41) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(41)}
           style={{ pointerEvents: isSeatReserved(41) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(41) ? "" : "41"}</span>
         </div>
         <div
-           className={`seat ${isSeatSelected(42) || isSeatReserved(42) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(42) || isSeatReserved(42) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(42)}
           style={{ pointerEvents: isSeatReserved(42) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(42) ? "" : "42"}</span>
         </div>
         <div
-           className={`seat ${isSeatSelected(43) || isSeatReserved(43) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(43) || isSeatReserved(43) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(43)}
           style={{ pointerEvents: isSeatReserved(43) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(43) ? "" : "43"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(44) || isSeatReserved(44) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(44) || isSeatReserved(44) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(44)}
           style={{ pointerEvents: isSeatReserved(44) ? "none" : "auto" }}
         >
@@ -428,28 +510,36 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       <div className="row">
         <div
-         className={`seat ${isSeatSelected(45) || isSeatReserved(45) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(45) || isSeatReserved(45) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(45)}
           style={{ pointerEvents: isSeatReserved(45) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(45) ? "" : "45"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(46) || isSeatReserved(46) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(46) || isSeatReserved(46) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(46)}
           style={{ pointerEvents: isSeatReserved(46) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(46) ? "" : "46"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(47) || isSeatReserved(47) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(47) || isSeatReserved(47) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(47)}
           style={{ pointerEvents: isSeatReserved(47) ? "none" : "auto" }}
         >
           <span className="seat-number">{isSeatSelected(47) ? "" : "47"}</span>
         </div>
         <div
-          className={`seat ${isSeatSelected(48) || isSeatReserved(48) ? "disabled" : ""}`}
+          className={`seat ${
+            isSeatSelected(48) || isSeatReserved(48) ? "disabled" : ""
+          }`}
           onClick={() => handleSeatClick(48)}
           style={{ pointerEvents: isSeatReserved(48) ? "none" : "auto" }}
         >
@@ -458,7 +548,7 @@ const MB4 = ({ onReservation, linijaId,pocetnaStanicaId,
       </div>
       {selectedSeats.length > 0 && (
         <div>
-          <p>Korisnik je izabrao sedišta:  {selectedSeats.join(", ")}</p>
+          <p>Korisnik je izabrao sedišta: {selectedSeats.join(", ")}</p>
         </div>
       )}
 

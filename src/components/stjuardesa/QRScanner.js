@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import QrReader from "react-qr-scanner";
+import apiUrl from "../../apiConfig";
 
 class QRScanner extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class QRScanner extends Component {
         const linijaId = linijaIdMatch[1];
 
         //? Formiranje URL-a za slanje HTTP zahteva
-        const url = `http://localhost:5000/linija/cekiranje/${novaOznakaRezervacije}`;
+        const url = `${apiUrl}/linija/cekiranje/${novaOznakaRezervacije}`;
 
         //? Kreiranje tela HTTP zahteva
         const requestBody = {

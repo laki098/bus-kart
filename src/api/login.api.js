@@ -1,15 +1,14 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const loginApi = () => {
   const getKorisnik = async () => {
-    return await fetch("http://localhost:5000/korisnik");
+    return await fetch(`${apiUrl}/korisnik`);
   };
 
   const login = async (korisnickoIme, lozinka) => {
-    console.log({ korisnickoIme: korisnickoIme, lozinka: lozinka });
-    /* return await fetch("http://localhost:5000/korisnik/login", {"method":"POST", "body":{korisnickoIme:korisnickoIme, lozinka:lozinka}}); */
     return await axios.post(
-      "http://localhost:5000/korisnik/login",
+      `${apiUrl}/korisnik/login`,
       {
         korisnickoIme: korisnickoIme,
         lozinka: lozinka,
@@ -22,7 +21,7 @@ const loginApi = () => {
 
   const logout = async () => {
     return await axios.post(
-      "http://localhost:5000/korisnik/logout",
+      `${apiUrl}/korisnik/logout`,
       {},
       {
         withCredentials: true,

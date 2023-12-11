@@ -1,8 +1,9 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const LinijeApi = () => {
   const getLinije = async () => {
-    return await fetch("http://localhost:5000/linija");
+    return await fetch(`${apiUrl}/linija`);
   };
   const upisLinije = async (
     pocetnaStanica,
@@ -14,17 +15,7 @@ const LinijeApi = () => {
     datumDolaska,
     oznakaBusa
   ) => {
-    console.log({
-      pocetnaStanica,
-      medjustanice,
-      krajnjaStanica,
-      vremePolaska,
-      vremeDolaska,
-      datumPolaska,
-      datumDolaska,
-      oznakaBusa,
-    });
-    return await axios.post("http://localhost:5000/linija", {
+    return await axios.post(`${apiUrl}/linija`, {
       pocetnaStanica,
       medjustanice,
       krajnjaStanica,
@@ -41,10 +32,7 @@ const LinijeApi = () => {
     nazivKrajnjeStanice,
     datumPolaska
   ) => {
-    // return await axios.get("http://localhost:5000/linije/filterLinija", {
-    //     mestoPolaska:mestoPolaska, mestoDolaska:mestoDolaska, datumPolaska:datumPolaska
-    // })
-    return await fetch("http://localhost:5000/linija/filterLinija", {
+    return await fetch(`${apiUrl}/linija/filterLinija`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +53,7 @@ const LinijeApi = () => {
     id
   ) => {
     console.log(nazivPocetneStanice, nazivKrajnjeStanice, datumPolaska, id);
-    return await fetch("http://localhost:5000/linija/filterLinijaId", {
+    return await fetch(`${apiUrl}/linija/filterLinijaId`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,12 +69,12 @@ const LinijeApi = () => {
   };
 
   const filterLinijaID = async (id) => {
-    return await axios.get(`http://localhost:5000/linija/${id}`, {});
+    return await axios.get(`${apiUrl}/linija/${id}`, {});
   };
 
   const brisanjeLinije = async (idLinije) => {
     console.log(idLinije);
-    return await axios.delete(`http://localhost:5000/linija/${idLinije}`, {}); //brisanje radi po id-u
+    return await axios.delete(`${apiUrl}/linija/${idLinije}`, {}); //brisanje radi po id-u
   };
 
   const editLinije = async (
@@ -104,21 +92,7 @@ const LinijeApi = () => {
     vozac,
     stjuardesa
   ) => {
-    console.log(
-      pocetnaStanica,
-      medjustanice,
-      krajnjaStanica,
-      vremePolaska,
-      vremeDolaska,
-      datumPolaska,
-      datumDolaska,
-      oznakaBusa,
-      pocetakRute,
-      krajRute,
-      vozac,
-      stjuardesa
-    );
-    return await axios.put(`http://localhost:5000/linija/${id}`, {
+    return await axios.put(`${apiUrl}/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
       pocetnaStanica,
       medjustanice,

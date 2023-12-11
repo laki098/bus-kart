@@ -4,6 +4,7 @@ import "./sedista.css";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../../NavBar/links/i18n";
 import "../i18n";
+import apiUrl from "../../../apiConfig";
 
 function Autobus({
   autobusData,
@@ -19,20 +20,17 @@ function Autobus({
   const [pocetnaStanicaIdS, setPocetnaStanicaIdS] = useState();
 
   const getLinije = async () => {
-    const response = await fetch(
-      `http://localhost:5000/rezervacije/linija/${linijaId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(`${apiUrl}/rezervacije/linija/${linijaId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-        body: JSON.stringify({
-          pocetnaStanicaId,
-          krajnjaStanicaId,
-        }),
-      }
-    );
+      body: JSON.stringify({
+        pocetnaStanicaId,
+        krajnjaStanicaId,
+      }),
+    });
     const data = await response.json();
     setRezervacija(data.rezervacije);
   };

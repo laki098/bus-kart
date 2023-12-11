@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./reset.css";
+import apiUrl from "../../apiConfig";
 
 const PasswordReset = () => {
   const [novaSifra, setNovaSifra] = useState();
@@ -9,19 +10,16 @@ const PasswordReset = () => {
   const { token } = useParams();
 
   const getResetPassword = async () => {
-    const response = await fetch(
-      `http://localhost:5000/korisnik/reset-sifra/${token}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          novaSifra: novaSifra,
-          potvrdaSifre: potvrdaNoveSifre,
-        }),
-      }
-    );
+    const response = await fetch(`${apiUrl}/korisnik/reset-sifra/${token}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        novaSifra: novaSifra,
+        potvrdaSifre: potvrdaNoveSifre,
+      }),
+    });
 
     const data = await response.json();
     console.log(data);
@@ -45,10 +43,18 @@ const PasswordReset = () => {
     <div className="container-reset">
       <form onSubmit={handleSubmit} className="form-reset">
         <label className="label-reset">Nova Sifra</label>
-        <input  className="input-reset" onChange={(e) => setNovaSifra(e.target.value)}></input>
+        <input
+          className="input-reset"
+          onChange={(e) => setNovaSifra(e.target.value)}
+        ></input>
         <label className="label-reset">Potvrda nove sifre</label>
-        <input className="input-reset" onChange={(e) => setPotvrdaNoveSifre(e.target.value)}></input>
-        <button className="button-reset" onClick={getResetPassword}>Resetuj lozinku</button>
+        <input
+          className="input-reset"
+          onChange={(e) => setPotvrdaNoveSifre(e.target.value)}
+        ></input>
+        <button className="button-reset" onClick={getResetPassword}>
+          Resetuj lozinku
+        </button>
       </form>
     </div>
   );

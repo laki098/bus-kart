@@ -1,4 +1,5 @@
 import axios from "axios";
+import apiUrl from "../apiConfig";
 
 const StaniceApi = () => {
   const upisStanice = async (naziv, adresa) => {
@@ -7,7 +8,7 @@ const StaniceApi = () => {
       adresa: adresa,
     });
     return await axios.post(
-      "http://localhost:5000/stanica",
+      `${apiUrl}/stanica`,
       {
         naziv: naziv,
         adresa: adresa,
@@ -19,16 +20,16 @@ const StaniceApi = () => {
   };
 
   const filterStaniceId = async (id) => {
-    return await axios.get(`http://localhost:5000/stanica/${id}`, {});
+    return await axios.get(`${apiUrl}/stanica/${id}`, {});
   };
 
   const brisanjeStanice = async (id) => {
-    return await axios.delete(`http://localhost:5000/stanica/${id}`, {});
+    return await axios.delete(`${apiUrl}/stanica/${id}`, {});
   };
 
   const editStanice = async (id, naziv, adresa) => {
     console.log(id, naziv, adresa);
-    return await axios.put(`http://localhost:5000/stanica/${id}`, {
+    return await axios.put(`${apiUrl}/stanica/${id}`, {
       naziv: naziv,
       adresa: adresa,
     });
