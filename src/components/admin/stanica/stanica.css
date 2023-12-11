@@ -126,27 +126,33 @@
     color: darkblue;
     font-size: medium;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
    /* flex-wrap: wrap;    */
   }
 
   .sirina-info-stanica{
     width: 8rem;
+    text-align: center;
   }
   .sirina-info-15{
-    width: 15rem;
+    width: 18rem;
+    padding: 22px;
+    text-align: center;
   }
   .sirina-info-10{
     width: 10rem;
   }
   .sirina-info-8{
     width: 8rem;
+    text-align: center;
   }
   .sirina-info-7{
     width: 7rem;
+    text-align: center;
   }
   .sirina-info-6{
     width: 6rem;
+    text-align: center;
   }
   .sirina-info-5{
     width: 5rem;

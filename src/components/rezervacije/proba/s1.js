@@ -5,6 +5,7 @@ import volan from './../../images/volan.png';
 import ulaz from './../../images/ulaz.jpg';
 import stepenice from './../../images/stepenice.jpg';
 import sto from "./../../images/sto.jpg";
+import { toast } from 'react-toastify';
 
 
 
@@ -34,13 +35,26 @@ const S1 =  ({ onReservation, linijaId, pocetnaStanicaId,
  useEffect(() => {
    getLinije();
  }, []);
+
+ const notifyWarn = () => {
+  toast.warn('Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.', {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+}
  
  const handleSeatClick = (seatNumber) => {
   
    // Proverite da li korisnik već ima selektovano sedište
    if (selectedSeats.length > 0) {
     if(selectedSeats != seatNumber) {
-      alert("Već ste izabrali sedište. Možete rezervisati samo jedno sedište po putovanju.");
+      notifyWarn();
     return;
     }
     
