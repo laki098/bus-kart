@@ -34,7 +34,6 @@
   }
  .cene-okvir {
     width: max-content;
-    width: 57rem;
     border: 1px solid darkblue;
     border-radius: 0.3rem;
     border-collapse: collapse;
@@ -65,8 +64,12 @@
     padding-top: 1rem;
  }
  .cene-polja1 {
-  margin: 1rem;
-  width: 4vw;
+    width: 99px;
+    padding: 10px;
+    height: 80px;
+    border: 1px solid #c2bddf;
+    text-align: center;
+    line-height: 55px;
  }
  @media (max-width: 480px) {
   .cene-okvir {
@@ -75,12 +78,19 @@
   }
 
   .cene-polja1 {
-      width: 100%; /* srediti za responsive nije sredjeno */
+     
       box-sizing: border-box; 
       margin: 0; 
   }
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
+  .cene-okvir {
+      width: 100%; 
+      padding: 1rem; 
+  }
+} */
+
+@media (max-width: 925px) {
   .cene-okvir {
       width: 100%; 
       padding: 1rem; 

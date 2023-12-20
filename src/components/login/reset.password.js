@@ -8,6 +8,8 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ResetPassword = () => {
   const form = useRef();
@@ -29,12 +31,11 @@ const ResetPassword = () => {
 
     if (response.ok) {
       if (response.status == 200) {
-        alert(data.message);
-        window.location.href = "/pocetna";
+        toast.success(data.message, { onClose: () => window.location.href = "/pocetna" });
       }
     } else {
       if (response.status == 404) {
-        alert(data.message);
+        toast.error(data.message);
       }
     }
   };

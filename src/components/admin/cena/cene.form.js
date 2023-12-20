@@ -85,10 +85,10 @@ const CeneForm = ({ mode, id }) => {
             <select
               name="pocetnaStanica"
               className="input-cene"
-              defaultValue={cene.pocetnaStanica}
+              defaultValue={mode === "add" ? "" : cene.pocetnaStanica}
               onChange={ceneLogic.changeHandler}
             >
-              <option className="medjustanica">{cene.pocetnaStanica}</option>
+               <option disabled={!mode === "add"}>{mode === "add" ? "Izaberi stanicu" : cene.pocetnaStanica}</option>
               {stanice.map((stanica) => {
                 if (stanica !== cene.pocetnaStanica) {
                   return (
@@ -107,10 +107,10 @@ const CeneForm = ({ mode, id }) => {
             <select
               name="krajnjaStanicaR"
               className="input-cene"
-              defaultValue={cene.krajnjaStanicaR}
+              defaultValue={mode === "add" ? "" : cene.krajnjaStanicaR}
               onChange={ceneLogic.changeHandler}
             >
-              <option className="medjustanica">{cene.krajnjaStanicaR}</option>
+               <option disabled={!mode === "add"}>{mode === "add" ? "Izaberi stanicu" : cene.krajnjaStanicaR}</option>
               {stanice.map((stanica) => {
                 if (stanica !== cene.krajnjaStanicaR) {
                   return (
