@@ -90,7 +90,7 @@ const BusInitional = () => {
                         {/*  column centar   */}
                         <Trans i18nKey="description.part170">Oznaka </Trans>
                       </div>
-                      <div className="kolona-bus podaci  sirina-info-4">
+                      <div className="kolona-bus podaci ">
                         {" "}
                         {bus.oznakaBusa}
                       </div>{" "}

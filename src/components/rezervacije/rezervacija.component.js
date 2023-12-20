@@ -274,7 +274,7 @@ const RezervacijaComponent = ({ id, state }) => {
         </div>
       </header>
       <div>
-        <Slider value={sliderValue} />
+        <Slider value={sliderValue}>Korak 2/2</Slider>
       </div>
 
       <div className="red-1"></div>
