@@ -134,9 +134,9 @@ const AdminInitial = () => {
           <select
             className="position unos" //className="position" bilo je  className="unos"
             value={val1} //
-            onChange={adminLogic.changeHandler}
+            onChange={(e) => setVal1(e.target.value)}
           >
-            <option className="medjustanica"  value="" disabled selected>Izaberite stanicu</option>
+            
             {stanice.map((stanice) => {
               // Za ispis iz baze filtrirano mesto polaska
               return (

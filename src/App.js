@@ -43,22 +43,8 @@ function App() {
           <Navbar />
 
           <div className="content">
+          <AuthProvider>
             <Switch>
-              <ProtectedRoute
-                path="/adminpanel"
-                component={AdminPanel}
-                adminOnly
-              />
-              <ProtectedRoute
-                path="/stjuardesa"
-                component={Stjuardesa}
-                stjuardesaOnly
-              />
-              <ProtectedRoute
-                path="/:id/stjuardesalinija"
-                component={StjuardesaLinija}
-                stjuardesaOnly
-              />
               <Route path="/pocetna">
                 <Pocetna />
               </Route>
@@ -80,14 +66,22 @@ function App() {
               <Route path="/karta">
                 <Karta />
               </Route>
-            </Switch>
-
+              <Route path="/verifikacija/:id">
+              <Verifikacija />
+              </Route>
+              <Route path="/passwordreset/:token">
+              <PasswordReset />
+            </Route>
             <Route path="/registration.component">
               <RegistrationComponent />
             </Route>
             <Route path="/reset.password">
               <ResetPassword />
             </Route>
+            </Switch>
+          </AuthProvider>
+          <AuthProvider>
+          <Switch>
             <ProtectedRoute
               path="/:id/admin.change.line"
               component={AdminChangeLine}
@@ -103,6 +97,21 @@ function App() {
               component={AdminInitial}
               adminOnly
             />
+             <ProtectedRoute
+                path="/:id/stjuardesalinija"
+                component={StjuardesaLinija}
+                stjuardesaOnly
+              />
+               <ProtectedRoute
+                path="/adminpanel"
+                component={AdminPanel}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/stjuardesa"
+                component={Stjuardesa}
+                stjuardesaOnly
+              />
             <ProtectedRoute
               path="/bus.initial"
               component={BusInitional}
@@ -139,9 +148,7 @@ function App() {
               component={StaniceEdit}
               adminOnly
             />
-            <Route path="/passwordreset/:token">
-              <PasswordReset />
-            </Route>
+            
             <ProtectedRoute
               path="/cene.initial"
               component={CeneInitial}
@@ -153,9 +160,8 @@ function App() {
               component={CeneEdit}
               adminOnly
             />
-            <Route path="/verifikacija/:id">
-              <Verifikacija />
-            </Route>
+             </Switch>
+          </AuthProvider>
           </div>
 
           <Footer />
