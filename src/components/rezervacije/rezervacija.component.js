@@ -499,7 +499,6 @@ const RezervacijaComponent = ({ id, state }) => {
                     type="text"
                     name="osvezenje"
                     value={osvezenje}
-                    required
                     onChange={handleOsvezenje}
                   >
                     <option disabled={false} value="">
