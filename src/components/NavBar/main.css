@@ -25,6 +25,15 @@
     grid-gap: 0.025rem ;
   }
 }
+
+@media (max-width: 890px){
+  .navbar{
+    display: flex;
+    /*flex-direction: column;*/
+    flex-wrap: wrap;
+  }
+}
+
 .navbar {
   background: rgba(232, 244, 248, 1);
   background: -moz-linear-gradient(
@@ -137,9 +146,9 @@ img {
     list-style: none;
     background: -webkit-linear-gradient(
       left,
-      rgba(232, 244, 248, 1) 0%,
-      rgba(190, 224, 233, 1) 43%,
-      rgba(134, 196, 213, 1) 100%
+      rgb(104, 212, 248) 40%,
+      rgb(54, 188, 225) 63%,
+      rgb(2, 152, 193) 100%
     );
     background: -o-linear-gradient(
       left,
@@ -162,10 +171,17 @@ img {
     left: 0;
     top: 4.688rem;
     transition: all 0.5s ease-out;    /*  ease-out  bilo */
-    width: 95%;
+      width: 95%;   
+    /*  width: 5rem;    */
     margin: 1rem;
     z-index: 10;
   }
+
+  
+  
+
+
+
   .nav-links {
     color: white;
     bottom: 0;
@@ -191,26 +207,33 @@ img {
 
 @media (min-width: 480px) and (max-width: 690px) {
   .nav-links-mobile {
-    width: 91.5vw;
+    width: 40vw;       /*  91.5vw;   */
     border-radius: 1rem;
-  }
- 
+  } 
 }
 
 @media (min-width: 690px) {
   .nav-links-mobile {
-    width: 94.2vw;
+    width:  40vw;      /*    94.2vw;   */
     border-radius: 1rem;
-  }
-  
+  }  
 }
 
 @media (min-width: 890px) {
   .nav-links-mobile {
-    width: 95.5vw;
+    width: 40vw;      /*  95.5vw;   */
     border-radius: 1rem;
   }
 }
+
+@media (max-width: 890px) {
+  .dropdown{
+    top:-1rem;
+  }
+
+}
+
+
 
 
 
@@ -218,10 +241,12 @@ img {
 .dropdown {
   z-index: 10;
   position: absolute;
-  width: 9.5rem;    /*  10.5    */
+  width: 9.5rem;    /*  10.5  --> 9.5  */
   text-align: center;
   left: -1.75rem;   
-  top: 2.7rem;
+  top: 2.7rem;    /*2.7rem    */
+  opacity: 1;                               /* dodala da podesim dropdown   */
+  visibility: visible;
 }
 
 
@@ -233,17 +258,22 @@ li:hover .dropdown {
   margin-top: -0.35rem;                      /* sa 0.5rem bilo lepo ali pravi probleme oko ulaska i sa -0.01rem bilo Ok  */
   margin-left: 1.5rem;
   padding-bottom: 0.05rem;
+  opacity: 1;                               /* dodala da podesim dropdown   */
+  visibility: visible;
  /* transition-duration: 0.5s;    */
 }
 
 
 li:hover .dropdown .dropdown-item {
   display: inline-block;
-
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+  opacity: 1;                               /* dodala zbog dropdown   */
+  visibility: visible;
 }
+
+
 
 
 
@@ -274,7 +304,7 @@ nav ul li a {
 }
 
 nav ul li a:not(.active):hover {
-  background-color:#2a59f1 ;
+  background-color:   rgb(40, 158, 194);  /*  #2a59f1 ;   */
 }
 
 .test-dropdown {
@@ -287,24 +317,64 @@ nav ul li a:not(.active):hover {
     cursor: pointer;
 }
 .test-dropdown:not(.active):hover {
-  background-color:  #2a59f1 ;   
+  background-color:   #2a59f1 ;   
 }
 
+.login-style:not(.active):hover {
+  background-color:  rgb(40, 158, 194);    /*#2a59f1 ;   */
+}
 
-.logins {
-  cursor: pointer;
+.login-style {
   color: white;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
 }
 
+
+/* 
+nav .menu {
+  display: none;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+}
+ */
+/* nav .menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.2rem;
+} */
+
+
+
+
+/* ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+} */
 
 .item-li {
   display: inline-block;
   margin-right: 20px;
   position: relative;
-  
 }
 .item-lii {
   display: inline-block;
+  position: relative;
+}
+
+.item-mobilni{
+  display: block;
   position: relative;
 }
 
@@ -313,3 +383,16 @@ nav ul li a:not(.active):hover {
   color: #31cfeb;
   cursor: pointer;
 } */
+
+.NEprikaziProfil{
+ /*display: none;    */
+  opacity: 0;
+  visibility: hidden;    
+ /* visibility: visible;    */
+}
+.prikaziProfil{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* dopisala sam linije 248 249  259 260 270 271  zbog dropdown    */
