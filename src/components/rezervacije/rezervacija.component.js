@@ -3,6 +3,8 @@ import RezervacijaLogic from "./rezervacija.logic";
 import classes from "../registration/registration.module.css";
 import LinijeApi from "../../api/linije.api";
 import cookies from "js-cookie";
+import Slider from "../NavBar/links/slider/slider";
+import apiUrl from "../../apiConfig";
 
 import Qrcode from "./QrCode";
 import "../rezervacije/index1.css";
@@ -34,6 +36,8 @@ const RezervacijaComponent = ({ id, state }) => {
   const [val2, setVal2] = useState("");
   const [checked, setChecked] = useState(false);
   const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
+  const [ceneFilter, setCeneFilter] = useState();
+  const [tipKarte, setTipKarte] = useState();
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -43,6 +47,25 @@ const RezervacijaComponent = ({ id, state }) => {
     userPars = JSON.parse(userData);
   }
 
+  const cene = async () => {
+    const response = await fetch(`${apiUrl}/cena/filterCena`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pocetnaStanica: state.pocetnaStanica,
+        krajnjaStanicaR: state.krajnjaStanica,
+        tipKarte: tipKarte,
+      }),
+    });
+    const data = await response.json();
+    setCeneFilter(data.cenaPovratne);
+  };
+
+  useEffect(() => {
+    cene();
+  }, [tipKarte]);
   {
     /*
   const filterLinija = async () => {
@@ -134,7 +157,6 @@ const RezervacijaComponent = ({ id, state }) => {
   }, []);
 
   const [osvezenje, setOsvezenje] = useState("");
-  console.log(osvezenje);
 
   const handleOsvezenje = (e) => {
     setOsvezenje(e.target.value);
@@ -152,52 +174,9 @@ const RezervacijaComponent = ({ id, state }) => {
   const [pom1, setPom1] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
-  {
-    /*
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-*/
-  }
-
-  const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
-  const [ukupnaCena, setUkupnaCena] = useState(0);
-
-  useEffect(() => {
-    const novaCena = calculateTicketPrice(selectedValue) * brojIzabranihSedista;
-    setUkupnaCena(novaCena);
-  }, [selectedValue, brojIzabranihSedista]);
-
   const [showReturnDate, setShowReturnDate] = useState(false);
 
   // const [ticketPrice, setTicketPrice] = useState(0);
-
-  const calculateTicketPrice = (selectedTicketType) => {
-    let price = 0;
-    switch (selectedTicketType) {
-      case "Jednosmerna":
-        price = 1000;
-        break;
-      case "Povratna":
-        price = 2000;
-        break;
-      case "Besplatna":
-        price = 0;
-        break;
-      case "Studentska":
-        price = 500;
-        break;
-      case "Vikend":
-        price = 1500;
-        break;
-      case "Nedeljna":
-        price = 2500;
-        break;
-      default:
-        price = 0;
-    }
-    return price;
-  };
 
   let [formInputsValid, setFormInputsValid] = useState({
     name: true,
@@ -287,29 +266,6 @@ const RezervacijaComponent = ({ id, state }) => {
 
   const handleCheckboxChange = (id) => {
     setCheckedItemId(id);
-  };
-
-  //let start;
-  //let end;
-
-  // ovo korektno radi
-  const submitHandler = (event) => {
-    event.preventDefault();
-    {
-      /*  const formData = new FormData(event.target);      */
-      const data = {
-        polaznaStanicaR: state.krajnjaStanica,
-        krajnjaStanicaR: state.pocetnaStanica,
-        datumPolaska: returnDate,
-        datumDolaska: pomDatDolazak,
-        vremePolaska: pomPolazak,
-        vremeDolaska: pomDolazak,
-        cekiran: "DA",
-      };
-
-      console.log("Podaci sa povratne karte");
-      console.log(data);
-    }
   };
 
   // za rezervaciju povratne karte ali tu nesto nije kako treba
@@ -635,11 +591,12 @@ const RezervacijaComponent = ({ id, state }) => {
                     required
                     value={selectedValue}
                     onChange={(event) => {
-                      setSelectedValue(event.target.value);
+                      const selectedOptionValue = event.target.value; // Ovo je vrednost izabranog optiona
+                      setSelectedValue(selectedOptionValue);
 
                       if (
-                        (event.target.value === "Povratna") |
-                        (event.target.value === "Return")
+                        (selectedOptionValue === "Povratna") |
+                        (selectedOptionValue === "Return")
                       ) {
                         setShowReturnDate(true);
                         setPomDateRet(returnDate);
@@ -651,17 +608,19 @@ const RezervacijaComponent = ({ id, state }) => {
                         setPomDatDolazak(""); //postavlja na nulu zbog promene tipa karte
                         setPomDateRet("povratna"); //sluzi za poziv vrste karte koju upisujemo u bazu
                       }
-                      if (event.target.value === "Studentska") {
+                      if (selectedOptionValue === "Studentska") {
                         setPom(true);
                       } else {
                         setPom(false);
                       }
 
-                      if (event.target.value === "Students") {
+                      if (selectedOptionValue === "Students") {
                         setPom1(true);
                       } else {
                         setPom1(false);
                       }
+                      // Postavljanje vrednosti u state setTipKarte
+                      setTipKarte(selectedOptionValue);
                     }}
                   >
                     <option disabled={false} value="">
@@ -670,10 +629,14 @@ const RezervacijaComponent = ({ id, state }) => {
                       </Trans>
                     </option>
                     <option>
-                      <Trans i18nKey="description.part24">Jednosmerna</Trans>
+                      <Trans i18nKey="description.part24" value="Jednosmerna">
+                        Jednosmerna
+                      </Trans>
                     </option>
                     <option>
-                      <Trans i18nKey="description.part25">Povratna</Trans>
+                      <Trans i18nKey="description.part25" value="Povratna">
+                        Povratna
+                      </Trans>
                     </option>
                     <option>
                       <Trans i18nKey="description.part26">Besplatna</Trans>
@@ -812,26 +775,7 @@ const RezervacijaComponent = ({ id, state }) => {
                 <div className="vasIzbor">
                   <p>
                     <Trans i18nKey="description.part60">Cena karte:</Trans>{" "}
-                    <strong>
-                      {" "}
-                      {calculateTicketPrice(selectedValue)}
-                      &nbsp; <Trans i18nKey="description.part61"> dinara</Trans>
-                    </strong>
-                  </p>
-                  <p>
-                    <Trans i18nKey="description.part62">
-                      Broj izabranih sedišta:
-                    </Trans>
-                    <strong> {brojIzabranihSedista}</strong>
-                  </p>
-                  <p>
-                    <Trans i18nKey="description.part63">Ukupna cena:</Trans>
-                    <strong>
-                      {" "}
-                      {ukupnaCena}
-                      &nbsp;
-                      <Trans i18nKey="description.part61"> dinara</Trans>
-                    </strong>
+                    {ceneFilter} din
                   </p>
                 </div>
               </div>
@@ -861,17 +805,16 @@ const RezervacijaComponent = ({ id, state }) => {
                   {/*------------------------------  */}
                 </div>
                 <div>
-                  {console.log(state) ||
-                    (linija.oznakaBusa != "S2" ? (
-                      ""
-                    ) : (
-                      <S2
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
+                  {(linija.oznakaBusa != "S2" ? (
+                    ""
+                  ) : (
+                    <S2
+                      onReservation={handleReservation}
+                      linijaId={state.id}
+                      pocetnaStanicaId={state.pocetnaStanicaId}
+                      krajnjaStanicaId={state.krajnjaStanicaId}
+                    />
+                  )) ||
                     (linija.oznakaBusa != "MAN" ? (
                       ""
                     ) : (
@@ -969,8 +912,6 @@ const RezervacijaComponent = ({ id, state }) => {
             {/*<button  onClick={clickRezervisiPovratak}>Rezerviši privremeno povratnu</button>  ovaj poziv dovodi do pucanja */}
             {/*   onClick={submitHandler}   bilo postavljeno da bi se proverilo u console.log  */}
             {/*    <button className="buttonSwitch" onClick={submitHandler} >      */}
-            {console.log("returnDate je:", returnDate)}
-            {console.log("pomDateRet", pomDateRet)}
             {/* returnDate!==null?       */}
             {/* biramo vrstu poziva upisa podataka u karti  */}
             <div>
