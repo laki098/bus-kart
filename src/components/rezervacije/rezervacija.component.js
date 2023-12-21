@@ -23,16 +23,17 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { isVisible } from "@testing-library/user-event/dist/utils";
 
 const RezervacijaComponent = ({ id, state }) => {
- // const [filteredLinije, setFilteredLinije] = useState([]);
+  // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
   const [brojSedista, setBrojSedista] = useState();
 
-  // zbog povratne karte 
+  // zbog povratne karte
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [returnDate, setReturnDate] = useState(Date);
   const [val1, setVal1] = useState("");
   const [val2, setVal2] = useState("");
-  const [checked, setChecked] = useState(false); 
+  const [checked, setChecked] = useState(false);
+  const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -42,7 +43,8 @@ const RezervacijaComponent = ({ id, state }) => {
     userPars = JSON.parse(userData);
   }
 
-{/*
+  {
+    /*
   const filterLinija = async () => {
     if (!valueDate) return;
     const response = await LinijeApi().filterLinija(val1, val2, returnDate);
@@ -52,10 +54,10 @@ const RezervacijaComponent = ({ id, state }) => {
     console.log(data.rezultat);
     setFilteredLinije(data.rezultat);
   };
-*/}
+*/
+  }
 
   const novaRezervacija = () => {
-    console.log("--***----KORAK 3")
     RezervacijaApi()
       .rezervacija(
         1,
@@ -146,26 +148,17 @@ const RezervacijaComponent = ({ id, state }) => {
     console.log("Selektovana sedišta:", selectedSeats);
   };
 
-  const clickRezervisi = () => {
-    novaRezervacija();
-    /* // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi način)
-    alert("Vaša karta je uspešno rezervisana!"); */
-
-    // Sačekaj nekoliko sekundi pre nego što se preusmeriš na početnu stranicu
-    /* setTimeout(() => {
-      window.location.href = "/pocetna";
-    }, 5000); */ // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 1,5 sekunde) 
-  };
-
   const [pom, setPom] = useState(false);
   const [pom1, setPom1] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
-  {/*
+  {
+    /*
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
-*/}
+*/
+  }
 
   const [brojIzabranihSedista, setBrojIzabranihSedista] = useState(0);
   const [ukupnaCena, setUkupnaCena] = useState(0);
@@ -177,7 +170,7 @@ const RezervacijaComponent = ({ id, state }) => {
 
   const [showReturnDate, setShowReturnDate] = useState(false);
 
- // const [ticketPrice, setTicketPrice] = useState(0);
+  // const [ticketPrice, setTicketPrice] = useState(0);
 
   const calculateTicketPrice = (selectedTicketType) => {
     let price = 0;
@@ -232,8 +225,6 @@ const RezervacijaComponent = ({ id, state }) => {
   const confirmeHandler = (event) => {
     event.preventDefault();
 
-    
-
     const formValidation = rezervacijaLogic.formValidation(
       fNameInputRef,
       mestoInputRef,
@@ -258,9 +249,7 @@ const RezervacijaComponent = ({ id, state }) => {
     });
     if (!formValidation.isFormValid) {
       return;
-    }
-    else {
-      clickRezervisi();
+    } else {
     }
   };
 
@@ -276,29 +265,29 @@ const RezervacijaComponent = ({ id, state }) => {
 
   useEffect(() => {
     filterLinija();
-}, [returnDate]);
+  }, [returnDate]);
 
-    // ovo se sigurno upotrebljava u prvom prolazu i to mi omogucava da samo jedna opcija bude check
-{/*
+  // ovo se sigurno upotrebljava u prvom prolazu i to mi omogucava da samo jedna opcija bude check
+  {
+    /*
     const handleOptionClick = (option) => {
       setChecked(option === checked ? null : option);
     };
-  */}
+  */
+  }
 
   const [checkedItemId, setCheckedItemId] = useState(null);
- // const [error, setError] = useState(null);       // zbog obrade greske kod povratne karte
+  // const [error, setError] = useState(null);       // zbog obrade greske kod povratne karte
 
-  const [pomPolazak, setPomPolazak]=useState(''); // da rese ispad kad se promeni datum kod povratne karte
-  const [pomDolazak, setPomDolazak]=useState('');
-  const [pomDatDolazak, setPomDatDolazak]=useState("");
+  const [pomPolazak, setPomPolazak] = useState(""); // da rese ispad kad se promeni datum kod povratne karte
+  const [pomDolazak, setPomDolazak] = useState("");
+  const [pomDatDolazak, setPomDatDolazak] = useState("");
 
-  const [pomDateRet, setPomDateRet]=useState(null);   //kod poziva dela za upis rezervacije na samom kraju
+  const [pomDateRet, setPomDateRet] = useState(""); //kod poziva dela za upis rezervacije na samom kraju
 
   const handleCheckboxChange = (id) => {
     setCheckedItemId(id);
   };
-
-
 
   //let start;
   //let end;
@@ -307,39 +296,24 @@ const RezervacijaComponent = ({ id, state }) => {
   const submitHandler = (event) => {
     event.preventDefault();
     {
-    /*  const formData = new FormData(event.target);      */
-      const data = { 
+      /*  const formData = new FormData(event.target);      */
+      const data = {
         polaznaStanicaR: state.krajnjaStanica,
         krajnjaStanicaR: state.pocetnaStanica,
         datumPolaska: returnDate,
         datumDolaska: pomDatDolazak,
         vremePolaska: pomPolazak,
         vremeDolaska: pomDolazak,
-        cekiran: "DA", 
+        cekiran: "DA",
       };
-      
+
       console.log("Podaci sa povratne karte");
       console.log(data);
     }
   };
 
   // za rezervaciju povratne karte ali tu nesto nije kako treba
-  const novaRezervacijaPovratak = (event) => {
-    console.log("--***----KORAK 2")
-    event.preventDefault();
-    console.log(state.krajnjaStanica,
-      state.pocetnaStanica,
-      returnDate,
-      pomDatDolazak,
-      pomPolazak,
-      pomDolazak,   
-      state.id,
-      state.krajnjaStanicaId,
-      state.pocetnaStanicaId,
-      userPars.idKorisnika,
-      osvezenje,
-      parseInt(selectedSeats))
-    {
+  const novaRezervacijaPovratak = () => {
     RezervacijaApi()
       .rezervacijaPovratna(
         1,
@@ -348,8 +322,8 @@ const RezervacijaComponent = ({ id, state }) => {
         returnDate,
         pomDatDolazak,
         pomPolazak,
-        pomDolazak,   
-        state.id,
+        pomDolazak,
+        PovratnaIdLinija,
         state.krajnjaStanicaId,
         state.pocetnaStanicaId,
         userPars.idKorisnika,
@@ -364,24 +338,24 @@ const RezervacijaComponent = ({ id, state }) => {
         console.log(error);
         notifyWarn();
       });
-    }  
   };
 
   //puca mi program zbog ovog dole
   const clickRezervisiPovratak = () => {
-    novaRezervacijaPovratak();
-    console.log('Rezervacija za povratnu kartu iz clikRezervisiPovratak');
+    if (pomDateRet == "") {
+      novaRezervacija();
+    } else if (pomDateRet == "povratna") {
+      novaRezervacijaPovratak();
+      novaRezervacija();
+    }
     /* // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi način)
     alert("Vaša karta je uspešno rezervisana!"); */
 
     // Sačekaj nekoliko sekundi pre nego što se preusmeriš na početnu stranicu
     /* setTimeout(() => {
       window.location.href = "/pocetna";
-    }, 200000); */ // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 1,5 sekunde) 
+    }, 200000); */ // Ova vrednost u milisekundama predstavlja koliko će trajati prikazivanje poruke pre nego što se preusmeriš (u ovom slučaju 1,5 sekunde)
   };
-
- 
-
 
   //prevodjenje
   const lngs = {
@@ -390,7 +364,6 @@ const RezervacijaComponent = ({ id, state }) => {
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
-
 
   return (
     <>
@@ -412,18 +385,14 @@ const RezervacijaComponent = ({ id, state }) => {
       </header>
 
       <div className="red-1"></div>
-      <form onSubmit= {confirmeHandler} className="forma">
-
+      <form onSubmit={confirmeHandler} className="forma">
         {" "}
         {/* className={`${classes.form} side`}  */}
         <p className="p-style2">Korak 3/3</p>
-        <div className="margin">
-
-        </div>
+        <div className="margin"></div>
         <div>
           {" "}
-          {/* className="flex-container"  */} 
-          
+          {/* className="flex-container"  */}
           <div className="flex-container">
             <div className="flex-clan">
               {" "}
@@ -469,7 +438,9 @@ const RezervacijaComponent = ({ id, state }) => {
                     type="text"
                     className="test"
                     name="email"
-                    value={userPars.email == undefined ? undefined : userPars.email}
+                    value={
+                      userPars.email == undefined ? undefined : userPars.email
+                    }
                     ref={emailInputRef}
                     onChange={rezervacijaLogic.changeHandler}
                   />
@@ -666,14 +637,19 @@ const RezervacijaComponent = ({ id, state }) => {
                     onChange={(event) => {
                       setSelectedValue(event.target.value);
 
-                      if ((event.target.value === "Povratna") | (event.target.value ==="Return")) {
+                      if (
+                        (event.target.value === "Povratna") |
+                        (event.target.value === "Return")
+                      ) {
                         setShowReturnDate(true);
                         setPomDateRet(returnDate);
                       } else {
                         setShowReturnDate(false);
-                        setReturnDate(null);        //da ne baca vrednosti iz baze od predhono izabranog datuma
-                        setPomPolazak(''); setPomDolazak(''); setPomDatDolazak('');   //postavlja na nulu zbog promene tipa karte
-                        setPomDateRet(null);  //sluzi za poziv vrste karte koju upisujemo u bazu
+                        setReturnDate(null); //da ne baca vrednosti iz baze od predhono izabranog datuma
+                        setPomPolazak("");
+                        setPomDolazak("");
+                        setPomDatDolazak(""); //postavlja na nulu zbog promene tipa karte
+                        setPomDateRet("povratna"); //sluzi za poziv vrste karte koju upisujemo u bazu
                       }
                       if (event.target.value === "Studentska") {
                         setPom(true);
@@ -747,62 +723,80 @@ const RezervacijaComponent = ({ id, state }) => {
                   {/* kraj studentska karta   */}
                   {showReturnDate && (
                     <div className="ograda1">
-                    <div >
-                      <label htmlFor="returnDate">
-                      <Trans i18nKey="description.part70">  Datum povratka  </Trans>
-                      </label>
-                      &emsp; &ensp;
-                      <input
-                        type="date"
-                        id="returnDate"
-                        name="returnDate"
-                        min={state.datumDolaska}
-                        onChange={(e) => {
-                          e.persist();
-                          
-                          setTimeout(() => setReturnDate(e.target.value), 0);
-                        }}
-                        onClick={()=>{setPomPolazak(''); setPomDolazak(''); setPomDatDolazak('');}}
-                      />
-                    </div>
-                    <div style={{textAlign: "left", paddingLeft:"2rem"}}>
-                      <label >  
-                      <Trans i18nKey="description.part11">  Vreme polaska  </Trans>
-                      </label>
-                    </div>
-  
-                    <div className="teget">
-                      {/* Ovde formira podatke za povratnu kartu  */}
-                      {returnDate!==null? 
                       <div>
-                    {filteredLinije.map((linija) => (
-                      <div>
-                      <li key={linija.id}>
-                        <label>{linija.vremePolaska}  ---{linija.vremeDolaska}---</label>
+                        <label htmlFor="returnDate">
+                          <Trans i18nKey="description.part70">
+                            {" "}
+                            Datum povratka{" "}
+                          </Trans>
+                        </label>
+                        &emsp; &ensp;
                         <input
-                          type="checkbox"
-                          value={linija.id}
-                          checked={checkedItemId === linija.id}
-                          onChange={() => handleCheckboxChange(linija.id)}
+                          type="date"
+                          id="returnDate"
+                          name="returnDate"
+                          min={state.datumDolaska}
+                          onChange={(e) => {
+                            e.persist();
 
-                          onClick={()=> {
-                          setPomPolazak(linija.vremePolaska)
-                          setPomDolazak(linija.vremeDolaska)
-                          setPomDatDolazak(linija.datumDolaska)
-                          setPomDateRet(returnDate)   // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                            setTimeout(() => setReturnDate(e.target.value), 0);
                           }}
-                        />   
-                      </li>   
+                          onClick={() => {
+                            setPomPolazak("");
+                            setPomDolazak("");
+                            setPomDatDolazak("");
+                          }}
+                        />
                       </div>
-                    ))}
-                      </div>:""}
-                    <hr/>Odabrali ste polazak - dolazak (h):<hr/> 
-                    {pomPolazak}---{pomDolazak}                   
-                    </div>
+                      <div style={{ textAlign: "left", paddingLeft: "2rem" }}>
+                        <label>
+                          <Trans i18nKey="description.part11">
+                            {" "}
+                            Vreme polaska{" "}
+                          </Trans>
+                        </label>
+                      </div>
 
+                      <div className="teget">
+                        {/* Ovde formira podatke za povratnu kartu  */}
+                        {returnDate !== null ? (
+                          <div>
+                            {filteredLinije.map((linija) => (
+                              <div>
+                                <li key={linija.id}>
+                                  <label>
+                                    {linija.vremePolaska} ---
+                                    {linija.vremeDolaska}---
+                                  </label>
+                                  <input
+                                    type="checkbox"
+                                    value={linija.id}
+                                    checked={checkedItemId === linija.id}
+                                    onChange={() =>
+                                      handleCheckboxChange(linija.id)
+                                    }
+                                    onClick={() => {
+                                      setPovratnaIdLinija(linija.id);
+                                      setPomPolazak(linija.vremePolaska);
+                                      setPomDolazak(linija.vremeDolaska);
+                                      setPomDatDolazak(linija.datumDolaska);
+                                      setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                                    }}
+                                  />
+                                </li>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                        <hr />
+                        Odabrali ste polazak - dolazak (h):
+                        <hr />
+                        {pomPolazak}---{pomDolazak}
+                      </div>
                     </div>
                   )}
-             
                   <div className="red-1"></div>
                 </div>
               </div>
@@ -972,38 +966,24 @@ const RezervacijaComponent = ({ id, state }) => {
           </div>
           <div className="red-1"></div>
           <div>
-
-
-       {/*<button  onClick={clickRezervisiPovratak}>Rezerviši privremeno povratnu</button>  ovaj poziv dovodi do pucanja */}
-        {/*   onClick={submitHandler}   bilo postavljeno da bi se proverilo u console.log  */}
-
-
-        {/*    <button className="buttonSwitch" onClick={submitHandler} >      */}
-        
-        {console.log('returnDate je:',returnDate)}
-
-        {console.log('pomDateRet',pomDateRet)}
-
-          {/* returnDate!==null?       */}  
-          {/* biramo vrstu poziva upisa podataka u karti  */}
-        {pomDateRet!==null?
-        <div>
-          {/* Da pozovemo rezervaciju za povratnu kartu ovde mi puca----------- */}
-        <button className={classes.submit} onClick={() => { clickRezervisiPovratak(); novaRezervacija(); }}>
-              
-            <Trans i18nKey="description.part181">Rezerviši kartu </Trans> Povratna je !!!
-            </button>
-        </div>
-        :
-        <div>
-          {/*  Poziv rezervacije za kartu koja nije povratna    */}
-        <button className={classes.submit} onClick={clickRezervisi}>
-              
-            <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
-            </button>
-        </div>}
-
-       {/*     <button onClick={clickRezervisiPovratak}>Rezerviši povratnu kartu</button>  */}   {/* ovde pukne program  */}
+            {/*<button  onClick={clickRezervisiPovratak}>Rezerviši privremeno povratnu</button>  ovaj poziv dovodi do pucanja */}
+            {/*   onClick={submitHandler}   bilo postavljeno da bi se proverilo u console.log  */}
+            {/*    <button className="buttonSwitch" onClick={submitHandler} >      */}
+            {console.log("returnDate je:", returnDate)}
+            {console.log("pomDateRet", pomDateRet)}
+            {/* returnDate!==null?       */}
+            {/* biramo vrstu poziva upisa podataka u karti  */}
+            <div>
+              {/*  Poziv rezervacije za kartu koja nije povratna    */}
+              <button
+                className={classes.submit}
+                onClick={clickRezervisiPovratak}
+              >
+                <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
+              </button>
+            </div>
+            {/*     <button onClick={clickRezervisiPovratak}>Rezerviši povratnu kartu</button>  */}{" "}
+            {/* ovde pukne program  */}
             {/* <button className={classes.submit} onClick={clickRezervisi}>
               <p className="slovaDugme">
                 <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
@@ -1019,7 +999,7 @@ const RezervacijaComponent = ({ id, state }) => {
           <div className="red-1"></div>
         </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
       <div className="red-1"></div>
     </>
   );

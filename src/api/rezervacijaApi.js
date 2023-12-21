@@ -48,7 +48,22 @@ const RezervacijaApi = () => {
     osvezenje,
     oznakaSedista
   ) => {
-    console.log("-----------------------------------------")
+    console.log(
+      "--------------222------",
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista
+    );
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
       polaznaStanicaR,
@@ -66,7 +81,7 @@ const RezervacijaApi = () => {
     });
   };
 
-  return { rezervacija, rezervacijaPovratna};
+  return { rezervacija, rezervacijaPovratna };
 };
 
 export default RezervacijaApi;
