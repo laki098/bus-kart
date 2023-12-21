@@ -321,30 +321,30 @@ router.post("/rezervacija", async (req, res) => {
     }
 
     if (!postojiStanicaP) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "Nepostoji stanica pocetna ",
       });
     }
 
     if (!postojiStanicaK) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "Nepostoji stanica krajnja na ispisanoj liniji",
       });
     }
 
     if (!linija) {
-      res.status(404).json({ message: "Linija nije pronadjena" });
+      return res.status(404).json({ message: "Linija nije pronadjena" });
     }
 
     if (!stanicaP || !stanicaK) {
-      res.status(404).json({ message: "Stanica nije pronadjena" });
+      return res.status(404).json({ message: "Stanica nije pronadjena" });
     }
 
     // Ažuriranje broja slobodnih mesta
     //?umanjuje ako je pocetna na liniji
     if (linija.pocetnaStanicaId == pocetnaStanicaId) {
       if (linija.brojSlobodnihMesta < brojMesta) {
-        res.status(404).json({ message: "nema dovoljno mesta" });
+        return res.status(404).json({ message: "nema dovoljno mesta" });
         return;
       }
 
