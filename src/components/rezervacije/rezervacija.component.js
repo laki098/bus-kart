@@ -254,6 +254,12 @@ const RezervacijaComponent = ({ id, state }) => {
     };
   */
   }
+  const [sliderValue, setSliderValue] = useState(100);
+  const NovaVrednost = 100;
+  const handleNekePromene = () => {
+        // Implementirajte logiku koja će promeniti vrednost slidera kada pređete na drugu stranicu
+        setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
+      };
 
   const [checkedItemId, setCheckedItemId] = useState(null);
   // const [error, setError] = useState(null);       // zbog obrade greske kod povratne karte
@@ -339,13 +345,12 @@ const RezervacijaComponent = ({ id, state }) => {
           ))}
         </div>
       </header>
-
+      <div>
+        <Slider value={sliderValue} />
+      </div>
       <div className="red-1"></div>
       <form onSubmit={confirmeHandler} className="forma">
         {" "}
-        {/* className={`${classes.form} side`}  */}
-        <p className="p-style2">Korak 3/3</p>
-        <div className="margin"></div>
         <div>
           {" "}
           {/* className="flex-container"  */}
