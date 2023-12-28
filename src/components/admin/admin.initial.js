@@ -110,7 +110,7 @@ const AdminInitial = () => {
       {/*  dodala klasu iz registration komponent*/}
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div Name="jezici">
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
