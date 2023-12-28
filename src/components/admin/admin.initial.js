@@ -15,7 +15,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { useMediaQuery } from "react-responsive"; // responsive
 import MediaQuery from "react-responsive";
 
-import ListajPeriodDatuma from "./ListajPeriodDatuma";
+import ListajJSON_Konzola from "./ListajJSON_Konzola";
 
 const AdminInitial = () => {
   const [period, setPeriod]=useState(0);    // za koji period hocemo red voznje za 1, 3 ili 6 meseci
@@ -125,7 +125,8 @@ const AdminInitial = () => {
           ))}
         </div>
       </header>
-      <div className="admin-initial-polje">
+
+      <div className="admin-initial-polje admin-initial-polje-izmena ">
         {" "}
         {/* className={classes.form}  */}
         {/* className={classes.form}   className="home" */}
@@ -195,13 +196,13 @@ const AdminInitial = () => {
     <br/><br/>
 
     <hr/><hr/>
-    <ListajPeriodDatuma valueDate={valueDate} period={period}/>
-
+    <ListajJSON_Konzola valueDate={valueDate} period={period}/>
+    <div className="red-05"></div>
 
         <button className={classes.submit} onClick={clickButton}>
           <p className="admin-slovaDugme">
             <Trans i18nKey="description.part34">Red vožnje</Trans>
-          </p>
+          </p> 
         </button>
         <Link to="/admin.component">
           {" "}
