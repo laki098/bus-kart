@@ -15,7 +15,11 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { useMediaQuery } from "react-responsive"; // responsive
 import MediaQuery from "react-responsive";
 
+import ListajPeriodDatuma from "./ListajPeriodDatuma";
+
 const AdminInitial = () => {
+  const [period, setPeriod]=useState(0);    // za koji period hocemo red voznje za 1, 3 ili 6 meseci
+
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [val1, setVal1] = useState("");
   const [valueDate, setValueDate] = useState("");
@@ -183,6 +187,17 @@ const AdminInitial = () => {
           />
         </div>{" "}
         <br />
+    {/* ubacen kod zbog prikaza u konzoli  */}
+    <div className="red-05"></div>
+    <button onClick={() => {setPeriod(1)}}>Za 1 mesec</button> &emsp;
+    <button onClick={() => {setPeriod(3)}}>Za 3 meseci</button> &emsp;
+    <button onClick={() => {setPeriod(6)}}>Za 6 meseci</button>
+    <br/><br/>
+
+    <hr/><hr/>
+    <ListajPeriodDatuma valueDate={valueDate} period={period}/>
+
+
         <button className={classes.submit} onClick={clickButton}>
           <p className="admin-slovaDugme">
             <Trans i18nKey="description.part34">Red vožnje</Trans>
