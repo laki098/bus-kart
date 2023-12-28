@@ -1,62 +1,66 @@
 .slider-container {
-    position: relative;
-    width: 40%;
-    height: 25px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .slider-wrapper {
-    width: 100%;
-    position: relative;
-  }
-  
-  .customSlider-thumb {
-    cursor: pointer;/* 
-    background: #000; */
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    outline: none;
-    top: 4px;
-  }
-  
-  .customSlider-track {
-    top: 4px;
-    height: 14px;
-    background: #ddd;
-    border-radius: 10px;
-  }
-  
-  .customSlider-mark {
-    cursor: pointer;
-    top: 6px;
-    width: 1.5px;
-    height: 8px;
-    background-color: #ccc;
-  }
-  
-  .customSlider-mark.customSlider-mark-before {
-    background-color: #000;
-  }
-  
-  .customSlider-mark.customSlider-mark-active {
-    display: none;
-  }
+  position: relative;
+  width: 69%;
+  height: 50px; /* Promenjeno na 50px (dvostruko više) */
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .customSlider-mark-red {
-    background-color: #99d805;
-  }
+.slider-wrapper {
+  width: 100%;
+  position: relative;
+}
 
-  .customSlider-mark-green {
-    background-color: #46f146;
-  }
-  
-  .customSlider-progress-bar {
-    height: 14px;
-    position: absolute;
-    top: 4px;
-    left: 0;
-    border-radius: 10px;
-  }
+.customSlider-thumb {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  outline: none;
+  top: 18px; /* Promenjeno na 18px (sredina visine) */
+}
+
+.customSlider-track {
+  top: 18px; /* Promenjeno na 18px (sredina visine) */
+  height: 14px;
+  background: #ddd;
+  position: relative;
+  height: 30px;
+}
+
+.customSlider-progress-bar {
+  height: 30px;
+  position: absolute;
+  top: 18px; /* Promenjeno na 18px (sredina visine) */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.customSlider-middle-bar {
+  width: 50%;
+  background: #ddd;
+}
+
+.page-number {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.page-number.active {
+  background: rgb(136 197 214);
+}
+
+.page-number.active.right-skew {
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0% 100%);
+}
+
+.customSlider-progress-bar.inactive {
+  clip-path: none;
+}

@@ -59,8 +59,8 @@ router.post("/", async (req, res) => {
       krajnjaStanica,
       vremePolaska,
       vremeDolaska,
-      datumPolaska,
-      datumDolaska,
+      datumiPolaska,
+      datumiDolaska,
       oznakaBusa,
       pocetakRute,
       krajRute,
@@ -82,79 +82,83 @@ router.post("/", async (req, res) => {
       },
     });
 
-    //kreiranje broja sedista.. izlacenja po oznaci busa
+    // Kreiranje linija za svaki datum
+    for (let i = 0; i < datumiPolaska.length; i++) {
+      const datumPolaska = datumiPolaska[i];
+      const datumDolaska = datumiDolaska[i];
+      //kreiranje broja sedista.. izlacenja po oznaci busa
+      const brojMestaUBusu = await Bus.findOne({
+        where: {
+          oznakaBusa,
+        },
+        attributes: {
+          exclude: [
+            "idAutobusa",
+            "oznakaBusa",
+            "tablice",
+            "createdAt",
+            "updatedAt",
+          ],
+        },
+      });
 
-    const brojMestaUBusu = await Bus.findOne({
-      where: {
+      const brojSlobodnihMesta = brojMestaUBusu.brojSedista;
+
+      // Kreiranje medjustanica sa vremenima
+      const medjustaniceWithTimes = medjustanice.map((stanica) => ({
+        naziv: stanica.stanica,
+        vremePolaska: stanica.vremePolaskaM,
+        vremeDolaska: stanica.vremeDolaskaM,
+        datumPolaska: datumPolaska,
+        datumDolaska: datumDolaska,
+        pocetakRute: stanica.pocetakRute,
+        krajRute: stanica.krajRute,
+      }));
+
+      // Kreiranje linije
+      const novaLinija = await Linija.create({
+        vremePolaska,
+        vremeDolaska,
+        datumPolaska,
+        datumDolaska,
+        brojSlobodnihMesta,
         oznakaBusa,
-      },
-      attributes: {
-        exclude: [
-          "idAutobusa",
-          "oznakaBusa",
-          "tablice",
-          "createdAt",
-          "updatedAt",
-        ],
-      },
-    });
+        pocetakRute,
+        krajRute,
+        stjuardesa,
+        vozac,
+      });
 
-    const brojSlobodnihMesta = brojMestaUBusu.brojSedista;
+      // Povezivanje početne stanice i krajnje stanice s linijom
+      novaLinija.setPocetnaStanica(pocetna);
+      novaLinija.setKrajnjaStanica(krajnja);
 
-    // Kreiranje medjustanica sa vremenima
-    const medjustaniceWithTimes = medjustanice.map((stanica) => ({
-      naziv: stanica.stanica,
-      vremePolaska: stanica.vremePolaskaM,
-      vremeDolaska: stanica.vremeDolaskaM,
-      datumPolaska: stanica.datumPolaskaM,
-      datumDolaska: stanica.datumDolaskaM,
-      pocetakRute: stanica.pocetakRute,
-      krajRute: stanica.krajRute,
-    }));
+      // Povezivanje medjustanica sa vremenima s linijom
+      await Promise.all(
+        medjustaniceWithTimes.map(async (stanica, index) => {
+          const foundStanica = await Stanica.findOne({
+            where: {
+              naziv: stanica.naziv,
+            },
+          });
 
-    // Kreiranje linije
-    const novaLinija = await Linija.create({
-      vremePolaska,
-      vremeDolaska,
-      datumPolaska,
-      datumDolaska,
-      brojSlobodnihMesta,
-      oznakaBusa,
-      pocetakRute,
-      krajRute,
-      stjuardesa,
-      vozac,
-    });
+          await novaLinija.addStanica(foundStanica, {
+            through: {
+              redosled: index + 1,
+              vremePolaskaM: stanica.vremePolaska,
+              vremeDolaskaM: stanica.vremeDolaska,
+              datumPolaskaM: stanica.datumPolaska,
+              datumDolaskaM: stanica.datumDolaska,
+              brojSlobodnihMesta,
+              pocetakRute,
+              krajRute,
+            },
+          });
+        })
+      );
+    }
 
-    // Povezivanje početne stanice i krajnje stanice s linijom
-    novaLinija.setPocetnaStanica(pocetna);
-    novaLinija.setKrajnjaStanica(krajnja);
-
-    // Povezivanje medjustanica sa vremenima s linijom
-    await Promise.all(
-      medjustaniceWithTimes.map(async (stanica, index) => {
-        const foundStanica = await Stanica.findOne({
-          where: {
-            naziv: stanica.naziv,
-          },
-        });
-
-        await novaLinija.addStanica(foundStanica, {
-          through: {
-            redosled: index + 1,
-            vremePolaskaM: stanica.vremePolaska,
-            vremeDolaskaM: stanica.vremeDolaska,
-            datumPolaskaM: stanica.datumPolaska,
-            datumDolaskaM: stanica.datumDolaska,
-            brojSlobodnihMesta,
-            pocetakRute,
-            krajRute,
-          },
-        });
-      })
-    );
-
-    return res.status(201).json({ message: "Uspesno dodata nova linija" });
+    return res.status(201).json({ message: "Uspesno dodate nove linije" });
   } catch (error) {
     res.status(500).json({ error });
   }
