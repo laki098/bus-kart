@@ -156,7 +156,7 @@
 }
 
 .kolona-bus{
-    width: 99px;
+    width: fit-content;   /*  99px; */
     padding: 10px;
     height: 80px; 
     border: 1px solid #c2bddf;

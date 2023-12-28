@@ -126,13 +126,13 @@
     color: darkblue;
     font-size: medium;
     font-weight: bold;
-    text-align: center;
+    text-align: left;      /* bilo je centar    */
    /* flex-wrap: wrap;    */
   }
 
   .sirina-info-stanica{
     width: 8rem;
-    text-align: center;
+   /* text-align: center;     da bi bolje stampalo    */
   }
   .sirina-info-15{
     width: 18rem;
@@ -156,6 +156,9 @@
   }
   .sirina-info-5{
     width: 5rem;
+  }
+  .sirina-info-4{
+    width: 4rem;
   }
   .sirina-info-3{
     width: 3rem;
@@ -203,4 +206,7 @@
     width: 10rem;
     margin-left: 11rem;
     margin-top: -3.5rem;
+  }
+  .obicna-debljina{
+    font-weight: normal;
   }
