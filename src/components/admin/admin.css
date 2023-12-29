@@ -365,3 +365,11 @@
   padding-left: -4rem;
   color: blue;
 }
+
+.admin-initial-polje-izmena{
+  border: 2px solid darkblue;
+  /* box-shadow: rgb(165 150 149 / 20%) 0px 8px 24px;    */
+  box-shadow: 6px 2px 10px 4px rgba(0,37,191,0.19);
+    -webkit-box-shadow: 6px 2px 10px 4px rgba(0,37,191,0.19);
+    -moz-box-shadow: 6px 2px 10px 4px rgba(0,37,191,0.19);
+}

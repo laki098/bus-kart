@@ -71,7 +71,7 @@ const StaniceInitial = () => {
 
       <div className="red-1"></div>
       <div className="stampajLiniju">
-        <div className="tabela-stanica">
+        <div className="tabela-stanica spisak-stanica">
           <ul>
             {stanice.map((stanica) => {
               return (
@@ -87,7 +87,7 @@ const StaniceInitial = () => {
                     <div className="polje-stanica">
                       <Trans i18nKey="description.part111">Adresa </Trans>
                     </div>
-                    <div className="info-stanica sirina-info-stanica">
+                    <div className="info-stanica sirina-info-stanica email-polje obicna-debljina">
                       {stanica.adresa}
                     </div>
                     <div className="polje-stanica">

@@ -15,7 +15,11 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { useMediaQuery } from "react-responsive"; // responsive
 import MediaQuery from "react-responsive";
 
+import ListajJSON_Konzola from "./ListajJSON_Konzola";
+
 const AdminInitial = () => {
+  const [period, setPeriod]=useState(0);    // za koji period hocemo red voznje za 1, 3 ili 6 meseci
+
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [val1, setVal1] = useState("");
   const [valueDate, setValueDate] = useState("");
@@ -106,7 +110,7 @@ const AdminInitial = () => {
       {/*  dodala klasu iz registration komponent*/}
       {/*  header je deo za prevodjenje*/}
       <header>
-        <div Name="jezici">
+        <div className="jezici">
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
@@ -121,7 +125,8 @@ const AdminInitial = () => {
           ))}
         </div>
       </header>
-      <div className="admin-initial-polje">
+
+      <div className="admin-initial-polje admin-initial-polje-izmena ">
         {" "}
         {/* className={classes.form}  */}
         {/* className={classes.form}   className="home" */}
@@ -183,10 +188,21 @@ const AdminInitial = () => {
           />
         </div>{" "}
         <br />
+    {/* ubacen kod zbog prikaza u konzoli  */}
+    <div className="red-05"></div>
+    <button onClick={() => {setPeriod(1)}}>Za 1 mesec</button> &emsp;
+    <button onClick={() => {setPeriod(3)}}>Za 3 meseci</button> &emsp;
+    <button onClick={() => {setPeriod(6)}}>Za 6 meseci</button>
+    <br/><br/>
+
+    <hr/><hr/>
+    <ListajJSON_Konzola valueDate={valueDate} period={period}/>
+    <div className="red-05"></div>
+
         <button className={classes.submit} onClick={clickButton}>
           <p className="admin-slovaDugme">
             <Trans i18nKey="description.part34">Red vožnje</Trans>
-          </p>
+          </p> 
         </button>
         <Link to="/admin.component">
           {" "}
