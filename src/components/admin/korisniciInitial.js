@@ -113,7 +113,7 @@ const KorisniciInitial = () => {
                   <div className="polje-stanica">
                     <Trans i18nKey="description.part44">Korisničko ime </Trans>
                   </div>
-                  <div className="info-stanica sirina-info-stanica">
+                  <div className="info-stanica sirina-info-7">
                     {korisnik.korisnickoIme}
                   </div>
                   <div className="polje-stanica">

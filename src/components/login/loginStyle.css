@@ -304,3 +304,14 @@ input::placeholder {
 .medjustanica {
   text-align: center;
 }
+
+.passwordContainer {
+  position: relative;
+}
+
+.passwordToggleLogin {
+  position: absolute;
+  top: 14px;
+  transform: translateX(-165%);
+  cursor: pointer;
+}
