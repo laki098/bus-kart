@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import CeneApi from "../../../api/cene.api";
 import apiUrl from "../../../apiConfig";
 
+import "../../NavBar/links/i18n"; // za prevodjenje
+import "../../../components/rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+
 const CeneInitial = () => {
   const [cene, setCene] = useState([]);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -36,9 +40,33 @@ const CeneInitial = () => {
     setIsConfirmationOpen(false);
   };
 
+  //prevodjenje
+  const lngs = {
+      en: { nativeName: "Engleski" },
+      de: { nativeName: "Srpski" },
+  };
+  const { t, i18n } = useTranslation();
+  // prevodjenje
+
   return (
     <>
-      <div className="cene-okvir">
+      <header>
+        <div className="jezici">
+          {Object.keys(lngs).map((lng) => (
+            <button
+              key={lng}
+              style={{fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",}}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+      </header>
+
+
+      <div className="cene-okvir" style={{borderWidth:0}}>
         <ul>
           {cene &&
             Array.isArray(cene) &&
@@ -48,19 +76,22 @@ const CeneInitial = () => {
               return (
                 <li key={jednaCena.id}>
                   <div className="cene-red">
-                    <div className="cene-polja">Pocetna Stanica</div>
-                    <div className="cene-polja1">
+                    <div className="cene-polja">
+                      <Trans i18nKey="description.part31">Početna stanica</Trans></div>
+                    <div className="cene-polja1 info-stanica sirina-info-stanica">        {/*bilo je samo cene-polja1  */}
                       {jednaCena.pocetnaStanica}
                     </div>
-                    <div className="cene-polja">Krajnja Stanica</div>
-                    <div className="cene-polja1">
+                    <div className="cene-polja">
+                      <Trans i18nKey="description.part198">Krajnja stanica</Trans></div>
+                    <div className="cene-polja1 info-stanica sirina-info-stanica">
                       {jednaCena.krajnjaStanicaR}
                     </div>
                     <div className="cene-polja">Cena</div>
-                    <div className="cene-polja1">{formatiranaCena} </div>
+                    <div className="cene-polja1">{jednaCena.cenaKarte}</div>
                     <div className="cene-polja">
                       <Link to={`${jednaCena.id}/cene.edit`}>
-                        <button className="buttonSwitch">Izmeni</button>
+                        <button className="buttonSwitch">
+                          <Trans i18nKey="description.part145">Izmeni</Trans></button>
                       </Link>
                     </div>
                     <div className="cene-polja">
@@ -68,7 +99,7 @@ const CeneInitial = () => {
                         onClick={() => brisanjeCene(jednaCena.id)}
                         className="buttonSwitch"
                       >
-                        Obriši
+                        <Trans i18nKey="description.part134">Obriši</Trans>
                       </button>
                     </div>
                   </div>
@@ -79,19 +110,21 @@ const CeneInitial = () => {
       </div>
       <div>
         <Link to={"/cene.add"}>
-          <button className="buttonSwitch">Dodaj novu cenu</button>
+          <button className="buttonSwitch">
+            <Trans i18nKey="description.part199">Dodaj novu cenu</Trans></button>
         </Link>
       </div>
       <div className="confirm-dialog-container">
         {isConfirmationOpen && (
           <div className="confirm-dialog-overlay">
             <div className="confirm-dialog-box">
-              <div>Da li ste sigurni da želite da obrišete ovu cenu?</div>
+              <div><Trans i18nKey="description.part200">
+                Da li ste sigurni da želite da obrišete ovu cenu?</Trans></div>
               <button className="confirm-dialog-yes" onClick={confirmDelete}>
-                Da
+                <Trans i18nKey="description.part153">Da</Trans>
               </button>
               <button className="confirm-dialog-no" onClick={cancelDelete}>
-                Ne
+                <Trans i18nKey="description.part154">Ne</Trans>
               </button>
             </div>
           </div>

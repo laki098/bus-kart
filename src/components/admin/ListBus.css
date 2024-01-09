@@ -249,7 +249,7 @@
   }
 
   .korisniciTabela{
-    width: 97rem;         /* bilo je max-content 95rem   */
+    width: max-content;         /* bilo je max-content 97rem i 95rem , 95%  */
     background-color: #fbfafa;
   }
   .korisniciTabelaPromena{
@@ -278,6 +278,15 @@
   .jezici{
     text-align: right;
     margin-right: 3rem;
+  }
+  .jezici-dugme{
+    border: "0px solid darkblue";   
+    color: white;
+    background: #2794D6;
+    border-radius: 0.3rem;
+    font-size: 14px;
+    margin: 0.15rem;
+    padding: 0.2rem;
   }
 
   .red-1{

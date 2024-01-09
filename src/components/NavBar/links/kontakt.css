@@ -68,6 +68,8 @@ rasponsive-maps {
   font-size: large; /* larger   */
   line-height: 1.5; /*  3     */
   color: darkblue;
+  width: 35vw;          /*pozicioniranje div u desno i sirina 35vw    */
+  margin-left: 5vw;
 }
 
 .prikazKontakt{
