@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import cookies from "js-cookie";
 import "./still.css";
 
@@ -6,11 +6,14 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../i18n";
 import "../../../../components/NavBar/links/i18n";
 import apiUrl from "../../../../apiConfig";
+import { Link } from "react-router-dom";
 
 const Karta = () => {
   const [sveKarte, setSveKarte] = useState([]);
   const [neiskorisceneKarte, setNeiskorisceneKarte] = useState([]);
   const [iskorisceneKarte, setIskorisceneKarte] = useState([]);
+
+  const idRef = useRef();   //ubaceno da bi pokupila {karte.id}
 
   // Izvlačenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -51,6 +54,25 @@ const Karta = () => {
     getKarte();
   }, []);
 
+  //rezervacija sediste kod povratne karte
+
+  const sedistePovratak = (karte) => {
+    const potvrda = window.confirm("Da li je ovo povratna karta?");
+    if (potvrda) {
+      alert("Korisnik je odabrao Jeste");
+      funkcijaNakonOdabiraDaPovratna(karte.id);
+    } else {
+      alert("Korisnik je odabrao Nije");
+    }
+  };
+
+  const funkcijaNakonOdabiraDaPovratna = (karte) => {
+    console.log("Funkcija koja se poziva nakon odabira Jeste povratna je karta");
+    console.log(karte);
+    console.log(karte.id);
+  //  console.log(`Polazak povratne linije: ${karte.vremeP}`);
+  };
+
   //prevodjenje start
   const lngs = {
     en: { nativeName: "Engleski" },
@@ -58,6 +80,8 @@ const Karta = () => {
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
+
+  console.log('Sačuvana vrednost ID-a:', idRef.current);
 
   return (
     <>
@@ -67,6 +91,7 @@ const Karta = () => {
             {Object.keys(lngs).map((lng) => (
               <button
                 key={lng}
+                className="jezici-dugme"
                 style={{
                   fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
                 }}
@@ -94,7 +119,11 @@ const Karta = () => {
                 {sveKarte
                   .filter((karte) => karte.cekiranje === false)
                   .map((karte) => (
-                    <div key={karte.id}>
+                    <div key={karte.id} >
+                      {console.log('Mapiranje karte:', karte)} 
+                      {console.log('Karta ID:', karte.id)} {/* Dodajte ovu liniju */}
+                      {idRef.current = karte.id}
+                      {console.log('idRef:',idRef.current)}
                       <li className="admin-jedan-red">
                         {" "}
                         {/* lista-stavka">    */}
@@ -173,12 +202,14 @@ const Karta = () => {
                             </div>
                           )}
                         </div>
+                            &emsp; &ensp;<button onClick={sedistePovratak }>Sedište</button>
                       </li>
                     </div>
-                  ))}
+                ))}
               </div>
             </div>
           </div>
+
           <div>
             <div className="labela-stanica labela-stanica-naslov red-1">
               <Trans i18nKey="description.part188">Neaktivne karte </Trans>
@@ -241,6 +272,7 @@ const Karta = () => {
                       <div className="naslov">
                         <Trans i18nKey="description.part185"> Čekiran </Trans>
                       </div>
+
                       <div className="vrednost">
                         {karte.cekiranje === false ? (
                           <>

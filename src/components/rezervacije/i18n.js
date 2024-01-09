@@ -177,6 +177,13 @@ i18n
             part193: 'Started',
             part194: 'Route information',
             part195: 'Currently reserved seat number',
+            part196: 'New price',
+            part197: 'Change the price',
+            part198: 'Final station',
+            part199: 'Add new price',
+            part200: 'Are you sure you want to delete this price?',
+            part201: 'Price',
+            part202: 'Change station',
 
           }
         }
@@ -344,6 +351,13 @@ i18n
             part193: 'Krenuli',
             part194: 'Informacije o ruti',
             part195: 'Trenutno rezervisano mesto broj',
+            part196: 'Nova cena',
+            part197: 'Izmeni cenu',
+            part198: 'Krajnja stanica',
+            part199: 'Dodaj novu cenu',
+            part200: 'Da li ste sigurni da želite da obrišete ovu cenu?',
+            part201: 'Cene',
+            part202: 'Izaberi stanicu',
 
 
           }

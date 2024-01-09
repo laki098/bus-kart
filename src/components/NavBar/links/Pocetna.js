@@ -148,6 +148,7 @@ const Pocetna = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
