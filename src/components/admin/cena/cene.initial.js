@@ -43,6 +43,8 @@ const CeneInitial = () => {
           {cene &&
             Array.isArray(cene) &&
             cene.map((jednaCena) => {
+              const formatiranaCena = parseFloat(jednaCena.cenaKarte).toFixed(2);
+
               return (
                 <li key={jednaCena.id}>
                   <div className="cene-red">
@@ -55,7 +57,7 @@ const CeneInitial = () => {
                       {jednaCena.krajnjaStanicaR}
                     </div>
                     <div className="cene-polja">Cena</div>
-                    <div className="cene-polja1">{jednaCena.cenaKarte}</div>
+                    <div className="cene-polja1">{formatiranaCena} </div>
                     <div className="cene-polja">
                       <Link to={`${jednaCena.id}/cene.edit`}>
                         <button className="buttonSwitch">Izmeni</button>
