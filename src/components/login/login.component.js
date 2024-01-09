@@ -11,6 +11,7 @@ import "../../components/NavBar/links/i18n";
 
 import "../admin/admin.css";
 import { ToastContainer } from "react-toastify";
+import { useState } from "react";
 
 const LoginComponent = () => {
   const loginLogic = LoginLogic();
@@ -26,6 +27,17 @@ const LoginComponent = () => {
   const submitHandler = (event) => {
     event.preventDefault();
   }
+
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleToggleClick = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="pozadina">
@@ -74,15 +86,22 @@ const LoginComponent = () => {
                   />
                 </div>
                 <div className="second-input">
-                 {/*  <img src={password} alt="password" className="user1" /> */}
+                 <div className="passwordContainer">
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Lozinka"
                     name="lozinka"
                     className="name1 input-new"
                     onChange={loginLogic.changeHandler}
                     autoComplete="current-password"
                   />
+                  <span
+                    className="passwordToggleLogin "
+                    onClick={handleToggleClick}
+                  >
+                           {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+                  </span>
+                </div>
                 </div>
                 <div className="login-button">
                   <button className="button" onClick={loginLogic.login}>

@@ -92,6 +92,8 @@ const LineForm = ({ mode, id, state }) => {
   }, []);
 
   const medjustanice = [];
+  const datumPolaska = [];
+  const datumDolaska = [];
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -109,8 +111,8 @@ const LineForm = ({ mode, id, state }) => {
         krajnjaStanica: formData.get("krajnjaStanica"),
         vremePolaska: formData.get("vremePolaska"),
         vremeDolaska: formData.get("vremeDolaska"),
-        datumPolaska: formData.get("datumPolaska"),
-        datumDolaska: formData.get("datumDolaska"),
+        datumPolaska: datumPolaska,
+        datumDolaska: datumDolaska,
         oznakaBusa: formData.get("oznakaBusa"),
         vozac: formData.get("vozac"),
         stjuardesa: formData.get("stjuardesa"),
@@ -357,7 +359,7 @@ const LineForm = ({ mode, id, state }) => {
                     name="datumPolaska"
                     type="date"
                     className="input-stanica"
-                    onChange={adminLogic.changeHandler}
+                    onChange={adminLogic.handlerDatumPolaska}
                   />
 
                   <div className="red-05">

@@ -3,7 +3,12 @@ import LinijeApi from "../../api/linije.api";
 import { toast } from "react-toastify";
 
 const AdminLogic = () => {
-  let [data, setData] = useState({ medjustanice: [] });
+  let [data, setData] = useState({
+    medjustanice: [],
+    datumPolaska: [],
+    datumDolaska: [],
+  });
+  console.log(data);
 
   const changeHandler = (e) =>
     setData({
@@ -20,6 +25,12 @@ const AdminLogic = () => {
       medjustanice: novaMedjustanica,
     });
   };
+
+  const handlerDatumPolaska = (e) =>
+    setData({
+      ...data,
+      datumPolaska: [e.target.value],
+    });
 
   const dodajMedjustanicu = () => {
     setData({
@@ -46,7 +57,6 @@ const AdminLogic = () => {
       datumDolaskaM: item.datumDolaskaM,
     };
   });
-  
 
   const upisLinije = async () => {
     LinijeApi()
@@ -129,6 +139,7 @@ const AdminLogic = () => {
     handlerMedjustanice,
     dodajMedjustanicu,
     ukloniMedjustanicu,
+    handlerDatumPolaska,
   };
 };
 

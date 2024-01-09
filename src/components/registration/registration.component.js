@@ -47,6 +47,18 @@ const RegistrationComponent = () => {
 
     registrationLogic.registracija();
   };
+
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleToggleClick = () => {
+    setShowPassword(!showPassword);
+  };
+  
   return (
     <>
       <form onSubmit={confirmeHandler} className={classes.form}>
@@ -98,12 +110,20 @@ const RegistrationComponent = () => {
           }`}
         >
           <label>Lozinka:</label>
-          <input
-            type="password"
-            name="lozinka"
-            ref={lozinkaInputRef}
-            onChange={registrationLogic.changeHandler}
-          ></input>
+          <div className={classes.passwordContainer}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="lozinka"
+              ref={lozinkaInputRef}
+              onChange={registrationLogic.changeHandler}
+            />
+            <span
+              className={classes.passwordToggle}
+              onClick={handleToggleClick}
+            >
+              {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+            </span>
+          </div>
           {!formInputsValid.lozinka && <p>Unesite lozinku</p>}
         </div>
         <div
