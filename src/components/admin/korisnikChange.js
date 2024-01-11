@@ -22,15 +22,7 @@ const KorisnikChange = () => {
 
   const korisnikLogic = KorisnikLogic();
 
-  /* const back = () => {
-    window.history.back();
-  }; */
-
-  const back = () => {
-    setTimeout(() => {
-      window.location.href = "/korisniciInitial";
-    }, 2000);
-  };
+  
   
   const submitHandler = (event) => {
     event.preventDefault();
@@ -179,7 +171,7 @@ const KorisnikChange = () => {
           <option value="vozac"><Trans i18nKey="description.part163">Vozač</Trans></option>
         </select>
         </div>
-        <div className="column-1"><button onClick={back} type="submit" className="buttonSwitch">   {/* bila je klasa dugme */}
+        <div className="column-1"><button  type="submit" className="buttonSwitch">   {/* bila je klasa dugme */}
           {" "}
           <Trans i18nKey="description.part129">Sačuvaj  </Trans>
         </button></div>

@@ -17,6 +17,9 @@ const BusLogic = () => {
       .upisBus(data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
         notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/bus.initial";
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);
@@ -28,6 +31,9 @@ const BusLogic = () => {
       .editBus(data.idAutobusa, data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
         notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/bus.initial";
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);

@@ -8,6 +8,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
+import { toast, ToastContainer  } from 'react-toastify';
 
 const ResetPassword = () => {
   const form = useRef();
@@ -16,6 +17,32 @@ const ResetPassword = () => {
   const submit = (e) => {
     e.preventDefault();
   };
+
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  const notifySuccest = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
 
   const getResetPassword = async () => {
     const response = await fetch(`${apiUrl}/korisnik/zaboravljena-sifra`, {
@@ -29,12 +56,14 @@ const ResetPassword = () => {
 
     if (response.ok) {
       if (response.status == 200) {
-        alert(data.message);
-        window.location.href = "/pocetna";
+        notifySuccest(data.message);
+        setTimeout(() => {
+          window.location.href = "/pocetna";
+        }, 2500);
       }
     } else {
       if (response.status == 404) {
-        alert(data.message);
+        notifyWarn(data.message);
       }
     }
   };
@@ -108,6 +137,7 @@ const ResetPassword = () => {
         </div>
         {/*  </div>     */}
       </form>
+      <ToastContainer />
     </div>
   );
 };

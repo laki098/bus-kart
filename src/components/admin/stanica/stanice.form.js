@@ -28,11 +28,7 @@ const StaniceForm = ({ mode, id }) => {
     }
   }, []);
 
-  const back = () => {
-    setTimeout(() => {
-      window.location.href = "/stanice.initial";
-    }, 2000);
-  };
+  
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -125,7 +121,7 @@ const StaniceForm = ({ mode, id }) => {
           </div>
           <div>
             <div className="red-1"></div>
-            <button onClick={back} type="submit" className="buttonSwitch">
+            <button  type="submit" className="buttonSwitch">
               {mode === "add" ? (
                 <>
                   <Trans i18nKey="description.part128">Dodaj</Trans>

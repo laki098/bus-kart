@@ -50,17 +50,12 @@ const CeneForm = ({ mode, id }) => {
 
     setStanice(a2);
   };
-  console.log(stanice);
-
+ 
   useEffect(() => {
     getStanice(); //?Prilikom ucitavanja stranice da pozove funkciju get stanice
   }, []);
 
-  const back = () => {
-    setTimeout(() => {
-      window.location.href = "/cene.initial";
-    }, 2000);
-  };
+ 
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -191,7 +186,7 @@ const CeneForm = ({ mode, id }) => {
           </div>
           <div className="red-1"></div>
           <div>
-            <button onClick={back} type="submit" className="buttonSwitch">
+            <button  type="submit" className="buttonSwitch">
               {mode === "add" ? 
                 <><Trans i18nKey="description.part128">Dodaj </Trans></>
                : 
