@@ -221,7 +221,7 @@ router.post("/zaboravljena-sifra", async (req, res) => {
     if (!korisnik) {
       return res
         .status(404)
-        .json({ message: "korisnik sa datim email-om ne postoji" });
+        .json({ message: "Korisnik sa datim email-om ne postoji" });
     }
 
     //?kreiranje tokena za reset

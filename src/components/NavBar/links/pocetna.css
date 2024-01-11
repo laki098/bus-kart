@@ -504,3 +504,20 @@ a {
 .belo {
   background-color: #fff;
 }
+
+.slovaMalaDim{
+  font-style: inherit;
+  color: darkblue;
+  font-size: "1.2rem" ;
+  font-weight: bold;
+}
+
+.teget{
+  color: darkblue;
+}
+
+.podesiSliku{
+  height: auto;
+  opacity: "130%";
+}
+

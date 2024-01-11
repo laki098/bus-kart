@@ -2,12 +2,38 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./reset.css";
 import apiUrl from "../../apiConfig";
+import { toast, ToastContainer  } from 'react-toastify';
 
 const PasswordReset = () => {
   const [novaSifra, setNovaSifra] = useState("");
   const [potvrdaNoveSifre, setPotvrdaNoveSifre] = useState("");
 
   const { token } = useParams();
+
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  const notifySuccest = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const getResetPassword = async () => {
     const response = await fetch(`${apiUrl}/korisnik/reset-sifra/${token}`, {
@@ -26,12 +52,14 @@ const PasswordReset = () => {
     if (response.ok) {
       if (response.status == 200) {
         console.log(data);
-        alert("Uspesno promenjena sifra");
-        window.location.href = "/login.component";
+        notifySuccest(data.message);
+        setTimeout(() => {
+          window.location.href = "/login.component";
+        }, 2500);
       }
     } else {
       if (response.status == 404 || response.status == 400) {
-        alert(data.message);
+        notifyWarn(data.message);
       }
     }
   };
@@ -95,6 +123,7 @@ const PasswordReset = () => {
           Resetuj lozinku
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

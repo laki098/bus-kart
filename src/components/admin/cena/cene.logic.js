@@ -17,7 +17,10 @@ const CeneLogic = () => {
         CeneApi()
         .upisCene(data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
         .then((response) => {
-            notifySuccest(); // Prikazuje notifikacije
+            notifySuccest();
+            setTimeout(() => {
+              window.location.href = "/cene.initial";
+            }, 2000); // Prikazuje notifikacije
           })
         .catch((error) => {
             console.log(error);
@@ -28,7 +31,10 @@ const CeneLogic = () => {
         CeneApi()
         .editCene(data.id,data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
         .then((response) => {
-            notifySuccest(); // Prikazuje notifikacije
+            notifySuccest();
+            setTimeout(() => {
+              window.location.href = "/cene.initial";
+            }, 2000); // Prikazuje notifikacije
           }).catch((error) => {
             console.log(error);
           });

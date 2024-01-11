@@ -71,7 +71,7 @@ const StaniceInitial = () => {
 
       <div className="red-1"></div>
       <div className="stampajLiniju">
-        <div className="tabela-stanica spisak-stanica">
+        <div className="tabela-stanica spisak-stanica" >
           <ul>
             {stanice.map((stanica) => {
               return (

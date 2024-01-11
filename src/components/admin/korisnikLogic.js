@@ -27,7 +27,10 @@ const KorisnikLogic = () => {
         data.privremenaRola
       )
       .then((response) => {
-        notifySuccest(); // Prikazuje notifikaciju o uspešnoj promeni
+        notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/korisniciInitial";
+        }, 2000); // Prikazuje notifikaciju o uspešnoj promeni
         
       })
       .catch((error) => {

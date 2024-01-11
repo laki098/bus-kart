@@ -27,11 +27,7 @@ const BusForm = ({ mode, idAutobusa }) => {
     }
   }, []);
 
-  const back = () => {
-    setTimeout(() => {
-      window.location.href = "/bus.initial";
-    }, 2000);
-  };
+ 
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -141,7 +137,6 @@ const BusForm = ({ mode, idAutobusa }) => {
               <div className="red-1"></div>
                 {/* bilo je className="button"   style={{ height: "2rem" }}*/}
               <button
-                onClick={back}
                 type="submit"
                 className="buttonSwitch"
               >

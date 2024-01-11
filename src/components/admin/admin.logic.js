@@ -78,7 +78,10 @@ const AdminLogic = () => {
       )
       .then((response) => {
         console.log(response);
-        notifySuccest(); // Prikazuje notifikaciju o uspešnom pravljenju linije
+        notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/admin.initial";
+        }, 2000); // Prikazuje notifikaciju o uspešnom pravljenju linije
       })
       .catch((error) => {
         console.log(error);
@@ -104,7 +107,10 @@ const AdminLogic = () => {
       )
       .then((response) => {
         console.log(response);
-        notifySuccest(); // Prikazuje notifikaciju o uspešnom editovanju linije
+        notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/admin.initial";
+        }, 2000); // Prikazuje notifikaciju o uspešnom editovanju linije
       })
       .catch((error) => {
         console.log(error);

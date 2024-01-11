@@ -6,6 +6,14 @@ import { ToastContainer } from "react-toastify";
 import helpers from "../../../helpers/helpers";
 import apiUrl from "../../../apiConfig";
 
+import "../../NavBar/links/i18n"; // za prevodjenje
+import "../../../components/rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+
+import "../ListBus.css";
+
+
+
 const CeneForm = ({ mode, id }) => {
   const [cene, setCene] = useState({});
   const ceneLogic = CeneLogic();
@@ -42,17 +50,12 @@ const CeneForm = ({ mode, id }) => {
 
     setStanice(a2);
   };
-  console.log(stanice);
-
+ 
   useEffect(() => {
     getStanice(); //?Prilikom ucitavanja stranice da pozove funkciju get stanice
   }, []);
 
-  const back = () => {
-    setTimeout(() => {
-      window.location.href = "/cene.initial";
-    }, 2000);
-  };
+ 
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -71,16 +74,50 @@ const CeneForm = ({ mode, id }) => {
     }
   };
 
+  //prevodjenje
+    const lngs = {
+      en: { nativeName: "Engleski" },
+      de: { nativeName: "Srpski" },
+    };
+    const { t, i18n } = useTranslation();
+  // prevodjenje
+
   return (
     <>
-      <form onSubmit={submitHandler} className="cene-form">
+      <header>
+        <div className="jezici ">
+          {Object.keys(lngs).map((lng) => (
+            
+            <button
+              key={lng}
+              style={{fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",}}
+             
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+            
+          ))}
+        </div>
+      </header>
+
+      <div className="red-1"></div>
+      <form onSubmit={submitHandler} className="cene-form admin-initial-polje-izmena"> 
+                                {/* dodala zbog senke admin-initial-polje-izmena   */}
         <div>
           <div className="naslov-cene">
-            {mode === "add" ? <>Nova cena</> : <>Izmeni cenu</>}
+            {mode === "add" ? 
+            <><Trans i18nKey="description.part196">Nova cena</Trans></>
+             : 
+            <><Trans i18nKey="description.part197">Izmeni cenu</Trans></>
+            }
           </div>
           <div>
             <div>
-              <label className="cene-labela">Pocetna Stanica</label>
+              <label className="cene-labela">
+                <Trans i18nKey="description.part31">Početna Stanica</Trans>
+              </label>
             </div>
             <select
               name="pocetnaStanica"
@@ -88,7 +125,11 @@ const CeneForm = ({ mode, id }) => {
               defaultValue={mode === "add" ? "" : cene.pocetnaStanica}
               onChange={ceneLogic.changeHandler}
             >
-               <option disabled={!mode === "add"}>{mode === "add" ? "Izaberi stanicu" : cene.pocetnaStanica}</option>
+              <option disabled={!mode === "add"}>{mode === "add" ? 
+                <Trans i18nKey="description.part202">Izaberi stanicu</Trans>
+                : 
+                cene.pocetnaStanica}
+              </option>
               {stanice.map((stanica) => {
                 if (stanica !== cene.pocetnaStanica) {
                   return (
@@ -102,7 +143,9 @@ const CeneForm = ({ mode, id }) => {
           </div>
           <div>
             <div>
-              <label className="cene-labela">Krajnja Stanica</label>
+              <label className="cene-labela">
+                <Trans i18nKey="description.part198">Krajnja stanica</Trans>
+              </label>
             </div>
             <select
               name="krajnjaStanicaR"
@@ -110,7 +153,11 @@ const CeneForm = ({ mode, id }) => {
               defaultValue={mode === "add" ? "" : cene.krajnjaStanicaR}
               onChange={ceneLogic.changeHandler}
             >
-               <option disabled={!mode === "add"}>{mode === "add" ? "Izaberi stanicu" : cene.krajnjaStanicaR}</option>
+              <option disabled={!mode === "add"}>{mode === "add" ? 
+               <Trans i18nKey="description.part202">Izaberi stanicu</Trans>
+                : 
+               cene.krajnjaStanicaR}
+              </option>
               {stanice.map((stanica) => {
                 if (stanica !== cene.krajnjaStanicaR) {
                   return (
@@ -125,7 +172,9 @@ const CeneForm = ({ mode, id }) => {
           <div>
             <div>
               {" "}
-              <label className="cene-labela">Cena</label>
+              <label className="cene-labela">
+                <Trans i18nKey="description.part169">Cena</Trans>
+              </label>
             </div>
             <input
               defaultValue={cene.cenaKarte}
@@ -135,9 +184,14 @@ const CeneForm = ({ mode, id }) => {
               onChange={ceneLogic.changeHandler}
             />
           </div>
+          <div className="red-1"></div>
           <div>
-            <button onClick={back} type="submit" className="buttonSwitch">
-              {mode === "add" ? <>Dodaj</> : <> Zameni </>}
+            <button  type="submit" className="buttonSwitch">
+              {mode === "add" ? 
+                <><Trans i18nKey="description.part128">Dodaj </Trans></>
+               : 
+                <><Trans i18nKey="description.part133">Zameni </Trans></>
+              }
             </button>
           </div>
         </div>

@@ -15,7 +15,10 @@ const StaniceLogic = () => {
     StaniceApi()
       .upisStanice(data.naziv, data.adresa)
       .then((response) => {
-        notifySuccest(); // Prikazuje notifikacije
+        notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/stanice.initial";
+        }, 2000); // Prikazuje notifikacije
       })
       .catch((error) => {
         console.log(error);
@@ -26,7 +29,10 @@ const StaniceLogic = () => {
     StaniceApi()
       .editStanice(data.id, data.naziv, data.adresa)
       .then((response) => {
-        notifySuccest(); // Prikazuje notifikacije
+        notifySuccest();
+        setTimeout(() => {
+          window.location.href = "/stanice.initial";
+        }, 2000); // Prikazuje notifikacije
       })
       .catch((error) => {
         console.log(error);

@@ -60,7 +60,7 @@ const AdminPanel = () => {
       </Link>
       <Link to={"/cene.initial"}>
         <button className="button-panel">
-       Cene 
+        <Trans i18nKey="description.part201"> Cene </Trans>
         </button>
       </Link>
     </div>
