@@ -59,8 +59,8 @@ router.post("/", async (req, res) => {
       krajnjaStanica,
       vremePolaska,
       vremeDolaska,
-      datumiPolaska,
-      datumiDolaska,
+      datumPolaska,
+      datumDolaska,
       oznakaBusa,
       pocetakRute,
       krajRute,
@@ -83,9 +83,9 @@ router.post("/", async (req, res) => {
     });
 
     // Kreiranje linija za svaki datum
-    for (let i = 0; i < datumiPolaska.length; i++) {
-      const datumPolaska = datumiPolaska[i];
-      const datumDolaska = datumiDolaska[i];
+    for (let i = 0; i < datumPolaska.length; i++) {
+      const datumPolaska1 = datumPolaska[i];
+      const datumDolaska1 = datumDolaska[i];
       //kreiranje broja sedista.. izlacenja po oznaci busa
       const brojMestaUBusu = await Bus.findOne({
         where: {
@@ -109,8 +109,8 @@ router.post("/", async (req, res) => {
         naziv: stanica.stanica,
         vremePolaska: stanica.vremePolaskaM,
         vremeDolaska: stanica.vremeDolaskaM,
-        datumPolaska: datumPolaska,
-        datumDolaska: datumDolaska,
+        datumPolaska: datumPolaska1,
+        datumDolaska: datumDolaska1,
         pocetakRute: stanica.pocetakRute,
         krajRute: stanica.krajRute,
       }));
@@ -119,8 +119,8 @@ router.post("/", async (req, res) => {
       const novaLinija = await Linija.create({
         vremePolaska,
         vremeDolaska,
-        datumPolaska,
-        datumDolaska,
+        datumPolaska: datumPolaska1,
+        datumDolaska: datumDolaska1,
         brojSlobodnihMesta,
         oznakaBusa,
         pocetakRute,

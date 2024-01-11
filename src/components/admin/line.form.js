@@ -373,7 +373,7 @@ const LineForm = ({ mode, id, state }) => {
                     name="datumDolaska"
                     type="date"
                     className="input-stanica"
-                    onChange={adminLogic.changeHandler}
+                    onChange={adminLogic.handlerDatumDolaska}
                   />
 
                   <div className="red-05">

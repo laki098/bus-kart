@@ -29,7 +29,13 @@ const AdminLogic = () => {
   const handlerDatumPolaska = (e) =>
     setData({
       ...data,
-      datumPolaska: [e.target.value],
+      datumPolaska: [e.target.value, ...data.datumPolaska],
+    });
+
+  const handlerDatumDolaska = (e) =>
+    setData({
+      ...data,
+      datumDolaska: [e.target.value, ...data.datumDolaska],
     });
 
   const dodajMedjustanicu = () => {
@@ -140,6 +146,7 @@ const AdminLogic = () => {
     dodajMedjustanicu,
     ukloniMedjustanicu,
     handlerDatumPolaska,
+    handlerDatumDolaska,
   };
 };
 
