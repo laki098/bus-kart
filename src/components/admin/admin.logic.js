@@ -77,11 +77,12 @@ const AdminLogic = () => {
         data.oznakaBusa
       )
       .then((response) => {
-        console.log(response);
-        notifySuccest();
+        if (response.status === 201) {
+        notifySuccest(response.data.message);
         setTimeout(() => {
           window.location.href = "/admin.initial";
         }, 2000); // Prikazuje notifikaciju o uspešnom pravljenju linije
+      }
       })
       .catch((error) => {
         console.log(error);
@@ -107,18 +108,20 @@ const AdminLogic = () => {
       )
       .then((response) => {
         console.log(response);
-        notifySuccest();
-        setTimeout(() => {
-          window.location.href = "/admin.initial";
-        }, 2000); // Prikazuje notifikaciju o uspešnom editovanju linije
+        if (response.status === 200) {
+          notifySuccest(response.data.message);
+          setTimeout(() => {
+            window.location.href = "/admin.initial";
+          }, 2000); // Prikazuje notifikaciju o uspešnom pravljenju linije
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const notifySuccest = () => {
-    toast.success("Uspešno!", {
+  const notifySuccest = (message) => {
+    toast.success(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,

@@ -359,7 +359,7 @@ router.put("/:idKorisnik", async (req, res) => {
     if (updateKorisnik[0] === 0) {
       return res.status(404).json({ message: "korisnik nije pronadjen" });
     }
-    return res.status(200).json({ message: "korisnik uspesno promenjen" });
+    return res.status(200).json({ message: "Korisnik uspesno promenjen" });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske", error });
   }

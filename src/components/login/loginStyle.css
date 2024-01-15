@@ -315,3 +315,12 @@ input::placeholder {
   transform: translateX(-165%);
   cursor: pointer;
 }
+.edit-medjustanica {
+  width: 10rem;
+  height: 2rem;
+  border-color: darkblue;
+  border-radius: 0.3rem;
+  margin: 0.2rem;
+  text-align: center;
+  margin-left: 2.2rem;
+}

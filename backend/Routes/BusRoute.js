@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
     const { oznakaBusa, tablice, brojSedista } = req.body;
 
     const newBus = await Bus.create({ oznakaBusa, tablice, brojSedista });
-    res.status(201).json({ message: "uspesno kreiran bus", newBus });
+    res.status(201).json({ message: "Uspesno kreiran bus", newBus });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }

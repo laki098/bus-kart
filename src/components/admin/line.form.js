@@ -495,23 +495,29 @@ const LineForm = ({ mode, id, state }) => {
                       </div>
                       <select
                         name="stanica"
+                        className="edit-medjustanica"
                         /* value={medjustanica.stanica} */
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
                       >
+                        <option 
+                        disabled
+                        selected>
+                          Izaberite medjustanica
+                          </option>
                         {stanice.map((stanica) => {
                           return (
-                            <option key={stanica} value={stanica}>
+                            <option key={stanica} value={stanica} >
                               {stanica}
                             </option>
                           );
                         })}
                       </select>
                       &emsp;&emsp;
-                      <label className="labela-stanica">
-                        <Trans i18nKey="description.part169">Cena</Trans>
-                      </label>
+                      {/* <label className="labela-stanica">
+                       
+                      </label> */}
                       <div className="red-05">
                         <label className="labela-stanica">
                           <Trans i18nKey="description.part150">
