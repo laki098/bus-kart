@@ -504,7 +504,7 @@ const LineForm = ({ mode, id, state }) => {
                         <option 
                         disabled
                         selected>
-                          Izaberite medjustanica
+                          Izaberite medjustanicu
                           </option>
                         {stanice.map((stanica) => {
                           return (

@@ -95,7 +95,7 @@ const RegistrationComponent = () => {
             formInputsValid.korisnickoIme ? "" : classes.invalid
           }`}
         >
-          <label>Koriscko ime:</label>
+          <label>Korisnicko ime:</label>
           <input
             type="text"
             name="korisnickoIme"
@@ -124,7 +124,7 @@ const RegistrationComponent = () => {
               {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
             </span>
           </div>
-          {!formInputsValid.lozinka && <p>Unesite lozinku</p>}
+          {!formInputsValid.lozinka && <p>Lozinka ne može biti manja od 6 karaktera</p>}
         </div>
         <div
           className={`${classes.control} ${

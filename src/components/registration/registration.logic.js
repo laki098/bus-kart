@@ -11,32 +11,35 @@ const RegistrationLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-  const registracija = () => {
-    RegistracijaApi()
-      .registracija(
-        data.korisnickoIme,
-        data.lozinka,
-        data.ime,
-        data.prezime,
-        data.email,
-        data.brojTelefona
-      )
-      .then((rasponse) => {
-        console.log(rasponse);
-        notifySuccest();
-        setTimeout(() => {
-          window.location.href = "/pocetna"; // Preusmerava korisnika na pocetna nakon nekoliko sekundi
-        }, 3000);
-      })
-      .catch((error) => {
-        console.log(error);
-        /* alert("korisnicko ime isto") */
-        notifyWarn();
-      });
-  };
+    const registracija = () => {
+      RegistracijaApi()
+        .registracija(
+          data.korisnickoIme,
+          data.lozinka,
+          data.ime,
+          data.prezime,
+          data.email,
+          data.brojTelefona
+        )
+        .then((response) => {
+          if (response.status === 201) {
+            console.log(response);
+            notifySuccest(response.data.message);
+            setTimeout(() => {
+              window.location.href = "/pocetna";
+            }, 3000);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response && error.response.status === 400) {
+            notifyWarn(error.response.data.message);
+          }
+        });
+    };
 
-  const notifySuccest = () => {
-    toast.success(" Uspešno ste se registrovali!", {
+  const notifySuccest = (message) => {
+    toast.success(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -48,8 +51,8 @@ const RegistrationLogic = () => {
     });
   };
 
-  const notifyWarn = () => {
-    toast.warn(" Korisničko ime je zauzeto!", {
+  const notifyWarn = (message) => {
+    toast.warn(message, {
       position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
