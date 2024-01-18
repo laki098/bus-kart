@@ -160,7 +160,7 @@ router.post("/login", async (req, res) => {
 
     if (!korisnik) {
       //? provera dali korisnik postoji
-      return res.status(404).json({ message: "Korisnik nije pronađen" });
+      return res.status(404).json({ message: "Korisničko ime nije pronađeno" });
     }
 
     //? uporedjivanje hesovane lozinke sa unetom lozinkom

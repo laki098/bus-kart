@@ -18,7 +18,9 @@ const LoginLogic = () => {
       })
       .catch((error) => {
         console.log(error);
-        notifyWarn();
+        if (error.response && error.response.status === 404 || error.response && error.response.status === 401) {
+          notifyWarn(error.response.data.message);
+        }
       });
   };
 
@@ -35,8 +37,8 @@ const LoginLogic = () => {
     });
   };
 
-  const notifyWarn = () => {
-    toast.warn("Uneti su pogresni podaci!", {
+  const notifyWarn = (message) => {
+    toast.warn(message, {
       position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
