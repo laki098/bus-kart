@@ -1,0 +1,61 @@
+    /* kod header dela koji se primenjuje kod prevoda */
+    .jezici{
+        text-align: right;
+        margin-right: 3rem;
+    }
+    .jezici-dugme{
+        border: "0px solid darkblue";   
+        color: white;
+        background: #2794D6;
+        border-radius: 0.3rem;
+        font-size: 14px;
+        margin: 0.15rem;
+        padding: 0.2rem;
+    }
+    .jezici-dugme-promena{
+        border: "0px solid darkblue";   
+        color: white;
+        background: #2794D6;
+        border-radius: 0.4rem;
+        font-size: 18px;
+        margin: 0.15rem;
+        padding: 0.2rem;
+    }
+
+    .info-stanica-1{
+            width: 7.6rem;
+            border: 1px solid rgb(156, 198, 253);
+            background-color: rgb(221, 234, 250);
+            padding: 0.5rem;
+            color: darkblue;
+            font-size: medium;
+            font-weight: bold;
+            text-align: center;   /* left   */
+           /* flex-wrap: wrap;    */
+    }
+
+
+
+    .sirina-info-stanica{
+        width: 8rem;
+       /* text-align: center;     da bi bolje stampalo    */
+    }  
+
+    .cena-info{
+        width: 8rem;
+        border: 1px solid rgb(156, 198, 253);
+        background-color: rgb(221, 234, 250);
+        padding: 0.5rem;
+        color: darkblue;
+        font-size: medium;
+        font-weight: bold;
+        text-align: center;
+        /*---*/
+        word-wrap: break-word;
+        line-height: 1;
+        display: flex;
+        align-items: center; /* Vertikalno centriranje */
+        justify-content: center;
+        
+    }
+

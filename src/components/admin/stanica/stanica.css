@@ -129,6 +129,14 @@
    /* flex-wrap: wrap;    */
   }
 
+  .fino-podesavanje{
+    word-wrap: break-word;
+    line-height: 1;
+    display: flex;
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center;
+  }
+
   .sirina-info-stanica{
     width: 8rem;
    /* text-align: center;     da bi bolje stampalo    */

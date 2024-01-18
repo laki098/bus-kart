@@ -71,6 +71,16 @@
     text-align: center;
     line-height: 55px;
  }
+ /*
+ .cene-polja-podesavanje {
+  width: 99px;
+  padding: 10px;
+  height: 80px;
+  border: 1px solid #c2bddf;
+  text-align: center;       */
+ /* line-height: 55px;    
+}*/
+
  @media (max-width: 480px) {
   .cene-okvir {
       width: auto; 

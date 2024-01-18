@@ -110,42 +110,42 @@ const KorisniciInitial = () => {
                   {" "}
                   {/* kod podataka bila je klasa "column podaci" a sada je  "column-2 podaci-sirina"  */}
                   {/* bilo class="column centar" i --> class="column-2 centar podaci-sirina"  */}
-                  <div className="polje-stanica">
+                  <div className="polje-stanica fino-podesavanje">
                     <Trans i18nKey="description.part44">Korisničko ime </Trans>
                   </div>
-                  <div className="info-stanica sirina-info-7">
+                  <div className="info-stanica sirina-info-7 fino-podesavanje">
                     {korisnik.korisnickoIme}
                   </div>
-                  <div className="polje-stanica">
+                  <div className="polje-stanica fino-podesavanje">
                     <Trans i18nKey="description.part40">Ime </Trans>
                   </div>
-                  <div className="info-stanica sirina-info-7">
+                  <div className="info-stanica sirina-info-7 fino-podesavanje">
                     {" "}
                     {korisnik.ime}
                   </div>
-                  <div className="polje-stanica">
+                  <div className="polje-stanica fino-podesavanje">
                     <Trans i18nKey="description.part42">Prezime </Trans>
                   </div>
-                  <div className="info-stanica sirina-info-7">
+                  <div className="info-stanica sirina-info-7 fino-podesavanje">
                     {" "}
                     {korisnik.prezime}{" "}
                   </div>
-                  <div className="polje-stanica">
+                  <div className="polje-stanica fino-podesavanje">
                     <Trans i18nKey="description.part48">Broj telefona </Trans>
                   </div>
-                  <div className="info-stanica sirina-info-7">
+                  <div className="info-stanica sirina-info-10 fino-podesavanje">
                     {korisnik.brojTelefona}
                   </div>
-                  <div className="polje-stanica"> Email</div>
+                  <div className="polje-stanica fino-podesavanje"> Email</div>
                   <div className="info-stanica sirina-info-15 email-polje">
                     {" "}
                     {korisnik.email}
                   </div>
-                  <div className="polje-stanica"> Role</div>
-                  <div className="info-stanica sirina-info-6">
+                  <div className="polje-stanica fino-podesavanje"> Role</div>
+                  <div className="info-stanica sirina-info-6 fino-podesavanje">
                     {korisnik.role}
                   </div>
-                  <div className="polje-stanica">
+                  <div className="polje-stanica fino-podesavanje">
                     <Link to={`${korisnik.idKorisnik}/korisnikChange`}>
                       <button className="buttonSwitch">
                         <Trans i18nKey="description.part145">Izmeni</Trans>
@@ -153,7 +153,7 @@ const KorisniciInitial = () => {
                     </Link>
                   </div>
                   {/* buttonSwitch-crveno  */}
-                  <div class="polje-stanica">
+                  <div class="polje-stanica fino-podesavanje">
                     <button
                       className="buttonSwitch "
                       onClick={() => {
