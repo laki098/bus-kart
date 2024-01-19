@@ -158,7 +158,7 @@ router.post("/", async (req, res) => {
       );
     }
 
-    return res.status(201).json({ message: "Uspesno dodate nove linije" });
+    return res.status(201).json({ message: "Uspesno dodate nova linija" });
   } catch (error) {
     res.status(500).json({ error });
   }

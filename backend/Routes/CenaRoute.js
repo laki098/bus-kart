@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
       krajnjaStanicaR,
       cenaKarte,
     });
-    res.status(201).json({ message: "uspesno kreirana cena", novaCena });
+    res.status(201).json({ message: "Uspesno kreirana cena", novaCena });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }
@@ -90,10 +90,10 @@ router.put("/:id", async (req, res) => {
     );
 
     if (izmenaCene[0] === 0) {
-      return res.status(404).json({ message: "Cnea nije pronađen" });
+      return res.status(404).json({ message: "Cena nije pronađen" });
     }
 
-    res.status(200).json({ message: "Cena je uspešno izmenjen" });
+    res.status(200).json({ message: "Cena je uspešno izmenjena" });
   } catch (error) {
     res.status(500).json({ message: "Došlo je do greške", error });
   }

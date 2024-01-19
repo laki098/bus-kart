@@ -126,8 +126,15 @@
     color: darkblue;
     font-size: medium;
     font-weight: bold;
-    text-align: left;      /* bilo je centar    */
    /* flex-wrap: wrap;    */
+  }
+
+  .fino-podesavanje{
+    word-wrap: break-word;
+    line-height: 1;
+    display: flex;
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center;
   }
 
   .sirina-info-stanica{

@@ -58,6 +58,30 @@ router.post("/registration", async (req, res) => {
     const { korisnickoIme, lozinka, ime, prezime, brojTelefona, email } =
       req.body;
 
+       // Dodatna logika za proveru postojanja korisničkog imena i emaila
+    const existingUsername = await Korisnik.findOne({
+      where: { korisnickoIme: korisnickoIme },
+    });
+
+    const existingEmail = await Korisnik.findOne({
+      where: { email: email },
+    });
+
+    if (existingUsername) {
+      return res.status(400).json({ message: "Korisničko ime već postoji." });
+    }
+
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email adresa već postoji." });
+    }
+    if (korisnickoIme.length < 5) {
+      return res.status(400).json({ message: "Korisničko ime mora imati najmanje 5 karaktera." });
+    }
+    if (brojTelefona.length < 9) {
+      return res.status(400).json({ message: "Broj telefona mora imati najmanje 9 cifara." });
+    }
+
+
     //? Generisemo verifikacioni token
     const verifikacijskiToken = uuidv4();
 
@@ -136,7 +160,7 @@ router.post("/login", async (req, res) => {
 
     if (!korisnik) {
       //? provera dali korisnik postoji
-      return res.status(404).json({ message: "Korisnik nije pronađen" });
+      return res.status(404).json({ message: "Korisničko ime nije pronađeno" });
     }
 
     //? uporedjivanje hesovane lozinke sa unetom lozinkom
@@ -359,7 +383,7 @@ router.put("/:idKorisnik", async (req, res) => {
     if (updateKorisnik[0] === 0) {
       return res.status(404).json({ message: "korisnik nije pronadjen" });
     }
-    return res.status(200).json({ message: "korisnik uspesno promenjen" });
+    return res.status(200).json({ message: "Korisnik uspesno promenjen" });
   } catch (error) {
     res.status(500).json({ message: "doslo je do greske", error });
   }

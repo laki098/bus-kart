@@ -24,7 +24,9 @@ import "./i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { isVisible } from "@testing-library/user-event/dist/utils";
 
-const RezervacijaComponent = ({ id, state }) => {
+//import { PotvrdaContext } from '../NavBar/links/korisnik/karta';    // da onemoguci promenu tipa karte jer je ovo povratna karta
+
+const RezervacijaComponent = ({ id, state}) => {
   // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
   const [brojSedista, setBrojSedista] = useState();
@@ -38,6 +40,22 @@ const RezervacijaComponent = ({ id, state }) => {
   const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
   const [ceneFilter, setCeneFilter] = useState();
   const [tipKarte, setTipKarte] = useState();
+
+ // const { potvrdaP } = useContext(PotvrdaContext);   //karta je povratna samo sediste odaberite i pice
+  //console.log('Vrednost potvrdaP u RezervacijaKarte:', potvrdaP);
+
+  //const { potvrdaP } = useContext(PotvrdaContext);
+  {/*
+  useEffect(() => {
+    if (potvrdaP !== undefined) {
+      console.log("RezervacijaComponent.js - potvrdaP:", potvrdaP);
+    }else{
+      console.log('potvradaP se jos nije postavila');
+    }
+  }, [potvrdaP]);
+*/}
+
+  console.log('Da li je povratna linija: ' +state.povratna);
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -274,7 +292,7 @@ const RezervacijaComponent = ({ id, state }) => {
     setCheckedItemId(id);
   };
 
-  // za rezervaciju povratne karte ali tu nesto nije kako treba
+  
   const novaRezervacijaPovratak = () => {
     RezervacijaApi()
       .rezervacijaPovratna(
@@ -329,6 +347,7 @@ const RezervacijaComponent = ({ id, state }) => {
 
   return (
     <>
+       
       <header>
         <div className="jezici">
           {Object.keys(lngs).map((lng) => (
@@ -586,6 +605,10 @@ const RezervacijaComponent = ({ id, state }) => {
                   </select>
                 </div>
 
+                {/* Odabir vrste karte  */}
+                {state.povratna? null: 
+                
+
                 <div className="radio">
                   {" "}
                   {/*  className="radio1"   */}
@@ -767,6 +790,9 @@ const RezervacijaComponent = ({ id, state }) => {
                   )}
                   <div className="red-1"></div>
                 </div>
+                }
+              {/* Kraj dela za definisanje vrste karte    */}
+
               </div>
               <div className="red-1"></div>
               <div className="red-1"></div>
@@ -923,6 +949,7 @@ const RezervacijaComponent = ({ id, state }) => {
               {/*  Poziv rezervacije za kartu koja nije povratna    */}
               <button
                 className={classes.submit}
+                style={{fontSize: "18px", color: "darkblue"}}
                 onClick={clickRezervisiPovratak}
               >
                 <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
@@ -947,6 +974,8 @@ const RezervacijaComponent = ({ id, state }) => {
       </form>
       <ToastContainer />
       <div className="red-1"></div>
+
+        
     </>
   );
 };

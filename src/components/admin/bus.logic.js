@@ -16,10 +16,12 @@ const BusLogic = () => {
     BusApi()
       .upisBus(data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
-        notifySuccest();
+        if (response.status === 201) {
+        notifySuccest(response.data.message);
         setTimeout(() => {
           window.location.href = "/bus.initial";
         }, 2000);
+      }
       })
       .catch((error) => {
         console.log(error);
@@ -30,17 +32,21 @@ const BusLogic = () => {
     BusApi()
       .editBus(data.idAutobusa, data.oznakaBusa, data.tablice, data.brojSedista)
       .then((response) => {
-        notifySuccest();
-        setTimeout(() => {
-          window.location.href = "/bus.initial";
-        }, 2000);
+        if (response.status === 200) {
+          notifySuccest(response.data.message);
+          setTimeout(() => {
+            window.location.href = "/bus.initial";
+          }, 2000);
+        } if (response.status === 400) {
+          notifyWarn(data.message);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const notifySuccest = () => {
-    toast.success("Uspešno", {
+  const notifySuccest = (message) => {
+    toast.success(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -51,6 +57,19 @@ const BusLogic = () => {
       theme: "light",
     });
   };
+
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
 
   return { changeHandler, setData, upisBus, editBus };
 };

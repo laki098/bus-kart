@@ -91,6 +91,7 @@ const LoginComponent = () => {
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Lozinka"
                     name="lozinka"
+                    current-password
                     className="name1 input-new"
                     onChange={loginLogic.changeHandler}
                     autoComplete="current-password"

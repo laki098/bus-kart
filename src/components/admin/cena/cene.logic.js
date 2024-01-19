@@ -17,10 +17,12 @@ const CeneLogic = () => {
         CeneApi()
         .upisCene(data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
         .then((response) => {
-            notifySuccest();
+          if (response.status === 201) {
+            notifySuccest(response.data.message);
             setTimeout(() => {
               window.location.href = "/cene.initial";
-            }, 2000); // Prikazuje notifikacije
+            }, 2000);
+          } // Prikazuje notifikacije
           })
         .catch((error) => {
             console.log(error);
@@ -31,18 +33,22 @@ const CeneLogic = () => {
         CeneApi()
         .editCene(data.id,data.pocetnaStanica, data.krajnjaStanicaR, data.cenaKarte)
         .then((response) => {
-            notifySuccest();
+          if (response.status === 200) {
+            notifySuccest(response.data.message);
             setTimeout(() => {
               window.location.href = "/cene.initial";
-            }, 2000); // Prikazuje notifikacije
+            }, 2000);
+          } if (response.status === 404) {
+            notifyWarn(data.message);
+          }
           }).catch((error) => {
             console.log(error);
           });
     };
 
 
-const notifySuccest = () => {
-    toast.success("Uspešno", {
+const notifySuccest = (message) => {
+    toast.success(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -53,6 +59,18 @@ const notifySuccest = () => {
       theme: "light",
     });
   };
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
 
   return {changeHandler, setData, upisCene, editCene};
 };
