@@ -19,8 +19,17 @@ const Karta = () => {
   const [neiskorisceneKarte, setNeiskorisceneKarte] = useState([]);
   const [iskorisceneKarte, setIskorisceneKarte] = useState([]);
 
-  const [potvrdaP,setPotvrdaP]= useState('');   //vrsta karta true= jeste povratna; je false= nije povratna
+  const [potvrdaP,setPotvrdaP]= useState(false);   //vrsta karta true= jeste povratna; je false= nije povratna
   const [loading, setLoading] = useState(true); // Dodato stanje za praćenje učitavanja
+
+
+
+
+//  const[povratnaYes, setPovratnaYes]=useState(false); //da li je tipKarte Povratna=true ako nije false
+ // const [kliknuto, setKliknuto] = useState(false);    // pomocna promenljiva za prelaz na RezervacijaComponent
+
+  
+ // const prikaziDugme = tipKarte === 'Povratna' || tipKarte === 'Return';
 
 
   // Izvlačenje korisnika koji je prijavljen
@@ -55,6 +64,9 @@ const Karta = () => {
         vremeP: item.vremePolaska,
         vremeD: item.vremeDolaska,
         cekiranje: item.cekiran,
+        povratna:item.tipKarte,
+        tipKarte:item.tipKarte,     // ovaj deo omogucava da se uvek korektno prikaze dugme Povratna 
+
       };
     });
     setSveKarte(a1);
@@ -67,18 +79,35 @@ const Karta = () => {
   //rezervacija sediste kod povratne karte
 
   const sedistePovratak = (karte) => {
-    const potvrda = window.confirm("Da li je ovo povratna karta?");
+    const potvrda = window.confirm("Da li je želite da rezervišete sedište u povratnoj karti?");
     if (potvrda) {
-      alert("Odabrali ste da je ovo Vaša povratna karta, pa Vas molimo da rezervišete svoje mesto u autobusu i odaberete osveženje, pritiskom na link Sedište");
+      alert("Kliknite na dugme Sedište");
       setPotvrdaP(true);     
     } else {
-      alert("Potvrdili ste da ovo nije Vaša povratna karta");
+    //  alert("Ne");
       setPotvrdaP(false);
     }
-    return(potvrdaP);
+   // return(potvrdaP);
   };
 
-  
+{/*
+  const sedisteYes=(karte)=>{
+    const potvrda = window.confirm("Želite li da rezervisete sedište na povratnoj liniji?");
+    if (potvrda) {
+      setPovratnaYes(true);    
+    } else {
+      setPovratnaYes(false);
+    }
+    return(povratnaYes);
+  }
+
+  useEffect(() => {
+    // Ovde ćete dobiti ažuriranu vrednost potvrdaP
+    console.log("Karta.js - povratnaYes:", povratnaYes);
+  //  alert('potvrdaP  ' + potvrdaP);
+  }, [povratnaYes]);
+
+*/}
   useEffect(() => {
     // Ovde ćete dobiti ažuriranu vrednost potvrdaP
     console.log("Karta.js - potvrdaP:", potvrdaP);
@@ -86,6 +115,7 @@ const Karta = () => {
   }, [potvrdaP]);
 
   // kraj izrade funckija koje treba da omoguce da se samo sediste rezervise kod povratne karte
+
 
   //prevodjenje start
   const lngs = {
@@ -122,6 +152,9 @@ const Karta = () => {
             vremeD: item.vremeDolaska,
             cekiranje: item.cekiran,
             povratna:potvrdaP,          // true = povratna karta, false nije povratna
+        //    povratnaPrikaz:povratnaYes, // true = povratna karta, false nije povratna  kod II nacina rada
+            tipKarte:item.tipKarte || "",     // dopisala zbog citanja tipa karte   --> bilo je item.tipKarte ali nije stabilno
+            potvrdaP: '', // mozda ga ovo stabilizuje 
           };
         });
         setSveKarte(a1);
@@ -251,11 +284,19 @@ const Karta = () => {
                           </>
                         )}
                       </div>
-                    </li>
-                   <button onClick={sedistePovratak}>Povratna</button>   
-                    &emsp; &ensp;
+
+                    </li>    
+                     
+                    {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && (
+                        
+                        <button className="dugme-povratna-karta" onClick={sedistePovratak}>  
+                            <Trans i18nKey="description.part25"> Povratna </Trans>
+                            </button>
+                    )}        
+
                     {/* Idi samo ako je povratna karta na stranicu RezervacijaComponent.js parametri su state */}
-                    {potvrdaP ? (
+                    
+                    {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && potvrdaP ? (
                       <Link 
                             to={{
                             pathname: `${karte.linijaId}/rezervacijakarte`,
@@ -275,9 +316,12 @@ const Karta = () => {
                             },
                           }}
                           >  
-                          Sedište                 
+                          &ensp; 
+                          <button className="dugme-sediste-karta">
+                          <Trans i18nKey="description.part203">Sedište  </Trans>  </button>            
                       </Link> 
                     ) : null}
+                        
                   
                   </div>
                 ))}

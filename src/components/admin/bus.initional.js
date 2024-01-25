@@ -101,7 +101,7 @@ const BusInitional = () => {
                       >
                         <Trans i18nKey="description.part171">Tablice </Trans>
                       </div>
-                      <div className="kolona-bus podaci sirina-info-4"> {bus.tablice} </div>
+                      <div className="kolona-bus podaci sirina-info-6"> {bus.tablice} </div>
                       <div className="kolona-bus">
                         <Trans i18nKey="description.part36">Broj mesta </Trans>{" "}
                       </div>

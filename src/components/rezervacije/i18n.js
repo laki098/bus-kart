@@ -184,6 +184,7 @@ i18n
             part200: 'Are you sure you want to delete this price?',
             part201: 'Price',
             part202: 'Change station',
+            part203: 'Seat',
 
           }
         }
@@ -358,6 +359,7 @@ i18n
             part200: 'Da li ste sigurni da želite da obrišete ovu cenu?',
             part201: 'Cene',
             part202: 'Izaberi stanicu',
+            part203: 'Sedište',
 
 
           }
