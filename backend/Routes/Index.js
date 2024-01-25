@@ -285,6 +285,7 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte,
     } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
@@ -463,6 +464,7 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte,
     });
 
     console.log(linijaId);
