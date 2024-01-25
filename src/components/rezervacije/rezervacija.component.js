@@ -39,7 +39,7 @@ const RezervacijaComponent = ({ id, state}) => {
   const [checked, setChecked] = useState(false);
   const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
   const [ceneFilter, setCeneFilter] = useState();
-  const [tipKarte, setTipKarte] = useState();
+  const [tipKarte, setTipKarte] = useState('');
 
  // const { potvrdaP } = useContext(PotvrdaContext);   //karta je povratna samo sediste odaberite i pice
   //console.log('Vrednost potvrdaP u RezervacijaKarte:', potvrdaP);
@@ -55,7 +55,8 @@ const RezervacijaComponent = ({ id, state}) => {
   }, [potvrdaP]);
 */}
 
-  console.log('Da li je povratna linija: ' +state.povratna);
+//  console.log('Da li je povratna linija state.povrtana: ' +state.povratna);
+//  console.log('Da li je povratna linija state.povratnaPrikaz: ' +state.povratnaPrikaz);
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -112,8 +113,11 @@ const RezervacijaComponent = ({ id, state}) => {
         state.pocetnaStanicaId,
         state.krajnjaStanicaId,
         userPars.idKorisnika,
+        
         osvezenje,
-        parseInt(selectedSeats)
+        parseInt(selectedSeats),
+        tipKarte,
+        
       )
       .then((response) => {
         console.log(response);
@@ -124,6 +128,8 @@ const RezervacijaComponent = ({ id, state}) => {
         notifyWarn();
       });
   };
+
+  console.log('tipKarte u Rezervacijacomponent je:' +tipKarte);
 
   const notifySuccest = () => {
     toast.success("Uspešno ste rezervisali kartu", {
@@ -307,8 +313,10 @@ const RezervacijaComponent = ({ id, state}) => {
         state.krajnjaStanicaId,
         state.pocetnaStanicaId,
         userPars.idKorisnika,
+        
         osvezenje,
-        parseInt(selectedSeats)
+        parseInt(selectedSeats),
+        tipKarte
       )
       .then((response) => {
         console.log(response);
@@ -339,8 +347,8 @@ const RezervacijaComponent = ({ id, state}) => {
 
   //prevodjenje
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    de: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
@@ -353,6 +361,7 @@ const RezervacijaComponent = ({ id, state}) => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -605,22 +614,25 @@ const RezervacijaComponent = ({ id, state}) => {
                   </select>
                 </div>
 
-                {/* Odabir vrste karte  */}
+                {/* Odabir vrste karte   pisalo je samo   state.povratna? null:  */}
                 {state.povratna? null: 
                 
 
                 <div className="radio">
                   {" "}
                   {/*  className="radio1"   */}
+                  {/*  dole biramo tipKarta koji treba upisati u bazu */}
                   <select
                     className="select"
                     type="text"
                     name="Izaberi kartu"
                     required
                     value={selectedValue}
-                    onChange={(event) => {
+                    //value={tipKarte}
+                    onChange={(event) => {    
                       const selectedOptionValue = event.target.value; // Ovo je vrednost izabranog optiona
                       setSelectedValue(selectedOptionValue);
+                      //setTipKarte(selectedOptionValue);
 
                       if (
                         (selectedOptionValue === "Povratna") |
@@ -656,29 +668,27 @@ const RezervacijaComponent = ({ id, state}) => {
                         Izaberite kartu
                       </Trans>
                     </option>
-                    <option>
-                      <Trans i18nKey="description.part24" value="Jednosmerna">
-                        Jednosmerna
-                      </Trans>
+                    <option value="Jednosmerna">
+                      <Trans i18nKey="description.part24" > Jednosmerna </Trans>
                     </option>
-                    <option>
-                      <Trans i18nKey="description.part25" value="Povratna">
-                        Povratna
-                      </Trans>
+                    <option value="Povratna">
+                      <Trans i18nKey="description.part25" > Povratna    </Trans>
                     </option>
-                    <option>
+                    <option value="Besplatna">
                       <Trans i18nKey="description.part26">Besplatna</Trans>
                     </option>
-                    <option>
+                    <option value="Studentska">
                       <Trans i18nKey="description.part27">Studentska</Trans>
                     </option>
-                    <option>
+                    <option value="Vikend">
                       <Trans i18nKey="description.part28">Vikend</Trans>
                     </option>
-                    <option>
+                    <option value="Nedeljna">
                       <Trans i18nKey="description.part29">Nedeljna</Trans>
                     </option>
                   </select>
+
+                  <p> Izabrali ste tipKarte  {tipKarte}</p>      
                   {/* studentska karta   */}
                   <div>
                     {pom ? (

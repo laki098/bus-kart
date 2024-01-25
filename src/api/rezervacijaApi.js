@@ -15,8 +15,10 @@ const RezervacijaApi = () => {
     krajnjaStanicaId,
     korisnikId,
     osvezenje,
-    oznakaSedista
+    oznakaSedista,
+    tipKarte              //dodala
   ) => {
+    console.log(tipKarte)
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
       polaznaStanicaR,
@@ -31,6 +33,7 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte         //dodala
     });
   };
   const rezervacijaPovratna = async (
@@ -46,7 +49,8 @@ const RezervacijaApi = () => {
     krajnjaStanicaId,
     korisnikId,
     osvezenje,
-    oznakaSedista
+    oznakaSedista,
+    tipKarte         //dodala
   ) => {
     console.log(
       "--------------222------",
@@ -62,7 +66,8 @@ const RezervacijaApi = () => {
       krajnjaStanicaId,
       korisnikId,
       osvezenje,
-      oznakaSedista
+      oznakaSedista,
+      tipKarte           //dodala
     );
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
@@ -78,6 +83,7 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte           //dodala
     });
   };
 
