@@ -1095,6 +1095,59 @@ router.post("/filterLinijaId", async (req, res) => {
   }
 });
 
+router.post("/filtriraneLinije", async (req, res) => {
+  try {
+    const sveLinije = await Linija.findAll({
+      include: [
+        {
+          model: Stanica,
+          as: "pocetnaStanica",
+        },
+        {
+          model: Stanica,
+          as: "krajnjaStanica",
+        },
+        {
+          model: Stanica,
+          as: "Stanicas",
+        },
+      ],
+    });
+
+    //? Set za praćenje već viđenih kombinacija
+    const vidjeneKombinacije = new Set();
+
+    //? Filtriranje linija i provera da se stanice ne ponavljaju
+    const filtriraneLinije = sveLinije.filter((linija) => {
+      let kombinacija =
+        linija.pocetnaStanica.naziv + linija.krajnjaStanica.naziv;
+
+      //? Dodajemo međustanice u kombinaciju sa redosledom
+      linija.Stanicas.forEach((medjustanica) => {
+        kombinacija += medjustanica.naziv + medjustanica.redosled;
+      });
+
+      //? Provera da li smo već videli ovu kombinaciju
+      if (!vidjeneKombinacije.has(kombinacija)) {
+        //? Dodajemo kombinaciju u set ako je prvi put viđena
+        vidjeneKombinacije.add(kombinacija);
+        return true;
+      }
+
+      return false;
+    });
+
+    res
+      .status(200)
+      .json({ message: "Uspesno izvucena linija", filtriraneLinije });
+  } catch (error) {
+    res
+
+      .status(500)
+      .json({ message: "Doslo je do greske pri ocitavanju baze", error });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
