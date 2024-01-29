@@ -1,0 +1,13 @@
+.okvir {
+      line-height: 35px;
+      padding: 0.2rem;
+      margin: 0.2rem;
+     
+   }
+   .linija-polja {
+    width: fit-content;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.5rem;
+    background-color: #fff;
+    padding-top: 1rem;
+ }

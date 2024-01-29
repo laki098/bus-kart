@@ -1116,6 +1116,8 @@ router.post("/filtriraneLinije", async (req, res) => {
       ],
     });
 
+    console.log(sveLinije)
+
     //? Set za praćenje već viđenih kombinacija
     const vidjeneKombinacije = new Set();
 

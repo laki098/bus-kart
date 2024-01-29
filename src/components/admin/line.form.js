@@ -172,6 +172,7 @@ const LineForm = ({ mode, id, state }) => {
                         value=""
                         disabled
                         selected
+                        required
                       >
                         Izaberite stanicu
                       </option>
@@ -328,6 +329,7 @@ const LineForm = ({ mode, id, state }) => {
                   <select
                     name="krajnjaStanica"
                     className="input-stanica"
+                    required
                     onChange={adminLogic.changeHandler}
                   >
                     <option className="medjustanica" value="" disabled selected>
@@ -356,6 +358,7 @@ const LineForm = ({ mode, id, state }) => {
                     defaultValue={linija.datumPolaska}
                     name="datumPolaska"
                     type="date"
+                    required
                     className="input-stanica"
                     onChange={adminLogic.handlerDatumPolaska}
                   />
@@ -370,6 +373,7 @@ const LineForm = ({ mode, id, state }) => {
                     defaultValue={linija.datumDolaska}
                     name="datumDolaska"
                     type="date"
+                    required
                     className="input-stanica"
                     onChange={adminLogic.handlerDatumDolaska}
                   />
@@ -416,6 +420,7 @@ const LineForm = ({ mode, id, state }) => {
                   <select
                     value={linija.oznakaBusa}
                     name="oznakaBusa"
+                    required
                     className="odaberiBus"
                     onChange={adminLogic.changeHandler}
                   >
