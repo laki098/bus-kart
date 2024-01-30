@@ -159,7 +159,7 @@ img {
       rgba(190, 224, 233, 1) 43%,
       rgba(134, 196, 213, 1) 100%
     );
-    left: 0;
+    right: 0;
     top: 4.688rem;
     transition: all 0.5s ease-out;    /*  ease-out  bilo */
     width: 95%;
@@ -189,29 +189,15 @@ img {
 }
 
 
-@media (min-width: 480px) and (max-width: 690px) {
-  .nav-links-mobile {
-    width: 91.5vw;
-    border-radius: 1rem;
-  }
- 
-}
 
-@media (min-width: 690px) {
-  .nav-links-mobile {
-    width: 94.2vw;
-    border-radius: 1rem;
-  }
-  
-}
 
-@media (min-width: 890px) {
+
+@media (min-width: 260px) and (max-width: 890px) {
   .nav-links-mobile {
-    width: 95.5vw;
+    width: calc(var(--nav-links-width-start) + (var(--nav-links-width-end) - var(--nav-links-width-start)) * ((100vw - 260px) / (890 - 260)));
     border-radius: 1rem;
   }
 }
-
 
 
 

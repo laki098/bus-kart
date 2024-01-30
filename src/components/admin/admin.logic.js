@@ -86,6 +86,9 @@ const AdminLogic = () => {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response && error.response.status === 500 ) {
+          notifyWarn(error.response.data.message);
+        }
       });
   };
 
@@ -132,6 +135,18 @@ const AdminLogic = () => {
       theme: "light",
     });
   };
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
 
   const brisanjeLinije = async (id) => {
     console.log("id", id);

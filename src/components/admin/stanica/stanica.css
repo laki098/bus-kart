@@ -44,9 +44,9 @@
     padding: 2rem;    /* 3rem   */
     background-color: aliceblue;
   }
-  .spisak-stanica{
-    width: 45rem;   /* 40rem  */
-  }
+ /*  .spisak-stanica{
+    width: 45rem;   
+  } */
   .prosiri-tabela-stanica{
     padding: 3rem;
   }
@@ -135,6 +135,7 @@
     display: flex;
     align-items: center; /* Vertikalno centriranje */
     justify-content: center;
+    text-align: center;
   }
 
   .sirina-info-stanica{

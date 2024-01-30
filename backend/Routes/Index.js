@@ -68,6 +68,21 @@ router.post("/", async (req, res) => {
       vozac,
     } = req.body;
 
+    console.log(
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      pocetakRute,
+      krajRute,
+      stjuardesa,
+      vozac
+    );
+
     // Kreiranje početne stanice
     const pocetna = await Stanica.findOne({
       where: {
@@ -285,6 +300,7 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte,
     } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
@@ -463,6 +479,7 @@ router.post("/rezervacija", async (req, res) => {
       korisnikId,
       osvezenje,
       oznakaSedista,
+      tipKarte,
     });
 
     console.log(linijaId);
@@ -1113,6 +1130,8 @@ router.post("/filtriraneLinije", async (req, res) => {
         },
       ],
     });
+
+    console.log(sveLinije);
 
     //? Set za praćenje već viđenih kombinacija
     const vidjeneKombinacije = new Set();

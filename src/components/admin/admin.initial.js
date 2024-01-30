@@ -12,14 +12,7 @@ import "../NavBar/links/i18n"; // za prevodjenje
 import "../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
-import { useMediaQuery } from "react-responsive"; // responsive
-import MediaQuery from "react-responsive";
-
-import ListajJSON_Konzola from "./ListajJSON_Konzola";
-
 const AdminInitial = () => {
-  const [period, setPeriod]=useState(0);    // za koji period hocemo red voznje za 1, 3 ili 6 meseci
-
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [val1, setVal1] = useState("");
   const [valueDate, setValueDate] = useState("");
@@ -141,7 +134,6 @@ const AdminInitial = () => {
             value={val1} //
             onChange={(e) => setVal1(e.target.value)}
           >
-            
             {stanice.map((stanice) => {
               // Za ispis iz baze filtrirano mesto polaska
               return (
@@ -187,22 +179,11 @@ const AdminInitial = () => {
             onChange={(e) => setValueDate(e.target.value)}
           />
         </div>{" "}
-        <br />
-    {/* ubacen kod zbog prikaza u konzoli  */}
-    <div className="red-05"></div>
-    <button onClick={() => {setPeriod(1)}}>Za 1 mesec</button> &emsp;
-    <button onClick={() => {setPeriod(3)}}>Za 3 meseci</button> &emsp;
-    <button onClick={() => {setPeriod(6)}}>Za 6 meseci</button>
-    <br/><br/>
-
-    <hr/><hr/>
-    <ListajJSON_Konzola valueDate={valueDate} period={period}/>
-    <div className="red-05"></div>
-
+        <div className="red-05"></div>
         <button className={classes.submit} onClick={clickButton}>
           <p className="admin-slovaDugme">
             <Trans i18nKey="description.part34">Red vožnje</Trans>
-          </p> 
+          </p>
         </button>
         <Link to="/admin.component">
           {" "}
@@ -211,6 +192,16 @@ const AdminInitial = () => {
             <p className="admin-slovaDugme">
               {" "}
               <Trans i18nKey="description.part37">Dododavanje linije</Trans>
+            </p>
+          </button>
+        </Link>
+        <Link to="/viseLinija">
+          {" "}
+          {/* className="button-admin" */}
+          <button className={classes.submit}>
+            <p className="admin-slovaDugme">
+              {" "}
+              <Trans i18nKey="">Produzetak linije</Trans>
             </p>
           </button>
         </Link>
