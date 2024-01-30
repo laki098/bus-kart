@@ -25,55 +25,68 @@ const ViseLinija = () => {
   }, []);
 
   return (
-    <div>
+    <div className="linija-okvir">
       {linije.map((linija) => {
         return (
           <>
-            <div className="okvir">
-              <div className="pocetna">
-                Pocetna stanica : {linija.pocetnaStanica.naziv}
+            <div className="linija-red">
+              <div className="linija-polja">
+                Pocetna stanica </div>
+                <div className="linija-info">
+                   {linija.pocetnaStanica.naziv}
               </div>
-              <div>Krajnja stanica : {linija.krajnjaStanica.naziv}</div>
-            </div>
+              <div className="linija-polja">
+                Krajnja stanica </div>
+              <div className="linija-info">
+                 {linija.krajnjaStanica.naziv}
+                 </div>
+           
             {linija.Stanicas.map((medjustanica) => {
               return (
-                <div>
-                  <div className="okvir">
-                    Medjustanica : {medjustanica.naziv}
+                <>
+                <div className="linija-polja">
+                  Medjustanica 
                   </div>
+                  <div className="linija-info">
+                     {medjustanica.naziv}
+                  
                 </div>
+                </>
               );
             })}
-            <div className="okvir">
-            <button
+            <div className="linija-dugme">
+            <button className="button-linija"
               onClick={() => {
                 setPeriod(1);
               }}
             >
-              Za 1 mesec
+              1 mesec
             </button>{" "}
             &emsp;
-            <button
+            <button className="button-linija"
               onClick={() => {
                 setPeriod(3);
               }}
             >
-              Za 3 meseci
+            3 meseci
             </button>{" "}
             &emsp;
-            <button
+            <button className="button-linija"
               onClick={() => {
                 setPeriod(6);
               }}
             >
-              Za 6 meseci
+            6 meseci
             </button>
+            </div>
             <ListajJSON_Konzola valueDate={valueDate} period={period} />
             </div>
+           
           </>
         );
       })}
     </div>
+    
   );
 };
 
