@@ -68,6 +68,21 @@ router.post("/", async (req, res) => {
       vozac,
     } = req.body;
 
+    console.log(
+      pocetnaStanica,
+      medjustanice,
+      krajnjaStanica,
+      vremePolaska,
+      vremeDolaska,
+      datumPolaska,
+      datumDolaska,
+      oznakaBusa,
+      pocetakRute,
+      krajRute,
+      stjuardesa,
+      vozac
+    );
+
     // Kreiranje početne stanice
     const pocetna = await Stanica.findOne({
       where: {
@@ -1116,7 +1131,7 @@ router.post("/filtriraneLinije", async (req, res) => {
       ],
     });
 
-    console.log(sveLinije)
+    console.log(sveLinije);
 
     //? Set za praćenje već viđenih kombinacija
     const vidjeneKombinacije = new Set();
