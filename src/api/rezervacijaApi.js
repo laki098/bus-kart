@@ -87,7 +87,58 @@ const RezervacijaApi = () => {
     });
   };
 
-  return { rezervacija, rezervacijaPovratna };
+  const rezervacijaPovratnaIzmena = async (
+    brojMesta,
+    polaznaStanicaR,
+    krajnjaStanicaR,
+    datumPolaska,
+    datumDolaska,
+    vremePolaska,
+    vremeDolaska,
+    linijaId,
+    pocetnaStanicaId,
+    krajnjaStanicaId,
+    korisnikId,
+    osvezenje,
+    oznakaSedista,
+    tipKarte         //dodala
+  ) => {
+    console.log(
+      "--------------333------",
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista,
+      tipKarte           //dodala
+    );
+    return await axios.post(`${apiUrl}/linija/rezervacija`, {
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista,
+      tipKarte           //dodala
+    });
+  };
+
+  return { rezervacija, rezervacijaPovratna, rezervacijaPovratnaIzmena };
 };
 
 export default RezervacijaApi;

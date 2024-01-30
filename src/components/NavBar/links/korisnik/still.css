@@ -33,7 +33,9 @@
 
 .Grupa {
   display: inline-flex;
-  flex-wrap: wrap;    /* dodala   */
+  flex-wrap: wrap;            /* dodala   */
+  width: fit-content;         /* dodala   */
+  justify-content: center;    /* dodala   */
 }
 
 
@@ -77,4 +79,8 @@
 
 .closebtn:hover {
   color: black;
+}
+
+.crveno{
+  color: red;       /*#a805da;    */
 }
