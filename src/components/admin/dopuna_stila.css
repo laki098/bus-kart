@@ -102,5 +102,38 @@
         right: 10px;
         font-size: 20px;
       }
+
+      .karte-prikaz{
+        width: fit-content;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+      }
       
+
+       /*    *******************************************         */
+
+       .animated-button {
+        transition: transform 0.3s ease-in-out; /* Podešavanje tranzicije */
+      }
+
+      .animated-button:active {
+        transform: translateY(5px); /* Pomeranje dugmeta nadole za 5 piksela prilikom pritiska */
+      }
+      
+      .clicked {
+        transform: translateY(1rem); /* Pomeranje dugmeta nadole za 10 piksela (prilagodite vrednost prema potrebi) */
+      }
+
+      .promena-povratka{
+        border: "1px solid red";   
+        color: white;
+        background: #ef22ef;
+        border-radius: 0.4rem;
+        font-size: 14px;
+        margin: 0.15rem;
+        padding: 0.2rem;
+        cursor: pointer;
+    }
+
 

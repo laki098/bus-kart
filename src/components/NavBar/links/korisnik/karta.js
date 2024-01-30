@@ -1,6 +1,7 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
 import cookies from "js-cookie";
 import "./still.css";
+import "../../../admin/dopuna_stila.css";
 
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../i18n";
@@ -202,10 +203,11 @@ const Karta = () => {
 
           <div className="red-1"></div>
           
-          <div>
-            <div className="labela-stanica labela-stanica-naslov red-1">
+          <div >
+            <div className="labela-stanica labela-stanica-naslov red-1 crveno">
             <Trans i18nKey="description.part187"> Aktivne karte </Trans>
             </div>
+            {/* bila className="Grupa"    */}
             <div className="Grupa">
               {sveKarte
                 .filter((karte) => karte.cekiranje === false)
@@ -331,7 +333,7 @@ const Karta = () => {
           <div className="red-1"></div>
 
           <div>
-            <div className="labela-stanica labela-stanica-naslov red-1">
+            <div className="labela-stanica labela-stanica-naslov red-1 crveno">
               <Trans i18nKey="description.part188">Neaktivne karte </Trans>
             </div>
             <div className="Grupa">
