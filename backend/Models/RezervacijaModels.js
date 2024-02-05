@@ -57,6 +57,21 @@ const Rezervacija = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    email: {
+      type: DataTypes.STRING,
+
+      validate: {
+        isEmail: {
+          args: true,
+          msg: "unesite ispravno mejl",
+        },
+
+        notEmpty: {
+          args: true,
+          msg: "email ne sme biti prazno polje",
+        },
+      },
+    },
   },
   {
     tableName: "rezervacija",

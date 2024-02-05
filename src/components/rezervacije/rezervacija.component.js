@@ -26,7 +26,7 @@ import { isVisible } from "@testing-library/user-event/dist/utils";
 
 //import { PotvrdaContext } from '../NavBar/links/korisnik/karta';    // da onemoguci promenu tipa karte jer je ovo povratna karta
 
-const RezervacijaComponent = ({ id, state}) => {
+const RezervacijaComponent = ({ id, state }) => {
   // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
   const [brojSedista, setBrojSedista] = useState();
@@ -39,16 +39,18 @@ const RezervacijaComponent = ({ id, state}) => {
   const [checked, setChecked] = useState(false);
   const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
   const [ceneFilter, setCeneFilter] = useState();
-  const [tipKarte, setTipKarte] = useState('');
+  const [tipKarte, setTipKarte] = useState("");
 
-  const [izmeniPovratak, setIzmeniPovratak]=useState(false);
+  const [izmeniPovratak, setIzmeniPovratak] = useState(false);
+  const [email, setEmail] = useState();
   //const [clickedDugme, setClickedDugme] = useState(false);
 
- // const { potvrdaP } = useContext(PotvrdaContext);   //karta je povratna samo sediste odaberite i pice
+  // const { potvrdaP } = useContext(PotvrdaContext);   //karta je povratna samo sediste odaberite i pice
   //console.log('Vrednost potvrdaP u RezervacijaKarte:', potvrdaP);
 
   //const { potvrdaP } = useContext(PotvrdaContext);
-  {/*
+  {
+    /*
   useEffect(() => {
     if (potvrdaP !== undefined) {
       console.log("RezervacijaComponent.js - potvrdaP:", potvrdaP);
@@ -56,10 +58,11 @@ const RezervacijaComponent = ({ id, state}) => {
       console.log('potvradaP se jos nije postavila');
     }
   }, [potvrdaP]);
-*/}
+*/
+  }
 
-//  console.log('Da li je povratna linija state.povrtana: ' +state.povratna);
-//  console.log('Da li je povratna linija state.povratnaPrikaz: ' +state.povratnaPrikaz);
+  //  console.log('Da li je povratna linija state.povrtana: ' +state.povratna);
+  //  console.log('Da li je povratna linija state.povratnaPrikaz: ' +state.povratnaPrikaz);
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -116,11 +119,11 @@ const RezervacijaComponent = ({ id, state}) => {
         state.pocetnaStanicaId,
         state.krajnjaStanicaId,
         userPars.idKorisnika,
-        
+
         osvezenje,
         parseInt(selectedSeats),
         tipKarte,
-        
+        email
       )
       .then((response) => {
         console.log(response);
@@ -131,8 +134,6 @@ const RezervacijaComponent = ({ id, state}) => {
         notifyWarn();
       });
   };
-
-  console.log('tipKarte u Rezervacijacomponent je:' +tipKarte);
 
   const notifySuccest = () => {
     toast.success("UspeÅ¡no ste rezervisali kartu", {
@@ -284,9 +285,9 @@ const RezervacijaComponent = ({ id, state}) => {
   const [sliderValue, setSliderValue] = useState(100);
   const NovaVrednost = 100;
   const handleNekePromene = () => {
-        // Implementirajte logiku koja Ä‡e promeniti vrednost slidera kada preÄ‘ete na drugu stranicu
-        setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
-      };
+    // Implementirajte logiku koja Ä‡e promeniti vrednost slidera kada preÄ‘ete na drugu stranicu
+    setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
+  };
 
   const [checkedItemId, setCheckedItemId] = useState(null);
   // const [error, setError] = useState(null);       // zbog obrade greske kod povratne karte
@@ -294,7 +295,7 @@ const RezervacijaComponent = ({ id, state}) => {
   const [pomPolazak, setPomPolazak] = useState(""); // da rese ispad kad se promeni datum kod povratne karte
   const [pomDolazak, setPomDolazak] = useState("");
   const [pomDatDolazak, setPomDatDolazak] = useState("");
-  const [pomDatPolazak, setPomDatPolazak] = useState("");   // potreban kod edita povratne karte
+  const [pomDatPolazak, setPomDatPolazak] = useState(""); // potreban kod edita povratne karte
 
   const [pomDateRet, setPomDateRet] = useState(""); //kod poziva dela za upis rezervacije na samom kraju
 
@@ -302,7 +303,6 @@ const RezervacijaComponent = ({ id, state}) => {
     setCheckedItemId(id);
   };
 
-  
   const novaRezervacijaPovratak = () => {
     RezervacijaApi()
       .rezervacijaPovratna(
@@ -317,10 +317,11 @@ const RezervacijaComponent = ({ id, state}) => {
         state.krajnjaStanicaId,
         state.pocetnaStanicaId,
         userPars.idKorisnika,
-        
+
         osvezenje,
         parseInt(selectedSeats),
-        tipKarte
+        tipKarte,
+        email
       )
       .then((response) => {
         console.log(response);
@@ -337,20 +338,21 @@ const RezervacijaComponent = ({ id, state}) => {
     RezervacijaApi()
       .rezervacijaPovratnaIzmena(
         1,
-        state.krajnjaStanica,     //citamo state ReadOnly
-        state.pocetnaStanica,     //citamo state ReadOnly
-        pomDatPolazak,            //korisnik promenio sa Fronta unosom novih podataka a bilo je returnDate,
-        pomDatDolazak,            //korisnik promenio sa Fronta unosom novih podataka
-        pomPolazak,               //korisnik promenio sa Fronta unosom novih podataka
-        pomDolazak,               //korisnik promenio sa Fronta unosom novih podataka
+        state.krajnjaStanica, //citamo state ReadOnly
+        state.pocetnaStanica, //citamo state ReadOnly
+        pomDatPolazak, //korisnik promenio sa Fronta unosom novih podataka a bilo je returnDate,
+        pomDatDolazak, //korisnik promenio sa Fronta unosom novih podataka
+        pomPolazak, //korisnik promenio sa Fronta unosom novih podataka
+        pomDolazak, //korisnik promenio sa Fronta unosom novih podataka
         PovratnaIdLinija,
         state.krajnjaStanicaId,
         state.pocetnaStanicaId,
         userPars.idKorisnika,
-        
+
         osvezenje,
         parseInt(selectedSeats),
-        tipKarte
+        tipKarte,
+        email
       )
       .then((response) => {
         console.log(response);
@@ -362,33 +364,41 @@ const RezervacijaComponent = ({ id, state}) => {
       });
   };
 
+  const handleEmailInputChange = (event) => {
+    const email = event.target.value;
+    // Pozovite funkciju novaRezervacijaPovratak sa vrednošću email adrese
+    setEmail(email);
+  };
+
   //  upisujem podatke u bazu za obicnu kartu povratnu kartu i izmenjenu povratnu kartu
   const clickRezervisiPovratak = () => {
     if (pomDateRet == "") {
       novaRezervacija();
+      console.log(emailInputRef.current.value);
     } else if (pomDateRet == "povratna") {
       novaRezervacijaPovratak();
       novaRezervacija();
       //dodala za promenjeni povratak
       //novaRezervacijaPovratakIzmena();
-    } else if (state.povratna === true){
-        //dodala za upis kod promenjenog povratka
+      console.log(emailInputRef.current.value);
+    } else if (state.povratna === true) {
+      //dodala za upis kod promenjenog povratka
       novaRezervacijaPovratakIzmena();
     }
-    
+
     /* // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi naÄin)
     alert("VaÅ¡a karta je uspeÅ¡no rezervisana!"); */
 
     // SaÄekaj nekoliko sekundi pre nego Å¡to se preusmeriÅ¡ na poÄetnu stranicu
-     setTimeout(() => {
+    setTimeout(() => {
       window.location.href = "/pocetna";
-    }, 10000);  // Ova vrednost u milisekundama predstavlja koliko Ä‡e trajati prikazivanje poruke pre nego Å¡to se preusmeriÅ¡ (u ovom sluÄaju 1,5 sekunde)
+    }, 10000); // Ova vrednost u milisekundama predstavlja koliko Ä‡e trajati prikazivanje poruke pre nego Å¡to se preusmeriÅ¡ (u ovom sluÄaju 1,5 sekunde)
   };
 
   //hocemo da menjamo povratnu liniju
   const newReturn = () => {
-   setIzmeniPovratak(true);
-   setReturnDate(Date);       // da bih imala praznu listu kad krenem sa novim listanjem
+    setIzmeniPovratak(true);
+    setReturnDate(Date); // da bih imala praznu listu kad krenem sa novim listanjem
   };
 
   // u povratnoj liniji ostaje po starom i vreme i datum
@@ -401,13 +411,13 @@ const RezervacijaComponent = ({ id, state}) => {
     datumDInputRef.current.value = state.datumDolaska;
 
     // da ne prikazuje predhodni izbor
-    setReturnDate('');
-    setPomPolazak('');
-    setPomDolazak('');
-   };
+    setReturnDate("");
+    setPomPolazak("");
+    setPomDolazak("");
+  };
 
-   // postavi novu vrednost u polje za vreme povratka
-   const handleDaClick = () => {
+  // postavi novu vrednost u polje za vreme povratka
+  const handleDaClick = () => {
     // Postavi novu vrednost u input polje
     vremeInputRef.current.value = pomPolazak;
     vremeDInputRef.current.value = pomDolazak;
@@ -424,20 +434,18 @@ const RezervacijaComponent = ({ id, state}) => {
     datumDInputRef.current.value = state.datumDolaska;
 
     // da ne prikazuje predhodni izbor
-    setReturnDate('');
-    setPomPolazak('');
-    setPomDolazak('');
-
+    setReturnDate("");
+    setPomPolazak("");
+    setPomDolazak("");
   };
-  
+
   useEffect(() => {
     // Inicijalno postavljanje vrednosti na null (prazan string)
     // ubacila da kad ucitam po prvi put formu da mi ne prikazuje podatke od prednodni put sto sam menjala
-    setReturnDate('');
-    setPomPolazak('');
-    setPomDolazak('');
+    setReturnDate("");
+    setPomPolazak("");
+    setPomDolazak("");
   }, []);
-  
 
   //prevodjenje
   const lngs = {
@@ -449,7 +457,6 @@ const RezervacijaComponent = ({ id, state}) => {
 
   return (
     <>
-       
       <header>
         <div className="jezici">
           {Object.keys(lngs).map((lng) => (
@@ -525,7 +532,10 @@ const RezervacijaComponent = ({ id, state}) => {
                       userPars.email == undefined ? undefined : userPars.email
                     }
                     ref={emailInputRef}
-                    onChange={rezervacijaLogic.changeHandler}
+                    onChange={(event) => {
+                      rezervacijaLogic.changeHandler(event);
+                      handleEmailInputChange(event);
+                    }}
                   />
                   {!formInputsValid.email && <p>Unesite E-mail</p>}
                 </div>
@@ -710,309 +720,325 @@ const RezervacijaComponent = ({ id, state}) => {
                   </select>
                 </div>
 
-              {/* Ovde dolazimo iz fajla karta.js u slucaju da je karta povratna 
+                {/* Ovde dolazimo iz fajla karta.js u slucaju da je karta povratna 
               i zelimo rezervaciju sedista ili promenu datuma  */}
-              {state.povratna? 
-                <div>
-                <div className="red-1"></div>  
-                <p className="teget">Da li želite da promenite datum i vreme povratka</p>
-                    <div className="red-05"></div>
-                    <button onClick={newReturn} className="promena-povratka animated-button">
-                      Da</button> 
-                    &ensp; 
-                    
-                    <button onClick={oldReturn} className="promena-povratka animated-button">
-                      Ne</button>
-                    <div className="red-05"></div>
-
-                    {/* dodajem deo u slucaju da putnik menja datum i vreme povratka    */}
-                    {izmeniPovratak && 
-                    
-                      <div>
-              
-              
-                    <div className="ograda1">
-                      <div>
-                        <label htmlFor="returnDate">
-                          <Trans i18nKey="description.part70">
-                            {" "}
-                            Datum povratka{" "}
-                          </Trans>
-                        </label>
-                        &emsp; &ensp;
-                        <input
-                          type="date"
-                          id="returnDate"
-                          name="returnDate"
-                       //   value={returnDate || ''}    //da zadrzi vrednost koja je pre toga bila odabrana ili prikaze prazno ako nista nije odabirano
-                          min={state.datumDolaska}
-                          onChange={(e) => {
-                            e.persist();
-
-                            setTimeout(() => setReturnDate(e.target.value), 0);
-                          }}
-                          onClick={() => {
-                            setPomPolazak("");
-                            setPomDolazak("");
-                            setPomDatPolazak("");     // ubaceno da bih imala podatak edit datuma povratka-polazak
-                            setPomDatDolazak("");
-                          }}
-                        />
-                      </div>
-                      <div style={{ textAlign: "left", paddingLeft: "2rem" }}>
-                        <label>
-                          <Trans i18nKey="description.part11">
-                            {" "}
-                            Vreme polaska{" "}
-                          </Trans>
-                        </label>
-                      </div>
-
-                      <div className="teget">
-                        {/* Ovde formira podatke za povratnu kartu  */}
-                        {returnDate !== null ? (        
-                          <div>
-                            {filteredLinije.map((linija) => (
-                              <div>
-                                <li key={linija.id}>
-                                  <label>
-                                    {linija.vremePolaska} ---
-                                    {linija.vremeDolaska}---
-                                  </label>
-                                  {/* polje gde biramo povratnu liniju  */}
-                                  <input
-                                    type="checkbox"
-                                    value={linija.id}
-                                    checked={checkedItemId === linija.id}
-                                    onChange={() =>
-                                      handleCheckboxChange(linija.id)
-                                    }
-                                    // na klik postavljamo odabrane vrednosti
-                                    onClick={() => {
-                                      setPovratnaIdLinija(linija.id);
-                                      setPomPolazak(linija.vremePolaska);
-                                      setPomDolazak(linija.vremeDolaska);
-                                      setPomDatPolazak(linija.datumPolaska);    // ubacila kod edita
-                                      setPomDatDolazak(linija.datumDolaska);
-                                      setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
-                                    }}
-                                  />
-                                </li>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        <hr />
-                        Odabrali ste polazak - dolazak (h):
-                        <hr />
-                        {pomPolazak}---{pomDolazak}
-                        <br/>
-                        Da li želite da postavite nov povratak <br/>
-                        <button onClick={handleDaClick} className="promena-povratka animated-button">Da</button> &emsp; 
-                        <button onClick={handleNeClick} className="promena-povratka animated-button">Ne</button>
-                      </div>
-
-                    </div>
-                    
-
-
-
-                      </div>
-                    
-                    }
-                    {/*  kraj promene datuma povratka i vremena     */}
-                </div>
-                : 
-                <div className="radio">
-                  {" "}
-                  {/*  className="radio1"   */}
-                  {/*  dole biramo tipKarta koji treba upisati u bazu */}
-                  <select
-                    className="select"
-                    type="text"
-                    name="Izaberi kartu"
-                    required
-                    value={selectedValue}
-                    //value={tipKarte}
-                    onChange={(event) => {    
-                      const selectedOptionValue = event.target.value; // Ovo je vrednost izabranog optiona
-                      setSelectedValue(selectedOptionValue);
-                      //setTipKarte(selectedOptionValue);
-
-                      if (
-                        (selectedOptionValue === "Povratna") |
-                        (selectedOptionValue === "Return")
-                      ) {
-                        setShowReturnDate(true);
-                        setPomDateRet(returnDate);
-                      } else {
-                        setShowReturnDate(false);
-                        setReturnDate(null); //da ne baca vrednosti iz baze od predhono izabranog datuma
-                        setPomPolazak("");
-                        setPomDolazak("");
-                        setPomDatDolazak(""); //postavlja na nulu zbog promene tipa karte
-                        setPomDateRet("povratna"); //sluzi za poziv vrste karte koju upisujemo u bazu
-                      }
-                      if (selectedOptionValue === "Studentska") {
-                        setPom(true);
-                      } else {
-                        setPom(false);
-                      }
-
-                      if (selectedOptionValue === "Students") {
-                        setPom1(true);
-                      } else {
-                        setPom1(false);
-                      }
-                      // Postavljanje vrednosti u state setTipKarte
-                      setTipKarte(selectedOptionValue);
-                    }}
-                  >
-                    <option disabled={false} value="">
-                      <Trans i18nKey="description.part23">
-                        Izaberite kartu
-                      </Trans>
-                    </option>
-                    <option value="Jednosmerna">
-                      <Trans i18nKey="description.part24" > Jednosmerna </Trans>
-                    </option>
-                    <option value="Povratna">
-                      <Trans i18nKey="description.part25" > Povratna    </Trans>
-                    </option>
-                    <option value="Besplatna">
-                      <Trans i18nKey="description.part26">Besplatna</Trans>
-                    </option>
-                    <option value="Studentska">
-                      <Trans i18nKey="description.part27">Studentska</Trans>
-                    </option>
-                    <option value="Vikend">
-                      <Trans i18nKey="description.part28">Vikend</Trans>
-                    </option>
-                    <option value="Nedeljna">
-                      <Trans i18nKey="description.part29">Nedeljna</Trans>
-                    </option>
-                  </select>
-
-                     
-                  {/* studentska karta   */}
+                {state.povratna ? (
                   <div>
-                    {pom ? (
-                      <div className="ograda1">
-                        <p>
-                          {" "}
-                          <Trans i18nKey="description.part137">
-                            VaÅ¾i za studente do 27 god. uz index u suprotnom
-                            plaÄ‡a se puna cena karte
-                          </Trans>
-                        </p>{" "}
-                      </div>
-                    ) : (
-                      " "
-                    )}
-
-                    {pom1 ? (
-                      <div className="ograda1">
-                        {" "}
-                        <p>
-                          {" "}
-                          <Trans i18nKey="description.part137">
-                            Valid for students up to 27 years old. with the
-                            index, otherwise the full price of the ticket is
-                            paid{" "}
-                          </Trans>
-                        </p>
-                      </div>
-                    ) : (
-                      " "
-                    )}
-                  </div>
-                  {/* kraj studentska karta   */}
-                  {showReturnDate && (
-                    <div className="ograda1">
+                    <div className="red-1"></div>
+                    <p className="teget">
+                      Da li želite da promenite datum i vreme povratka
+                    </p>
+                    <div className="red-05"></div>
+                    <button
+                      onClick={newReturn}
+                      className="promena-povratka animated-button"
+                    >
+                      Da
+                    </button>
+                    &ensp;
+                    <button
+                      onClick={oldReturn}
+                      className="promena-povratka animated-button"
+                    >
+                      Ne
+                    </button>
+                    <div className="red-05"></div>
+                    {/* dodajem deo u slucaju da putnik menja datum i vreme povratka    */}
+                    {izmeniPovratak && (
                       <div>
-                        <label htmlFor="returnDate">
-                          <Trans i18nKey="description.part70">
-                            {" "}
-                            Datum povratka{" "}
-                          </Trans>
-                        </label>
-                        &emsp; &ensp;
-                        <input
-                          type="date"
-                          id="returnDate"
-                          name="returnDate"
-                          min={state.datumDolaska}
-                          onChange={(e) => {
-                            e.persist();
-
-                            setTimeout(() => setReturnDate(e.target.value), 0);
-                          }}
-                          onClick={() => {
-                            setPomPolazak("");
-                            setPomDolazak("");
-                           
-                            setPomDatDolazak("");
-                          }}
-                        />
-                      </div>
-                      <div style={{ textAlign: "left", paddingLeft: "2rem" }}>
-                        <label>
-                          <Trans i18nKey="description.part11">
-                            {" "}
-                            Vreme polaska{" "}
-                          </Trans>
-                        </label>
-                      </div>
-
-                      <div className="teget">
-                        {/* Ovde formira podatke za povratnu kartu  */}
-                        {returnDate !== null ? (
+                        <div className="ograda1">
                           <div>
-                            {filteredLinije.map((linija) => (
-                              <div>
-                                <li key={linija.id}>
-                                  <label>
-                                    {linija.vremePolaska} ---
-                                    {linija.vremeDolaska}---
-                                  </label>
-                                  <input
-                                    type="checkbox"
-                                    value={linija.id}
-                                    checked={checkedItemId === linija.id}
-                                    onChange={() =>
-                                      handleCheckboxChange(linija.id)
-                                    }
-                                    onClick={() => {
-                                      setPovratnaIdLinija(linija.id);
-                                      setPomPolazak(linija.vremePolaska);
-                                      setPomDolazak(linija.vremeDolaska);
-                                      setPomDatDolazak(linija.datumDolaska);
-                                      setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
-                                    }}
-                                  />
-                                </li>
-                              </div>
-                            ))}
+                            <label htmlFor="returnDate">
+                              <Trans i18nKey="description.part70">
+                                {" "}
+                                Datum povratka{" "}
+                              </Trans>
+                            </label>
+                            &emsp; &ensp;
+                            <input
+                              type="date"
+                              id="returnDate"
+                              name="returnDate"
+                              //   value={returnDate || ''}    //da zadrzi vrednost koja je pre toga bila odabrana ili prikaze prazno ako nista nije odabirano
+                              min={state.datumDolaska}
+                              onChange={(e) => {
+                                e.persist();
+
+                                setTimeout(
+                                  () => setReturnDate(e.target.value),
+                                  0
+                                );
+                              }}
+                              onClick={() => {
+                                setPomPolazak("");
+                                setPomDolazak("");
+                                setPomDatPolazak(""); // ubaceno da bih imala podatak edit datuma povratka-polazak
+                                setPomDatDolazak("");
+                              }}
+                            />
                           </div>
-                        ) : (
-                          ""
-                        )}
-                        <hr />
-                        Odabrali ste polazak - dolazak (h):
-                        <hr />
-                        {pomPolazak}---{pomDolazak}
+                          <div
+                            style={{ textAlign: "left", paddingLeft: "2rem" }}
+                          >
+                            <label>
+                              <Trans i18nKey="description.part11">
+                                {" "}
+                                Vreme polaska{" "}
+                              </Trans>
+                            </label>
+                          </div>
+
+                          <div className="teget">
+                            {/* Ovde formira podatke za povratnu kartu  */}
+                            {returnDate !== null ? (
+                              <div>
+                                {filteredLinije.map((linija) => (
+                                  <div>
+                                    <li key={linija.id}>
+                                      <label>
+                                        {linija.vremePolaska} ---
+                                        {linija.vremeDolaska}---
+                                      </label>
+                                      {/* polje gde biramo povratnu liniju  */}
+                                      <input
+                                        type="checkbox"
+                                        value={linija.id}
+                                        checked={checkedItemId === linija.id}
+                                        onChange={() =>
+                                          handleCheckboxChange(linija.id)
+                                        }
+                                        // na klik postavljamo odabrane vrednosti
+                                        onClick={() => {
+                                          setPovratnaIdLinija(linija.id);
+                                          setPomPolazak(linija.vremePolaska);
+                                          setPomDolazak(linija.vremeDolaska);
+                                          setPomDatPolazak(linija.datumPolaska); // ubacila kod edita
+                                          setPomDatDolazak(linija.datumDolaska);
+                                          setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                                        }}
+                                      />
+                                    </li>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <hr />
+                            Odabrali ste polazak - dolazak (h):
+                            <hr />
+                            {pomPolazak}---{pomDolazak}
+                            <br />
+                            Da li želite da postavite nov povratak <br />
+                            <button
+                              onClick={handleDaClick}
+                              className="promena-povratka animated-button"
+                            >
+                              Da
+                            </button>{" "}
+                            &emsp;
+                            <button
+                              onClick={handleNeClick}
+                              className="promena-povratka animated-button"
+                            >
+                              Ne
+                            </button>
+                          </div>
+                        </div>
                       </div>
+                    )}
+                    {/*  kraj promene datuma povratka i vremena     */}
+                  </div>
+                ) : (
+                  <div className="radio">
+                    {" "}
+                    {/*  className="radio1"   */}
+                    {/*  dole biramo tipKarta koji treba upisati u bazu */}
+                    <select
+                      className="select"
+                      type="text"
+                      name="Izaberi kartu"
+                      required
+                      value={selectedValue}
+                      //value={tipKarte}
+                      onChange={(event) => {
+                        const selectedOptionValue = event.target.value; // Ovo je vrednost izabranog optiona
+                        setSelectedValue(selectedOptionValue);
+                        //setTipKarte(selectedOptionValue);
 
+                        if (
+                          (selectedOptionValue === "Povratna") |
+                          (selectedOptionValue === "Return")
+                        ) {
+                          setShowReturnDate(true);
+                          setPomDateRet(returnDate);
+                        } else {
+                          setShowReturnDate(false);
+                          setReturnDate(null); //da ne baca vrednosti iz baze od predhono izabranog datuma
+                          setPomPolazak("");
+                          setPomDolazak("");
+                          setPomDatDolazak(""); //postavlja na nulu zbog promene tipa karte
+                          setPomDateRet("povratna"); //sluzi za poziv vrste karte koju upisujemo u bazu
+                        }
+                        if (selectedOptionValue === "Studentska") {
+                          setPom(true);
+                        } else {
+                          setPom(false);
+                        }
+
+                        if (selectedOptionValue === "Students") {
+                          setPom1(true);
+                        } else {
+                          setPom1(false);
+                        }
+                        // Postavljanje vrednosti u state setTipKarte
+                        setTipKarte(selectedOptionValue);
+                      }}
+                    >
+                      <option disabled={false} value="">
+                        <Trans i18nKey="description.part23">
+                          Izaberite kartu
+                        </Trans>
+                      </option>
+                      <option value="Jednosmerna">
+                        <Trans i18nKey="description.part24">
+                          {" "}
+                          Jednosmerna{" "}
+                        </Trans>
+                      </option>
+                      <option value="Povratna">
+                        <Trans i18nKey="description.part25"> Povratna </Trans>
+                      </option>
+                      <option value="Besplatna">
+                        <Trans i18nKey="description.part26">Besplatna</Trans>
+                      </option>
+                      <option value="Studentska">
+                        <Trans i18nKey="description.part27">Studentska</Trans>
+                      </option>
+                      <option value="Vikend">
+                        <Trans i18nKey="description.part28">Vikend</Trans>
+                      </option>
+                      <option value="Nedeljna">
+                        <Trans i18nKey="description.part29">Nedeljna</Trans>
+                      </option>
+                    </select>
+                    {/* studentska karta   */}
+                    <div>
+                      {pom ? (
+                        <div className="ograda1">
+                          <p>
+                            {" "}
+                            <Trans i18nKey="description.part137">
+                              VaÅ¾i za studente do 27 god. uz index u suprotnom
+                              plaÄ‡a se puna cena karte
+                            </Trans>
+                          </p>{" "}
+                        </div>
+                      ) : (
+                        " "
+                      )}
+
+                      {pom1 ? (
+                        <div className="ograda1">
+                          {" "}
+                          <p>
+                            {" "}
+                            <Trans i18nKey="description.part137">
+                              Valid for students up to 27 years old. with the
+                              index, otherwise the full price of the ticket is
+                              paid{" "}
+                            </Trans>
+                          </p>
+                        </div>
+                      ) : (
+                        " "
+                      )}
                     </div>
-                  )}
+                    {/* kraj studentska karta   */}
+                    {showReturnDate && (
+                      <div className="ograda1">
+                        <div>
+                          <label htmlFor="returnDate">
+                            <Trans i18nKey="description.part70">
+                              {" "}
+                              Datum povratka{" "}
+                            </Trans>
+                          </label>
+                          &emsp; &ensp;
+                          <input
+                            type="date"
+                            id="returnDate"
+                            name="returnDate"
+                            min={state.datumDolaska}
+                            onChange={(e) => {
+                              e.persist();
 
-                  <div className="red-1"></div>
-                </div>
-              }
-              {/* Kraj dela za definisanje vrste karte    */}
+                              setTimeout(
+                                () => setReturnDate(e.target.value),
+                                0
+                              );
+                            }}
+                            onClick={() => {
+                              setPomPolazak("");
+                              setPomDolazak("");
 
+                              setPomDatDolazak("");
+                            }}
+                          />
+                        </div>
+                        <div style={{ textAlign: "left", paddingLeft: "2rem" }}>
+                          <label>
+                            <Trans i18nKey="description.part11">
+                              {" "}
+                              Vreme polaska{" "}
+                            </Trans>
+                          </label>
+                        </div>
+
+                        <div className="teget">
+                          {/* Ovde formira podatke za povratnu kartu  */}
+                          {returnDate !== null ? (
+                            <div>
+                              {filteredLinije.map((linija) => (
+                                <div>
+                                  <li key={linija.id}>
+                                    <label>
+                                      {linija.vremePolaska} ---
+                                      {linija.vremeDolaska}---
+                                    </label>
+                                    <input
+                                      type="checkbox"
+                                      value={linija.id}
+                                      checked={checkedItemId === linija.id}
+                                      onChange={() =>
+                                        handleCheckboxChange(linija.id)
+                                      }
+                                      onClick={() => {
+                                        setPovratnaIdLinija(linija.id);
+                                        setPomPolazak(linija.vremePolaska);
+                                        setPomDolazak(linija.vremeDolaska);
+                                        setPomDatDolazak(linija.datumDolaska);
+                                        setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                                      }}
+                                    />
+                                  </li>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          <hr />
+                          Odabrali ste polazak - dolazak (h):
+                          <hr />
+                          {pomPolazak}---{pomDolazak}
+                        </div>
+                      </div>
+                    )}
+                    <div className="red-1"></div>
+                  </div>
+                )}
+                {/* Kraj dela za definisanje vrste karte    */}
               </div>
               <div className="red-1"></div>
               <div className="red-1"></div>
@@ -1169,7 +1195,7 @@ const RezervacijaComponent = ({ id, state}) => {
               {/*  Poziv rezervacije za kartu koja nije povratna    */}
               <button
                 className={classes.submit}
-                style={{fontSize: "18px", color: "darkblue"}}
+                style={{ fontSize: "18px", color: "darkblue" }}
                 onClick={clickRezervisiPovratak}
               >
                 <Trans i18nKey="description.part181">Rezerviši kartu </Trans>
@@ -1194,8 +1220,6 @@ const RezervacijaComponent = ({ id, state}) => {
       </form>
       <ToastContainer />
       <div className="red-1"></div>
-
-        
     </>
   );
 };

@@ -285,7 +285,6 @@ const transporter = nodemailer.createTransport({
 
 router.post("/rezervacija", async (req, res) => {
   try {
-    console.log(req.body);
     const {
       brojMesta,
       polaznaStanicaR,
@@ -301,6 +300,7 @@ router.post("/rezervacija", async (req, res) => {
       osvezenje,
       oznakaSedista,
       tipKarte,
+      email,
     } = req.body;
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
@@ -480,6 +480,7 @@ router.post("/rezervacija", async (req, res) => {
       osvezenje,
       oznakaSedista,
       tipKarte,
+      email,
     });
 
     console.log(linijaId);
@@ -578,12 +579,9 @@ router.post("/rezervacija", async (req, res) => {
           <p>Vreme Polaska: ${vremePolaska}</p>
           <p>Vreme Dolaska: ${vremeDolaska}</p>
           <p>Osveženje: ${osvezenje}</p>
-          
-        
-          <p>Molimo vas da skenirate QR kod za više detalja:</p>
-          <img src="cid:qr-code" alt="QR Code" />
           <p>Provera validnosti karte proveriti na sledećem linku:</p>
           <a href="http://localhost:3000/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
+          <p>Molimo vas da skenirate QR kod za više detalja:</p>
         </div>
       </body>
     </html>
@@ -592,7 +590,7 @@ router.post("/rezervacija", async (req, res) => {
     // Unutar vašeg postojećeg koda za slanje e-maila
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: korisnik.email,
+      to: email,
       subject: emailSubject,
       html: emailText,
       attachments, // Dodajte prilog e-mail poruci
