@@ -16,9 +16,10 @@ const RezervacijaApi = () => {
     korisnikId,
     osvezenje,
     oznakaSedista,
-    tipKarte              //dodala
+    tipKarte,
+    email //dodala
   ) => {
-    console.log(tipKarte)
+    console.log(tipKarte);
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
       polaznaStanicaR,
@@ -33,7 +34,8 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
-      tipKarte         //dodala
+      tipKarte,
+      email, //dodala
     });
   };
   const rezervacijaPovratna = async (
@@ -50,7 +52,8 @@ const RezervacijaApi = () => {
     korisnikId,
     osvezenje,
     oznakaSedista,
-    tipKarte         //dodala
+    tipKarte,
+    email //dodala
   ) => {
     console.log(
       "--------------222------",
@@ -67,7 +70,8 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
-      tipKarte           //dodala
+      tipKarte,
+      email //dodala
     );
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
@@ -83,7 +87,8 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
-      tipKarte           //dodala
+      tipKarte,
+      email, //dodala
     });
   };
 
@@ -101,7 +106,8 @@ const RezervacijaApi = () => {
     korisnikId,
     osvezenje,
     oznakaSedista,
-    tipKarte         //dodala
+    tipKarte,
+    email //dodala
   ) => {
     console.log(
       "--------------333------",
@@ -118,7 +124,8 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
-      tipKarte           //dodala
+      tipKarte,
+      email //dodala
     );
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
       brojMesta,
@@ -134,7 +141,8 @@ const RezervacijaApi = () => {
       korisnikId,
       osvezenje,
       oznakaSedista,
-      tipKarte           //dodala
+      tipKarte,
+      email, //dodala
     });
   };
 
