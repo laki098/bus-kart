@@ -12,6 +12,7 @@ const ViseLinija = () => {
   const [selectedPeriodFromList, setSelectedPeriodFromList] = useState(null);
   const [generatedDateList, setGeneratedDateList] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
   
   const getLinije = async () => {
@@ -101,6 +102,24 @@ const ViseLinija = () => {
   }, []);
 
 
+  const openConfirmationDialog = () => {
+    setIsConfirmationOpen(true);
+  };
+  
+  const closeConfirmationDialog = () => {
+    setIsConfirmationOpen(false);
+  };
+  
+  const confirmAction = () => {
+    // Ovdje možete implementirati logiku za akciju nakon potvrde, ako je potrebno
+    closeConfirmationDialog(); // Zatvori dijalog nakon potvrde
+    notifySuccest();
+    setTimeout(() => {
+      window.location.href = "/admin.initial"; 
+    }, 2500);
+  };
+
+
   const submitHandler = (event) => {
     event.preventDefault();
   }
@@ -159,10 +178,7 @@ const ViseLinija = () => {
                   setPeriod(1);
                   setSelectedPeriodFromList(1);
                   creiranjeViseLinija();
-                   notifySuccest();
-                   setTimeout(() => {
-                    window.location.href = "/admin.initial"; 
-                  }, 2500);
+                   openConfirmationDialog();
                 }}
               >
                 1 mesec
@@ -176,10 +192,7 @@ const ViseLinija = () => {
                   setPeriod(3);
                   setSelectedPeriodFromList(3);
                   creiranjeViseLinija();
-                  notifySuccest();
-                   setTimeout(() => {
-                    window.location.href = "/admin.initial"; 
-                  }, 2500)
+                  openConfirmationDialog();
                 }}
               >
                 3 meseci
@@ -193,10 +206,7 @@ const ViseLinija = () => {
                   setPeriod(6);
                   setSelectedPeriodFromList(6);
                   creiranjeViseLinija();
-                  notifySuccest();
-                   setTimeout(() => {
-                    window.location.href = "/admin.initial"; 
-                  }, 2500)
+                  openConfirmationDialog();
                 }}
               >
                 6 meseci
@@ -213,6 +223,23 @@ const ViseLinija = () => {
       ))}
       
     </div>
+    <div className="confirm-dialog-container">
+  {isConfirmationOpen && (
+    <div className="confirm-dialog-overlay">
+      <div className="confirm-dialog-box">
+        <div className="red-05">
+          Da li ste sigurni da želite produžiti liniju?
+        </div>
+        <button className="confirm-dialog-yes" onClick={confirmAction}>
+          Da
+        </button>
+        <button className="confirm-dialog-no" onClick={closeConfirmationDialog}>
+          Ne
+        </button>
+      </div>
+    </div>
+  )}
+</div>
     </form>
     <ToastContainer/>
     </>

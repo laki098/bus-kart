@@ -105,3 +105,57 @@
    box-shadow: #d6d6e7 0 3px 7px inset;
    transform: translateY(2px);
  }
+
+ .confirm-dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999; 
+}
+
+.confirm-dialog-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.confirm-dialog-yes {
+ background: red;
+ color: white;
+ padding: 10px;
+ margin-right: 4px;
+ border: none;
+ cursor: pointer;
+ font-size: medium;
+}
+
+.confirm-dialog-no {
+  background: green;
+  color: white;
+  padding: 10px;
+  margin-left: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
+
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Poluprozirna crna pozadina */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
