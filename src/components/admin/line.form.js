@@ -119,6 +119,7 @@ const LineForm = ({ mode, id, state }) => {
       adminLogic.editLinije(data, id);
     }
   };
+  
 
   //prevodjenje start
   const lngs = {

@@ -17,6 +17,7 @@ const AdminInitial = () => {
   const [val1, setVal1] = useState("");
   const [valueDate, setValueDate] = useState("");
   const [val2, setVal2] = useState("");
+  const today = new Date().toISOString().split("T")[0];
   const [polasci, setPolasci] = useState([]);
   const [dolasci, setDolasci] = useState([]);
   const [stanice, setStanice] = useState([]);
@@ -51,6 +52,7 @@ const AdminInitial = () => {
   };
 
   useEffect(() => {
+    setValueDate(today);
     getStanice();
   }, [filteredLinije]);
 
@@ -175,7 +177,8 @@ const AdminInitial = () => {
           <input
             type="date"
             className="position unos"
-            value={valueDate}
+            value={valueDate || today} // Postavite value na valueDate ako postoji, inače na današnji datum
+            min={today} // Postavite min atribut na današnji datum
             onChange={(e) => setValueDate(e.target.value)}
           />
         </div>{" "}
@@ -297,7 +300,7 @@ const AdminInitial = () => {
                           <button className={classes.submit}>
                             <p className="admin-dugme-slova">
                               <Trans i18nKey="description.part133">
-                                Zameni
+                                Uredi
                               </Trans>
                             </p>
                           </button>

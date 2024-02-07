@@ -38,6 +38,7 @@ const Pocetna = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [bus1, bus2];
   const [showClass, setShowClass] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
 
   const [sliderValue, setSliderValue] = useState(50);
   const NovaVrednost = 50;
@@ -74,6 +75,7 @@ const Pocetna = () => {
   };
 
   useEffect(() => {
+    setValueDate(today);
     getStanice(); //?Prilikom ucitavanja stranice da pozove funkciju get stanice
   }, []);
 
@@ -223,12 +225,12 @@ const Pocetna = () => {
                 <Trans i18nKey="description.part33"> Datum polaska </Trans>
               </label>
               <div className="input-date">
-                <input
-                  type="date"
-                  className="dates"
-                  value={valueDate}
-                  min={new Date().toISOString().split("T")[0]}
-                  onChange={(e) => setValueDate(e.target.value)}
+              <input
+                 type="date"
+                 className="dates"
+                 value={valueDate || today} // Postavite value na valueDate ako postoji, inače na današnji datum
+                 min={today} // Postavite min atribut na današnji datum
+                 onChange={(e) => setValueDate(e.target.value)}
                 />
               </div>
             </div>
