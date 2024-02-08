@@ -70,6 +70,9 @@ const RezervacijaComponent = ({ id, state }) => {
 
   if (userData != undefined) {
     userPars = JSON.parse(userData);
+    if (!email) {
+      setEmail(userPars.email);
+    }
   }
 
   const cene = async () => {
@@ -374,16 +377,11 @@ const RezervacijaComponent = ({ id, state }) => {
   const clickRezervisiPovratak = () => {
     if (pomDateRet == "") {
       novaRezervacija();
-      console.log(emailInputRef.current.value);
     } else if (pomDateRet == "povratna") {
       novaRezervacijaPovratak();
       novaRezervacija();
       //dodala za promenjeni povratak
       //novaRezervacijaPovratakIzmena();
-      console.log(emailInputRef.current.value);
-    } else if (state.povratna === true) {
-      //dodala za upis kod promenjenog povratka
-      novaRezervacijaPovratakIzmena();
     }
 
     /* // Prikazi poruku o rezervaciji (koristi alert, modal, ili neki drugi naÄin)
