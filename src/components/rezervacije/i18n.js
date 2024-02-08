@@ -285,7 +285,7 @@ i18n
             part131: 'Prevoznik',
             part132: 'Izaberite prevoznika',
 
-            part133: 'Zameni',
+            part133: 'Uredi',
             part134: 'Obriši',
             part135: 'Nema linije',
 
