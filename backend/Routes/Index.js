@@ -197,7 +197,7 @@ router.put("/:id", async (req, res) => {
       vozac,
     } = req.body;
 
-    // Pronađite postojeću liniju koju želite urediti
+    console.log(req.body);
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -206,7 +206,7 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Linija nije pronađena." });
     }
 
-    // Ažurirajte svojstva linije prema novim informacijama
+    //? Azurirana svojstva linije
     postojucaLinija.vremePolaska = vremePolaska;
     postojucaLinija.vremeDolaska = vremeDolaska;
     postojucaLinija.datumPolaska = datumPolaska;
@@ -217,7 +217,7 @@ router.put("/:id", async (req, res) => {
     postojucaLinija.stjuardesa = stjuardesa;
     postojucaLinija.vozac = vozac;
 
-    // Povezivanje početne stanice i krajnje stanice s linijom
+    //? Povezivanje početne stanice i krajnje stanice s linijom
     const pocetna = await Stanica.findOne({
       where: {
         naziv: pocetnaStanica,
@@ -233,10 +233,10 @@ router.put("/:id", async (req, res) => {
     postojucaLinija.pocetnaStanicaId = pocetna.id;
     postojucaLinija.krajnjaStanicaId = krajnja.id;
 
-    // Spremite promjene u bazi podataka za liniju
+    //? Cuvanje promena u bazi
     await postojucaLinija.save();
 
-    // Sada ažurirajte medjustanice
+    //? Azuriranje medjustanice
     for (let i = 0; i < medjustanice.length; i++) {
       const medjustanicaData = medjustanice[i];
       const stanicaIdFr = medjustanicaData.stanicaId;
@@ -255,7 +255,7 @@ router.put("/:id", async (req, res) => {
       });
 
       if (novaMedjustanica) {
-        // Ažurirajte podatke medjustanice
+        //? Ažuriranje podataka medjustanice
         novaMedjustanica.vremePolaskaM = medjustanicaData.vremePolaskaM;
         novaMedjustanica.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
         novaMedjustanica.datumPolaskaM = medjustanicaData.datumPolaskaM;
@@ -263,7 +263,7 @@ router.put("/:id", async (req, res) => {
         novaMedjustanica.pocetakRute = medjustanicaData.pocetakRute;
         novaMedjustanica.krajRute = medjustanicaData.krajRute;
 
-        // Spremite promjene u bazi podataka za medjustanicu
+        //? cuvanje promena u bazi
         await novaMedjustanica.save();
       }
     }
@@ -302,6 +302,8 @@ router.post("/rezervacija", async (req, res) => {
       tipKarte,
       email,
     } = req.body;
+
+    console.log(req.body);
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
