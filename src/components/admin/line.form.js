@@ -13,6 +13,7 @@ import helpers from "../../helpers/helpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const LineForm = ({ mode, id, state }) => {
   const [linija, setLinija] = useState({});
   const adminLogic = AdminLogic();
@@ -119,6 +120,8 @@ const LineForm = ({ mode, id, state }) => {
       adminLogic.editLinije(data, id);
     }
   };
+  
+
   
 
   //prevodjenje start
@@ -392,7 +395,6 @@ const LineForm = ({ mode, id, state }) => {
                     className="input-stanica-vreme"
                     type="time"
                     required
-                    label="Time"
                     name="vremePolaska"
                     onChange={adminLogic.changeHandler}
                   ></input>
@@ -674,7 +676,6 @@ const LineForm = ({ mode, id, state }) => {
                     className="input-stanica"
                     type="time"
                     required
-                    label="Time"
                     name="vremePolaska"
                     onChange={adminLogic.changeHandler}
                   ></input>
