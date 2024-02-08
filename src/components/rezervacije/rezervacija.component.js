@@ -43,33 +43,15 @@ const RezervacijaComponent = ({ id, state }) => {
 
   const [izmeniPovratak, setIzmeniPovratak] = useState(false);
   const [email, setEmail] = useState();
-  //const [clickedDugme, setClickedDugme] = useState(false);
-
-  // const { potvrdaP } = useContext(PotvrdaContext);   //karta je povratna samo sediste odaberite i pice
-  //console.log('Vrednost potvrdaP u RezervacijaKarte:', potvrdaP);
-
-  //const { potvrdaP } = useContext(PotvrdaContext);
-  {
-    /*
-  useEffect(() => {
-    if (potvrdaP !== undefined) {
-      console.log("RezervacijaComponent.js - potvrdaP:", potvrdaP);
-    }else{
-      console.log('potvradaP se jos nije postavila');
-    }
-  }, [potvrdaP]);
-*/
-  }
-
-  //  console.log('Da li je povratna linija state.povrtana: ' +state.povratna);
-  //  console.log('Da li je povratna linija state.povratnaPrikaz: ' +state.povratnaPrikaz);
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
   let userPars = {};
 
+  //?provera da li postoji user(kada je prijavljen) i parsiramo podatke kako bi mogli da koristimo podatke, posto stizu kao JSON
   if (userData != undefined) {
     userPars = JSON.parse(userData);
+    //?proveravamo da li postoji mejl i setujemo trenutni mejl
     if (!email) {
       setEmail(userPars.email);
     }
@@ -94,19 +76,6 @@ const RezervacijaComponent = ({ id, state }) => {
   useEffect(() => {
     cene();
   }, [tipKarte]);
-  {
-    /*
-  const filterLinija = async () => {
-    if (!valueDate) return;
-    const response = await LinijeApi().filterLinija(val1, val2, returnDate);
-
-    const data = await response.json();
-
-    console.log(data.rezultat);
-    setFilteredLinije(data.rezultat);
-  };
-*/
-  }
 
   const novaRezervacija = () => {
     RezervacijaApi()
