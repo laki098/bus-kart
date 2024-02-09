@@ -3,7 +3,7 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize({
-  dialect: "mysql",
+  dialect: process.env.DEPLOY=='1' ? "mariadb" : "mysql",
   host: process.env.DB_URL,
   database: process.env.DB_NAME,
   username: process.env.DB_USER,

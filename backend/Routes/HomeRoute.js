@@ -2,7 +2,7 @@
 import bc from "bcrypt";
  */
 const express = require("express");
-const bc = require("bcrypt");
+const bc = require("bcryptjs");
 
 //? Ovo je middleware, on takodje dobije req i res, koji ima iste podatke kao i taj endpoint na kome ga koristimo. Moze da se koristi da proverimo da li je korisnik admin npr.
 import { testMiddleware } from "../Middlewares/testMiddleware.js";

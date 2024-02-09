@@ -31,8 +31,7 @@ const Navbar = () => {
 
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
   const clickBaitLogout = () => {
-    loginApi().logout();
-    window.location.href = "pocetna";
+    loginApi().logout().then(() => {window.location.href = "pocetna";});
   };
 
   //? izvlacenje korisnika iz cookisa

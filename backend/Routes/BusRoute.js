@@ -16,9 +16,9 @@ router.get("/", async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "uspesno dobavljeni svi autobusi", autobusi });
+      .json({ message: "uspešno dobavljeni svi autobusi", autobusi });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: "Došlo je do greške" });
   }
 });
 
@@ -30,9 +30,9 @@ router.get("/:idAutobusa", async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "uspesno dobavljeni svi autobusi", autobusi });
+      .json({ message: "uspešno dobavljeni svi autobusi", autobusi });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: "Došlo je do greške" });
   }
 });
 
@@ -45,9 +45,9 @@ router.get("/oznaka/:oznakaBusa", async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "uspesno dobavljeni svi autobusi", autobusi });
+      .json({ message: "uspešno dobavljeni svi autobusi", autobusi });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred" });
+    res.status(500).json({ message: "Došlo je do greške" });
   }
 });
 
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
     const { oznakaBusa, tablice, brojSedista } = req.body;
 
     const newBus = await Bus.create({ oznakaBusa, tablice, brojSedista });
-    res.status(201).json({ message: "Uspesno kreiran bus", newBus });
+    res.status(201).json({ message: "Uspešno kreiran autobus", newBus });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }

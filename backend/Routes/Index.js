@@ -173,7 +173,7 @@ router.post("/", async (req, res) => {
       );
     }
 
-    return res.status(201).json({ message: "Uspesno dodate nova linija" });
+    return res.status(201).json({ message: "Uspešno dodate nova linija" });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -275,7 +275,22 @@ router.put("/:id", async (req, res) => {
 });
 
 //? Kreirajte transporter za slanje email poruka
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport(process.env.DEPLOY == '1' ? 
+{
+  host: "mail.bustravel.rs",
+  port: 587,
+  secure: false, // use TLS,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  tls: {
+    // do not fail on invalid certs
+    rejectUnauthorized: false,
+  },
+}
+:
+{
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
@@ -344,22 +359,22 @@ router.post("/rezervacija", async (req, res) => {
 
     if (!postojiStanicaP) {
       return res.status(404).json({
-        message: "Nepostoji stanica pocetna ",
+        message: "Ne postoji stanica početna ",
       });
     }
 
     if (!postojiStanicaK) {
       return res.status(404).json({
-        message: "Nepostoji stanica krajnja na ispisanoj liniji",
+        message: "Ne postoji stanica krajnja na ispisanoj liniji",
       });
     }
 
     if (!linija) {
-      return res.status(404).json({ message: "Linija nije pronadjena" });
+      return res.status(404).json({ message: "Linija nije pronađena" });
     }
 
     if (!stanicaP || !stanicaK) {
-      return res.status(404).json({ message: "Stanica nije pronadjena" });
+      return res.status(404).json({ message: "Stanica nije pronađena" });
     }
 
     // Ažuriranje broja slobodnih mesta
@@ -582,7 +597,7 @@ router.post("/rezervacija", async (req, res) => {
           <p>Vreme Dolaska: ${vremeDolaska}</p>
           <p>Osveženje: ${osvezenje}</p>
           <p>Provera validnosti karte proveriti na sledećem linku:</p>
-          <a href="http://localhost:3000/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
+          <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
           <p>Molimo vas da skenirate QR kod za više detalja:</p>
         </div>
       </body>
@@ -623,13 +638,13 @@ router.post(
 
       if (linijaIdInt != idLinijaFront) {
         console.log(linijaIdInt, idLinijaFront, "-------");
-        res.status(404).json({ message: "Ova karta nije na za ovu liniju" });
+        res.status(404).json({ message: "Ova karta nije za ovu liniju" });
         return;
       }
 
       //?Provera da li rezervacija postoji
       if (!izvlacenjeRezervacije) {
-        res.status(404).json({ message: "Nepostojeca rezervacija" });
+        res.status(404).json({ message: "Nepostojeća rezervacija" });
         return;
       }
 
@@ -643,7 +658,7 @@ router.post(
       await izvlacenjeRezervacije.save();
       res.status(200).json({ message: "Uspešno čekiranje" });
     } catch (error) {
-      res.status(500).json({ message: "An error occurred", error });
+      res.status(500).json({ message: "Došlo je do greške", error });
     }
   }
 );
@@ -870,12 +885,12 @@ router.post("/filterLinija", async (req, res) => {
       }
     }
 
-    res.status(200).json({ message: "uspesno izvučena linija", rezultat });
+    res.status(200).json({ message: "uspešno izvučena linija", rezultat });
   } catch (error) {
     console.log(error);
     res
       .status(500)
-      .json({ message: "doslo je do greske pri filtriranju", error });
+      .json({ message: "došlo je do greške pri filtriranju", error });
   }
 });
 
@@ -1103,12 +1118,12 @@ router.post("/filterLinijaId", async (req, res) => {
       }
     }
 
-    res.status(200).json({ message: "uspesno izvučena linija", rezultat });
+    res.status(200).json({ message: "uspešno izvučena linija", rezultat });
   } catch (error) {
     console.log(error);
     res
       .status(500)
-      .json({ message: "doslo je do greske pri filtriranju", error });
+      .json({ message: "došlo je do greške pri filtriranju", error });
   }
 });
 
@@ -1158,12 +1173,12 @@ router.post("/filtriraneLinije", async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Uspesno izvucena linija", filtriraneLinije });
+      .json({ message: "Uspešno izvučena linija", filtriraneLinije });
   } catch (error) {
     res
 
       .status(500)
-      .json({ message: "Doslo je do greske pri ocitavanju baze", error });
+      .json({ message: "Došlo je do greške pri očitavanju baze", error });
   }
 });
 
@@ -1177,13 +1192,13 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (deleteLinija === 0) {
-      return res.status(404).json({ message: "Linija nije pronadjena" });
+      return res.status(404).json({ message: "Linija nije pronađena" });
     }
-    res.status(200).json({ message: "Linija uspesno obrisana" });
+    res.status(200).json({ message: "Linija uspešno obrisana" });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "doslo je do greske pri ocitavanju baze", error });
+      .json({ message: "došlo je do greške pri očitavanju baze", error });
   }
 });
 

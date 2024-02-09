@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
       napomena,
       ostalo,
     });
-    return res.status(201).json({ message: "Uspesno dodat nov grad" });
+    return res.status(201).json({ message: "Uspešno dodat nov grad" });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }
@@ -48,10 +48,10 @@ router.put("/:id", async (req, res) => {
     );
 
     if (updateGrada[0] === 0) {
-      return res.status(404).json({ message: "Grad nije pronadjen" });
+      return res.status(404).json({ message: "Grad nije pronađen" });
     }
 
-    return res.status(200).json({ message: "Grad je uspesno promenjen" });
+    return res.status(200).json({ message: "Grad je uspešno promenjen" });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }
@@ -67,9 +67,9 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (deleteGrad === 0) {
-      return res.status(404).json({ message: "Grad nije pronadjen" });
+      return res.status(404).json({ message: "Grad nije pronađen" });
     }
-    res.status(200).json({ message: "Uspesno je obrisan Grad" });
+    res.status(200).json({ message: "Uspešno je obrisan Grad" });
   } catch (error) {
     res.status(500).json({ message: "Došlo je do greške" });
   }
