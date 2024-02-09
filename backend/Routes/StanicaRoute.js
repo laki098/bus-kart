@@ -33,9 +33,9 @@ router.get("/:id", async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "uspesno pronadjena stanica", stanica });
+    res.status(200).json({ message: "uspešno pronađena stanica", stanica });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred", error });
+    res.status(500).json({ message: "Došlo je do greške", error });
   }
 });
 
@@ -52,7 +52,7 @@ router.post(
       const novaStanica = await Stanica.create({ naziv, adresa });
       res
         .status(201)
-        .json({ message: "Uspesno dodata nova stanica", novaStanica });
+        .json({ message: "Uspešno dodata nova stanica", novaStanica });
     } catch (error) {
       res.status(500).json({ message: error.errors[0].message });
     }
@@ -72,9 +72,9 @@ router.put("/:id", async (req, res) => {
       { where: { id }, limit: 1 }
     );
     if (updateStanica[0] === 0) {
-      res.status(404).json({ message: "Stanica nije pronadjena" });
+      res.status(404).json({ message: "Stanica nije pronađena" });
     }
-    res.status(200).json({ message: "Stanica je uspesno izmenjena" });
+    res.status(200).json({ message: "Stanica je uspešno izmenjena" });
   } catch (error) {
     res.status(500).json({ message: "Došlo je do greške", error });
   }
@@ -90,14 +90,14 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (deleteStanica === 0) {
-      return res.status(404).json({ message: "Stanica nije pronadjena" });
+      return res.status(404).json({ message: "Stanica nije pronađena" });
     }
 
-    res.status(200).json({ message: "Stanica je uspesno izbrisana" });
+    res.status(200).json({ message: "Stanica je uspešno izbrisana" });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Doslo je do greske prilikom ocitavanja baze", error });
+      .json({ message: "Došlo je do greške prilikom očitavanja baze", error });
   }
 });
 module.exports = router;

@@ -264,7 +264,7 @@ router.post("/linija/:linijaId", async (req, res) => {
     }
     res
       .status(200)
-      .json({ message: "Uspesno dobijene rezervacije", rezervacije });
+      .json({ message: "Uspešno dobijene rezervacije", rezervacije });
   } catch (error) {
     res.status(500).json({ message: "bag", error: error.message });
   }
@@ -280,9 +280,9 @@ router.get("/:id", async (req, res) => {
     console.log(id, '---------')
     res
       .status(200)
-      .json({ message: "uspesno dobavljena rezervacija", rezervacija });
+      .json({ message: "uspešno dobavljena rezervacija", rezervacija });
   } catch (error) {
-    res.status(500).json({ message: "doslo je do greske" });
+    res.status(500).json({ message: "došlo je do greške" });
   }
 });
 

@@ -28,9 +28,9 @@ router.get("/:id", async (req, res) => {
     const cena = await Cena.findOne({
       where: { id },
     });
-    res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
+    res.status(200).json({ message: "uspešno dobavljena rezervacija", cena });
   } catch (error) {
-    res.status(500).json({ message: "doslo je do greske" });
+    res.status(500).json({ message: "došlo je do greške" });
   }
 });
 
@@ -46,19 +46,19 @@ router.post("/filterCena", async (req, res) => {
     
     if (tipKarte == "Jednosmerna") {
       const cenaPovratne = cena.cenaKarte ;
-      res.status(200).json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
+      res.status(200).json({ message: "uspešno dobavljena rezervacija", cenaPovratne });
       return
     }
     if (tipKarte == "Povratna") {
       const cenaPovratne = cena.cenaKarte + cena.cenaKarte * 0.7;
       res
         .status(200)
-        .json({ message: "uspesno dobavljena rezervacija", cenaPovratne });
+        .json({ message: "uspešno dobavljena rezervacija", cenaPovratne });
        return
     }
-    res.status(200).json({ message: "uspesno dobavljena rezervacija", cena });
+    res.status(200).json({ message: "uspešno dobavljena rezervacija", cena });
   } catch (error) {
-    res.status(500).json({ message: "doslo je do greske" });
+    res.status(500).json({ message: "došlo je do greške" });
   }
 });
 
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
       krajnjaStanicaR,
       cenaKarte,
     });
-    res.status(201).json({ message: "Uspesno kreirana cena", novaCena });
+    res.status(201).json({ message: "Uspešno kreirana cena", novaCena });
   } catch (error) {
     res.status(500).json({ message: error.errors[0].message });
   }
@@ -90,7 +90,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (izmenaCene[0] === 0) {
-      return res.status(404).json({ message: "Cena nije pronađen" });
+      return res.status(404).json({ message: "Cena nije pronađena" });
     }
 
     res.status(200).json({ message: "Cena je uspešno izmenjena" });
@@ -110,10 +110,10 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (deleteCene === 0) {
-      return res.status(404).json({ message: "Cena nije pronađen" });
+      return res.status(404).json({ message: "Cena nije pronađena" });
     }
 
-    res.status(200).json({ message: "Cena je uspešno obrisan" });
+    res.status(200).json({ message: "Cena je uspešno obrisana" });
   } catch (error) {
     res.status(500).json({ message: "Došlo je do greške" });
   }
