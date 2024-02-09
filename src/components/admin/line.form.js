@@ -6,7 +6,7 @@ import apiUrl from "../../apiConfig";
 import "../login/loginStyle.css"; /* preuzimam stil od login/login.component.js */
 
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
-import "../NavBar/links/i18n";
+import "../rezervacije/i18n";
 import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
@@ -126,8 +126,8 @@ const LineForm = ({ mode, id, state }) => {
 
   //prevodjenje start
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    de: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
@@ -139,6 +139,7 @@ const LineForm = ({ mode, id, state }) => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}

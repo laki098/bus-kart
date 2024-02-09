@@ -186,6 +186,12 @@ i18n
             part202: 'Change station',
             part203: 'Seat',
 
+            part204: 'Intermediate station',
+            part205: '1 Month',
+            part206: '3 Months',
+            part207: '6 Months',
+            part208: 'Are you sure you want to extend the line',
+
           }
         }
       },
@@ -360,6 +366,12 @@ i18n
             part201: 'Cene',
             part202: 'Izaberi stanicu',
             part203: 'Sedište',
+
+            part204: 'Međustanica',
+            part205: '1 Mesec',
+            part206: '3 Meseci',
+            part207: '6 Meseci',
+            part208: 'Da li ste sigurni da želite produžiti liniju?',
 
 
           }

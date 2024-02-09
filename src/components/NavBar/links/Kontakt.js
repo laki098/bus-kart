@@ -11,8 +11,8 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 const Kontakt = () => {
   //prevodjenje
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    de: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
@@ -25,6 +25,7 @@ const Kontakt = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
