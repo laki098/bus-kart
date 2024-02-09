@@ -22,7 +22,6 @@ const AdminInitial = () => {
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
   const [lineToDelete, setLineToDelete] = useState(null);
-  
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -119,19 +118,16 @@ const AdminInitial = () => {
           </label>
           <br />
           <select
-  className="position unos"
-  value={val1 || null}
-  onChange={(e) => setVal1(e.target.value)}
->
-  <option className="medjustanica" value={null} disabled selected>
-    Izaberite liniju
-  </option>
-  {stanice.map((stanica) => (
-    <option key={stanica.id} value={stanica.naziv}>
-      {stanica.naziv}
-    </option>
-  ))}
-</select>
+            className="position unos"
+            value={val1}
+            onChange={(e) => setVal1(e.target.value)}
+          >
+            {stanice.map((stanica) => (
+              <option key={stanica.id} value={stanica.naziv}>
+                {stanica.naziv}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="admin-centar">
           <label className="admin-labela">
@@ -143,9 +139,6 @@ const AdminInitial = () => {
             value={val2}
             onChange={(e) => setVal2(e.target.value)}
           >
-            <option className="medjustanica" value="" disabled selected>
-          Izaberite liniju
-        </option>
             {stanice.map((stanica) => (
               <option key={stanica.id} value={stanica.naziv}>
                 {stanica.naziv}
