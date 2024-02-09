@@ -29,7 +29,7 @@ const StanicaRouter = require("./Routes/StanicaRoute.js");
 const StjuardesaRouter = require("./Routes/StjuardesaRoute.js");
 const RezervacijaRoute = require("./Routes/RezervacijaRoute.js");
 const Korisnik = require("./Models/KorisnikModels.js");
-const bc = require("bcrypt");
+const bc = require("bcryptjs");
 const CenaRouter = require("./Routes/CenaRoute.js");
 
 //? Kreiranje server
@@ -40,7 +40,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.CLIENT_BASE_URL],
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })
@@ -77,9 +77,9 @@ app.use("/stjuardesa", StjuardesaRouter);
 app.use("/rezervacije", RezervacijaRoute);
 app.use("/cena", CenaRouter);
 
-const PORT = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("Server je pokenut na portu 5000");
+  console.log(`Server je pokrenut na portu ${PORT}`);
 });
 
 module.exports = app;

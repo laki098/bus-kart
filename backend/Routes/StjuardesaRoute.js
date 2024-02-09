@@ -35,7 +35,7 @@ router.get("/:idKorisnika", async (req, res) => {
       ],
     });
 
-    res.status(200).json({ message: "uspesno izvadjena", izvlacenjeLinija });
+    res.status(200).json({ message: "uspešno izvađena", izvlacenjeLinija });
   } catch (error) {
     res.status(500).json({ message: "bag" });
   }
@@ -63,7 +63,7 @@ router.get("/filterLinija/:id", async (req, res) => {
       ],
     });
 
-    res.status(200).json({ message: "uspesno izvadjena st", izvlacenjeLinija });
+    res.status(200).json({ message: "uspešno izvađena st", izvlacenjeLinija });
   } catch (error) {
     res.status(500).json({ message: "bag" });
   }
@@ -80,7 +80,7 @@ router.put("/promenaVremena", async (req, res) => {
     });
 
     if (!medjustanica) {
-      return res.status(404).json({ message: "Medjustanica nije pronađena." });
+      return res.status(404).json({ message: "Međustanica nije pronađena." });
     }
 
     //? Dodelite trenutno vreme za novo vreme polaska i novo vreme dolaska.

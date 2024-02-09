@@ -7,8 +7,9 @@ import nodemailer from "nodemailer";
 import Korisnik from "../Models/KorisnikModels.js";
 import Rezervacija from "../Models/RezervacijaModels.js"; */
 
+require("dotenv/config");
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
@@ -17,6 +18,8 @@ const Korisnik = require("../Models/KorisnikModels.js");
 const Rezervacija = require("../Models/RezervacijaModels.js");
 
 const router = express.Router();
+
+const clientUrl = process.env.CLIENT_BASE_URL;
 
 //? dobavljanje svih korisnika
 router.get("/", async (req, res) => {
@@ -44,7 +47,22 @@ router.get("/:idKorisnik", async (req, res) => {
 });
 
 // Kreirajte transporter za slanje email poruka
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport(process.env.DEPLOY == '1' ? 
+{
+  host: "mail.bustravel.rs",
+  port: 587,
+  secure: false, // use TLS,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  tls: {
+    // do not fail on invalid certs
+    rejectUnauthorized: false,
+  },
+}
+:
+{
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
@@ -144,7 +162,7 @@ router.get("/verify/:token", async (req, res) => {
     user.verifikacijskiToken = null;
     await user.save();
 
-    res.redirect("http://localhost:3000/login.component"); //! STAVITI LINK GDE CE DA VODI POSLE CEKIRANJA MEJLA
+    res.redirect(`${clientUrl}/login.component`); //! STAVITI LINK GDE CE DA VODI POSLE CEKIRANJA MEJLA
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -206,11 +224,15 @@ router.post("/login", async (req, res) => {
     });
 
     //? slanje korisnicke podatke u cookies
-    res.cookie("userData", JSON.stringify(userData), {
+    const cookieSettings = {
       expires: cookieExp,
       path: "/",
       secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-    });
+    };
+    if (process.env.DEPLOY === '1') {
+      cookieSettings.domain = clientUrl.replace("https://","").replace("http://","");
+    }
+    res.cookie("userData", JSON.stringify(userData), cookieSettings);
 
     res.status(200).json({ userData });
   } catch (error) {
@@ -256,7 +278,7 @@ router.post("/zaboravljena-sifra", async (req, res) => {
     await korisnik.save();
 
     //? kreiranje html dugmeta i slanje na mejl
-    const resetButtonHtml = `<a href=http://localhost:3000/passwordreset/${resetToken} style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Resetuj šifru</a>`;
+    const resetButtonHtml = `<a href=${clientUrl}/passwordreset/${resetToken} style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Resetuj šifru</a>`;
 
     const resetLinkHtml = `Kliknite na link ispod da biste resetovali vašu šifru:<br><br>${resetButtonHtml}`;
 
@@ -282,7 +304,7 @@ router.post("/zaboravljena-sifra", async (req, res) => {
 router.get("/reset-sifra/:token", (req, res) => {
   const { token } = req.params;
 
-  res.render("http://localhost:3000/passwordreset", { token });
+  res.render(`${clientUrl}/passwordreset`, { token });
 });
 
 router.post("/reset-sifra/:token", async (req, res) => {
@@ -328,12 +350,12 @@ router.delete("/:idKorisnik", async (req, res) => {
     });
 
     if (deleteKorisnik === 0) {
-      return res.status(404).json({ message: "Korisnik nije pronadjen" });
+      return res.status(404).json({ message: "Korisnik nije pronađen" });
     }
 
-    res.status(200).json({ message: "Korisnik uspesno obrisan" });
+    res.status(200).json({ message: "Korisnik uspešno obrisan" });
   } catch (error) {
-    res.status(500).json({ message: "Doslo je do greske" });
+    res.status(500).json({ message: "Došlo je do greške" });
   }
 });
 
@@ -381,11 +403,11 @@ router.put("/:idKorisnik", async (req, res) => {
     }
 
     if (updateKorisnik[0] === 0) {
-      return res.status(404).json({ message: "korisnik nije pronadjen" });
+      return res.status(404).json({ message: "korisnik nije pronađen" });
     }
-    return res.status(200).json({ message: "Korisnik uspesno promenjen" });
+    return res.status(200).json({ message: "Korisnik uspešno promenjen" });
   } catch (error) {
-    res.status(500).json({ message: "doslo je do greske", error });
+    res.status(500).json({ message: "došlo je do greške", error });
   }
 });
 
@@ -401,12 +423,12 @@ router.post("/karta", async (req, res) => {
     });
 
     console.log(karte);
-    res.status(200).json({ message: "izvucen korsnik", karte });
+    res.status(200).json({ message: "izvučen korisnik", karte });
   } catch (error) {
     console.log(error);
     res
       .status(500)
-      .json({ message: "doslo je do greske pri filtriranju", error });
+      .json({ message: "došlo je do greške pri filtriranju", error });
   }
 });
 
