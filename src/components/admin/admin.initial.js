@@ -18,12 +18,11 @@ const AdminInitial = () => {
   const [valueDate, setValueDate] = useState("");
   const [val2, setVal2] = useState("");
   const today = new Date().toISOString().split("T")[0];
-  const [polasci, setPolasci] = useState([]);
-  const [dolasci, setDolasci] = useState([]);
   const [stanice, setStanice] = useState([]);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState(false);
   const [lineToDelete, setLineToDelete] = useState(null);
+  
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -44,17 +43,15 @@ const AdminInitial = () => {
     setFilteredLinije(data.rezultat);
   };
 
-  const getLinije = async () => {
-    const response = await fetch(`${apiUrl}/linija`);
-    const podaci = await response.json();
-    const data = podaci.linija;
-    console.log(data);
-  };
+  useEffect(() => {
+    getStanice();
+  }, []);
 
   useEffect(() => {
-    setValueDate(today);
-    getStanice();
-  }, [filteredLinije]);
+    if (!valueDate) {
+      setValueDate(today);
+    }
+  }, [today, valueDate]);
 
   const adminLogic = AdminLogic();
 
@@ -65,7 +62,7 @@ const AdminInitial = () => {
   };
 
   const clickButton = async (event) => {
-    await filterLinija(); // Dodao await ovde kako bi se prvo filtrirale linije pre nego što se promeni klasa.
+    await filterLinija();
     changer();
   };
 
@@ -77,8 +74,6 @@ const AdminInitial = () => {
   const confirmDelete = async () => {
     if (lineToDelete !== null) {
       await adminLogic.brisanjeLinije(lineToDelete);
-      // Dodajte kod za osvežavanje prikaza linija nakon brisanja ako je brisanje uspešno.
-      // Možete koristiti setState za osvežavanje filteredLinije stanja ili bilo koju drugu metodu koja osvežava prikaz.
       const updatedLinije = filteredLinije.filter(
         (linija) => linija.id !== lineToDelete
       );
@@ -92,18 +87,14 @@ const AdminInitial = () => {
     setIsDeleteConfirmationOpen(false);
   };
 
-  //prevodjenje
   const lngs = {
     en: { nativeName: "Engleski" },
     de: { nativeName: "Srpski" },
   };
   const { t, i18n } = useTranslation();
-  // prevodjenje
 
   return (
     <div>
-      {/*  dodala klasu iz registration komponent*/}
-      {/*  header je deo za prevodjenje*/}
       <header>
         <div className="jezici">
           {Object.keys(lngs).map((lng) => (
@@ -122,51 +113,44 @@ const AdminInitial = () => {
       </header>
 
       <div className="admin-initial-polje admin-initial-polje-izmena ">
-        {" "}
-        {/* className={classes.form}  */}
-        {/* className={classes.form}   className="home" */}
         <div className="admin-centar">
-          {/* className="prvi"  */}
           <label className="admin-labela">
             <Trans i18nKey="description.part3">Mesto polaska:</Trans>
           </label>
           <br />
           <select
-            className="position unos" //className="position" bilo je  className="unos"
-            value={val1} //
-            onChange={(e) => setVal1(e.target.value)}
-          >
-            {stanice.map((stanice) => {
-              // Za ispis iz baze filtrirano mesto polaska
-              return (
-                //
-                <option key={stanice.id} value={stanice.naziv}>
-                  {stanice.naziv}
-                </option> //
-              );
-            })}
-          </select>
+  className="position unos"
+  value={val1 || null}
+  onChange={(e) => setVal1(e.target.value)}
+>
+  <option className="medjustanica" value={null} disabled selected>
+    Izaberite liniju
+  </option>
+  {stanice.map((stanica) => (
+    <option key={stanica.id} value={stanica.naziv}>
+      {stanica.naziv}
+    </option>
+  ))}
+</select>
         </div>
         <div className="admin-centar">
-          {/* className="prvi"  */}
           <label className="admin-labela">
             <Trans i18nKey="description.part5">Mesto Dolaska:</Trans>
           </label>
           <br />
           <select
-            className="position unos" // unos sam dopisala dodatno
-            value={val2} //
-            onChange={(e) => setVal2(e.target.value)} //
+            className="position unos"
+            value={val2}
+            onChange={(e) => setVal2(e.target.value)}
           >
-            {stanice.map((stanice) => {
-              // Za ispis iz baze filtrirano mesto polaska
-              return (
-                //
-                <option key={stanice.id} value={stanice.naziv}>
-                  {stanice.naziv}
-                </option> //
-              );
-            })}
+            <option className="medjustanica" value="" disabled selected>
+          Izaberite liniju
+        </option>
+            {stanice.map((stanica) => (
+              <option key={stanica.id} value={stanica.naziv}>
+                {stanica.naziv}
+              </option>
+            ))}
           </select>
         </div>
         <div className="admin-centar">
@@ -177,11 +161,11 @@ const AdminInitial = () => {
           <input
             type="date"
             className="position unos"
-            value={valueDate || today} // Postavite value na valueDate ako postoji, inače na današnji datum
-            min={today} // Postavite min atribut na današnji datum
+            value={valueDate || today}
+            min={today}
             onChange={(e) => setValueDate(e.target.value)}
           />
-        </div>{" "}
+        </div>
         <div className="red-05"></div>
         <button className={classes.submit} onClick={clickButton}>
           <p className="admin-slovaDugme">
@@ -189,145 +173,106 @@ const AdminInitial = () => {
           </p>
         </button>
         <Link to="/admin.component">
-          {" "}
-          {/* className="button-admin" */}
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
-              {" "}
               <Trans i18nKey="description.part37">Dododavanje linije</Trans>
             </p>
           </button>
         </Link>
         <Link to="/viseLinija">
-          {" "}
-          {/* className="button-admin" */}
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
-              {" "}
               <Trans i18nKey="">Produzetak linije</Trans>
             </p>
           </button>
         </Link>
       </div>
 
-      {/* Blok koji ispisuje red voznje  */}
-
       {filteredLinije.length > 0 ? (
         <div>
           <ul>
-            {" "}
-            {/* admin-tebela je zamenila home1  */}
             <div
               className={`admin-tebela .admin-tebela ${
                 showClass ? "show" : ""
               }`}
             >
               <style>{`
-            .admin-tebela {
-              display: none;
-            }
-            .show {
-              display: block;
-            }
-          `}</style>
-              {filteredLinije.map((linija) => {
-                return (
-                  <li key={linija.id}>
-                    <div className="admin-jedan-red">
-                      {" "}
-                      {/* admin-pod-tabela    bela pozadina */}
+                .admin-tebela {
+                  display: none;
+                }
+                .show {
+                  display: block;
+                }
+              `}</style>
+              {filteredLinije.map((linija) => (
+                <li key={linija.id}>
+                  <div className="admin-jedan-red">
+                    <div className="polje-stanica">
+                      <Trans i18nKey="description.part3">
+                        Mesto polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="info-stanica-1">
+                      {linija.pocetnaStanica}
+                    </div>
+                    <div className="polje-stanica">
+                      <Trans i18nKey="description.part11">
+                        Vreme polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="info-stanica">
+                      {linija.vremePolaska}
+                    </div>
+                    <div className="polje-stanica">
+                      <Trans i18nKey="description.part13">
+                        Vreme dolaska
+                      </Trans>
+                    </div>
+                    <div className="info-stanica">{linija.vremeDolaska}</div>
+                    <div className="polje-stanica">
+                      <Trans i18nKey="description.part5">
+                        Mesto dolaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="info-stanica-1">
+                      {linija.krajnjaStanica}
+                    </div>
+                    <Link
+                      to={{
+                        pathname: `${linija.id}/admin.change.line`,
+                        state: {
+                          id: linija.id,
+                          vremePolaska: linija.vremePolaska,
+                          pocetnaStanica: linija.pocetnaStanica,
+                          krajnjaStanica: linija.krajnjaStanica,
+                          vremeDolaska: linija.vremeDolaska,
+                          datumPolaska: linija.datumPolaska,
+                          datumDolaska: linija.datumDolaska,
+                          oznakaBusa: linija.oznakaBusa,
+                        },
+                      }}
+                    >
                       <div className="polje-stanica">
-                        {" "}
-                        <Trans i18nKey="description.part11">
-                          Vreme polaska{" "}
-                        </Trans>{" "}
-                      </div>{" "}
-                      {/* bilo className="column centar"  */}
-                      <div className="info-stanica">
-                        {linija.vremePolaska}{" "}
-                      </div>{" "}
-                      {/* className="column centar podaci"   */}
-                      <div className="polje-stanica">
-                        <Trans i18nKey="description.part13">
-                          Vreme dolaska
-                        </Trans>{" "}
-                      </div>
-                      <div className="info-stanica">{linija.vremeDolaska}</div>
-                      <div className="polje-stanica">
-                        <Trans i18nKey="description.part3">
-                          Mesto polaska{" "}
-                        </Trans>{" "}
-                      </div>
-                      <div className="info-stanica-1">
-                        {linija.pocetnaStanica}
-                      </div>
-                      <div className="polje-stanica">
-                        <Trans i18nKey="description.part5">
-                          Mesto dolaska{" "}
-                        </Trans>{" "}
-                      </div>
-                      <div className="info-stanica-1">
-                        {linija.krajnjaStanica}
-                      </div>
-                      {/* &nbsp;&nbsp;   */}
-                      <Link
-                        to={{
-                          //? prosledjivanje id-a linije kroz url
-                          pathname: `${linija.id}/admin.change.line`,
-                          //? prosledjivanje podataka za rezervaciju
-                          state: {
-                            id: linija.id,
-                            vremePolaska: linija.vremePolaska,
-                            pocetnaStanica: linija.pocetnaStanica,
-                            krajnjaStanica: linija.krajnjaStanica,
-                            vremeDolaska: linija.vremeDolaska,
-                            datumPolaska: linija.datumPolaska,
-                            datumDolaska: linija.datumDolaska,
-                            oznakaBusa: linija.oznakaBusa,
-                          },
-                        }}
-                      >
-                        {/*  <button
-                          style={{
-                            backgroundColor: "lightblue",
-                            borderBlockColor: "blue",
-                            marginBlock: "0.4rem",
-                            borderColor: "blue",
-                          }}
-                        >
-                      */}
-                        <div className="polje-stanica">
-                          <button className={classes.submit}>
-                            <p className="admin-dugme-slova">
-                              <Trans i18nKey="description.part133">
-                                Uredi
-                              </Trans>
-                            </p>
-                          </button>
-                        </div>
-                      </Link>
-                      {/*  {" "} &emsp;   */}
-                      {/*
-                      style={{
-                          backgroundColor: "lightblue",
-                          borderBlockColor: "blue",
-                        }}
-                      */}
-                      <div className="polje-stanica">
-                        <button
-                          onClick={() => brisanjeLinije(linija.id)}
-                          className={classes.submit}
-                        >
-                          {" "}
+                        <button className={classes.submit}>
                           <p className="admin-dugme-slova">
-                            <Trans i18nKey="description.part134">Obriši</Trans>
+                            <Trans i18nKey="description.part133">Uredi</Trans>
                           </p>
                         </button>
                       </div>
+                    </Link>
+                    <div className="polje-stanica">
+                      <button
+                        onClick={() => brisanjeLinije(linija.id)}
+                        className={classes.submit}
+                      >
+                        <p className="admin-dugme-slova">
+                          <Trans i18nKey="description.part134">Obriši</Trans>
+                        </p>
+                      </button>
                     </div>
-                  </li>
-                );
-              })}
+                  </div>
+                </li>
+              ))}
             </div>
           </ul>
         </div>
