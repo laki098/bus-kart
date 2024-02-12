@@ -277,12 +277,77 @@ router.get("/:id", async (req, res) => {
     const rezervacija = await Rezervacija.findOne({
       where: { id },
     });
-    console.log(id, '---------')
+    console.log(id, "---------");
     res
       .status(200)
       .json({ message: "uspešno dobavljena rezervacija", rezervacija });
   } catch (error) {
     res.status(500).json({ message: "došlo je do greške" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params; //? ID karte koji se menja
+    const {
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista,
+      tipKarte,
+      email,
+    } = req.body;
+
+    const sveKarteNaLiniji = await Rezervacija.findAll({
+      where: { linijaId },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    //? provera da li oznakaSedista postoji vec na toj liniji pod tim brojem
+    const oznakaSedistaPostoji = sveKarteNaLiniji.some(
+      (karta) => karta.oznakaSedista === oznakaSedista
+    );
+
+    if (oznakaSedistaPostoji) {
+      //? vraćamo poruku da to sedište već postoji
+      return res
+        .status(400)
+        .json({ message: "Oznaka sedišta već postoji", status: "failed" });
+    }
+
+    const updateKarta = await Rezervacija.update(
+      {
+        oznakaSedista,
+      },
+      { where: { id }, limit: 1 }
+    );
+
+    if (updateKarta[0] === 0) {
+      return res.status(404).json({ message: "Karta nije pronađena" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Karta je uspesno promenjena", sveKarteNaLiniji });
+  } catch (error) {
+    if (error.name === "SequelizeValidationError") {
+      return res
+        .status(400)
+        .json({ message: "Proverite unete podatke", status: "failed" });
+    }
+
+    res.status(500).json({ message: "Došlo je do greške", error });
   }
 });
 
