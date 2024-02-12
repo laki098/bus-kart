@@ -13,9 +13,8 @@ import helpers from "../../helpers/helpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const LineForm = ({ mode, id, state }) => {
-  const [linija, setLinija] = useState({});
+  const [linija, setLinija] = useState([]);
   const adminLogic = AdminLogic();
   const [stanice, setStanice] = useState([]);
   const [waypoints, setWaypoints] = useState([]);
@@ -33,6 +32,13 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
+
+  const getLinija = async () => {
+    const response = await fetch(`${apiUrl}/linija/${id}`);
+    const data = await response.json();
+    setLinija(data.linija);
+  };
+  console.log(linija);
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -84,9 +90,11 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   useEffect(() => {
+    getLinija();
     getStanice();
     getAutobusi();
     getKorisnici();
+
     if (mode === "edit") {
       /* izmeniLiniju(); */
     }
@@ -98,7 +106,6 @@ const LineForm = ({ mode, id, state }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    
 
     if (mode === "add") {
       adminLogic.upisLinije();
@@ -120,9 +127,6 @@ const LineForm = ({ mode, id, state }) => {
       adminLogic.editLinije(data, id);
     }
   };
-  
-
-  
 
   //prevodjenje start
   const lngs = {
@@ -468,10 +472,10 @@ const LineForm = ({ mode, id, state }) => {
                     onChange={adminLogic.changeHandler}
                   >
                     <option className="medjustanica">
-                      {state.pocetnaStanica}
+                      {linija.pocetnaStanica?.naziv}
                     </option>
                     {stanice.map((stanica) => {
-                      if (stanica !== state.pocetnaStanica) {
+                      if (stanica !== linija.pocetnaStanica?.naziv) {
                         return (
                           <option
                             className="medjustanica"
@@ -509,14 +513,12 @@ const LineForm = ({ mode, id, state }) => {
                           adminLogic.handlerMedjustanice(e, index)
                         }
                       >
-                        <option 
-                        disabled
-                        selected>
+                        <option disabled selected>
                           Izaberite medjustanicu
-                          </option>
+                        </option>
                         {stanice.map((stanica) => {
                           return (
-                            <option key={stanica} value={stanica} >
+                            <option key={stanica} value={stanica}>
                               {stanica}
                             </option>
                           );
@@ -619,10 +621,10 @@ const LineForm = ({ mode, id, state }) => {
                     onChange={adminLogic.changeHandler}
                   >
                     <option className="medjustanica">
-                      {state.krajnjaStanica}
+                      {linija.krajnjaStanica?.naziv}
                     </option>
                     {stanice.map((stanica) => {
-                      if (stanica !== state.krajnjaStanica) {
+                      if (stanica !== linija.krajnjaStanica?.naziv) {
                         return (
                           <option
                             className="medjustanica"

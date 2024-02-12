@@ -38,14 +38,26 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
 
     const linija = await Linija.findOne({
       where: { id },
+      include: [
+        {
+          model: Stanica,
+          as: "pocetnaStanica",
+        },
+        {
+          model: Stanica,
+          as: "krajnjaStanica",
+        },
+        Stanica,
+      ],
     });
 
     res.status(200).json({ message: "Uspesno pronadjena linija", linija });
   } catch (error) {
-    res.status(500).json({ message: "Doslo je do greske", error });
+    res.status(500).json({ message: "Doslo je do greskeaaaaa", error });
   }
 });
 
@@ -275,28 +287,29 @@ router.put("/:id", async (req, res) => {
 });
 
 //? Kreirajte transporter za slanje email poruka
-const transporter = nodemailer.createTransport(process.env.DEPLOY == '1' ? 
-{
-  host: "mail.bustravel.rs",
-  port: 587,
-  secure: false, // use TLS,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-  tls: {
-    // do not fail on invalid certs
-    rejectUnauthorized: false,
-  },
-}
-:
-{
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+const transporter = nodemailer.createTransport(
+  process.env.DEPLOY == "1"
+    ? {
+        host: "mail.bustravel.rs",
+        port: 587,
+        secure: false, // use TLS,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+        tls: {
+          // do not fail on invalid certs
+          rejectUnauthorized: false,
+        },
+      }
+    : {
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      }
+);
 
 router.post("/rezervacija", async (req, res) => {
   try {
