@@ -246,8 +246,11 @@ router.post("/logout", (req, res) => {
   try {
     //? Brisanje JWT tokena iz kolačića
     res.clearCookie("token");
-    res.clearCookie("userData");
-
+    if (process.env.DEPLOY === '1') {
+      res.clearCookie("userData", {domain: clientUrl.replace('https://', '').replace('http://', '')})
+    } else {
+      res.clearCookie("userData");
+    }
     //? Vraćanje odgovora sa statusom 200 i porukom odjavljivanja
     res.status(200).json({ message: "Uspešno ste se odjavili." });
   } catch (error) {
