@@ -92,6 +92,7 @@ const LinijeApi = () => {
     vozac,
     stjuardesa
   ) => {
+    console.log(medjustanice)
     return await axios.put(`${apiUrl}/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
       pocetnaStanica,

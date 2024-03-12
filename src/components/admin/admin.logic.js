@@ -8,7 +8,7 @@ const AdminLogic = () => {
     datumPolaska: [],
     datumDolaska: [],
   });
-  console.log(data);
+  
 
   const changeHandler = (e) =>
     setData({
@@ -26,6 +26,7 @@ const AdminLogic = () => {
       }
     
       novaMedjustanica[index][name] = value;
+      
       setData({
         ...data,
         medjustanice: novaMedjustanica,
@@ -59,6 +60,17 @@ const AdminLogic = () => {
       medjustanice: novaMedjustanica,
     });
   };
+
+  const raspakovanaMedjustanicaEdit = data.medjustanice.map((item) => {
+    console.log(item.stanica)
+    return {
+      
+      vremePolaskaM: item.vremePolaskaM,
+      vremeDolaskaM: item.vremeDolaskaM,
+      datumPolaskaM: item.datumPolaskaM,
+      datumDolaskaM: item.datumDolaskaM,
+    };
+  });
 
   const raspakovanaMedjustanica = data.medjustanice.map((item) => {
     return {
@@ -99,11 +111,12 @@ const AdminLogic = () => {
   };
 
   const editLinije = (data, id) => {
+    console.log(data)
     LinijeApi()
       .editLinije(
         id,
         data.pocetnaStanica,
-        data.medjustanice,
+        raspakovanaMedjustanicaEdit,
         data.krajnjaStanica,
         data.vremePolaska,
         data.vremeDolaska,

@@ -512,6 +512,7 @@ const LineForm = ({ mode, id, state }) => {
                           onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                        }
+                       defaultValue={stanicas.naziv}
                       >
                           {stanice.map((stanica) => (
                             <option
