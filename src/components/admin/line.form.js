@@ -39,6 +39,7 @@ const LineForm = ({ mode, id, state }) => {
     setLinija(data.linija);
   };
   console.log(linija);
+  console.log(waypoints)
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -506,22 +507,22 @@ const LineForm = ({ mode, id, state }) => {
                         </label>
                       </div>
                       <select
-                        name="stanica"
-                        className="edit-medjustanica"
-                        value={stanicas.naziv} 
-                        onChange={(e) =>
+                          name="stanica"
+                          className="edit-medjustanica"
+                          onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
-                        }
+                       }
                       >
-                       
-                        {stanice.map((stanica) => {
-                          return (
-                            <option key={stanica} defaultValue={stanicas.naziv}>
-                              {stanica}
-                            </option>
-                          );
-                        })}
-                      </select>
+                          {stanice.map((stanica) => (
+                            <option
+                               key={stanica}
+                               value={stanica}
+                              selected={stanicas.naziv === stanica}
+                            >
+                             {stanica}
+                           </option>
+                           ))}
+                        </select>
                       &emsp;&emsp;
                       {/* <label className="labela-stanica">
                        
@@ -562,7 +563,7 @@ const LineForm = ({ mode, id, state }) => {
                           adminLogic.handlerMedjustanice(e, index)
                         }
                       ></input>
-                      <div className="red-05">
+                      {/* <div className="red-05">
                         <label className="labela-stanica">
                           <Trans i18nKey="description.part7">
                             Datum polaska
@@ -593,7 +594,7 @@ const LineForm = ({ mode, id, state }) => {
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
-                      />
+                      /> */}
                     </div>
                   ))}
                   </div>

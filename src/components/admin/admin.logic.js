@@ -16,15 +16,21 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-  const handlerMedjustanice = (e, index) => {
-    const { name, value } = e.target;
-    const novaMedjustanica = [...data.medjustanice];
-    novaMedjustanica[index][name] = value;
-    setData({
-      ...data,
-      medjustanice: novaMedjustanica,
-    });
-  };
+    const handlerMedjustanice = (e, index) => {
+      const { name, value } = e.target;
+      const novaMedjustanica = [...data.medjustanice];
+    
+      // Provera da li medjustanica na odgovarajućem indeksu postoji
+      if (!novaMedjustanica[index]) {
+        novaMedjustanica[index] = {};
+      }
+    
+      novaMedjustanica[index][name] = value;
+      setData({
+        ...data,
+        medjustanice: novaMedjustanica,
+      });
+    };
 
   const handlerDatumPolaska = (e) =>
     setData({
@@ -134,6 +140,7 @@ const AdminLogic = () => {
       progress: undefined,
       theme: "light",
     });
+    
   };
   const notifyWarn = (message) => {
     toast.warn(message, {
