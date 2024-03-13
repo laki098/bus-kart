@@ -8,7 +8,7 @@ const AdminLogic = () => {
     datumPolaska: [],
     datumDolaska: [],
   });
-  
+  console.log(data)
 
   const changeHandler = (e) =>
     setData({
