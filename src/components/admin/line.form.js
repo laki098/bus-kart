@@ -79,6 +79,23 @@ const LineForm = ({ mode, id, state }) => {
     adminLogic.dodajMedjustanicu();
   };
 
+  const removeWaypoint = (index) => {
+    const updatedWaypoints = [...waypoints];
+    const updatedSelectedValues = [...selectedValues];
+    const updatedCene = [...cene];
+
+    updatedWaypoints.splice(index, 1);
+    updatedSelectedValues.splice(index, 1);
+    updatedCene.splice(index, 1);
+
+    setWaypoints(updatedWaypoints);
+    setSelectedValues(updatedSelectedValues);
+    setCene(updatedCene);
+
+    // Pozovite funkciju za uklanjanje medjustanica iz admin logike
+    adminLogic.ukloniMedjustanicu(index);
+};
+
   const handleSelectChange = (event, index) => {
     const newSelectedValues = [...selectedValues];
     newSelectedValues[index] = event.target.value;
@@ -107,24 +124,24 @@ const LineForm = ({ mode, id, state }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
+  
     if (mode === "add") {
       adminLogic.upisLinije();
     } else if (mode === "edit") {
-      const formData = new FormData(event.target); //pravi objekat koji sadrzi sva imena inputa(zato sto submit ima sve vrednosti)
+      const formData = new FormData(event.target);
       const data = {
         pocetnaStanica: formData.get("pocetnaStanica"),
         medjustanice: medjustanice,
         krajnjaStanica: formData.get("krajnjaStanica"),
         vremePolaska: formData.get("vremePolaska"),
         vremeDolaska: formData.get("vremeDolaska"),
-        datumPolaska: datumPolaska,
-        datumDolaska: datumDolaska,
+        datumPolaska: formData.get("datumPolaska"),
+        datumDolaska: formData.get("datumDolaska"),
         oznakaBusa: formData.get("oznakaBusa"),
         vozac: formData.get("vozac"),
         stjuardesa: formData.get("stjuardesa"),
       };
-
+  
       adminLogic.editLinije(data, id);
     }
   };
@@ -314,6 +331,15 @@ const LineForm = ({ mode, id, state }) => {
                             adminLogic.handlerMedjustanice(e, index)
                           }
                         />
+                        <div>
+                          <button
+                           type="button"
+                           className="buttonSwitch korekcijaDugmeta"
+                           onClick={() => removeWaypoint(index)}
+                          >
+                               Ukloni medjustanicu
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -707,6 +733,15 @@ const LineForm = ({ mode, id, state }) => {
                           adminLogic.handlerMedjustanice(e, index)
                         }
                       />
+                      <div>
+                      <button
+                          type="button"
+                          className="buttonSwitch korekcijaDugmeta"
+                          onClick={() => removeWaypoint(index)}
+                      >
+                               Ukloni medjustanicu
+                      </button>
+                      </div>
                     </div>
                   ))}
                   <div className="red-1">
