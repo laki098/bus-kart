@@ -209,7 +209,6 @@ router.put("/:id", async (req, res) => {
       vozac,
     } = req.body;
 
-    console.log(req.body);
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -257,27 +256,33 @@ router.put("/:id", async (req, res) => {
         where: { id: stanicaIdFr },
       });
 
-      console.log(stanicaId1.id);
-      const stanicaId = stanicaId1.id;
-      const novaMedjustanica = await Medjustanica.findOne({
-        where: {
-          stanicaId,
-          linijaId,
-        },
-      });
+      let stanicaId = stanicaId1.id;
 
-      if (novaMedjustanica) {
-        //? Ažuriranje podataka medjustanice
-        novaMedjustanica.vremePolaskaM = medjustanicaData.vremePolaskaM;
-        novaMedjustanica.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
-        novaMedjustanica.datumPolaskaM = medjustanicaData.datumPolaskaM;
-        novaMedjustanica.datumDolaskaM = medjustanicaData.datumDolaskaM;
-        novaMedjustanica.pocetakRute = medjustanicaData.pocetakRute;
-        novaMedjustanica.krajRute = medjustanicaData.krajRute;
+      //? Ažuriranje podataka medjustanice
 
-        //? cuvanje promena u bazi
-        await novaMedjustanica.save();
+      try {
+        await Medjustanica.update(
+          {
+            vremePolaskaM: medjustanicaData.vremePolaskaM,
+            vremeDolaskaM: medjustanicaData.vremeDolaskaM,
+            datumPolaskaM: medjustanicaData.datumPolaskaM,
+            datumDolaskaM: medjustanicaData.datumDolaskaM,
+            pocetakRute: medjustanicaData.pocetakRute,
+            krajRute: medjustanicaData.krajRute,
+            stanicaId: medjustanicaData.noviStanicaId,
+          },
+          {
+            where: { stanicaId, linijaId },
+          }
+        );
+        console.log("Izmene su sačuvane u bazi podataka.");
+      } catch (error) {
+        console.error(
+          "Greška prilikom ažuriranja podataka u bazi podataka:",
+          error
+        );
       }
+      /* } */
     }
 
     return res.status(200).json({ message: "Uspešno uređena linija." });
