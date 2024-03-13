@@ -8,10 +8,7 @@ const AdminLogic = () => {
     datumPolaska: [],
     datumDolaska: [],
   });
-<<<<<<< HEAD
   console.log(data)
-=======
->>>>>>> 411d8b88816700a058c2c7ad41d40fd1a8a10b81
 
   const changeHandler = (e) =>
     setData({
@@ -23,13 +20,15 @@ const AdminLogic = () => {
     const { name, value } = e.target;
     const novaMedjustanica = [...data.medjustanice];
 
+    console.log(index + 1)
     // Provera da li medjustanica na odgovarajućem indeksu postoji
     if (!novaMedjustanica[index]) {
       novaMedjustanica[index] = {};
     }
 
     novaMedjustanica[index][name] = value;
-
+    novaMedjustanica[index]['redosled'] = index + 1;
+    console.log(novaMedjustanica)
     setData({
       ...data,
       medjustanice: novaMedjustanica,
@@ -65,8 +64,9 @@ const AdminLogic = () => {
   };
 
   const raspakovanaMedjustanicaEdit = data.medjustanice.map((item) => {
-    console.log(item.stanica);
+    console.log(item.redosled);
     return {
+      redosled: item.redosled,
       stanica: item.stanica,
       vremePolaskaM: item.vremePolaskaM,
       vremeDolaskaM: item.vremeDolaskaM,
