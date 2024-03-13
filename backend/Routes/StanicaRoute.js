@@ -100,4 +100,24 @@ router.delete("/:id", async (req, res) => {
       .json({ message: "Došlo je do greške prilikom očitavanja baze", error });
   }
 });
+
+//?izvlačenje po nazivu
+router.post("/pretragaPoNazivu", async (req, res) => {
+  try {
+    const { naziv } = req.body;
+
+    const stanica = await Stanica.findAll({
+      where: {
+        naziv,
+      },
+    });
+
+    return res.json({ stanica });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Greška prilikom pretraživanja stanica", error });
+  }
+});
+
 module.exports = router;

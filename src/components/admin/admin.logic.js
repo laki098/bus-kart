@@ -8,7 +8,6 @@ const AdminLogic = () => {
     datumPolaska: [],
     datumDolaska: [],
   });
-  
 
   const changeHandler = (e) =>
     setData({
@@ -16,22 +15,22 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-    const handlerMedjustanice = (e, index) => {
-      const { name, value } = e.target;
-      const novaMedjustanica = [...data.medjustanice];
-    
-      // Provera da li medjustanica na odgovarajućem indeksu postoji
-      if (!novaMedjustanica[index]) {
-        novaMedjustanica[index] = {};
-      }
-    
-      novaMedjustanica[index][name] = value;
-      
-      setData({
-        ...data,
-        medjustanice: novaMedjustanica,
-      });
-    };
+  const handlerMedjustanice = (e, index) => {
+    const { name, value } = e.target;
+    const novaMedjustanica = [...data.medjustanice];
+
+    // Provera da li medjustanica na odgovarajućem indeksu postoji
+    if (!novaMedjustanica[index]) {
+      novaMedjustanica[index] = {};
+    }
+
+    novaMedjustanica[index][name] = value;
+
+    setData({
+      ...data,
+      medjustanice: novaMedjustanica,
+    });
+  };
 
   const handlerDatumPolaska = (e) =>
     setData({
@@ -62,9 +61,9 @@ const AdminLogic = () => {
   };
 
   const raspakovanaMedjustanicaEdit = data.medjustanice.map((item) => {
-    console.log(item.stanica)
+    console.log(item.stanica);
     return {
-      
+      stanica: item.stanica,
       vremePolaskaM: item.vremePolaskaM,
       vremeDolaskaM: item.vremeDolaskaM,
       datumPolaskaM: item.datumPolaskaM,
@@ -73,6 +72,7 @@ const AdminLogic = () => {
   });
 
   const raspakovanaMedjustanica = data.medjustanice.map((item) => {
+    console.log(item.stanica);
     return {
       stanica: item.stanica,
       vremePolaskaM: item.vremePolaskaM,
@@ -96,22 +96,22 @@ const AdminLogic = () => {
       )
       .then((response) => {
         if (response.status === 201) {
-        notifySuccest(response.data.message);
-        setTimeout(() => {
-          window.location.href = "/admin.initial";
-        }, 2000); // Prikazuje notifikaciju o uspešnom pravljenju linije
-      }
+          notifySuccest(response.data.message);
+          setTimeout(() => {
+            window.location.href = "/admin.initial";
+          }, 2000); // Prikazuje notifikaciju o uspešnom pravljenju linije
+        }
       })
       .catch((error) => {
         console.log(error);
-        if (error.response && error.response.status === 500 ) {
+        if (error.response && error.response.status === 500) {
           notifyWarn(error.response.data.message);
         }
       });
   };
 
   const editLinije = (data, id) => {
-    console.log(data)
+    console.log(data);
     LinijeApi()
       .editLinije(
         id,
@@ -153,7 +153,6 @@ const AdminLogic = () => {
       progress: undefined,
       theme: "light",
     });
-    
   };
   const notifyWarn = (message) => {
     toast.warn(message, {
@@ -165,8 +164,8 @@ const AdminLogic = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
-  }
+    });
+  };
 
   const brisanjeLinije = async (id) => {
     console.log("id", id);
