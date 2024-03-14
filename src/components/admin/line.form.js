@@ -23,6 +23,7 @@ const LineForm = ({ mode, id, state }) => {
   const [autobusi, setAutobusi] = useState([]);
   const [vozac, setVozac] = useState([]);
   const [stjuardesa, setStjuardesa] = useState([]);
+  const today = new Date().toISOString().split("T")[0];
 
   const getAutobusi = async () => {
     const response = await fetch(`${apiUrl}/autobusi`);
@@ -320,6 +321,7 @@ const LineForm = ({ mode, id, state }) => {
                           name="datumPolaskaM"
                           type="date"
                           className="input-stanica"
+                          min={today}
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
@@ -337,6 +339,7 @@ const LineForm = ({ mode, id, state }) => {
                           name="datumDolaskaM"
                           type="date"
                           className="input-stanica"
+                          min={today}
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
@@ -344,7 +347,7 @@ const LineForm = ({ mode, id, state }) => {
                         <div>
                           <button
                             type="button"
-                            className="buttonSwitch korekcijaDugmeta"
+                            className="buttonSwitch korekcijaDugmeta1"
                             onClick={() => removeWaypoint(index)}
                           >
                             Ukloni medjustanicu
@@ -405,6 +408,7 @@ const LineForm = ({ mode, id, state }) => {
                     type="date"
                     required
                     className="input-stanica"
+                    min={today}
                     onChange={adminLogic.handlerDatumPolaska}
                   />
 
@@ -420,6 +424,7 @@ const LineForm = ({ mode, id, state }) => {
                     type="date"
                     required
                     className="input-stanica"
+                    min={today}
                     onChange={adminLogic.handlerDatumDolaska}
                   />
 
@@ -723,6 +728,7 @@ const LineForm = ({ mode, id, state }) => {
                         name="datumPolaskaM"
                         type="date"
                         className="input-stanica"
+                        min={today}
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
@@ -739,6 +745,7 @@ const LineForm = ({ mode, id, state }) => {
                         name="datumDolaskaM"
                         type="date"
                         className="input-stanica"
+                        min={today}
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
@@ -746,7 +753,7 @@ const LineForm = ({ mode, id, state }) => {
                       <div>
                         <button
                           type="button"
-                          className="buttonSwitch korekcijaDugmeta"
+                          className="buttonSwitch korekcijaDugmeta2"
                           onClick={() => removeWaypoint(index)}
                         >
                           Ukloni medjustanicu
@@ -805,6 +812,7 @@ const LineForm = ({ mode, id, state }) => {
                     defaultValue={state.datumPolaska}
                     name="datumPolaska"
                     type="date"
+                    min={today}
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
                   />
@@ -819,6 +827,7 @@ const LineForm = ({ mode, id, state }) => {
                     defaultValue={state.datumDolaska}
                     name="datumDolaska"
                     type="date"
+                    min={today}
                     className="input-stanica"
                     onChange={adminLogic.changeHandler}
                   />

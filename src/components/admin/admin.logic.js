@@ -64,7 +64,7 @@ const AdminLogic = () => {
   };
 
   const raspakovanaMedjustanicaEdit = data.medjustanice.map((item) => {
-    console.log(item.redosled);
+    
     return {
       redosled: item.redosled,
       stanica: item.stanica,
@@ -76,7 +76,7 @@ const AdminLogic = () => {
   });
 
   const raspakovanaMedjustanica = data.medjustanice.map((item) => {
-    console.log(item.stanica);
+    
     return {
       stanica: item.stanica,
       vremePolaskaM: item.vremePolaskaM,
