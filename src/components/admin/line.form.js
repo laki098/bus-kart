@@ -40,15 +40,6 @@ const LineForm = ({ mode, id, state }) => {
     setLinija(data.linija);
   };
 
-  // Sortiranje stanica po polju "redosled"
-  const sortiraneStanice = linija.Stanicas?.sort(
-    (a, b) => a.redosled - b.redosled
-  );
-  console.log(
-    linija.Stanicas?.Medjustanica,
-    "124411111111111111111111111111111"
-  );
-  console.log(sortiraneStanice, "------------------");
   console.log(linija);
   console.log(waypoints);
 

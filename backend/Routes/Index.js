@@ -38,7 +38,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
 
     //? Dohvatanje linije iz baze podataka
     const linija = await Linija.findOne({
