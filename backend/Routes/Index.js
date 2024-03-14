@@ -40,6 +40,7 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     console.log(id);
 
+    //? Dohvatanje linije iz baze podataka
     const linija = await Linija.findOne({
       where: { id },
       include: [
@@ -55,9 +56,20 @@ router.get("/:id", async (req, res) => {
       ],
     });
 
+    //? Ako nije pronađena linija s datim ID-jem
+    if (!linija) {
+      return res.status(404).json({ message: "Linija nije pronađena" });
+    }
+
+    //? Sortiranje stanica linije po redosledu međustanica
+    linija.Stanicas.sort((stanica1, stanica2) => {
+      return stanica1.Medjustanica.redosled - stanica2.Medjustanica.redosled;
+    });
+
+    //? Slanje odgovora sa sortiranom linijom
     res.status(200).json({ message: "Uspesno pronadjena linija", linija });
   } catch (error) {
-    res.status(500).json({ message: "Doslo je do greskeaaaaa", error });
+    res.status(500).json({ message: "Doslo je do greske", error });
   }
 });
 
@@ -208,7 +220,7 @@ router.put("/:id", async (req, res) => {
       stjuardesa,
       vozac,
     } = req.body;
-console.log(req.body)
+    console.log(req.body);
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -249,41 +261,37 @@ console.log(req.body)
 
     //? Azuriranje medjustanice
     for (let i = 0; i < medjustanice.length; i++) {
+      if (medjustanice[i] == null) {
+        // Preskoči korak ako je element null
+        continue;
+      }
+
       const medjustanicaData = medjustanice[i];
-      const stanicaIdFr = medjustanicaData.stanicaId;
+      const stanicaIdFr = medjustanicaData.stanica;
       const redosled = medjustanicaData.redosled;
 
       console.log(redosled);
+
       const stanicaId1 = await Stanica.findOne({
-        where: { id: stanicaIdFr },
+        where: { naziv: stanicaIdFr },
       });
 
-      let stanicaId = stanicaId1.id;
-
+      console.log(stanicaId1.id, "-------------------");
       //? Ažuriranje podataka medjustanice
-
-      try {
-        await Medjustanica.update(
-          {
-            vremePolaskaM: medjustanicaData.vremePolaskaM,
-            vremeDolaskaM: medjustanicaData.vremeDolaskaM,
-            datumPolaskaM: medjustanicaData.datumPolaskaM,
-            datumDolaskaM: medjustanicaData.datumDolaskaM,
-            pocetakRute: medjustanicaData.pocetakRute,
-            krajRute: medjustanicaData.krajRute,
-            stanicaId: medjustanicaData.noviStanicaId,
-          },
-          {
-            where: { stanicaId, linijaId },
-          }
-        );
-        console.log("Izmene su sačuvane u bazi podataka.");
-      } catch (error) {
-        console.error(
-          "Greška prilikom ažuriranja podataka u bazi podataka:",
-          error
-        );
-      }
+      await Medjustanica.update(
+        {
+          vremePolaskaM: medjustanicaData.vremePolaskaM,
+          vremeDolaskaM: medjustanicaData.vremeDolaskaM,
+          datumPolaskaM: medjustanicaData.datumPolaskaM,
+          datumDolaskaM: medjustanicaData.datumDolaskaM,
+          pocetakRute: medjustanicaData.pocetakRute,
+          krajRute: medjustanicaData.krajRute,
+          stanicaId: stanicaId1.id,
+        },
+        {
+          where: { redosled, linijaId },
+        }
+      );
     }
 
     return res.status(200).json({ message: "Uspešno uređena linija." });

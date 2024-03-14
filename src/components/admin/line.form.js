@@ -38,8 +38,18 @@ const LineForm = ({ mode, id, state }) => {
     const data = await response.json();
     setLinija(data.linija);
   };
+
+  // Sortiranje stanica po polju "redosled"
+  const sortiraneStanice = linija.Stanicas?.sort(
+    (a, b) => a.redosled - b.redosled
+  );
+  console.log(
+    linija.Stanicas?.Medjustanica,
+    "124411111111111111111111111111111"
+  );
+  console.log(sortiraneStanice, "------------------");
   console.log(linija);
-  console.log(waypoints)
+  console.log(waypoints);
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -94,7 +104,7 @@ const LineForm = ({ mode, id, state }) => {
 
     // Pozovite funkciju za uklanjanje medjustanica iz admin logike
     adminLogic.ukloniMedjustanicu(index);
-};
+  };
 
   const handleSelectChange = (event, index) => {
     const newSelectedValues = [...selectedValues];
@@ -124,7 +134,7 @@ const LineForm = ({ mode, id, state }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-  
+
     if (mode === "add") {
       adminLogic.upisLinije();
     } else if (mode === "edit") {
@@ -141,7 +151,7 @@ const LineForm = ({ mode, id, state }) => {
         vozac: formData.get("vozac"),
         stjuardesa: formData.get("stjuardesa"),
       };
-  
+
       adminLogic.editLinije(data, id);
     }
   };
@@ -333,11 +343,11 @@ const LineForm = ({ mode, id, state }) => {
                         />
                         <div>
                           <button
-                           type="button"
-                           className="buttonSwitch korekcijaDugmeta"
-                           onClick={() => removeWaypoint(index)}
+                            type="button"
+                            className="buttonSwitch korekcijaDugmeta"
+                            onClick={() => removeWaypoint(index)}
                           >
-                               Ukloni medjustanicu
+                            Ukloni medjustanicu
                           </button>
                         </div>
                       </div>
@@ -390,7 +400,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
 
                   <input
-                   /*  defaultValue={linija.datumPolaska} */
+                    /*  defaultValue={linija.datumPolaska} */
                     name="datumPolaska"
                     type="date"
                     required
@@ -405,7 +415,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
 
                   <input
-                   /*  defaultValue={linija.datumDolaska} */
+                    /*  defaultValue={linija.datumDolaska} */
                     name="datumDolaska"
                     type="date"
                     required
@@ -422,7 +432,7 @@ const LineForm = ({ mode, id, state }) => {
                   {/* className="inputText name1 input-new"
                       style={{ fontSize: "1rem" }} */}
                   <input
-                   /*  defaultValue={linija.vremePolaska} */
+                    /*  defaultValue={linija.vremePolaska} */
                     className="input-stanica-vreme"
                     type="time"
                     required
@@ -440,7 +450,7 @@ const LineForm = ({ mode, id, state }) => {
                   style={{ fontSize: "1rem" }} */}
 
                   <input
-                   /*  defaultValue={linija.vremeDolaska} */
+                    /*  defaultValue={linija.vremeDolaska} */
                     className="input-stanica-vreme"
                     type="time"
                     required
@@ -452,7 +462,7 @@ const LineForm = ({ mode, id, state }) => {
                     <label className="labela-stanica">Izaberite autobus</label>
                   </div>
                   <select
-                   /*  value={linija.oznakaBusa} */
+                    /*  value={linija.oznakaBusa} */
                     name="oznakaBusa"
                     required
                     className="odaberiBus"
@@ -516,116 +526,114 @@ const LineForm = ({ mode, id, state }) => {
                     })}
                   </select>
                   <div>
-                  {linija.Stanicas?.map((stanicas, index) => (
-                    <div key={index}>
-                      <div className="red-05">
-                        <hr />
-                      </div>
-                      <div className="red-05">
-                        <label className="labela-stanica">
-                          <strong>
-                            <Trans i18nKey="description.part165">
-                              {" "}
-                              Usputna stanica{" "}
-                            </Trans>
-                            {index + 1}
-                          </strong>
-                        </label>
-                      </div>
-                      <select
+                    {linija.Stanicas?.map((stanicas, index) => (
+                      <div key={index}>
+                        <div className="red-05">
+                          <hr />
+                        </div>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <strong>
+                              <Trans i18nKey="description.part165">
+                                {" "}
+                                Usputna stanica{" "}
+                              </Trans>
+                              {index + 1}
+                            </strong>
+                          </label>
+                        </div>
+                        <select
                           name="stanica"
                           className="edit-medjustanica"
                           onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
-                       }
-                       defaultValue={stanicas.naziv}
-                      >
-                        
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                          defaultValue={stanicas.naziv}
+                        >
                           {stanice.map((stanica) => (
                             <option
-                               key={stanica}
-                               value={stanica}
+                              key={stanica}
+                              value={stanica}
                               selected={stanicas.naziv === stanica}
                             >
-                             {stanica}
-                           </option>
-                           
-                           ))}
+                              {stanica}
+                            </option>
+                          ))}
                         </select>
-                      &emsp;&emsp;
-                      {/* <label className="labela-stanica">
+                        &emsp;&emsp;
+                        {/* <label className="labela-stanica">
                        
                       </label> */}
-                      <div className="red-05">
-                        <label className="labela-stanica">
-                          <Trans i18nKey="description.part150">
-                            Vreme odlaska (polaska)
-                          </Trans>
-                        </label>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part150">
+                              Vreme odlaska (polaska)
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremePolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part13">
+                              Vreme dolaska
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.vremeDolaskaM}
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremeDolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part7">
+                              Datum polaska
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.datumPolaskaM}
+                          name="datumPolaskaM"
+                          type="date"
+                          className="input-stanica"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        />
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part7">
+                              Datum dolaska
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.datumDolaskaM}
+                          name="datumDolaskaM"
+                          type="date"
+                          className="input-stanica"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        />
                       </div>
-                      <input
-                        defaultValue={stanicas.Medjustanica.vremePolaskaM} 
-                        className="input-stanica"
-                        type="time"
-                        required
-                        label="Time"
-                        name="vremePolaskaM"
-                        onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
-                        }
-                      ></input>
-                      <div className="red-05">
-                        <label className="labela-stanica">
-                          <Trans i18nKey="description.part13">
-                            Vreme dolaska
-                          </Trans>
-                        </label>
-                      </div>
-                      <input
-                        defaultValue={stanicas.Medjustanica.vremeDolaskaM} 
-                        className="input-stanica"
-                        type="time"
-                        required
-                        label="Time"
-                        name="vremeDolaskaM"
-                        onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
-                        }
-                      ></input>
-                      <div className="red-05">
-                        <label className="labela-stanica">
-                          <Trans i18nKey="description.part7">
-                            Datum polaska
-                          </Trans>
-                        </label>
-                      </div>
-                      <input
-                       defaultValue={stanicas.Medjustanica.datumPolaskaM} 
-                        name="datumPolaskaM"
-                        type="date"
-                        className="input-stanica"
-                        onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
-                        }
-                      />
-                      <div className="red-05">
-                        <label className="labela-stanica">
-                          <Trans i18nKey="description.part7">
-                            Datum dolaska
-                          </Trans>
-                        </label>
-                      </div>
-                      <input
-                        defaultValue={stanicas.Medjustanica.datumDolaskaM}
-                        name="datumDolaskaM"
-                        type="date"
-                        className="input-stanica"
-                        onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
-                        }
-                      />
-                    </div>
-                  ))}
+                    ))}
                   </div>
                   <div className="red-1"></div>
                   {waypoints.map((waypoint, index) => (
@@ -736,13 +744,13 @@ const LineForm = ({ mode, id, state }) => {
                         }
                       />
                       <div>
-                      <button
+                        <button
                           type="button"
                           className="buttonSwitch korekcijaDugmeta"
                           onClick={() => removeWaypoint(index)}
-                      >
-                               Ukloni medjustanicu
-                      </button>
+                        >
+                          Ukloni medjustanicu
+                        </button>
                       </div>
                     </div>
                   ))}
