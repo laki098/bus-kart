@@ -540,6 +540,7 @@ const LineForm = ({ mode, id, state }) => {
                        }
                        defaultValue={stanicas.naziv}
                       >
+                        
                           {stanice.map((stanica) => (
                             <option
                                key={stanica}
@@ -548,6 +549,7 @@ const LineForm = ({ mode, id, state }) => {
                             >
                              {stanica}
                            </option>
+                           
                            ))}
                         </select>
                       &emsp;&emsp;
@@ -590,7 +592,7 @@ const LineForm = ({ mode, id, state }) => {
                           adminLogic.handlerMedjustanice(e, index)
                         }
                       ></input>
-                      {/* <div className="red-05">
+                      <div className="red-05">
                         <label className="labela-stanica">
                           <Trans i18nKey="description.part7">
                             Datum polaska
@@ -621,7 +623,7 @@ const LineForm = ({ mode, id, state }) => {
                         onChange={(e) =>
                           adminLogic.handlerMedjustanice(e, index)
                         }
-                      /> */}
+                      />
                     </div>
                   ))}
                   </div>

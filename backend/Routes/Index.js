@@ -208,7 +208,7 @@ router.put("/:id", async (req, res) => {
       stjuardesa,
       vozac,
     } = req.body;
-
+console.log(req.body)
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
