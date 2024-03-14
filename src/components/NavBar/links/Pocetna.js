@@ -196,7 +196,7 @@ const Pocetna = () => {
 
             <div className="form">
               <button
-                className="fa-solid fa-repeat buttonSwitch "
+                className="fa-solid fa-repeat buttonSwitch buttonCenter"
                 onClick={click}
               ></button>
             </div>
@@ -235,7 +235,7 @@ const Pocetna = () => {
               </div>
             </div>
             <div className="form-button">
-              <button onClick={clickBait} className="buttonSwitch">
+              <button onClick={clickBait} className="buttonSwitch buttonCenter">
                 <Trans i18nKey="description.part34"> Red vožnje </Trans>
               </button>
             </div>
