@@ -251,7 +251,9 @@ router.put("/:id", async (req, res) => {
     for (let i = 0; i < medjustanice.length; i++) {
       const medjustanicaData = medjustanice[i];
       const stanicaIdFr = medjustanicaData.stanicaId;
+      const redosled = medjustanicaData.redosled;
 
+      console.log(redosled);
       const stanicaId1 = await Stanica.findOne({
         where: { id: stanicaIdFr },
       });
@@ -282,7 +284,6 @@ router.put("/:id", async (req, res) => {
           error
         );
       }
-      /* } */
     }
 
     return res.status(200).json({ message: "Uspešno uređena linija." });
