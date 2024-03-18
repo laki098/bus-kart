@@ -266,31 +266,48 @@ router.put("/:id", async (req, res) => {
       }
 
       const medjustanicaData = medjustanice[i];
-      const stanicaIdFr = medjustanicaData.stanica;
       const redosled = medjustanicaData.redosled;
+      const stanicaIdFr = medjustanicaData.stanica;
+      let stanicaId1;
 
-      console.log(redosled);
+      if (stanicaIdFr) {
+        stanicaId1 = await Stanica.findOne({
+          where: { naziv: stanicaIdFr },
+        });
+      }
 
-      const stanicaId1 = await Stanica.findOne({
-        where: { naziv: stanicaIdFr },
-      });
-
-      console.log(stanicaId1.id, "-------------------");
+      console.log(stanicaId1);
+      console.log("----------------RADII ---");
       //? Ažuriranje podataka medjustanice
-      await Medjustanica.update(
-        {
-          vremePolaskaM: medjustanicaData.vremePolaskaM,
-          vremeDolaskaM: medjustanicaData.vremeDolaskaM,
-          datumPolaskaM: medjustanicaData.datumPolaskaM,
-          datumDolaskaM: medjustanicaData.datumDolaskaM,
-          pocetakRute: medjustanicaData.pocetakRute,
-          krajRute: medjustanicaData.krajRute,
-          stanicaId: stanicaId1.id,
-        },
-        {
-          where: { redosled, linijaId },
-        }
-      );
+      const updateData = {};
+
+      if (medjustanicaData.vremePolaskaM !== undefined) {
+        updateData.vremePolaskaM = medjustanicaData.vremePolaskaM;
+      }
+      if (medjustanicaData.vremeDolaskaM !== undefined) {
+        updateData.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
+      }
+      if (medjustanicaData.datumPolaskaM !== undefined) {
+        updateData.datumPolaskaM = medjustanicaData.datumPolaskaM;
+      }
+      if (medjustanicaData.datumDolaskaM !== undefined) {
+        updateData.datumDolaskaM = medjustanicaData.datumDolaskaM;
+      }
+      if (medjustanicaData.pocetakRute !== undefined) {
+        updateData.pocetakRute = medjustanicaData.pocetakRute;
+      }
+      if (medjustanicaData.krajRute !== undefined) {
+        updateData.krajRute = medjustanicaData.krajRute;
+      }
+
+      // Dodajte uvjet za stanicaId
+      if (stanicaId1 && stanicaId1.id !== undefined) {
+        updateData.stanicaId = stanicaId1.id;
+      }
+
+      await Medjustanica.update(updateData, {
+        where: { redosled, linijaId },
+      });
     }
 
     return res.status(200).json({ message: "Uspešno uređena linija." });
