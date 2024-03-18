@@ -39,6 +39,7 @@ const AdminInitial = () => {
     if (!valueDate) return;
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
     const data = await response.json();
+    console.log(data.rezultat)
     setFilteredLinije(data.rezultat);
   };
 

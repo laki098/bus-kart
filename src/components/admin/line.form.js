@@ -33,15 +33,13 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
+  console.log(state)
 
   const getLinija = async () => {
     const response = await fetch(`${apiUrl}/linija/${id}`);
     const data = await response.json();
     setLinija(data.linija);
   };
-
-  console.log(linija);
-  console.log(waypoints);
 
   const getStanice = async () => {
     const response = await fetch(`${apiUrl}/stanica`);
@@ -846,6 +844,7 @@ const LineForm = ({ mode, id, state }) => {
 
                   <input
                     defaultValue={state.vremeDolaska}
+
                     className="input-stanica"
                     type="time"
                     required

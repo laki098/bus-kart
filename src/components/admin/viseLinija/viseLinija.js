@@ -48,9 +48,10 @@ const ViseLinija = () => {
 
     // Prikupljanje medjustanica sa vremenima
     const medjustanice = selectedLinija.Stanicas.map((medjustanica) => ({
+      
       stanica: medjustanica.naziv,
-      vremePolaskaM: selectedLinija.vremePolaska,
-      vremeDolaskaM: selectedLinija.vremeDolaska,
+      vremePolaskaM: medjustanica.Medjustanica.vremePolaskaM,
+      vremeDolaskaM: medjustanica.Medjustanica.vremeDolaskaM,
       datumPolaskaM: "2023-12-26", // Postavite datum kako vam odgovara
       datumDolaskaM: "2023-12-26", // Postavite datum kako vam odgovara
       pocetakRute: medjustanica.pocetakRute,
