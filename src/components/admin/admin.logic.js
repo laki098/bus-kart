@@ -7,6 +7,8 @@ const AdminLogic = () => {
     medjustanice: [],
     datumPolaska: [],
     datumDolaska: [],
+    vremePolaska: "", // Dodajemo vreme polaska i dolaska
+    vremeDolaska: "",
   });
   console.log(data);
 
@@ -16,24 +18,58 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-  const handlerMedjustanice = (e, index) => {
-    const { name, value } = e.target;
-    const novaMedjustanica = [...data.medjustanice];
-
-    console.log(index + 1);
-    // Provera da li medjustanica na odgovarajućem indeksu postoji
-    if (!novaMedjustanica[index]) {
-      novaMedjustanica[index] = {};
-    }
-
-    novaMedjustanica[index][name] = value;
-    novaMedjustanica[index]["redosled"] = index + 1;
-    console.log(novaMedjustanica);
-    setData({
-      ...data,
-      medjustanice: novaMedjustanica,
-    });
-  };
+    const handlerMedjustanice = (e, index) => {
+      const { name, value } = e.target;
+      const novaMedjustanica = [...data.medjustanice];
+    
+      if (!novaMedjustanica[index]) {
+        novaMedjustanica[index] = {};
+      }
+    
+      novaMedjustanica[index][name] = value;
+      novaMedjustanica[index]["redosled"] = index + 1;
+    
+      // Provera da li su vreme polaska i dolaska definisani
+      if (!data.vremePolaska || !data.vremeDolaska) {
+        return;
+      }
+    
+      // Provera da li je vreme medjustanice između vremena polaska i dolaska
+      const [satiMedjustanice, minutiMedjustanice] = value.split(":").map(Number);
+      const [satiPolaska, minutiPolaska] = data.vremePolaska.split(":").map(Number);
+      const [satiDolaska, minutiDolaska] = data.vremeDolaska.split(":").map(Number);
+    
+      const vremeMedjustanice = satiMedjustanice * 60 + minutiMedjustanice;
+      const vremePolaska = satiPolaska * 60 + minutiPolaska;
+      const vremeDolaska = satiDolaska * 60 + minutiDolaska;
+    
+      if (vremeMedjustanice < vremePolaska || vremeMedjustanice > vremeDolaska) {
+        // Ako vreme medjustanice nije između vremena polaska i dolaska, preskoči prikazivanje poruke i ne zaustavljaj dalje izvršavanje
+        alert("Izabrano vreme izlazi iz opsega pocetne i krajnje stanice!");
+        return;
+      }
+    
+      // Provera da li je selektovana stanica medjustanica
+      if (value === data.pocetnaStanica || value === data.krajnjaStanica) {
+        // Ako selektovana stanica nije medjustanica, prikaži poruku i ne nastavljaj dalje izvršavanje
+        alert("Izabrana stanica vec postoji!");
+        return;
+      }
+    
+      // Provera da li je datum definisan
+      if (!data.datumPolaska || !data.datumDolaska) {
+        // Ako datum nije definisan, prikaži poruku i ne nastavljaj dalje izvršavanje
+        alert("Morate uneti datum polaska i dolaska pre dodavanja medjustanica!");
+        return;
+      }
+      
+    
+      // Ako su sve provere prošle, ažuriraj stanje
+      setData({
+        ...data,
+        medjustanice: novaMedjustanica,
+      });
+    };
 
   const handlerDatumPolaska = (e) =>
     setData({
