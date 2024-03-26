@@ -215,6 +215,51 @@ const LineForm = ({ mode, id, state }) => {
                       })}
                     </select>
                   </div>
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part7">Datum polaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    /*  defaultValue={linija.datumPolaska} */
+                    name="datumPolaska"
+                    type="date"
+                    required
+                    className="input-stanica"
+                    min={today}
+                    onChange={adminLogic.handlerDatumPolaska}
+                  />
+
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part9">Datum dolaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    /*  defaultValue={linija.datumDolaska} */
+                    name="datumDolaska"
+                    type="date"
+                    required
+                    className="input-stanica"
+                    min={today}
+                    onChange={adminLogic.handlerDatumDolaska}
+                  />
+
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                    </label>
+                  </div>
+                  <input
+                    /*  defaultValue={linija.vremePolaska} */
+                    className="input-stanica-vreme"
+                    type="time"
+                    required
+                    name="vremePolaska"
+                    onChange={adminLogic.changeHandler}
+                  ></input>
                   <div className="red-05"></div>
                   <div>
                     {" "}
@@ -258,26 +303,6 @@ const LineForm = ({ mode, id, state }) => {
                             );
                           })}
                         </select>
-
-                        <div className="red-05">
-                          <label className="labela-stanica">
-                            <Trans i18nKey="description.part150">
-                              {/* bilo je vreme polaska  */}
-                              Vreme odlaska (polaska)
-                            </Trans>
-                          </label>
-                        </div>
-                        <input
-                          /* defaultValue={linija.vremePolaska} */
-                          className="input-stanica"
-                          type="time"
-                          required
-                          label="Time"
-                          name="vremePolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
                             <Trans i18nKey="description.part13">
@@ -293,6 +318,25 @@ const LineForm = ({ mode, id, state }) => {
                           required
                           label="Time"
                           name="vremeDolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part150">
+                              {/* bilo je vreme polaska  */}
+                              Vreme odlaska (polaska)
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          /* defaultValue={linija.vremePolaska} */
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremePolaskaM"
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
@@ -356,7 +400,23 @@ const LineForm = ({ mode, id, state }) => {
                       </Trans>
                     </button>
                   </div>
-                  {/*<br />*/}
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part13">Vreme dolaska</Trans>
+                    </label>
+                  </div>
+
+                  {/* bila je klasa u inputu inputText name1 input-new
+                  style={{ fontSize: "1rem" }} */}
+
+                  <input
+                    /*  defaultValue={linija.vremeDolaska} */
+                    className="input-stanica-vreme"
+                    type="time"
+                    required
+                    name="vremeDolaska"
+                    onChange={adminLogic.changeHandler}
+                  ></input>
                   <div className="red-05">
                     <label className="labela-stanica">
                       <Trans i18nKey="description.part5">Mesto dolaska</Trans>
@@ -384,74 +444,6 @@ const LineForm = ({ mode, id, state }) => {
                       );
                     })}
                   </select>
-                  {/*<br />*/}
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part7">Datum polaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    /*  defaultValue={linija.datumPolaska} */
-                    name="datumPolaska"
-                    type="date"
-                    required
-                    className="input-stanica"
-                    min={today}
-                    onChange={adminLogic.handlerDatumPolaska}
-                  />
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part9">Datum dolaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    /*  defaultValue={linija.datumDolaska} */
-                    name="datumDolaska"
-                    type="date"
-                    required
-                    className="input-stanica"
-                    min={today}
-                    onChange={adminLogic.handlerDatumDolaska}
-                  />
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part11">Vreme polaska</Trans>
-                    </label>
-                  </div>
-
-                  {/* className="inputText name1 input-new"
-                      style={{ fontSize: "1rem" }} */}
-                  <input
-                    /*  defaultValue={linija.vremePolaska} */
-                    className="input-stanica-vreme"
-                    type="time"
-                    required
-                    name="vremePolaska"
-                    onChange={adminLogic.changeHandler}
-                  ></input>
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part13">Vreme dolaska</Trans>
-                    </label>
-                  </div>
-
-                  {/* bila je klasa u inputu inputText name1 input-new
-                  style={{ fontSize: "1rem" }} */}
-
-                  <input
-                    /*  defaultValue={linija.vremeDolaska} */
-                    className="input-stanica-vreme"
-                    type="time"
-                    required
-                    name="vremeDolaska"
-                    onChange={adminLogic.changeHandler}
-                  ></input>
-
                   <div className="red-05">
                     <label className="labela-stanica">Izaberite autobus</label>
                   </div>
@@ -519,6 +511,50 @@ const LineForm = ({ mode, id, state }) => {
                       }
                     })}
                   </select>
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part7">Datum polaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    defaultValue={state.datumPolaska}
+                    name="datumPolaska"
+                    type="date"
+                    min={today}
+                    className="input-stanica"
+                    onChange={adminLogic.changeHandler}
+                  />
+
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part9">Datum dolaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    defaultValue={state.datumDolaska}
+                    name="datumDolaska"
+                    type="date"
+                    min={today}
+                    className="input-stanica"
+                    onChange={adminLogic.changeHandler}
+                  />
+
+                  <div className="red-05">
+                    <label className="labela-stanica">
+                      <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    defaultValue={state.vremePolaska}
+                    className="input-stanica"
+                    type="time"
+                    required
+                    name="vremePolaska"
+                    onChange={adminLogic.changeHandler}
+                  ></input>
                   <div>
                     {linija.Stanicas?.map((stanicas, index) => (
                       <div key={index}>
@@ -560,24 +596,6 @@ const LineForm = ({ mode, id, state }) => {
                       </label> */}
                         <div className="red-05">
                           <label className="labela-stanica">
-                            <Trans i18nKey="description.part150">
-                              Vreme odlaska (polaska)
-                            </Trans>
-                          </label>
-                        </div>
-                        <input
-                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
-                          className="input-stanica"
-                          type="time"
-                          required
-                          label="Time"
-                          name="vremePolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        ></input>
-                        <div className="red-05">
-                          <label className="labela-stanica">
                             <Trans i18nKey="description.part13">
                               Vreme dolaska
                             </Trans>
@@ -590,6 +608,24 @@ const LineForm = ({ mode, id, state }) => {
                           required
                           label="Time"
                           name="vremeDolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part150">
+                              Vreme odlaska (polaska)
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremePolaskaM"
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
@@ -763,6 +799,20 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <div className="red-05">
                     <label className="labela-stanica">
+                      <Trans i18nKey="description.part13">Vreme dolaska</Trans>
+                    </label>
+                  </div>
+
+                  <input
+                    defaultValue={state.vremeDolaska}
+                    className="input-stanica"
+                    type="time"
+                    required
+                    name="vremeDolaska"
+                    onChange={adminLogic.changeHandler}
+                  ></input>
+                  <div className="red-05">
+                    <label className="labela-stanica">
                       <Trans i18nKey="description.part5">Mesto dolaska</Trans>
                     </label>
                   </div>
@@ -790,67 +840,6 @@ const LineForm = ({ mode, id, state }) => {
                       return null;
                     })}
                   </select>
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part7">Datum polaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    defaultValue={state.datumPolaska}
-                    name="datumPolaska"
-                    type="date"
-                    min={today}
-                    className="input-stanica"
-                    onChange={adminLogic.changeHandler}
-                  />
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part9">Datum dolaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    defaultValue={state.datumDolaska}
-                    name="datumDolaska"
-                    type="date"
-                    min={today}
-                    className="input-stanica"
-                    onChange={adminLogic.changeHandler}
-                  />
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part11">Vreme polaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    defaultValue={state.vremePolaska}
-                    className="input-stanica"
-                    type="time"
-                    required
-                    name="vremePolaska"
-                    onChange={adminLogic.changeHandler}
-                  ></input>
-
-                  <div className="red-05">
-                    <label className="labela-stanica">
-                      <Trans i18nKey="description.part13">Vreme dolaska</Trans>
-                    </label>
-                  </div>
-
-                  <input
-                    defaultValue={state.vremeDolaska}
-                    className="input-stanica"
-                    type="time"
-                    required
-                    name="vremeDolaska"
-                    onChange={adminLogic.changeHandler}
-                  ></input>
-
                   <div className="red-05">
                     <label className="labela-stanica">
                       <Trans i18nKey="description.part166">
