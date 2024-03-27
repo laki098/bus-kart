@@ -10,7 +10,6 @@ const AdminLogic = () => {
     vremePolaska: "", // Dodajemo vreme polaska i dolaska
     vremeDolaska: "",
   });
-  console.log(data);
 
   const changeHandler = (e) =>
     setData({
@@ -18,24 +17,26 @@ const AdminLogic = () => {
       [e.target.name]: e.target.value,
     });
 
-    const handlerMedjustanice = (e, index) => {
-      const { name, value } = e.target;
-      const novaMedjustanica = [...data.medjustanice];
-  
-      console.log(index + 1);
-      // Provera da li medjustanica na odgovarajućem indeksu postoji
-      if (!novaMedjustanica[index]) {
-        novaMedjustanica[index] = {};
-      }
-  
-      novaMedjustanica[index][name] = value;
-      novaMedjustanica[index]["redosled"] = index + 1;
-      console.log(novaMedjustanica);
-      setData({
-        ...data,
-        medjustanice: novaMedjustanica,
-      });
+  const handlerMedjustanice = (e, index) => {
+    const { name, value } = e.target;
+    const novaMedjustanica = [...data.medjustanice];
+
+    //? Proširenje niza do odgovarajuće dužine
+    while (novaMedjustanica.length <= index) {
+      novaMedjustanica.push({});
+    }
+
+    //? Postavljanje novih vrednosti na odgovarajućim pozicijama u nizu
+    novaMedjustanica[index] = {
+      ...novaMedjustanica[index],
+      [name]: value,
+      redosled: index + 1,
     };
+    setData({
+      ...data,
+      medjustanice: novaMedjustanica,
+    });
+  };
 
   const handlerDatumPolaska = (e) =>
     setData({

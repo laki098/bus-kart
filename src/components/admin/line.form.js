@@ -23,6 +23,7 @@ const LineForm = ({ mode, id, state }) => {
   const [autobusi, setAutobusi] = useState([]);
   const [vozac, setVozac] = useState([]);
   const [stjuardesa, setStjuardesa] = useState([]);
+  const [najveciRedosled, setNajveciRedosled] = useState(0);
   const today = new Date().toISOString().split("T")[0];
 
   const getAutobusi = async () => {
@@ -33,7 +34,6 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
-  console.log(state);
 
   const getLinija = async () => {
     const response = await fetch(`${apiUrl}/linija/${id}`);
@@ -54,7 +54,7 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   const getKorisnici = async () => {
-    // izdvaja sve korisnike i ovde se radi filter za rolu koja nama treba
+    //? izdvaja sve korisnike i ovde se radi filter za rolu koja nama treba
     const response = await fetch(`${apiUrl}/korisnik`);
     const data = await response.json();
     const korisnici = data.korisnici;
@@ -77,6 +77,7 @@ const LineForm = ({ mode, id, state }) => {
   const duploDugmeMedjustanica = () => {
     addWaypoint();
     adminLogic.dodajMedjustanicu();
+    dobaviNajveciRedosled();
   };
 
   const removeWaypoint = (index) => {
@@ -92,7 +93,7 @@ const LineForm = ({ mode, id, state }) => {
     setSelectedValues(updatedSelectedValues);
     setCene(updatedCene);
 
-    // Pozovite funkciju za uklanjanje medjustanica iz admin logike
+    //? Pozovite funkciju za uklanjanje medjustanica iz admin logike
     adminLogic.ukloniMedjustanicu(index);
   };
 
@@ -117,7 +118,7 @@ const LineForm = ({ mode, id, state }) => {
       /* izmeniLiniju(); */
     }
   }, []);
-  console.log(linija.Stanicas);
+
   const medjustanice = [];
   const datumPolaska = [];
   const datumDolaska = [];
@@ -153,6 +154,17 @@ const LineForm = ({ mode, id, state }) => {
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
+
+  const dobaviNajveciRedosled = () => {
+    const medjustanice = linija.Stanicas;
+    let redosled = medjustanice[0].Medjustanica.redosled;
+    medjustanice.forEach((stanica) => {
+      if (stanica.Medjustanica.redosled > redosled) {
+        redosled = stanica.Medjustanica.redosled;
+      }
+    });
+    setNajveciRedosled(redosled);
+  };
 
   return (
     <div>
@@ -393,7 +405,7 @@ const LineForm = ({ mode, id, state }) => {
                     <button
                       type="button"
                       className="buttonSwitch korekcijaDugmeta"
-                      onClick={duploDugmeMedjustanica}
+                      onClick={() => duploDugmeMedjustanica()}
                     >
                       <Trans i18nKey="description.part151">
                         Dodaj usputnu stanicu{" "}
@@ -667,7 +679,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <div className="red-1"></div>
                   {waypoints.map((waypoint, index) => (
-                    <div key={index}>
+                    <div key={najveciRedosled + 1}>
                       <div className="red-05">
                         <hr />
                       </div>
@@ -678,7 +690,7 @@ const LineForm = ({ mode, id, state }) => {
                               {" "}
                               Usputna stanica{" "}
                             </Trans>
-                            {index + 1}
+                            {najveciRedosled + 1}
                           </strong>
                         </label>
                       </div>
@@ -687,7 +699,7 @@ const LineForm = ({ mode, id, state }) => {
                         className="edit-medjustanica"
                         /* value={medjustanica.stanica} */
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(e, najveciRedosled)
                         }
                       >
                         <option disabled selected>
@@ -720,7 +732,7 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremePolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(e, najveciRedosled)
                         }
                       ></input>
                       <div className="red-05">
@@ -738,7 +750,7 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremeDolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(e, najveciRedosled)
                         }
                       ></input>
                       <div className="red-05">
@@ -755,7 +767,7 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(e, najveciRedosled)
                         }
                       />
                       <div className="red-05">
@@ -772,7 +784,7 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(e, najveciRedosled)
                         }
                       />
                       <div>
