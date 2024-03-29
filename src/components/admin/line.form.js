@@ -23,7 +23,7 @@ const LineForm = ({ mode, id, state }) => {
   const [autobusi, setAutobusi] = useState([]);
   const [vozac, setVozac] = useState([]);
   const [stjuardesa, setStjuardesa] = useState([]);
-  const [najveciRedosled, setNajveciRedosled] = useState(0);
+  const [najveciRedosled, setNajveciRedosled] = useState(undefined);
   const today = new Date().toISOString().split("T")[0];
 
   const getAutobusi = async () => {
@@ -156,6 +156,10 @@ const LineForm = ({ mode, id, state }) => {
   // prevodjenje end
 
   const dobaviNajveciRedosled = () => {
+    if (najveciRedosled != undefined) {
+      setNajveciRedosled((redosled) => redosled + 1);
+      return;
+    }
     const medjustanice = linija.Stanicas;
     let redosled = medjustanice[0].Medjustanica.redosled;
     medjustanice.forEach((stanica) => {

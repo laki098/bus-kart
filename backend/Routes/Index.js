@@ -219,6 +219,7 @@ router.put("/:id", async (req, res) => {
       stjuardesa,
       vozac,
     } = req.body;
+    console.log(req.body);
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -271,74 +272,86 @@ router.put("/:id", async (req, res) => {
       const redosled = medjustanicaData.redosled;
       const stanicaIdFr = medjustanicaData.stanica;
       let stanicaId1;
-      try {
-        if (stanicaIdFr) {
-          stanicaId1 = await Stanica.findOne({
-            where: { naziv: stanicaIdFr },
-          });
+
+      if (stanicaIdFr) {
+        stanicaId1 = await Stanica.findOne({
+          where: { naziv: stanicaIdFr },
+        });
+      }
+
+      //? Ažuriranje i kreiranje podataka medjustanice
+      const medjustanica = await Medjustanica.findOne({
+        where: { redosled, linijaId },
+      });
+      if (!medjustanica) {
+        //? Ako medjustanica ne postoji, kreiramo novu
+        const noviMedjustanica = await Medjustanica.create({
+          redosled,
+          brojSlobodnihMesta: postojucaLinija.brojSlobodnihMesta,
+          vremePolaskaM: medjustanicaData.vremePolaskaM,
+          vremeDolaskaM: medjustanicaData.vremeDolaskaM,
+          datumPolaskaM: medjustanicaData.datumPolaskaM,
+          datumDolaskaM: medjustanicaData.datumDolaskaM,
+          pocetakRute: null,
+          krajRute: null,
+          linijaId,
+          stanicaId: stanicaId1.id,
+        });
+      } else {
+        //? Ako medjustanica već postoji, ažuriraj postojeće podatke
+        const updateData = {};
+
+        if (
+          medjustanicaData.vremePolaskaM !== undefined &&
+          medjustanicaData.vremePolaskaM !== null
+        ) {
+          updateData.vremePolaskaM = medjustanicaData.vremePolaskaM;
+        }
+        if (
+          medjustanicaData.vremeDolaskaM !== undefined &&
+          medjustanicaData.vremeDolaskaM !== null
+        ) {
+          updateData.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
+        }
+        if (
+          medjustanicaData.datumPolaskaM !== undefined &&
+          medjustanicaData.datumPolaskaM !== null
+        ) {
+          updateData.datumPolaskaM = medjustanicaData.datumPolaskaM;
+        }
+        if (
+          medjustanicaData.datumDolaskaM !== undefined &&
+          medjustanicaData.datumDolaskaM !== null
+        ) {
+          updateData.datumDolaskaM = medjustanicaData.datumDolaskaM;
+        }
+        if (
+          medjustanicaData.pocetakRute !== undefined &&
+          medjustanicaData.pocetakRute !== null
+        ) {
+          updateData.pocetakRute = medjustanicaData.pocetakRute;
+        }
+        if (
+          medjustanicaData.krajRute !== undefined &&
+          medjustanicaData.krajRute !== null
+        ) {
+          updateData.krajRute = medjustanicaData.krajRute;
         }
 
-        //? Ažuriranje i kreiranje podataka medjustanice
-        const medjustanica = await Medjustanica.findOne({
+        if (stanicaId1 && stanicaId1.id !== undefined) {
+          updateData.stanicaId = stanicaId1.id;
+          console.log(stanicaId1, stanicaId1.id);
+        }
+
+        await Medjustanica.update(updateData, {
           where: { redosled, linijaId },
         });
-
-        if (!medjustanica) {
-          //? Ako medjustanica ne postoji, kreiramo novu
-          const noviMedjustanica = await Medjustanica.create({
-            redosled,
-            brojSlobodnihMesta: postojucaLinija.brojSlobodnihMesta,
-            vremePolaskaM: medjustanicaData.vremePolaskaM,
-            vremeDolaskaM: medjustanicaData.vremeDolaskaM,
-            datumPolaskaM: medjustanicaData.datumPolaskaM,
-            datumDolaskaM: medjustanicaData.datumDolaskaM,
-            pocetakRute: null,
-            krajRute: null,
-            linijaId,
-            stanicaId: stanicaId1.id,
-          });
-        } else {
-          //? Ako medjustanica već postoji, ažuriraj postojeće podatke
-          const updateData = {};
-
-          if (medjustanicaData.vremePolaskaM !== undefined) {
-            updateData.vremePolaskaM = medjustanicaData.vremePolaskaM;
-          }
-          if (medjustanicaData.vremeDolaskaM !== undefined) {
-            updateData.vremeDolaskaM = medjustanicaData.vremeDolaskaM;
-          }
-          if (medjustanicaData.datumPolaskaM !== undefined) {
-            updateData.datumPolaskaM = medjustanicaData.datumPolaskaM;
-          }
-          if (medjustanicaData.datumDolaskaM !== undefined) {
-            updateData.datumDolaskaM = medjustanicaData.datumDolaskaM;
-          }
-          if (medjustanicaData.pocetakRute !== undefined) {
-            updateData.pocetakRute = medjustanicaData.pocetakRute;
-          }
-          if (medjustanicaData.krajRute !== undefined) {
-            updateData.krajRute = medjustanicaData.krajRute;
-          }
-
-          if (stanicaId1 && stanicaId1.id !== undefined) {
-            updateData.stanicaId = stanicaId1.id;
-            console.log(stanicaId1, stanicaId1.id);
-          }
-
-          await Medjustanica.update(updateData, {
-            where: { redosled, linijaId },
-          });
-        }
-        return res.status(200).json({ message: "Uspešno uređena linija." });
-      } catch (error) {
-        res
-          .status(404)
-          .json({ error, message: "Ova medjustanica već postoji" });
       }
     }
 
     return res.status(200).json({ message: "Uspešno uređena linija." });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error });
   }
 });
