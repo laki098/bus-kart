@@ -20,6 +20,7 @@ const AdminLogic = () => {
   const handlerMedjustanice = (e, index) => {
     const { name, value } = e.target;
     const novaMedjustanica = [...data.medjustanice];
+    console.log(novaMedjustanica);
 
     //? Proširenje niza do odgovarajuće dužine
     while (novaMedjustanica.length <= index) {
@@ -51,6 +52,7 @@ const AdminLogic = () => {
     });
 
   const dodajMedjustanicu = () => {
+    console.log(data);
     setData({
       ...data,
       medjustanice: [...data.medjustanice, {}],

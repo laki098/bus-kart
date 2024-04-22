@@ -23,7 +23,6 @@ const LineForm = ({ mode, id, state }) => {
   const [autobusi, setAutobusi] = useState([]);
   const [vozac, setVozac] = useState([]);
   const [stjuardesa, setStjuardesa] = useState([]);
-  const [najveciRedosled, setNajveciRedosled] = useState(undefined);
   const today = new Date().toISOString().split("T")[0];
 
   const getAutobusi = async () => {
@@ -69,6 +68,7 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   const addWaypoint = () => {
+    console.log(waypoints);
     setWaypoints([...waypoints, ""]);
     setSelectedValues([...selectedValues, ""]);
     setCene([...cene, ""]);
@@ -77,7 +77,6 @@ const LineForm = ({ mode, id, state }) => {
   const duploDugmeMedjustanica = () => {
     addWaypoint();
     adminLogic.dodajMedjustanicu();
-    dobaviNajveciRedosled();
   };
 
   const removeWaypoint = (index) => {
@@ -154,21 +153,6 @@ const LineForm = ({ mode, id, state }) => {
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
-
-  const dobaviNajveciRedosled = () => {
-    if (najveciRedosled != undefined) {
-      setNajveciRedosled((redosled) => redosled + 1);
-      return;
-    }
-    const medjustanice = linija.Stanicas;
-    let redosled = medjustanice[0].Medjustanica.redosled;
-    medjustanice.forEach((stanica) => {
-      if (stanica.Medjustanica.redosled > redosled) {
-        redosled = stanica.Medjustanica.redosled;
-      }
-    });
-    setNajveciRedosled(redosled);
-  };
 
   return (
     <div>
@@ -683,7 +667,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <div className="red-1"></div>
                   {waypoints.map((waypoint, index) => (
-                    <div key={najveciRedosled + 1}>
+                    <div key={linija.Stanicas.length + index}>
                       <div className="red-05">
                         <hr />
                       </div>
@@ -694,7 +678,7 @@ const LineForm = ({ mode, id, state }) => {
                               {" "}
                               Usputna stanica{" "}
                             </Trans>
-                            {najveciRedosled + 1}
+                            {linija.Stanicas.length + index + 1}
                           </strong>
                         </label>
                       </div>
@@ -703,7 +687,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="edit-medjustanica"
                         /* value={medjustanica.stanica} */
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, najveciRedosled)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       >
                         <option disabled selected>
@@ -736,7 +723,10 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremePolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, najveciRedosled)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       ></input>
                       <div className="red-05">
@@ -754,7 +744,10 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremeDolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, najveciRedosled)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       ></input>
                       <div className="red-05">
@@ -771,7 +764,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, najveciRedosled)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       />
                       <div className="red-05">
@@ -788,7 +784,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, najveciRedosled)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       />
                       <div>
