@@ -19,11 +19,22 @@ const LineForm = ({ mode, id, state }) => {
   const [stanice, setStanice] = useState([]);
   const [waypoints, setWaypoints] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
-  const [cene, setCene] = useState([]);
   const [autobusi, setAutobusi] = useState([]);
   const [vozac, setVozac] = useState([]);
   const [stjuardesa, setStjuardesa] = useState([]);
   const today = new Date().toISOString().split("T")[0];
+  const [selectedStations, setSelectedStations] = useState({
+    pocetnaStanica: "",
+    krajnjaStanica: "",
+    medjustanice: []
+  });
+
+  const [selected, setSelected] = useState([]);
+
+  const getSelectedStations = () => {
+    const { pocetnaStanica, krajnjaStanica, medjustanice } = selectedStations;
+    return [pocetnaStanica, ...medjustanice, krajnjaStanica];
+  };
 
   const getAutobusi = async () => {
     const response = await fetch(`${apiUrl}/autobusi`);
@@ -33,7 +44,7 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
-  console.log(state)
+  
 
   const getLinija = async () => {
     const response = await fetch(`${apiUrl}/linija/${id}`);
@@ -69,11 +80,20 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   const addWaypoint = () => {
+    // Dodajte novu međustanicu u waypoints, selectedValues i cene
     setWaypoints([...waypoints, ""]);
     setSelectedValues([...selectedValues, ""]);
-    setCene([...cene, ""]);
+  
+    // Ažurirajte selectedStations stanje
+    setSelectedStations(prevState => ({
+      ...prevState,
+      medjustanice: [...prevState.medjustanice, ""]
+    }));
+  
+    // Ažurirajte selected promenljivu
+    const updatedSelected = getSelectedStations();
+    setSelected(updatedSelected);
   };
-
   const duploDugmeMedjustanica = () => {
     addWaypoint();
     adminLogic.dodajMedjustanicu();
@@ -82,29 +102,15 @@ const LineForm = ({ mode, id, state }) => {
   const removeWaypoint = (index) => {
     const updatedWaypoints = [...waypoints];
     const updatedSelectedValues = [...selectedValues];
-    const updatedCene = [...cene];
 
     updatedWaypoints.splice(index, 1);
     updatedSelectedValues.splice(index, 1);
-    updatedCene.splice(index, 1);
 
     setWaypoints(updatedWaypoints);
     setSelectedValues(updatedSelectedValues);
-    setCene(updatedCene);
 
     // Pozovite funkciju za uklanjanje medjustanica iz admin logike
     adminLogic.ukloniMedjustanicu(index);
-  };
-
-  const handleSelectChange = (event, index) => {
-    const newSelectedValues = [...selectedValues];
-    newSelectedValues[index] = event.target.value;
-    setSelectedValues(newSelectedValues);
-  };
-  const handleCenaChange = (event, index) => {
-    const newCene = [...cene];
-    newCene[index] = event.target.value;
-    setCene(newCene);
   };
 
   useEffect(() => {
@@ -145,6 +151,25 @@ const LineForm = ({ mode, id, state }) => {
       adminLogic.editLinije(data, id);
     }
   };
+
+  const handleWaypointChange = (e, index) => { // Ova funkcija se poziva kada se vrednost neke međustanice promeni.
+    const { value } = e.target;
+    setSelectedStations(prevState => ({
+      ...prevState,
+      medjustanice: prevState.medjustanice.map((item, idx) => idx === index ? value : item)
+    }));
+  };
+
+  const handleStartEndChange = (e) => { // Ova funkcija se poziva kada se promeni početna ili krajnja stanica.
+    const { name, value } = e.target;
+    setSelectedStations(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+
+
 
   //prevodjenje start
   const lngs = {
@@ -191,8 +216,10 @@ const LineForm = ({ mode, id, state }) => {
                     <select
                       name="pocetnaStanica"
                       className="input-stanica"
-                      onChange={adminLogic.changeHandler}
-                    >
+                      onChange={(e) => {
+                        adminLogic.changeHandler(e);
+                        handleStartEndChange(e);
+                      }}>
                       <option
                         className="medjustanica"
                         value=""
@@ -208,6 +235,7 @@ const LineForm = ({ mode, id, state }) => {
                             className="medjustanica"
                             key={stanica}
                             value={stanica}
+                            disabled={selected.includes(stanica)}
                           >
                             {stanica}
                           </option>
@@ -279,9 +307,10 @@ const LineForm = ({ mode, id, state }) => {
                           name="stanica"
                           className="input-stanica"
                           /* value={medjustanica.stanica} */
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
+                          onChange={(e) => {
+                            adminLogic.handlerMedjustanice(e, index);
+                            handleWaypointChange(e, index);
+                          }}
                         >
                           <option
                             className="medjustanica"
@@ -297,6 +326,7 @@ const LineForm = ({ mode, id, state }) => {
                                 className="medjustanica"
                                 key={stanica}
                                 value={stanica}
+                                disabled={selected.includes(stanica)}
                               >
                                 {stanica}
                               </option>
@@ -318,9 +348,7 @@ const LineForm = ({ mode, id, state }) => {
                           required
                           label="Time"
                           name="vremeDolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
+                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
                         ></input>
                          <div className="red-05">
                           <label className="labela-stanica">
@@ -337,9 +365,7 @@ const LineForm = ({ mode, id, state }) => {
                           required
                           label="Time"
                           name="vremePolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
+                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -427,7 +453,10 @@ const LineForm = ({ mode, id, state }) => {
                     name="krajnjaStanica"
                     className="input-stanica"
                     required
-                    onChange={adminLogic.changeHandler}
+                    onChange={(e) => {
+                      adminLogic.changeHandler(e);
+                      handleStartEndChange(e);
+                    }}
                   >
                     <option className="medjustanica" value="" disabled selected>
                       Izaberite stanicu
@@ -438,6 +467,7 @@ const LineForm = ({ mode, id, state }) => {
                           className="medjustanica"
                           key={stanica}
                           value={stanica}
+                          disabled={selected.includes(stanica)}
                         >
                           {stanica}
                         </option>
