@@ -44,7 +44,6 @@ const LineForm = ({ mode, id, state }) => {
     });
     setAutobusi(autobusi);
   };
-  
 
   const getLinija = async () => {
     const response = await fetch(`${apiUrl}/linija/${id}`);
@@ -65,7 +64,7 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   const getKorisnici = async () => {
-    // izdvaja sve korisnike i ovde se radi filter za rolu koja nama treba
+    //? izdvaja sve korisnike i ovde se radi filter za rolu koja nama treba
     const response = await fetch(`${apiUrl}/korisnik`);
     const data = await response.json();
     const korisnici = data.korisnici;
@@ -81,6 +80,7 @@ const LineForm = ({ mode, id, state }) => {
 
   const addWaypoint = () => {
     // Dodajte novu međustanicu u waypoints, selectedValues i cene
+    console.log(waypoints);
     setWaypoints([...waypoints, ""]);
     setSelectedValues([...selectedValues, ""]);
   
@@ -109,7 +109,7 @@ const LineForm = ({ mode, id, state }) => {
     setWaypoints(updatedWaypoints);
     setSelectedValues(updatedSelectedValues);
 
-    // Pozovite funkciju za uklanjanje medjustanica iz admin logike
+    //? Pozovite funkciju za uklanjanje medjustanica iz admin logike
     adminLogic.ukloniMedjustanicu(index);
   };
 
@@ -350,7 +350,7 @@ const LineForm = ({ mode, id, state }) => {
                           name="vremeDolaskaM"
                           onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
                         ></input>
-                         <div className="red-05">
+                        <div className="red-05">
                           <label className="labela-stanica">
                             <Trans i18nKey="description.part150">
                               {/* bilo je vreme polaska  */}
@@ -419,7 +419,7 @@ const LineForm = ({ mode, id, state }) => {
                     <button
                       type="button"
                       className="buttonSwitch korekcijaDugmeta"
-                      onClick={duploDugmeMedjustanica}
+                      onClick={() => duploDugmeMedjustanica()}
                     >
                       <Trans i18nKey="description.part151">
                         Dodaj usputnu stanicu{" "}
@@ -697,7 +697,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <div className="red-1"></div>
                   {waypoints.map((waypoint, index) => (
-                    <div key={index}>
+                    <div key={linija.Stanicas.length + index}>
                       <div className="red-05">
                         <hr />
                       </div>
@@ -708,7 +708,7 @@ const LineForm = ({ mode, id, state }) => {
                               {" "}
                               Usputna stanica{" "}
                             </Trans>
-                            {index + 1}
+                            {linija.Stanicas.length + index + 1}
                           </strong>
                         </label>
                       </div>
@@ -717,7 +717,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="edit-medjustanica"
                         /* value={medjustanica.stanica} */
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       >
                         <option disabled selected>
@@ -750,7 +753,10 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremePolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       ></input>
                       <div className="red-05">
@@ -768,7 +774,10 @@ const LineForm = ({ mode, id, state }) => {
                         label="Time"
                         name="vremeDolaskaM"
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       ></input>
                       <div className="red-05">
@@ -785,7 +794,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       />
                       <div className="red-05">
@@ -802,7 +814,10 @@ const LineForm = ({ mode, id, state }) => {
                         className="input-stanica"
                         min={today}
                         onChange={(e) =>
-                          adminLogic.handlerMedjustanice(e, index)
+                          adminLogic.handlerMedjustanice(
+                            e,
+                            linija.Stanicas.length + index
+                          )
                         }
                       />
                       <div>
@@ -835,7 +850,6 @@ const LineForm = ({ mode, id, state }) => {
 
                   <input
                     defaultValue={state.vremeDolaska}
-
                     className="input-stanica"
                     type="time"
                     required

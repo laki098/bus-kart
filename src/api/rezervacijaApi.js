@@ -100,7 +100,70 @@ const RezervacijaApi = () => {
     datumDolaska,
     vremePolaska,
     vremeDolaska,
-    linijaId,
+    povIspravkaIdLinija,      //linijaId,
+    pocetnaStanicaId,
+    krajnjaStanicaId,
+    korisnikId,
+    osvezenje,
+    oznakaSedista,
+    tipKarte,
+    email, //dodala
+    //rezervacijaId,    // dodala
+  ) => {
+    console.log(
+      "--------------!!!!------",
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      povIspravkaIdLinija,      //linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista,
+      tipKarte,
+      email, //dodala
+      //rezervacijaId,
+    );
+    /* bilo je dole post      */
+    /* return await axios.put(`${apiUrl}/linija/rezervacija/${rezervacijaId}`, */
+    // dole je pisalo linijaId
+
+    const url = `${apiUrl}/linija/rezervacija/${povIspravkaIdLinija}`; // Dinamički generirajte URL s ID-om rezervacije
+    const url1  = `${apiUrl}/linija/rezervacija`;
+    return await axios.patch(url, {
+      brojMesta,
+      polaznaStanicaR,
+      krajnjaStanicaR,
+      datumPolaska,
+      datumDolaska,
+      vremePolaska,
+      vremeDolaska,
+      povIspravkaIdLinija,      //linijaId,
+      pocetnaStanicaId,
+      krajnjaStanicaId,
+      korisnikId,
+      osvezenje,
+      oznakaSedista,
+      tipKarte,
+      email, //dodala
+      //rezervacijaId,
+    });
+  };
+
+  const pre_rezervacija = async (
+    brojMesta,
+    polaznaStanicaR,
+    krajnjaStanicaR,
+    datumPolaska,
+    datumDolaska,
+    vremePolaska,
+    vremeDolaska,
+    linijaId,       //povIspravkaIdLinija,
     pocetnaStanicaId,
     krajnjaStanicaId,
     korisnikId,
@@ -109,25 +172,10 @@ const RezervacijaApi = () => {
     tipKarte,
     email //dodala
   ) => {
-    console.log(
-      "--------------333------",
-      brojMesta,
-      polaznaStanicaR,
-      krajnjaStanicaR,
-      datumPolaska,
-      datumDolaska,
-      vremePolaska,
-      vremeDolaska,
-      linijaId,
-      pocetnaStanicaId,
-      krajnjaStanicaId,
-      korisnikId,
-      osvezenje,
-      oznakaSedista,
-      tipKarte,
-      email //dodala
-    );
+    console.log('PreRezervacija');
     return await axios.post(`${apiUrl}/linija/rezervacija`, {
+      //axios.post(`${apiUrl}/linija/rezervacija`, {
+      //axios.put(`${apiUrl}/linija/rezervacija/${linijaId}`, {
       brojMesta,
       polaznaStanicaR,
       krajnjaStanicaR,
@@ -135,7 +183,7 @@ const RezervacijaApi = () => {
       datumDolaska,
       vremePolaska,
       vremeDolaska,
-      linijaId,
+      linijaId,       //povIspravkaIdLinija, 
       pocetnaStanicaId,
       krajnjaStanicaId,
       korisnikId,
@@ -146,7 +194,7 @@ const RezervacijaApi = () => {
     });
   };
 
-  return { rezervacija, rezervacijaPovratna, rezervacijaPovratnaIzmena };
+  return { rezervacija, rezervacijaPovratna, rezervacijaPovratnaIzmena, pre_rezervacija };
 };
 
 export default RezervacijaApi;

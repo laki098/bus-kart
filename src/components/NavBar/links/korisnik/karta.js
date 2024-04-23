@@ -8,12 +8,10 @@ import "../i18n";
 import "../../../../components/NavBar/links/i18n";
 import apiUrl from "../../../../apiConfig";
 import { Link } from "react-router-dom";      //zbog rezervacije sedista povratne karte
-import RezervacijaComponent from "../../../rezervacije/rezervacija.component";
 
-//import { PotvrdaContext } from "./PotvrdaContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-//export const PotvrdaContext = createContext();
-//import { PotvrdaContext } from './PotvrdaContext';
 
 const Karta = () => {
   const [sveKarte, setSveKarte] = useState([]);
@@ -23,15 +21,11 @@ const Karta = () => {
   const [potvrdaP,setPotvrdaP]= useState(false);   //vrsta karta true= jeste povratna; je false= nije povratna
   const [loading, setLoading] = useState(true); // Dodato stanje za praćenje učitavanja
 
+  let predhodnaPovratna = false;
 
 
-
-//  const[povratnaYes, setPovratnaYes]=useState(false); //da li je tipKarte Povratna=true ako nije false
- // const [kliknuto, setKliknuto] = useState(false);    // pomocna promenljiva za prelaz na RezervacijaComponent
-
-  
- // const prikaziDugme = tipKarte === 'Povratna' || tipKarte === 'Return';
-
+  const [predPovratna, setPredPovratna]=useState(false);
+  const [trenutnoOdabranaPovratna, setTrenutnoOdabranaPovratna] = useState(null);
 
   // Izvlačenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -66,7 +60,10 @@ const Karta = () => {
         vremeD: item.vremeDolaska,
         cekiranje: item.cekiran,
         povratna:item.tipKarte,
-        tipKarte:item.tipKarte,     // ovaj deo omogucava da se uvek korektno prikaze dugme Povratna 
+        tipKarte:item.tipKarte || " ",     // ovaj deo omogucava da se uvek korektno prikaze dugme Povratna 
+        pocetnaStanicaId: item.pocetnaStanicaId,    // dodala zbog upisa povratne karte
+        krajnjaStanicaId: item.krajnjaStanicaId,    // dodala zbog upisa povratne karte
+        email: item.email,                          // dodala jer ga nije bilo
 
       };
     });
@@ -79,36 +76,22 @@ const Karta = () => {
 
   //rezervacija sediste kod povratne karte
 
-  const sedistePovratak = (karte) => {
-    const potvrda = window.confirm("Da li je želite da rezervišete sedište u povratnoj karti?");
+  const sedistePovratak = (karte) => {  
+    const potvrda = window.confirm("Da li je želite da rezervišete sedište u povratnoj karti?");  
     if (potvrda) {
       alert("Kliknite na dugme Sedište");
       setPotvrdaP(true);     
     } else {
-    //  alert("Ne");
       setPotvrdaP(false);
     }
-   // return(potvrdaP);
   };
 
-{/*
-  const sedisteYes=(karte)=>{
-    const potvrda = window.confirm("Želite li da rezervisete sedište na povratnoj liniji?");
-    if (potvrda) {
-      setPovratnaYes(true);    
-    } else {
-      setPovratnaYes(false);
-    }
-    return(povratnaYes);
+  const sedistePovratak_1=()=>{
+      setPotvrdaP(true); // Postavljanje setPotvrdaP na true kada se klikne na dugme 
+
   }
 
-  useEffect(() => {
-    // Ovde ćete dobiti ažuriranu vrednost potvrdaP
-    console.log("Karta.js - povratnaYes:", povratnaYes);
-  //  alert('potvrdaP  ' + potvrdaP);
-  }, [povratnaYes]);
 
-*/}
   useEffect(() => {
     // Ovde ćete dobiti ažuriranu vrednost potvrdaP
     console.log("Karta.js - potvrdaP:", potvrdaP);
@@ -156,6 +139,11 @@ const Karta = () => {
         //    povratnaPrikaz:povratnaYes, // true = povratna karta, false nije povratna  kod II nacina rada
             tipKarte:item.tipKarte || "",     // dopisala zbog citanja tipa karte   --> bilo je item.tipKarte ali nije stabilno
             potvrdaP: '', // mozda ga ovo stabilizuje 
+
+            pocetnaStanicaId: item.pocetnaStanicaId,    // dodala zbog upisa povratne karte
+            krajnjaStanicaId: item.krajnjaStanicaId,    // dodala zbog upisa povratne karte
+            email: item.email,                          // dodala jer ga nije bilo
+    
           };
         });
         setSveKarte(a1);
@@ -172,6 +160,14 @@ const Karta = () => {
   if (loading) {
     return <p>Učitavanje...</p>; // Prikazuje se dok se podaci učitavaju
   }
+
+  // Funkcija za prikazivanje notifikacije
+  const porukaSediste = () => {
+    // Prikazuje notifikaciju kada se klikne na dugme
+    toast.success('Ukoliko želite da promenite rezervaciju povratne karte kliknite na Sedište!', {
+      position: toast.POSITION.TOP_CENTER
+    });
+  };
 
 
   return (
@@ -211,9 +207,11 @@ const Karta = () => {
             <div className="Grupa">
               {sveKarte
                 .filter((karte) => karte.cekiranje === false)
-                .map((karte) => (
+                .map((karte, index) => (
+                  
                   <div key={karte.id}>
                     <li className="lista-stavka">
+
                       <div className="naslov">
                         <Trans i18nKey="description.part184">
                           {" "}
@@ -287,18 +285,30 @@ const Karta = () => {
                         )}
                       </div>
 
-                    </li>    
-                     
-                    {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && (
-                        
-                        <button className="dugme-povratna-karta" onClick={sedistePovratak}>  
+                    </li>                      
+
+                    {/* dole je bilo na onClick={sedistePovratak}  */}
+                    {/* (karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && !predhodnaPovratna */ karte.tipKarte === 'PrPovratna'  &&   (                                         
+                        <button className="dugme-povratna-karta" onClick={sedistePovratak_1 } 
+                         >  
                             <Trans i18nKey="description.part25"> Povratna </Trans>
-                            </button>
-                    )}        
+                        </button>                        
+                    ) }  
+
+                       
+  
+                   {/*  {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return')?
+                    predhodnaPovratna=!predhodnaPovratna : " "} */}
+
+                    
+                   {(karte.tipKarte === 'PrPovratna' )?
+                    predhodnaPovratna= true : " "}
+                                     
 
                     {/* Idi samo ako je povratna karta na stranicu RezervacijaComponent.js parametri su state */}
                     
-                    {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && potvrdaP ? (
+                    {(karte.tipKarte === 'PrPovratna' ) && potvrdaP  ? (
+                      
                       <Link 
                             to={{
                             pathname: `${karte.linijaId}/rezervacijakarte`,
@@ -315,15 +325,22 @@ const Karta = () => {
                               datumPolaska: karte.datumP,
                               datumDolaska: karte.datumD,
                               povratna: potvrdaP,     //ako je tip povratne karte
+                              tipKarte: karte.tipKarte,   //dodala 12.02
+                              email: karte.email,         //dodala 12.02
                             },
                           }}
-                          >  
+                          > 
+                           
                           &ensp; 
+                          {predhodnaPovratna? 
                           <button className="dugme-sediste-karta">
-                          <Trans i18nKey="description.part203">Sedište  </Trans>  </button>            
+                          <Trans i18nKey="description.part203">Sedište  </Trans>  </button> 
+                          : " "} 
+                                    
                       </Link> 
                     ) : null}
-                        
+                       
+                    
                   
                   </div>
                 ))}
