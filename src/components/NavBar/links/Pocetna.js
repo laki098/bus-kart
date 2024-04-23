@@ -18,8 +18,8 @@ import apiUrl from "../../../apiConfig";
 const Pocetna = () => {
   //prevodjenje
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
@@ -150,7 +150,7 @@ const Pocetna = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
-              className="jezici-dugme"
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
