@@ -40,8 +40,19 @@
 .podaci-stjuardesa{
   font-weight: bold;
   color: darkblue;
-
 }
+.podaci-stjuardesa1{
+  font-weight: bold;
+  color: darkblue;
+  background-color: #f5f6fa;  /* #f0effb;   */
+}
+
+.podaci-stjuardesa-info{
+  font-weight: bold;
+  color: darkblue;
+  background-color: #E0F7FA;
+}
+
 .podaci-korisnik{
   font-weight: bold;
   background-color: rgb(228, 233, 244);
@@ -260,6 +271,12 @@
   .korisniciStjuardesa{
     width: 70rem;   /*  66rem   */
   }
+  .sirinaStjuardesa{
+    width: 78rem;
+  }
+  .vrstaStjuardesa{
+    border: 2px;
+  }
 
   .podesi-sirinu{
     width: fit-content;
@@ -301,6 +318,9 @@
 
   .sirina-48{
     width: 48rem;
+  }
+  .sirina-45{
+    width: 45rem;
   }
 
   .inputVelicna{

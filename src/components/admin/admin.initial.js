@@ -167,6 +167,7 @@ const AdminInitial = () => {
             <Trans i18nKey="description.part34">Red vožnje</Trans>
           </p>
         </button>
+        &emsp;
         <Link to="/admin.component">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
@@ -174,6 +175,7 @@ const AdminInitial = () => {
             </p>
           </button>
         </Link>
+        &emsp;
         <Link to="/viseLinija">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">

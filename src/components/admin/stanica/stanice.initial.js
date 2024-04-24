@@ -81,14 +81,14 @@ const StaniceInitial = () => {
                     <div className="polje-stanica">
                       <Trans i18nKey="description.part142">Naziv </Trans>
                     </div>
-                    <div className="info-stanica sirina-info-stanica fino-podesavanje">
-                      {" "}
+                    <div className="info-stanica sirina-info-stanica   fino-podesavanje">
+                      
                       {stanica.naziv}
                     </div>
                     <div className="polje-stanica">
                       <Trans i18nKey="description.part111">Adresa </Trans>
                     </div>
-                    <div className="info-stanica sirina-info-stanica email-polje obicna-debljina fino-podesavanje">
+                    <div className="info-stanica sirina-info-stanica email-polje obicna-debljina fino-podesavanje-1">
                       {stanica.adresa}
                     </div>
                     <div className="polje-stanica">
