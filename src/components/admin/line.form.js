@@ -173,8 +173,8 @@ const LineForm = ({ mode, id, state }) => {
 
   //prevodjenje start
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
@@ -186,6 +186,7 @@ const LineForm = ({ mode, id, state }) => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -299,7 +300,8 @@ const LineForm = ({ mode, id, state }) => {
                             <hr />
                           </div>
                           <label className="labela-stanica">
-                            <strong>Usputna stanica {index + 1}</strong>
+                            <strong> <Trans i18nKey="description.part165">Usputna stanica </Trans>
+                            &nbsp; {index + 1}</strong>
                           </label>
                         </div>
 
@@ -409,7 +411,7 @@ const LineForm = ({ mode, id, state }) => {
                             className="buttonSwitch korekcijaDugmeta1"
                             onClick={() => removeWaypoint(index)}
                           >
-                            Ukloni medjustanicu
+                            <Trans i18nKey="description.part221"> Ukloni međustanicu </Trans>
                           </button>
                         </div>
                       </div>
@@ -596,7 +598,7 @@ const LineForm = ({ mode, id, state }) => {
                             <strong>
                               <Trans i18nKey="description.part165">
                                 {" "}
-                                Usputna stanica{" "}
+                                <Trans i18nKey="description.part165">Usputna stanica </Trans>{" "}
                               </Trans>
                               {index + 1}
                             </strong>
@@ -826,7 +828,7 @@ const LineForm = ({ mode, id, state }) => {
                           className="buttonSwitch korekcijaDugmeta2"
                           onClick={() => removeWaypoint(index)}
                         >
-                          Ukloni medjustanicu
+                          <Trans i18nKey="description.part221"> Ukloni međustanicu </Trans>
                         </button>
                       </div>
                     </div>
