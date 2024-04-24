@@ -4,6 +4,10 @@ import ListajJSON_Konzola from "../ListajJSON_Konzola";
 import "../../admin/viseLinija/viseLinija.css";
 import { ToastContainer, toast } from "react-toastify";
 
+import "../../NavBar/links/i18n";     // za prevodjenje
+import "../../rezervacije/i18n";
+import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+
 const ViseLinija = () => {
   const [linije, setLinije] = useState([]);
   const [period, setPeriod] = useState(0);
@@ -145,28 +149,60 @@ const ViseLinija = () => {
     setIsButtonDisabled(false);
   };
   
+  const lngs = {
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
+  };
+  const { t, i18n } = useTranslation();
   
 
   return (
     <>
+      <header>
+        <div className="jezici">
+            {Object.keys(lngs).map((lng) => (
+              <button
+                key={lng}
+                className="jezici-dugme-promena"
+                style={{
+                  fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+                }}
+                type="submit"
+                onClick={() => i18n.changeLanguage(lng)}
+              >
+                {lngs[lng].nativeName}
+              </button>
+            ))}
+        </div>
+      </header>
+
     <form onSubmit={submitHandler}>
     <div className="linija-okvir">
       {linije.map((linija) => (
         <div key={linija.id}>
           <div className="linija-red">
-            <div className="linija-polja">Pocetna stanica </div>
+          <div className="linija-polja"> 
+              <Trans i18nKey="description.part31">Početna stanica </Trans>
+            </div>
             <div className="linija-info">{linija.pocetnaStanica.naziv}</div>
-            <div className="linija-polja">Krajnja stanica </div>
+            <div className="linija-polja">
+              <Trans i18nKey="description.part198">Krajnja stanica </Trans> 
+            </div>
             <div className="linija-info">{linija.krajnjaStanica.naziv}</div>
+            <div className="linija-polja">
             <input
               type="date"
+              className="unos-datuma"
               value={setValueDate[linija.id] }
               onChange={handleDateChange}
             />
+            </div>
 
             {linija.Stanicas.map((medjustanica) => (
               <React.Fragment key={medjustanica.id}>
-                <div className="linija-polja">Medjustanica</div>
+                <div className="linija-polja-10">
+                    <Trans i18nKey="description.part204"> Međustanica   </Trans>
+                </div>
                 <div className="linija-info">{medjustanica.naziv}</div>
               </React.Fragment>
             ))}
@@ -182,7 +218,7 @@ const ViseLinija = () => {
                    openConfirmationDialog();
                 }}
               >
-                1 mesec
+                <Trans i18nKey="description.part205"> 1 mesec </Trans>
               </button>{" "}
               &emsp;
               <button
@@ -196,7 +232,7 @@ const ViseLinija = () => {
                   openConfirmationDialog();
                 }}
               >
-                3 meseci
+                <Trans i18nKey="description.part206"> 3 meseci  </Trans>
               </button>{" "}
               &emsp;
               <button
@@ -210,7 +246,7 @@ const ViseLinija = () => {
                   openConfirmationDialog();
                 }}
               >
-                6 meseci
+                <Trans i18nKey="description.part207"> 6 meseci  </Trans>
               </button>
             </div>
             <ListajJSON_Konzola
@@ -225,22 +261,22 @@ const ViseLinija = () => {
       
     </div>
     <div className="confirm-dialog-container">
-  {isConfirmationOpen && (
-    <div className="confirm-dialog-overlay">
-      <div className="confirm-dialog-box">
-        <div className="red-05">
-          Da li ste sigurni da želite produžiti liniju?
+      {isConfirmationOpen && (
+        <div className="confirm-dialog-overlay">
+          <div className="confirm-dialog-box">
+            <div className="red-05">
+              Da li ste sigurni da želite produžiti liniju?
+            </div>
+            <button className="confirm-dialog-yes" onClick={confirmAction}>
+                <Trans i18nKey="description.part153"> Da  </Trans>
+            </button>
+            <button className="confirm-dialog-no" onClick={closeConfirmationDialog}>
+                <Trans i18nKey="description.part154"> Ne  </Trans>
+            </button>
+          </div>
         </div>
-        <button className="confirm-dialog-yes" onClick={confirmAction}>
-          Da
-        </button>
-        <button className="confirm-dialog-no" onClick={closeConfirmationDialog}>
-          Ne
-        </button>
-      </div>
+      )}
     </div>
-  )}
-</div>
     </form>
     <ToastContainer/>
     </>

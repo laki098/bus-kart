@@ -156,7 +156,8 @@ const StjuardesaLinija = ({}) => {
       });
   };
   const notifySuccest = () => {
-    toast.success("Uspešno ste rezervisali kartu", {
+    toast.success(<Trans i18nKey="description.part216"> Uspešno ste rezervisali kartu </Trans>
+    , {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -168,7 +169,8 @@ const StjuardesaLinija = ({}) => {
     });
   };
   const notifyWarn = () => {
-    toast.warn("Nisu uneti svi podaci", {
+    toast.warn(<Trans i18nKey="description.part217"> Nisu uneti svi podaci </Trans>
+    , {
       position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
@@ -229,8 +231,8 @@ const StjuardesaLinija = ({}) => {
 
   //prevodjenje start
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
@@ -242,6 +244,7 @@ const StjuardesaLinija = ({}) => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -259,7 +262,7 @@ const StjuardesaLinija = ({}) => {
           <Trans i18nKey="description.part194"> Informacije o ruti </Trans>
         </div>
         <div className="stampajLiniju">
-          <div className="rowTabela sirina-39">
+          <div className="rowTabela sirina-45">
             <div className="admin-jedan-red ">
               <div className="polje-stanica sirina-info-10">
                 <Trans i18nKey="description.part31"> Početna stanica </Trans>
@@ -292,7 +295,7 @@ const StjuardesaLinija = ({}) => {
                 {" "}
                 {linija.krajnjaStanica?.naziv}
               </div>
-              <div className="polje-stanica sirina-info-8">
+              <div className="polje-stanica sirina-info-14">
                 <button
                   onClick={() => {
                     handelePromenaVremenaLinija(linija.id, false, true);
@@ -301,6 +304,7 @@ const StjuardesaLinija = ({}) => {
                 >
                   <Trans i18nKey="description.part192"> Stigli </Trans>
                 </button>
+                &emsp;
                 <button
                   onClick={() => {
                     setKrajnjaStanica(linija.krajnjaStanica);
@@ -309,12 +313,12 @@ const StjuardesaLinija = ({}) => {
                   }}
                   className="buttonSwitch"
                 >
-                  <Trans /* i18nKey="description.part192" */> Dovde </Trans>
+                  <Trans  i18nKey="description.part218"> Izlazi </Trans>    {/* Dovde   */}
                 </button>
               </div>
             </div>
             <div className="admin-jedan-red ">
-              <div className="polje-stanica sirina-info-10">
+              <div className="polje-stanica-1 sirina-info-10">
                 <Trans i18nKey="description.part191"> Međustanice </Trans>
               </div>
               <ul>
@@ -324,7 +328,7 @@ const StjuardesaLinija = ({}) => {
                       <li className="info-stanica sirina-info-10">
                         {stanica.naziv}
                       </li>
-                      <div className="polje-stanica sirina-info-8">
+                      <div className="polje-stanica-1 sirina-info-8">
                         <button
                           onClick={() => {
                             handelePromenaVremena(
@@ -339,7 +343,7 @@ const StjuardesaLinija = ({}) => {
                           <Trans i18nKey="description.part193"> Krenuli </Trans>
                         </button>
                       </div>
-                      <div className="polje-stanica sirina-info-8">
+                      <div className="polje-stanica sirina-info-14">
                         <button
                           onClick={() => {
                             handelePromenaVremena(
@@ -356,6 +360,7 @@ const StjuardesaLinija = ({}) => {
                         >
                           <Trans i18nKey="description.part192"> Stigli </Trans>
                         </button>
+                        &emsp;
                         <button
                           onClick={() => {
                             setKrajnjaStanica(stanica);
@@ -364,10 +369,7 @@ const StjuardesaLinija = ({}) => {
                           }}
                           className="buttonSwitch"
                         >
-                          <Trans /* i18nKey="description.part192" */>
-                            {" "}
-                            Dovde{" "}
-                          </Trans>
+                          <Trans  i18nKey="description.part218"> Izlazi </Trans>    {/* Dovde   */}
                         </button>
                       </div>
                     </div>
@@ -378,9 +380,11 @@ const StjuardesaLinija = ({}) => {
           </div>
         </div>
       </div>
-      <div>
-        <p>Ruta:</p>
-        <div>{pocetnaStanica?.naziv} -</div> <div>{krajnjaStanica?.naziv}</div>
+      
+      <div className="red-1"></div>
+      <div className="labela">
+        <Trans i18nKey="description.part219"> Ruta </Trans>
+        : {pocetnaStanica?.naziv} - {krajnjaStanica?.naziv}
       </div>
 
       <Autobus
@@ -392,8 +396,10 @@ const StjuardesaLinija = ({}) => {
           setTrenutnaRezervacija(novaRezervacija)
         }
       />
+
+      <div className="red-1"></div>
       <button onClick={novaRezervacija} className="buttonSwitch">
-        Potvrdi izbor
+        <Trans i18nKey="description.part121"> Potvrdite </Trans>
       </button>
 
       <div className="red-1"></div>
@@ -401,9 +407,11 @@ const StjuardesaLinija = ({}) => {
         <QRScanner onScanSuccess={handleQRScanSuccess} idLinije={linija.id} />
       )}
 
+      <div className="red-1"></div>
       {!showQRScanner && (
         <button onClick={handleQRScan} className="buttonSwitch">
-          <p className="admin-dugme-slova">Skeniraj QR kod </p>
+          <p className="admin-dugme-slova">
+          <Trans i18nKey="description.part220"> Skeniraj QR kod  </Trans></p>
         </button>
       )}
       <ToastContainer />

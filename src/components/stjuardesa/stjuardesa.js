@@ -35,8 +35,8 @@ const Stjuardesa = () => {
 
   //prevodjenje start
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
@@ -48,6 +48,7 @@ const Stjuardesa = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -64,51 +65,55 @@ const Stjuardesa = () => {
         <Trans i18nKey="description.part189"> Aktivne linije </Trans>
       </div>
       <div className="stampajLiniju">
-        <div class="rowTabela korisniciStjuardesa">
+        <div class="rowTabela sirinaStjuardesa">
           <ul>
             {stjuardesaLinija.map((linija) => (
               <div key={linija.id}>
-                <li class="column centar">
-                  <Trans i18nKey="description.part31"> Početna stanica </Trans>
-                </li>
-                <li className="column podaci-stjuardesa centar">
-                  {linija.pocetnaStanica.naziv}
-                </li>
-                <li class="column centar">
-                  <Trans i18nKey="description.part32"> Dolazna stanica </Trans>
-                </li>
-                <li className="column podaci-stjuardesa centar">
-                  {linija.krajnjaStanica.naziv}
-                </li>
-                <li class="column centar">
-                  <Trans i18nKey="description.part11"> Vreme polaska </Trans>
-                </li>
-                <li className="column podaci-stjuardesa centar">
-                  {linija.vremePolaska}
-                </li>
-                <li class="column centar">
-                  <Trans i18nKey="description.part33"> Datum polaska </Trans>
-                </li>
-                <li className="column podaci-stjuardesa centar">
-                  {linija.datumPolaska}
-                </li>
-                <li class="column centar">
-                  <Link
-                    to={{
-                      pathname: `${linija.id}/stjuardesaLinija`,
-                      search: `?linijaId=${linija.id}&pocetnaStanicaId=${linija.pocetnaStanicaId}&krajnjaStanicaId=${linija.krajnjaStanicaId}`,
-                      state: {
-                        linija: linija, // Prosleđujemo ceo objekat linije kao stanje
-                      },
-                    }}
-                  >
-                    <button className="buttonSwitch">
-                      <p>
-                        <Trans i18nKey="description.part190"> Čekiranje </Trans>
-                      </p>
-                    </button>
-                  </Link>
-                </li>
+                <div className="jedan-red-prikaz">
+                  {/*className="column podaci-stjuardesa-info centar sirina-info-stanica"   */}
+                  {/*class="column centar podaci-stjuardesa1 "   */}
+                  <li class="column centar podaci-stjuardesa1 ">   
+                    <Trans i18nKey="description.part31"> Početna stanica </Trans>
+                  </li>
+                  <li className="column podaci-stjuardesa-info centar sirina-info-stanica">
+                    {linija.pocetnaStanica.naziv}
+                  </li>
+                  <li class="column centar podaci-stjuardesa1 ">
+                    <Trans i18nKey="description.part32"> Dolazna stanica </Trans>
+                  </li>
+                  <li className="column podaci-stjuardesa-info centar sirina-info-stanica">
+                    {linija.krajnjaStanica.naziv}
+                  </li>
+                  <li class="column centar podaci-stjuardesa1 ">
+                    <Trans i18nKey="description.part11"> Vreme polaska </Trans>
+                  </li>
+                  <li className="column podaci-stjuardesa-info centar">
+                    {linija.vremePolaska}
+                  </li>
+                  <li class="column centar podaci-stjuardesa1">
+                    <Trans i18nKey="description.part33"> Datum polaska </Trans>
+                  </li>
+                  <li className="column podaci-stjuardesa-info centar">
+                    {linija.datumPolaska}
+                  </li>
+                  <li class="column centar">
+                    <Link
+                      to={{
+                        pathname: `${linija.id}/stjuardesaLinija`,
+                        search: `?linijaId=${linija.id}&pocetnaStanicaId=${linija.pocetnaStanicaId}&krajnjaStanicaId=${linija.krajnjaStanicaId}`,
+                        state: {
+                          linija: linija, // Prosleđujemo ceo objekat linije kao stanje
+                        },
+                      }}
+                    >
+                      <button className="buttonSwitch">
+                        <p>
+                          <Trans i18nKey="description.part190"> Čekiranje </Trans>
+                        </p>
+                      </button>
+                    </Link>
+                  </li>
+              </div>  
               </div>
             ))}
           </ul>

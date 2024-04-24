@@ -88,8 +88,8 @@ const AdminInitial = () => {
   };
 
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
 
@@ -100,6 +100,7 @@ const AdminInitial = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -166,6 +167,7 @@ const AdminInitial = () => {
             <Trans i18nKey="description.part34">Red vožnje</Trans>
           </p>
         </button>
+        &emsp;
         <Link to="/admin.component">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
@@ -173,6 +175,7 @@ const AdminInitial = () => {
             </p>
           </button>
         </Link>
+        &emsp;
         <Link to="/viseLinija">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
