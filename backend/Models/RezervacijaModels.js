@@ -72,6 +72,18 @@ const Rezervacija = db.define(
         },
       },
     },
+    imeIprezime: {
+      type: DataTypes.STRING,
+    },
+    brojTelefona: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "broj telefona ne sme biti prazno polje",
+        },
+      },
+    },
   },
   {
     tableName: "rezervacija",
