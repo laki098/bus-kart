@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AdminLogic from "./admin.logic";
 import LinijeApi from "../../api/linije.api";
 import apiUrl from "../../apiConfig";
@@ -35,6 +35,11 @@ const LineForm = ({ mode, id, state }) => {
     const { pocetnaStanica, krajnjaStanica, medjustanice } = selectedStations;
     return [pocetnaStanica, ...medjustanice, krajnjaStanica];
   };
+
+  const vremePolaskaRef = useRef(null); // Definicija ref za vreme polaska
+  const vremeDolaskaRef = useRef(null); 
+  const vremePolaskaMRef = useRef(null); 
+  const vremeDolaskaMRef = useRef(null); 
 
   const getAutobusi = async () => {
     const response = await fetch(`${apiUrl}/autobusi`);
@@ -169,6 +174,38 @@ const LineForm = ({ mode, id, state }) => {
   };
 
 
+  const handleChangeVreme = () => { // Blokiranje vremena u medjustanici
+    const vremePolaskaValue = vremePolaskaRef.current.value;
+    const vremeDolaskaValue = vremeDolaskaRef.current.value;
+    const vremePolaskaMValue = vremePolaskaMRef.current.value;
+    const vremeDolaskaMValue = vremeDolaskaMRef.current.value;
+  
+    if ( vremeDolaskaValue < vremeDolaskaMValue) {
+      alert("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremeDolaskaMRef.current.value = "";
+    } 
+
+    if ( vremePolaskaValue > vremePolaskaMValue) {
+      alert("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremePolaskaMRef.current.value = "";
+    } 
+
+    if (vremeDolaskaMValue && vremeDolaskaMValue < vremePolaskaMValue) {
+      alert("Vreme  dolaska medjustanice  mora biti vece od polaska!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremeDolaskaMRef.current.value = "";
+    } 
+  
+  
+    console.log('Vreme polaska:', vremePolaskaValue);
+    console.log('Vreme dolaska:', vremeDolaskaValue);
+    console.log('Vreme polaska medjustanice:', vremePolaskaMValue);
+    console.log('Vreme dolaska medjustanice', vremeDolaskaMValue);
+};
+
+
 
 
   //prevodjenje start
@@ -282,6 +319,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <input
                     /*  defaultValue={linija.vremePolaska} */
+                    ref={vremePolaskaRef}
                     className="input-stanica-vreme"
                     type="time"
                     required
@@ -343,12 +381,13 @@ const LineForm = ({ mode, id, state }) => {
 
                         <input
                           /* defaultValue={linija.vremePolaska} */
+                          ref={vremePolaskaMRef}
                           className="input-stanica"
                           type="time"
                           required
                           label="Time"
                           name="vremeDolaskaM"
-                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
+                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -360,12 +399,13 @@ const LineForm = ({ mode, id, state }) => {
                         </div>
                         <input
                           /* defaultValue={linija.vremePolaska} */
+                          ref={vremeDolaskaMRef}
                           className="input-stanica"
                           type="time"
                           required
                           label="Time"
                           name="vremePolaskaM"
-                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
+                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -437,6 +477,7 @@ const LineForm = ({ mode, id, state }) => {
 
                   <input
                     /*  defaultValue={linija.vremeDolaska} */
+                    ref={vremeDolaskaRef}
                     className="input-stanica-vreme"
                     type="time"
                     required

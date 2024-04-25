@@ -40,6 +40,7 @@ const AdminLogic = () => {
     });
   };
 
+
   const handlerDatumPolaska = (e) =>
     setData({
       ...data,
@@ -89,12 +90,6 @@ const AdminLogic = () => {
       datumDolaskaM: item.datumDolaskaM,
     };
   });
-
-  const vremePolaskaMValues = raspakovanaMedjustanica.map(item => item.vremePolaskaM);
-  const vremeDolaskaMValues = raspakovanaMedjustanica.map(item => item.vremeDolaskaM);
-
-/* console.log(vremePolaskaMValues); // Ispisuje vrednosti vremePolaskaM
-console.log(vremeDolaskaMValues); */
 
   const upisLinije = async () => {
     LinijeApi()
