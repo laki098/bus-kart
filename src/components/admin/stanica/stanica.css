@@ -136,8 +136,46 @@
     padding: 0.2rem;
     background-color: #fff;
     display: flex;
-   align-items: center; /* Centrira po vertikali */
-   justify-content: center; /* Centrira po horizontali */
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+  }
+  .polje-stanica-2{
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.5rem;
+    background-color: #fff;
+  }
+  .polje-stanica-3{
+    word-wrap: break-word;
+    line-height: 1;
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.2rem;
+    background-color: #fff;
+    font-size: medium;
+    font-weight: normal;
+    display: flex;
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+    text-align: center;
+  }
+  .info-stanica-3{
+    word-wrap: break-word;
+    line-height: 1;
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.2rem;
+    background-color: rgb(221, 234, 250);
+    color: darkblue;
+    font-size: medium;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+    text-align: center;
   }
 
   .info-stanica{

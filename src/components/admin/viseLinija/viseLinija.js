@@ -181,7 +181,7 @@ const ViseLinija = () => {
       {linije.map((linija) => (
         <div key={linija.id}>
           <div className="linija-red">
-          <div className="linija-polja"> 
+            <div className="linija-polja"> 
               <Trans i18nKey="description.part31">Početna stanica </Trans>
             </div>
             <div className="linija-info">{linija.pocetnaStanica.naziv}</div>
@@ -190,23 +190,23 @@ const ViseLinija = () => {
             </div>
             <div className="linija-info">{linija.krajnjaStanica.naziv}</div>
             <div className="linija-polja">
-            <input
-              type="date"
-              className="unos-datuma"
-              value={setValueDate[linija.id] }
-              onChange={handleDateChange}
-            />
+              <input
+                type="date"
+                className="unos-datuma"
+                value={setValueDate[linija.id] }
+                onChange={handleDateChange}
+              />
             </div>
 
-            {linija.Stanicas.map((medjustanica) => (
-              <React.Fragment key={medjustanica.id}>
-                <div className="linija-polja-10">
+              {linija.Stanicas.map((medjustanica) => (
+                <React.Fragment key={medjustanica.id}>
+                  <div className="linija-polja-10">
                     <Trans i18nKey="description.part204"> Međustanica   </Trans>
-                </div>
-                <div className="linija-info">{medjustanica.naziv}</div>
-              </React.Fragment>
-            ))}
-            <div className="linija-dugme">
+                  </div>
+                  <div className="linija-info">{medjustanica.naziv}</div>
+                </React.Fragment>
+              ))}
+              <div className="linija-dugme">
               <button
                 className="button-linija"
                 disabled={isButtonDisabled}
