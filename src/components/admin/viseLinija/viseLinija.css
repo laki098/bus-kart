@@ -20,7 +20,15 @@
    padding: 0.5rem;
    background-color: #fff;
    padding-top: 1rem;
-}
+  }
+  .linija-polja-10{
+   width: 10rem;
+   border: 1px solid rgb(156, 198, 253);
+   padding: 0.5rem;
+   background-color: #fff;
+   padding-top: 1rem;
+  }
+
 .linija-info{
    width: 6rem;
    border: 1px solid rgb(156, 198, 253);
@@ -36,6 +44,22 @@
    align-items: center; /* Vertikalno centriranje */
    justify-content: center;
 }
+.linija-info-7{
+  width: 7rem;    
+  border: 1px solid rgb(156, 198, 253);
+  background-color: rgb(221, 234, 250);
+  padding: 0.5rem;
+  color: darkblue;
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+  word-wrap: break-word;
+  line-height: 1;
+  display: flex;
+  align-items: center; /* Vertikalno centriranje */
+  justify-content: center;
+}
+
 
  .linija-okvir {
    width: 90vw;

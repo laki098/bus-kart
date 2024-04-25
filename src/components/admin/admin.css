@@ -155,6 +155,19 @@
   margin: 0.5rem;
 }
 
+
+.unos-datuma{
+  text-align: center;
+  width: 10rem;
+  max-width: max-content;
+  height: 2rem;
+  border-radius: 0.25rem;
+  border-color: darkblue;
+  justify-content: center;
+  margin: 0.5rem;
+ 
+}
+
 /* .pozadinaSlika {
   background-image: image("Bus1");
 
@@ -315,7 +328,7 @@
   /*  position: relative;   */
     margin: 0 auto;
     width: 90%;   /*bila je 80% pa 90%  */
-    max-width: 81rem;   /* bila je 80rem    */
+    max-width: 90rem;   /* bila je 80rem    */
     display: flex;   /* bilo blok    */
     flex-wrap: wrap;
     background: #d2dff5;
@@ -340,6 +353,7 @@
 
 .info-stanica-1{
   width: 7.6rem;
+  height: 4rem;
   border: 1px solid rgb(156, 198, 253);
   background-color: rgb(221, 234, 250);
   padding: 0.5rem;

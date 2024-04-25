@@ -41,21 +41,22 @@ const RezervacijaComponent = ({ id, state }) => {
   const [ceneFilter, setCeneFilter] = useState();
   const [tipKarte, setTipKarte] = useState("");
 
-  const [drugiKorisnik, setDrugiKorisnik]=useState(false);
-  const [izmeniPovratak, setIzmeniPovratak] = useState(false);  //menjamo datum i vreme povratka
-  const [stariPovratak, setStariPovratak]=useState(false);      // ostajemo kod prvobitno rezervisanog datuma i vremena povratka 
+  const [drugiKorisnik, setDrugiKorisnik] = useState(false);
+  const [izmeniPovratak, setIzmeniPovratak] = useState(false); //menjamo datum i vreme povratka
+  const [stariPovratak, setStariPovratak] = useState(false); // ostajemo kod prvobitno rezervisanog datuma i vremena povratka
   const [email, setEmail] = useState();
-  const [filteredLinijePovratna, setFilteredLinijePovratna]=useState([]); // kad menjamo realnoPovratnu kartu
-  const [val1Pov, setVal1Pov] = useState("");     //kod promene realnoPovratne karte
+  const [filteredLinijePovratna, setFilteredLinijePovratna] = useState([]); // kad menjamo realnoPovratnu kartu
+  const [val1Pov, setVal1Pov] = useState(""); //kod promene realnoPovratne karte
   const [val2Pov, setVal2Pov] = useState("");
 
-  const [pomCena, setPomCena] = useState("");     //da mi ocita cenu kod promene rezdervacija
+  const [pomCena, setPomCena] = useState(""); //da mi ocita cenu kod promene rezdervacija
 
   //const [datumDolaskaOdlazne, setDatumDolaskaOdlazne]= useState(Date);  // pom prom da omoguci min datum kod realnoPovratne karte
   const danasDatum = new Date(); // Trenutni datum
-  
-  const [mogucDatumRealnogPovratka, setMogucDatumRealnogPovratka] = useState(null);
-  const [minDatRealnogPovratka, setMinDatRealnogPovratka] = useState("");   // donji limitar kod izbora min dat RealnogPovratka
+
+  const [mogucDatumRealnogPovratka, setMogucDatumRealnogPovratka] =
+    useState(null);
+  const [minDatRealnogPovratka, setMinDatRealnogPovratka] = useState(""); // donji limitar kod izbora min dat RealnogPovratka
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -94,10 +95,10 @@ const RezervacijaComponent = ({ id, state }) => {
 
   // da ocita cenu kod promene rezervacije
 
-  useEffect(()=>{
+  useEffect(() => {
     setPomCena(ceneFilter);
-   // alert('cena karte je: ' + ceneFilter);
-  }, [ceneFilter])
+    // alert('cena karte je: ' + ceneFilter);
+  }, [ceneFilter]);
 
   //niz sa cenama
   useEffect(() => {
@@ -106,9 +107,8 @@ const RezervacijaComponent = ({ id, state }) => {
         ...prevCene,
         [state.id]: cena,
       }));
-      console.log('cena karte je:', cena); // Prikazujemo cenu u konzoli
+      console.log("cena karte je:", cena); // Prikazujemo cenu u konzoli
     });
-    
   }, [ceneFilter]);
 
   const novaRezervacija = () => {
@@ -144,34 +144,34 @@ const RezervacijaComponent = ({ id, state }) => {
   const notifySuccest = () => {
     toast.success(
       <Trans i18nKey="description.part216">
-      "Uspešno ste rezervisali kartu"
-      </Trans>
-      , {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+        "Uspešno ste rezervisali kartu"
+      </Trans>,
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
   const notifyWarn = () => {
     toast.warn(
-      <Trans i18nKey="description.part217">
-      "Nisu uneti svi podaci"
-      </Trans>
-      , {
-      position: "top-center",
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+      <Trans i18nKey="description.part217">"Nisu uneti svi podaci"</Trans>,
+      {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
 
   const rezervacija = async () => {
@@ -210,8 +210,14 @@ const RezervacijaComponent = ({ id, state }) => {
     // Ovde mozete izvrsiti akcije sa selektovanim sedistima
     setSelectedSeats(selectedSeats);
     console.log("Selektovana sedista:", selectedSeats);
-    console.log('povIspravkaIdLinija ' + povIspravkaIdLinija + 'state.pocetnaStanicaId' + state.pocetnaStanicaId
-    + 'state.krajnjaStanicaId  ' + state.krajnjaStanicaId);
+    console.log(
+      "povIspravkaIdLinija " +
+        povIspravkaIdLinija +
+        "state.pocetnaStanicaId" +
+        state.pocetnaStanicaId +
+        "state.krajnjaStanicaId  " +
+        state.krajnjaStanicaId
+    );
   };
 
   const [pom, setPom] = useState(false);
@@ -244,7 +250,7 @@ const RezervacijaComponent = ({ id, state }) => {
   const vremeDInputRef = useRef();
   const emailInputRef = useRef();
   const telefonInputRef = useRef();
-  const oznakaBusaRef = useRef();       //dodala zbog prikaza busa
+  const oznakaBusaRef = useRef(); //dodala zbog prikaza busa
 
   const confirmeHandler = (event) => {
     event.preventDefault();
@@ -259,7 +265,7 @@ const RezervacijaComponent = ({ id, state }) => {
       vremeDInputRef,
       emailInputRef,
       telefonInputRef,
-      oznakaBusaRef             // dodala zbog busa
+      oznakaBusaRef // dodala zbog busa
     );
     setFormInputsValid({
       name: formValidation.validName,
@@ -287,18 +293,20 @@ const RezervacijaComponent = ({ id, state }) => {
     const data = await response.json();
     setFilteredLinije(data.rezultat);
 
-    setVal1Pov(state.pocetnaStanica);   //ovo sam dopisla za deo kada menjam realnoPovratnu kartu
+    setVal1Pov(state.pocetnaStanica); //ovo sam dopisla za deo kada menjam realnoPovratnu kartu
     setVal2Pov(state.krajnjaStanica);
-    const responsePov = await LinijeApi().filterLinija(val1Pov, val2Pov,returnDate);
+    const responsePov = await LinijeApi().filterLinija(
+      val1Pov,
+      val2Pov,
+      returnDate
+    );
     const dataPov = await responsePov.json();
     setFilteredLinijePovratna(dataPov.rezultat);
-
   };
 
   useEffect(() => {
     filterLinija();
   }, [returnDate]);
-
 
   const [sliderValue, setSliderValue] = useState(100);
   const NovaVrednost = 100;
@@ -310,26 +318,29 @@ const RezervacijaComponent = ({ id, state }) => {
   const [checkedItemId, setCheckedItemId] = useState(null);
   // const [error, setError] = useState(null);       // zbog obrade greske kod povratne karte
 
-  const [pomPolazak, setPomPolazak] = useState("");       // da rese ispad kad se promeni datum kod povratne karte
+  const [pomPolazak, setPomPolazak] = useState(""); // da rese ispad kad se promeni datum kod povratne karte
   const [pomDolazak, setPomDolazak] = useState("");
   const [pomDatDolazak, setPomDatDolazak] = useState("");
   const [pomDatPolazak, setPomDatPolazak] = useState(""); // potreban kod edita povratne karte
 
-  const [pomDateRet, setPomDateRet] = useState("");       //kod poziva dela za upis rezervacije na samom kraju
-  const [pomOznakaBus, setPomOznakaBus]= useState("");    //kod prikaza seme sedista busa prilikom izmene kod realnoPovratne karte
-  const [finalOznakaBus, setFinalOznakaBus]= useState("");  // taj bus prikazujem i tu se biraju sedista kod realnoPovratne karte
+  const [pomDateRet, setPomDateRet] = useState(""); //kod poziva dela za upis rezervacije na samom kraju
+  const [pomOznakaBus, setPomOznakaBus] = useState(""); //kod prikaza seme sedista busa prilikom izmene kod realnoPovratne karte
+  const [finalOznakaBus, setFinalOznakaBus] = useState(""); // taj bus prikazujem i tu se biraju sedista kod realnoPovratne karte
 
   //const [linijaId_nova, setLinijaId_nova] = useState("");   //linijaId od izabrane linije busa kojom cemo da se vracamo kod promene povratne karte
 
-  const [povIspravkaIdLinija, setPovIspravkaIdLinija] = useState("");   //da preuzme IdLinije kod realnoPovratnog busa kojeg menjamo
+  const [povIspravkaIdLinija, setPovIspravkaIdLinija] = useState(""); //da preuzme IdLinije kod realnoPovratnog busa kojeg menjamo
   const handleCheckboxChange = (id) => {
     setCheckedItemId(id);
   };
 
   // definise sliku busa gde biramo mesto kod realnoPovratne linije
   useEffect(() => {
-    {izmeniPovratak? setFinalOznakaBus(pomOznakaBus): setFinalOznakaBus(linija.oznakaBusa)}
-   
+    {
+      izmeniPovratak
+        ? setFinalOznakaBus(pomOznakaBus)
+        : setFinalOznakaBus(linija.oznakaBusa);
+    }
   }, [pomOznakaBus, stariPovratak]);
 
   const novaRezervacijaPovratak = () => {
@@ -354,7 +365,7 @@ const RezervacijaComponent = ({ id, state }) => {
       )
       .then((response) => {
         console.log(response);
-   //     notifySuccest();          da ne bi duplo javljalo poruku o uspesnosti rezervacije povratne karte
+        //     notifySuccest();          da ne bi duplo javljalo poruku o uspesnosti rezervacije povratne karte
       })
       .catch((error) => {
         console.log(error);
@@ -373,8 +384,8 @@ const RezervacijaComponent = ({ id, state }) => {
         pomDatDolazak, //korisnik promenio sa Fronta unosom novih podataka
         pomPolazak, //korisnik promenio sa Fronta unosom novih podataka
         pomDolazak, //korisnik promenio sa Fronta unosom novih podataka
-        povIspravkaIdLinija,  //state.id,   // bilo  PovratnaIdLinija,
-        state.pocetnaStanicaId,   // bilo je obrnuto
+        povIspravkaIdLinija, //state.id,   // bilo  PovratnaIdLinija,
+        state.pocetnaStanicaId, // bilo je obrnuto
         state.krajnjaStanicaId,
         userPars.idKorisnika,
 
@@ -388,32 +399,32 @@ const RezervacijaComponent = ({ id, state }) => {
         notifySuccest();
       })
       .catch((error) => {
-        console.log("Greška prilikom izvršavanja izmenjenog upisa karte")
+        console.log("Greška prilikom izvršavanja izmenjenog upisa karte");
         console.log(error);
         notifyWarn();
       });
   };
 
-   //dodala da proverim hoce li da se upisu novi podaci od izmenjene povratne karte
-   const preRezervacija = () => {
+  //dodala da proverim hoce li da se upisu novi podaci od izmenjene povratne karte
+  const preRezervacija = () => {
     RezervacijaApi()
       .pre_rezervacija(
         1,
         state.pocetnaStanica,
         state.krajnjaStanica,
-        pomDatPolazak,  //state.datumPolaska,
-        pomDatDolazak,  //state.datumDolaska,
-        pomPolazak,     //state.vremePolaska,
-        pomDolazak,     //state.vremeDolaska,
-        povIspravkaIdLinija,  //state.id,
-        state.pocetnaStanicaId,   //state.pocetnaStanicaId,
+        pomDatPolazak, //state.datumPolaska,
+        pomDatDolazak, //state.datumDolaska,
+        pomPolazak, //state.vremePolaska,
+        pomDolazak, //state.vremeDolaska,
+        povIspravkaIdLinija, //state.id,
+        state.pocetnaStanicaId, //state.pocetnaStanicaId,
         state.krajnjaStanicaId,
         userPars.idKorisnika,
 
         osvezenje,
         parseInt(selectedSeats),
-        state.tipKarte,     //tipKarte,
-        state.email,    //email
+        state.tipKarte, //tipKarte,
+        state.email //email
       )
       .then((response) => {
         //console.log(response);
@@ -424,17 +435,16 @@ const RezervacijaComponent = ({ id, state }) => {
           setTimeout(() => {
             window.location.href = "/pocetna";
           }, 3000);
-        } if (response.status === 404) {
+        }
+        if (response.status === 404) {
           notifyWarn();
         }
-
       })
       .catch((error) => {
         console.log(error);
         notifyWarn();
       });
   };
-
 
   const handleEmailInputChange = (event) => {
     const email = event.target.value;
@@ -444,72 +454,115 @@ const RezervacijaComponent = ({ id, state }) => {
 
   //  upisujem podatke u bazu za obicnu kartu povratnu kartu i izmenjenu povratnu kartu
   const clickRezervisiPovratak = () => {
-   // alert("stariPovratak" + stariPovratak +" " +"pomDateRet" + pomDateRet);
+    // alert("stariPovratak" + stariPovratak +" " +"pomDateRet" + pomDateRet);
     if (pomDateRet === "") {
       novaRezervacija();
-    } else if (pomDateRet === "povratna" && izmeniPovratak===false && stariPovratak===false) {
+    } else if (
+      pomDateRet === "povratna" &&
+      izmeniPovratak === false &&
+      stariPovratak === false
+    ) {
       novaRezervacijaPovratak();
       novaRezervacija();
       //dodala za promenjeni povratak
       //novaRezervacijaPovratakIzmena();
-    } else if (pomDateRet === "povratna" && izmeniPovratak===true){
-     // alert("Izmena povratne karte u toku, id karte je: "  +state.id+ " br sedista je "+ selectedSeats);
-      console.log("3 uslov: menjamo datum vreme unosimo pice i sediste")
-    // novaRezervacijaPovratakIzmena(state.id, state.linijaId, selectedSeats);
-      
+    } else if (pomDateRet === "povratna" && izmeniPovratak === true) {
+      // alert("Izmena povratne karte u toku, id karte je: "  +state.id+ " br sedista je "+ selectedSeats);
+      console.log("3 uslov: menjamo datum vreme unosimo pice i sediste");
+      // novaRezervacijaPovratakIzmena(state.id, state.linijaId, selectedSeats);
+
       preRezervacija();
       novaRezervacijaPovratakIzmena();
-   
-    //novaRezervacija();
-     console.log('Podaci izmenjene karte SVI -----: '+ 
-        '   PocetnaStanica  '+ state.pocetnaStanica + 	
-        '   KrajnjaStanica  ' + state.krajnjaStanica +
-        '   DatumPolaska  ' + pomDatPolazak + 
-        '   DatumDolaska  ' + pomDatDolazak +
-        '   VremePolaska  ' + pomPolazak +
-        '   VremeDolaska' + pomDolazak +
-        '   id linije  ' + povIspravkaIdLinija +
-        '   PocetnaStanicaId    ' + state.pocetnaStanicaId +
-        '   KrajnjaStanicaId    ' + state.krajnjaStanicaId +
-        '   userPars.idKorisnika    ' + userPars.idKorisnika +
-        '   osvezenje   ' + osvezenje +
-        '   parseInt(selectedSeats)   ' + parseInt(selectedSeats)+ 
-        '   tipKarte    ' + state.tipKarte + 
-        '   email   ' + email +
-        '   rezervacija.id  ' +state.id 
-      );
 
+      //novaRezervacija();
+      console.log(
+        "Podaci izmenjene karte SVI -----: " +
+          "   PocetnaStanica  " +
+          state.pocetnaStanica +
+          "   KrajnjaStanica  " +
+          state.krajnjaStanica +
+          "   DatumPolaska  " +
+          pomDatPolazak +
+          "   DatumDolaska  " +
+          pomDatDolazak +
+          "   VremePolaska  " +
+          pomPolazak +
+          "   VremeDolaska" +
+          pomDolazak +
+          "   id linije  " +
+          povIspravkaIdLinija +
+          "   PocetnaStanicaId    " +
+          state.pocetnaStanicaId +
+          "   KrajnjaStanicaId    " +
+          state.krajnjaStanicaId +
+          "   userPars.idKorisnika    " +
+          userPars.idKorisnika +
+          "   osvezenje   " +
+          osvezenje +
+          "   parseInt(selectedSeats)   " +
+          parseInt(selectedSeats) +
+          "   tipKarte    " +
+          state.tipKarte +
+          "   email   " +
+          email +
+          "   rezervacija.id  " +
+          state.id
+      );
 
       // dopisano da moze samo sa picem i sedistem da se upisu novi podaci dole
       // to dole ne radi uopse nista jer mi ode u drugi uslov
+    } else if (
+      pomDateRet === "povratna" &&
+      stariPovratak === true &&
+      izmeniPovratak === false
+    ) {
+      console.log("4 uslov: samo unosimo pice i sediste");
+      alert(
+        "Izmena povratne karte je u toku ali samo sa picem i sedistem" +
+          stariPovratak
+      );
+      //  novaRezervacijaPovratakIzmena(state.id, state.linijaId, selectedSeats);
 
-    } else if (pomDateRet==="povratna" && stariPovratak===true && izmeniPovratak===false ){
-      console.log('4 uslov: samo unosimo pice i sediste');
-      alert ("Izmena povratne karte je u toku ali samo sa picem i sedistem" + stariPovratak);
-    //  novaRezervacijaPovratakIzmena(state.id, state.linijaId, selectedSeats);
-    
       novaRezervacijaPovratakIzmena();
-      {/*
+      {
+        /*
       novaRezervacijaPovratakIzmena(state.pocetnaStanica, state.krajnjaStanica, pomDatPolazak, pomDatDolazak,
         pomPolazak, pomDolazak, state.id, state.pocetnaStanicaId, state.krajnjaStanicaId, 
         userPars.idKorisnika, osvezenje, parseInt(selectedSeats), state.tipKarte, email );
-      */}  
-      console.log('Podaci izmenjene karte -----: '+ 
-      '   PocetnaStanica  '+ state.pocetnaStanica + 	
-      '   KrajnjaStanica  ' + state.krajnjaStanica +
-      '   DatumPolaska  ' + pomDatPolazak + 
-      '   DatumDolaska  ' + pomDatDolazak +
-      '   VremePolaska  ' + pomPolazak +
-      '   VremeDolaska' + pomDolazak +
-      '   id linije  ' + povIspravkaIdLinija +
-      '   PocetnaStanicaId    ' + state.pocetnaStanicaId +
-      '   KrajnjaStanicaId    ' + state.krajnjaStanicaId +
-      '   userPars.idKorisnika    ' + userPars.idKorisnika +
-      '   osvezenje   ' + osvezenje +
-      '   parseInt(selectedSeats)   ' + parseInt(selectedSeats)+ 
-      '   tipKarte    ' +state.tipKarte + 
-      '   email   ' +email +
-      '   rezervacija.id  ' +state.id 
+      */
+      }
+      console.log(
+        "Podaci izmenjene karte -----: " +
+          "   PocetnaStanica  " +
+          state.pocetnaStanica +
+          "   KrajnjaStanica  " +
+          state.krajnjaStanica +
+          "   DatumPolaska  " +
+          pomDatPolazak +
+          "   DatumDolaska  " +
+          pomDatDolazak +
+          "   VremePolaska  " +
+          pomPolazak +
+          "   VremeDolaska" +
+          pomDolazak +
+          "   id linije  " +
+          povIspravkaIdLinija +
+          "   PocetnaStanicaId    " +
+          state.pocetnaStanicaId +
+          "   KrajnjaStanicaId    " +
+          state.krajnjaStanicaId +
+          "   userPars.idKorisnika    " +
+          userPars.idKorisnika +
+          "   osvezenje   " +
+          osvezenje +
+          "   parseInt(selectedSeats)   " +
+          parseInt(selectedSeats) +
+          "   tipKarte    " +
+          state.tipKarte +
+          "   email   " +
+          email +
+          "   rezervacija.id  " +
+          state.id
       );
     }
 
@@ -521,24 +574,24 @@ const RezervacijaComponent = ({ id, state }) => {
 
   //hocemo da menjamo povratnu liniju
   const newReturn = () => {
-    setIzmeniPovratak(true);    //novi datum povratka
-    setStariPovratak(false);    // prvobitno odabrani datum povratka
+    setIzmeniPovratak(true); //novi datum povratka
+    setStariPovratak(false); // prvobitno odabrani datum povratka
     setReturnDate(Date); // da bih imala praznu listu kad krenem sa novim listanjem
-    
+
     //setFinalOznakaBus(state.oznakaBusa);   // da mi ne prikazuje prazno za bus kada pritisnem dugme DA
   };
 
   // u povratnoj liniji ostaje po starom i vreme i datum
   const oldReturn = () => {
-    setIzmeniPovratak(false); 
+    setIzmeniPovratak(false);
     setStariPovratak(true);
-    setPomDateRet("povratna");    //da bi moglo da se pozove izmena povratne karte   
+    setPomDateRet("povratna"); //da bi moglo da se pozove izmena povratne karte
     // Vrati staru vrednost u input polje za slucaj da je putnik vec nesto bio menjao
     vremeInputRef.current.value = state.vremePolaska;
     vremeDInputRef.current.value = state.vremeDolaska;
     datumInputRef.current.value = state.datumPolaska;
     datumDInputRef.current.value = state.datumDolaska;
-    oznakaBusaRef.current.value = state.oznakaBusa;   //dodala zbog busa
+    oznakaBusaRef.current.value = state.oznakaBusa; //dodala zbog busa
     setFinalOznakaBus(state.oznakaBusaRef);
 
     // da ne prikazuje predhodni izbor
@@ -559,7 +612,7 @@ const RezervacijaComponent = ({ id, state }) => {
   // vrati prvobitno odabrano vreme povratka
   const handleNeClick = () => {
     //zbog busa ubacujem naredna 2 reda da bi vratio prvobitni bus
-    setIzmeniPovratak(false); 
+    setIzmeniPovratak(false);
     setStariPovratak(true);
     // Vrati staru vrednost u input polje
     vremeInputRef.current.value = state.vremePolaska;
@@ -567,7 +620,7 @@ const RezervacijaComponent = ({ id, state }) => {
     datumInputRef.current.value = state.datumPolaska;
     datumDInputRef.current.value = state.datumDolaska;
 
-    oznakaBusaRef.current.value = state.oznakaBusa;   //dodala da bi ocitala prvobitni bus
+    oznakaBusaRef.current.value = state.oznakaBusa; //dodala da bi ocitala prvobitni bus
     setFinalOznakaBus(oznakaBusaRef);
 
     // da ne prikazuje predhodni izbor
@@ -654,7 +707,6 @@ const RezervacijaComponent = ({ id, state }) => {
                   />
                   {!formInputsValid.name && <p>Unesite ime i prezime</p>}
                 </div>
-
                 <div
                   className={`${classes.control} ${
                     formInputsValid.email ? "" : classes.invalid
@@ -676,7 +728,6 @@ const RezervacijaComponent = ({ id, state }) => {
                   />
                   {!formInputsValid.email && <p>Unesite E-mail</p>}
                 </div>
-
                 <div
                   className={`${classes.control} ${
                     formInputsValid.email ? "" : classes.invalid
@@ -699,77 +750,80 @@ const RezervacijaComponent = ({ id, state }) => {
                   />
                   {!formInputsValid.telefon && <p>Unesite telefon</p>}
                 </div>
+                {/*  rezervacija za drugu osobu    */}
+                <div className="red-1"></div>
+                <hr />
+                <div className="red-05"></div>
+                <p className="teget">
+                  <Trans i18nKey="description.part210">
+                    Da li rezervišete za drugu osobu{" "}
+                  </Trans>
+                </p>
+                <div className="red-05"></div>
+                <button
+                  onClick={() => setDrugiKorisnik(true)}
+                  className="drugi-korisnik animated-button"
+                >
+                  <Trans i18nKey="description.part153"> Da </Trans>
+                </button>
+                &ensp;
+                <button
+                  onClick={() => setDrugiKorisnik(false)}
+                  className="drugi-korisnik animated-button"
+                >
+                  <Trans i18nKey="description.part154"> Ne </Trans>
+                </button>
+                <div className="red-05"></div>
+                {drugiKorisnik ? (
+                  <div>
+                    {/* -------podaci o drugom korisniku  ------  */}
 
-                    {/*  rezervacija za drugu osobu    */}
-                    <div className="red-1"></div>
-                    <hr/>
-                    <div className="red-05"></div>
-
-                    <p className="teget"> 
-                        <Trans i18nKey="description.part210">Da li rezervišete za drugu osobu </Trans> 
-                    </p>
-                    <div className="red-05"></div>
-                    <button
-                      onClick={() =>setDrugiKorisnik(true)}                      
-                      className="drugi-korisnik animated-button"
-                    >
-                      <Trans i18nKey="description.part153"> Da  </Trans>
-                    </button>
-                    &ensp;
-                    <button
-                      onClick={() =>setDrugiKorisnik(false)}
-                      className="drugi-korisnik animated-button"
-                    >
-                        <Trans i18nKey="description.part154"> Ne  </Trans>
-                    </button>
-                    <div className="red-05"></div>
-                    {drugiKorisnik?
-                    <div>
-                      {/* -------podaci o drugom korisniku  ------  */}
-
-
-                  <div className={classes.control}> 
-                      <div><label className="labela levo-23">
-                        <Trans i18nKey="description.part1">Ime i prezime</Trans>
-                      </label></div>
+                    <div className={classes.control}>
+                      <div>
+                        <label className="labela levo-23">
+                          <Trans i18nKey="description.part1">
+                            Ime i prezime
+                          </Trans>
+                        </label>
+                      </div>
                       <input
                         className="test"
                         type="text"
                         name="imeKorisnika"
-                       placeholder="Ime i prezime korisnika karte"                        
+                        placeholder="Ime i prezime korisnika karte"
                       />
-                  </div>
+                    </div>
 
-                  <div className={classes.control }> 
-                      <div><label className="labela levo-23">
-                        Email
-                      </label></div>
+                    <div className={classes.control}>
+                      <div>
+                        <label className="labela levo-23">Email</label>
+                      </div>
                       <input
                         className="test"
                         type="text"
                         name="emailKorisnika"
-                        placeholder="Email korisnika karte"                      
+                        placeholder="Email korisnika karte"
                       />
-                  </div>
+                    </div>
 
-                  <div className={classes.control}> 
-                      <div><label className="labela levo-23">
-                        <Trans i18nKey="description.part17">Telefon</Trans>
-                      </label></div>
+                    <div className={classes.control}>
+                      <div>
+                        <label className="labela levo-23">
+                          <Trans i18nKey="description.part17">Telefon</Trans>
+                        </label>
+                      </div>
                       <input
                         className="test"
                         type="text"
                         name="telKorisnika"
-                        placeholder="Telefon korisnika karte"                        
+                        placeholder="Telefon korisnika karte"
                       />
+                    </div>
                   </div>
-                
-
-
-                    </div>                   
-                    :""}
-
-                    {/*  kraj rezervacije za drugu osobu   */}
+                ) : (
+                  ""
+                )}
+                {/*  kraj rezervacije za drugu osobu   */}
               </div>
               <div className="red-1"></div>
               <div className="deoForme">
@@ -935,34 +989,34 @@ const RezervacijaComponent = ({ id, state }) => {
                     <div className="red-1"></div>
                     <p className="teget">
                       <Trans i18nKey="description.part211">
-                          Pritisnite DA ako želite da promenite datum i vreme povratka ?
+                        Pritisnite DA ako želite da promenite datum i vreme
+                        povratka ?
                       </Trans>
                     </p>
                     <div className="red-05"></div>
                     <p className="teget">
                       <Trans i18nKey="description.part215">
-                          Pritisnite NE ako želite prvobitu rezervaciju povratka !
+                        Pritisnite NE ako želite prvobitu rezervaciju povratka !
                       </Trans>
                     </p>
-
                     <div className="red-05"></div>
                     <button
                       onClick={newReturn}
                       className="promena-povratka animated-button"
                     >
-                      <Trans i18nKey="description.part153">   Da  </Trans>
+                      <Trans i18nKey="description.part153"> Da </Trans>
                     </button>
                     &ensp;
                     <button
                       onClick={oldReturn}
                       className="promena-povratka animated-button"
                     >
-                      <Trans i18nKey="description.part154">   Ne  </Trans>
+                      <Trans i18nKey="description.part154"> Ne </Trans>
                     </button>
                     <div className="red-05"></div>
                     {/*Stigli ste: {state.id+1}     */}
                     {/* dodajem deo u slucaju da putnik menja datum i vreme povratka    */}
-                    {izmeniPovratak  && (
+                    {izmeniPovratak && (
                       <div>
                         <div className="ograda1">
                           <div>
@@ -973,7 +1027,6 @@ const RezervacijaComponent = ({ id, state }) => {
                               </Trans>
                             </label>
                             &emsp; &ensp;
-                            
                             <input
                               type="date"
                               id="returnDate"
@@ -981,7 +1034,7 @@ const RezervacijaComponent = ({ id, state }) => {
                               //  min={state.datumDolaska}   //   bilo je tako
                               //  min={mogucDatumRealnogPovratka}
                               //  min={mogucDatumRealnogPovratka ? mogucDatumRealnogPovratka.toISOString().split('T')[0] : ''}
-                              min={new Date().toISOString().split('T')[0]} // Postavljanje min na trenutni datum
+                              min={new Date().toISOString().split("T")[0]} // Postavljanje min na trenutni datum
                               //  min={minDatRealnogPovratka}
                               onChange={(e) => {
                                 e.persist();
@@ -1016,58 +1069,68 @@ const RezervacijaComponent = ({ id, state }) => {
                               <div>
                                 {filteredLinijePovratna
 
-                              //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
-                              .sort((a, b) => {
-                                // Konvertujemo vreme polaska u Date objekte
-                                const timeA = new Date('1970-01-01T' + a.vremePolaska);
-                                const timeB = new Date('1970-01-01T' + b.vremePolaska);
-                                // Poredimo Date objekte
-                                return timeA - timeB;
-                              })
-                              
-                                .map((linija) => (
-                                  <div>
-                                    <li key={linija.id}>
-                                      <label>
-                                        {linija.vremePolaska} ---
-                                        {linija.vremeDolaska}---
-                                      </label>
-                                      {/* polje gde biramo povratnu liniju  */}
-                                      <input
-                                        type="checkbox"
-                                        value={linija.id}
-                                        checked={checkedItemId === linija.id}
-                                        onChange={() =>
-                                          handleCheckboxChange(linija.id)
-                                        }
-                                        // na klik postavljamo odabrane vrednosti
-                                        onClick={() => {
-                                         // setPovratnaIdLinija(linija.id);
-                                          setPovIspravkaIdLinija(linija.id);    //zbog prikaza sedista u busu
-                                          setPomPolazak(linija.vremePolaska);
-                                          setPomDolazak(linija.vremeDolaska);
-                                          setPomDatPolazak(linija.datumPolaska);  // ubacila kod edita
-                                          setPomDatDolazak(linija.datumDolaska);
-                                          setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
-                                          setPomOznakaBus(linija.oznakaBusa);     //da bi prikazao dinamicki slobodna mesta u busu
-                                        //  setLinijaId_nova(linija.linijaId);      //da bi mogla da upisem promenjene podatke u povratnoj karti
-                                        }}
-                                      />
-                                    </li>
-                                  </div>
-                                ))}
+                                  //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
+                                  .sort((a, b) => {
+                                    // Konvertujemo vreme polaska u Date objekte
+                                    const timeA = new Date(
+                                      "1970-01-01T" + a.vremePolaska
+                                    );
+                                    const timeB = new Date(
+                                      "1970-01-01T" + b.vremePolaska
+                                    );
+                                    // Poredimo Date objekte
+                                    return timeA - timeB;
+                                  })
+
+                                  .map((linija) => (
+                                    <div>
+                                      <li key={linija.id}>
+                                        <label>
+                                          {linija.vremePolaska} ---
+                                          {linija.vremeDolaska}---
+                                        </label>
+                                        {/* polje gde biramo povratnu liniju  */}
+                                        <input
+                                          type="checkbox"
+                                          value={linija.id}
+                                          checked={checkedItemId === linija.id}
+                                          onChange={() =>
+                                            handleCheckboxChange(linija.id)
+                                          }
+                                          // na klik postavljamo odabrane vrednosti
+                                          onClick={() => {
+                                            // setPovratnaIdLinija(linija.id);
+                                            setPovIspravkaIdLinija(linija.id); //zbog prikaza sedista u busu
+                                            setPomPolazak(linija.vremePolaska);
+                                            setPomDolazak(linija.vremeDolaska);
+                                            setPomDatPolazak(
+                                              linija.datumPolaska
+                                            ); // ubacila kod edita
+                                            setPomDatDolazak(
+                                              linija.datumDolaska
+                                            );
+                                            setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                                            setPomOznakaBus(linija.oznakaBusa); //da bi prikazao dinamicki slobodna mesta u busu
+                                            //  setLinijaId_nova(linija.linijaId);      //da bi mogla da upisem promenjene podatke u povratnoj karti
+                                          }}
+                                        />
+                                      </li>
+                                    </div>
+                                  ))}
                               </div>
                             ) : (
                               ""
                             )}
                             <hr />
-                              <Trans i18nKey="description.part212">
-                                Odabrali ste polazak - dolazak (h): </Trans>
+                            <Trans i18nKey="description.part212">
+                              Odabrali ste polazak - dolazak (h):{" "}
+                            </Trans>
                             <hr />
                             {pomPolazak}---{pomDolazak}
                             <br />
-                              <Trans i18nKey="description.part213">
-                                Da li želite da postavite nov povratak ? </Trans> 
+                            <Trans i18nKey="description.part213">
+                              Da li želite da postavite nov povratak ?{" "}
+                            </Trans>
                             <br />
                             <button
                               onClick={handleDaClick}
@@ -1239,48 +1302,53 @@ const RezervacijaComponent = ({ id, state }) => {
                           {returnDate !== null ? (
                             <div>
                               {filteredLinije
-                              //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
-                              .sort((a, b) => {
-                                // Konvertujemo vreme polaska u Date objekte
-                                const timeA = new Date('1970-01-01T' + a.vremePolaska);
-                                const timeB = new Date('1970-01-01T' + b.vremePolaska);
-                                // Poredimo Date objekte
-                                return timeA - timeB;
-                              })
+                                //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
+                                .sort((a, b) => {
+                                  // Konvertujemo vreme polaska u Date objekte
+                                  const timeA = new Date(
+                                    "1970-01-01T" + a.vremePolaska
+                                  );
+                                  const timeB = new Date(
+                                    "1970-01-01T" + b.vremePolaska
+                                  );
+                                  // Poredimo Date objekte
+                                  return timeA - timeB;
+                                })
 
-                              .map((linija) => (
-                                <div>
-                                  <li key={linija.id}>
-                                    <label>
-                                      {linija.vremePolaska} ---
-                                      {linija.vremeDolaska}---
-                                    </label>
-                                    <input
-                                      type="checkbox"
-                                      value={linija.id}
-                                      checked={checkedItemId === linija.id}
-                                      onChange={() =>
-                                        handleCheckboxChange(linija.id)
-                                      }
-                                      onClick={() => {
-                                        setPovratnaIdLinija(linija.id);
-                                        setPomPolazak(linija.vremePolaska);
-                                        setPomDolazak(linija.vremeDolaska);
-                                        setPomDatDolazak(linija.datumDolaska);
-                                        setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
-                                       // setDatumDolaskaOdlazne(linija.datumDolaska);
-                                      }}
-                                    />
-                                  </li>
-                                </div>
-                              ))}
+                                .map((linija) => (
+                                  <div>
+                                    <li key={linija.id}>
+                                      <label>
+                                        {linija.vremePolaska} ---
+                                        {linija.vremeDolaska}---
+                                      </label>
+                                      <input
+                                        type="checkbox"
+                                        value={linija.id}
+                                        checked={checkedItemId === linija.id}
+                                        onChange={() =>
+                                          handleCheckboxChange(linija.id)
+                                        }
+                                        onClick={() => {
+                                          setPovratnaIdLinija(linija.id);
+                                          setPomPolazak(linija.vremePolaska);
+                                          setPomDolazak(linija.vremeDolaska);
+                                          setPomDatDolazak(linija.datumDolaska);
+                                          setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
+                                          // setDatumDolaskaOdlazne(linija.datumDolaska);
+                                        }}
+                                      />
+                                    </li>
+                                  </div>
+                                ))}
                             </div>
                           ) : (
                             ""
                           )}
                           <hr />
-                            <Trans i18nKey="description.part212">
-                                Odabrali ste polazak - dolazak (h): </Trans>
+                          <Trans i18nKey="description.part212">
+                            Odabrali ste polazak - dolazak (h):{" "}
+                          </Trans>
                           <hr />
                           {pomPolazak}---{pomDolazak}
                         </div>
@@ -1304,10 +1372,9 @@ const RezervacijaComponent = ({ id, state }) => {
                   <p>
                     <Trans i18nKey="description.part60">Cena karte:</Trans>{" "}
                     {ceneFilter} din
-                    
                   </p>
                 </div>
-              {/*  {izmeniPovratak ? cene : ceneFilter}   ne radi  */}
+                {/*  {izmeniPovratak ? cene : ceneFilter}   ne radi  */}
               </div>
               <div className="red-1"></div>
             </div>
@@ -1316,7 +1383,7 @@ const RezervacijaComponent = ({ id, state }) => {
               {/* desni deo sa prikazom autobusa */}
               <div className="autobus">
                 <div className="centar">
-                {/* ubacila sam da mi olaksa testiranje pa sam sada zakomentarisala donji red
+                  {/* ubacila sam da mi olaksa testiranje pa sam sada zakomentarisala donji red
                 Prvobitni tip busa: {linija.oznakaBusa} --- Izmenjeni tip busa: {finalOznakaBus}
                 */}
                   {/*------------------------------ Dopisala SN po Vulicevom predlogu ovaj blok */}
@@ -1337,180 +1404,177 @@ const RezervacijaComponent = ({ id, state }) => {
                   </div>
                   {/*------------------------------  */}
                 </div>
-                
+
                 {/* finalOznakaBus mi govori koji tip busa je izabran 
                 prilikom promene rezervacije realnoPovratne karte  */}
 
-                {izmeniPovratak?
-                <div>
-                {(finalOznakaBus != "S2" ? (
-                  ""
+                {izmeniPovratak ? (
+                  <div>
+                    {(finalOznakaBus != "S2" ? (
+                      ""
+                    ) : (
+                      <S2
+                        onReservation={handleReservation}
+                        linijaId={povIspravkaIdLinija}
+                        pocetnaStanicaId={state.pocetnaStanicaId}
+                        krajnjaStanicaId={state.krajnjaStanicaId}
+                      />
+                    )) ||
+                      (finalOznakaBus != "MAN" ? (
+                        ""
+                      ) : (
+                        <MAN
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "VH" ? (
+                        ""
+                      ) : (
+                        <VH
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "MB1" ? (
+                        ""
+                      ) : (
+                        <MB1
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "MB3" ? (
+                        ""
+                      ) : (
+                        <MB3
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "MB4" ? (
+                        ""
+                      ) : (
+                        <MB4
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "VL" ? (
+                        ""
+                      ) : (
+                        <VL
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (finalOznakaBus != "S1" ? (
+                        ""
+                      ) : (
+                        <S1
+                          onReservation={handleReservation}
+                          linijaId={povIspravkaIdLinija}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      ))}
+                  </div>
                 ) : (
-                  <S2
-                    onReservation={handleReservation}
-                    linijaId={povIspravkaIdLinija}
-                    pocetnaStanicaId={state.pocetnaStanicaId}
-                    krajnjaStanicaId={state.krajnjaStanicaId}
-                  />
-                )) ||
-                  (finalOznakaBus != "MAN" ? (
-                    ""
-                  ) : (
-                    <MAN
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "VH" ? (
-                    ""
-                  ) : (
-                    <VH
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "MB1" ? (
-                    ""
-                  ) : (
-                    <MB1
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "MB3" ? (
-                    ""
-                  ) : (
-                    <MB3
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "MB4" ? (
-                    ""
-                  ) : (
-                    <MB4
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "VL" ? (
-                    ""
-                  ) : (
-                    <VL
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                  (finalOznakaBus != "S1" ? (
-                    ""
-                  ) : (
-                    <S1
-                      onReservation={handleReservation}
-                      linijaId={povIspravkaIdLinija}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  ))}
-              </div>
-
-
-                :
-                
-                <div>
-                  {(linija.oznakaBusa != "S2" ? (
-                    ""
-                  ) : (
-                    <S2
-                      onReservation={handleReservation}
-                      linijaId={state.id}
-                      pocetnaStanicaId={state.pocetnaStanicaId}
-                      krajnjaStanicaId={state.krajnjaStanicaId}
-                    />
-                  )) ||
-                    (linija.oznakaBusa != "MAN" ? (
+                  <div>
+                    {(linija.oznakaBusa != "S2" ? (
                       ""
                     ) : (
-                      <MAN
+                      <S2
                         onReservation={handleReservation}
                         linijaId={state.id}
                         pocetnaStanicaId={state.pocetnaStanicaId}
                         krajnjaStanicaId={state.krajnjaStanicaId}
                       />
                     )) ||
-                    (linija.oznakaBusa != "VH" ? (
-                      ""
-                    ) : (
-                      <VH
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
-                    (linija.oznakaBusa != "MB1" ? (
-                      ""
-                    ) : (
-                      <MB1
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
-                    (linija.oznakaBusa != "MB3" ? (
-                      ""
-                    ) : (
-                      <MB3
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
-                    (linija.oznakaBusa != "MB4" ? (
-                      ""
-                    ) : (
-                      <MB4
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
-                    (linija.oznakaBusa != "VL" ? (
-                      ""
-                    ) : (
-                      <VL
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    )) ||
-                    (linija.oznakaBusa != "S1" ? (
-                      ""
-                    ) : (
-                      <S1
-                        onReservation={handleReservation}
-                        linijaId={state.id}
-                        pocetnaStanicaId={state.pocetnaStanicaId}
-                        krajnjaStanicaId={state.krajnjaStanicaId}
-                      />
-                    ))}
-                </div>
-                }
+                      (linija.oznakaBusa != "MAN" ? (
+                        ""
+                      ) : (
+                        <MAN
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "VH" ? (
+                        ""
+                      ) : (
+                        <VH
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "MB1" ? (
+                        ""
+                      ) : (
+                        <MB1
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "MB3" ? (
+                        ""
+                      ) : (
+                        <MB3
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "MB4" ? (
+                        ""
+                      ) : (
+                        <MB4
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "VL" ? (
+                        ""
+                      ) : (
+                        <VL
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      )) ||
+                      (linija.oznakaBusa != "S1" ? (
+                        ""
+                      ) : (
+                        <S1
+                          onReservation={handleReservation}
+                          linijaId={state.id}
+                          pocetnaStanicaId={state.pocetnaStanicaId}
+                          krajnjaStanicaId={state.krajnjaStanicaId}
+                        />
+                      ))}
+                  </div>
+                )}
                 {/* kraj prikaza busa u zavisnosti od toga da li je normalna povratna rez ili je prerezervacija realnoPovratne karte  */}
 
                 <p className="plavo">

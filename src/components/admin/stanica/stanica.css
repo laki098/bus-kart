@@ -77,6 +77,18 @@
     flex-wrap: wrap;
   }
 
+  .jedan-red-prikaz-stjuardesa{
+   /* border: 1.5px solid grey;   */
+    border-bottom: 1px solid gray;
+   /* width: fit-content; */
+    line-height: 45px; 
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    margin: 0.3rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .input-stanica{
     width: 10rem;
     height: 2rem;
@@ -118,6 +130,54 @@
     background-color: #fff;
    /* flex-wrap: wrap;    */
   }
+  .polje-stanica-1{
+    width: fit-content;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.2rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+  }
+  .polje-stanica-2{
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.5rem;
+    background-color: #fff;
+  }
+  .polje-stanica-3{
+    word-wrap: break-word;
+    line-height: 1;
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.2rem;
+    background-color: #fff;
+    font-size: medium;
+    font-weight: normal;
+    display: flex;
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+    text-align: center;
+  }
+  .info-stanica-3{
+    word-wrap: break-word;
+    line-height: 1;
+    width: 8rem;
+    height: 4rem;
+    border: 1px solid rgb(156, 198, 253);
+    padding: 0.2rem;
+    background-color: rgb(221, 234, 250);
+    color: darkblue;
+    font-size: medium;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Centrira po vertikali */
+    justify-content: center; /* Centrira po horizontali */
+    text-align: center;
+  }
+
   .info-stanica{
     width: 5rem;
     border: 1px solid rgb(156, 198, 253);
@@ -133,6 +193,16 @@
     word-wrap: break-word;
     line-height: 1;
     display: flex;
+    align-items: center; /* Vertikalno centriranje */
+    justify-content: center;
+    text-align: center;
+  }
+
+  .fino-podesavanje-1{
+    word-wrap: break-word;
+    line-height: 1;
+    display: flexbox;    
+    justify-items: center;
     align-items: center; /* Vertikalno centriranje */
     justify-content: center;
     text-align: center;
@@ -180,11 +250,9 @@
   .sirina-39{
     width: 39rem;
   }
-
-  
-
-
-  
+  .sirina-info-14{
+    width: 14rem;
+  }
 
   .ograda-medjustanice{
     border:1px solid darkgreen;

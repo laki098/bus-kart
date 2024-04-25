@@ -399,6 +399,8 @@ router.post("/rezervacija", async (req, res) => {
       oznakaSedista,
       tipKarte,
       email,
+      imeIprezime,
+      brojTelefona,
     } = req.body;
 
     console.log(req.body);
@@ -581,6 +583,8 @@ router.post("/rezervacija", async (req, res) => {
       oznakaSedista,
       tipKarte,
       email,
+      imeIprezime,
+      brojTelefona,
     });
 
     console.log(linijaId);

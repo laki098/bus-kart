@@ -44,8 +44,8 @@ const StaniceInitial = () => {
 
   //prevodjenje
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje
@@ -57,6 +57,7 @@ const StaniceInitial = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -80,14 +81,14 @@ const StaniceInitial = () => {
                     <div className="polje-stanica">
                       <Trans i18nKey="description.part142">Naziv </Trans>
                     </div>
-                    <div className="info-stanica sirina-info-stanica fino-podesavanje">
-                      {" "}
+                    <div className="info-stanica sirina-info-stanica   fino-podesavanje">
+                      
                       {stanica.naziv}
                     </div>
                     <div className="polje-stanica">
                       <Trans i18nKey="description.part111">Adresa </Trans>
                     </div>
-                    <div className="info-stanica sirina-info-stanica email-polje obicna-debljina fino-podesavanje">
+                    <div className="info-stanica sirina-info-stanica email-polje obicna-debljina fino-podesavanje-1">
                       {stanica.adresa}
                     </div>
                     <div className="polje-stanica">

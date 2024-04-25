@@ -88,8 +88,8 @@ const AdminInitial = () => {
   };
 
   const lngs = {
-    en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    en: { nativeName: "En" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
 
@@ -100,6 +100,7 @@ const AdminInitial = () => {
           {Object.keys(lngs).map((lng) => (
             <button
               key={lng}
+              className="jezici-dugme-promena"
               style={{
                 fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
               }}
@@ -166,6 +167,7 @@ const AdminInitial = () => {
             <Trans i18nKey="description.part34">Red vožnje</Trans>
           </p>
         </button>
+        &emsp;
         <Link to="/admin.component">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
@@ -173,6 +175,7 @@ const AdminInitial = () => {
             </p>
           </button>
         </Link>
+        &emsp;
         <Link to="/viseLinija">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
@@ -201,34 +204,34 @@ const AdminInitial = () => {
               {filteredLinije.map((linija) => (
                 <li key={linija.id}>
                   <div className="admin-jedan-red">
-                    <div className="polje-stanica">
+                    <div className="polje-stanica-3">  {/* polje-stanica fino-podesavanje  */}
                       <Trans i18nKey="description.part3">
                         Mesto polaska{" "}
                       </Trans>
                     </div>
-                    <div className="info-stanica-1">
+                    <div className="info-stanica-3">   {/* info-stanica-1 fino-podesavanje  */}
                       {linija.pocetnaStanica}
                     </div>
-                    <div className="polje-stanica">
+                    <div className="polje-stanica-3">
                       <Trans i18nKey="description.part11">
                         Vreme polaska{" "}
                       </Trans>
                     </div>
-                    <div className="info-stanica">
+                    <div className="info-stanica-3">
                       {linija.vremePolaska}
                     </div>
-                    <div className="polje-stanica">
+                    <div className="polje-stanica-3">
                       <Trans i18nKey="description.part13">
                         Vreme dolaska
                       </Trans>
                     </div>
-                    <div className="info-stanica">{linija.vremeDolaska}</div>
-                    <div className="polje-stanica">
+                    <div className="info-stanica-3">{linija.vremeDolaska}</div>
+                    <div className="polje-stanica-3">
                       <Trans i18nKey="description.part5">
                         Mesto dolaska{" "}
                       </Trans>
                     </div>
-                    <div className="info-stanica-1">
+                    <div className="info-stanica-3">
                       {linija.krajnjaStanica}
                     </div>
                     <Link
@@ -246,7 +249,7 @@ const AdminInitial = () => {
                         },
                       }}
                     >
-                      <div className="polje-stanica">
+                      <div className="polje-stanica-3">
                         <button className={classes.submit}>
                           <p className="admin-dugme-slova">
                             <Trans i18nKey="description.part133">Uredi</Trans>
@@ -254,7 +257,7 @@ const AdminInitial = () => {
                         </button>
                       </div>
                     </Link>
-                    <div className="polje-stanica">
+                    <div className="polje-stanica-3">
                       <button
                         onClick={() => brisanjeLinije(linija.id)}
                         className={classes.submit}
