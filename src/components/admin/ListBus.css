@@ -290,6 +290,17 @@
     line-height: 1;   /* razmak izmedju linija    */
     text-align: justify;
   }
+  .email-polje-podesi{
+    width: 20rem;
+    height: 4rem;
+    word-wrap: break-word;
+    line-height: 1;   /* razmak izmedju linija    */
+    text-align: justify;
+    padding: 0.2rem;    /*22px;  */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
 
     /* kod header dela koji se primenjuje kod prevoda */
   .jezici{

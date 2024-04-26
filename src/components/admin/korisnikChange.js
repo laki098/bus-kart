@@ -80,18 +80,20 @@ const KorisnikChange = () => {
 
     <form onSubmit={submitHandler}>
       <div className="stampajLiniju">
-      <div className="rowTabela korisniciTabelaPromena">
-      <div className="column-1 centar-1">
+      <div className="rowTabela korisniciTabelaPromena" >
+        <div className="column-1 centar-1">
         <label ><Trans i18nKey="description.part44"> Korisničko ime </Trans>
         </label></div>
-        <div className="column-1 centar-1 podaci"><input
+        <div className="column-1 centar-1 podaci">
+          <input
           defaultValue={korisnik.korisnickoIme}
           type="text"
           required
           name="korisnickoIme"
           className="sirina-info-6"
           onChange={korisnikLogic.changeHandler}
-        ></input></div>
+          ></input>
+        </div>
         <div className="column-1 centar-1 ">
           <label><Trans i18nKey="description.part40">Ime</Trans></label>
         </div>
