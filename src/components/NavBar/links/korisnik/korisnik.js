@@ -99,7 +99,7 @@ const Korisnik = () => {
             <div className="user-control">
               <div className="red-1"></div>
               <label className="labela-stanica labela-stanica-vece veliki-naslov">
-                <Trans i18nKey="description.part159"> Korisik </Trans>
+                <Trans i18nKey="description.part159"> Korisnik </Trans>
               </label>
               <div className="red-1"></div>
               <div className="red-1"></div>
