@@ -45,7 +45,7 @@ const Kontakt = () => {
         <div className="contact row1">
           <div className="contact_prikaz">
             <div className="contact-div-1">
-              <div className="podaci1">
+              {/*   <div className="podaci1">      */}
                 <div
                   className="podaciKontakt"   
                   style={{ overflowX: "auto"}}   
@@ -70,7 +70,7 @@ const Kontakt = () => {
                   <h5>e-mail:</h5> <h5> eurocompassdoo@gmail.com </h5>
                   <div className="red-1"></div>
                 </div>
-              </div>
+              {/*  </div>   */}
             </div>
           </div>
           <div className="rasponsive-maps contact_prikaz">

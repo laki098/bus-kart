@@ -55,7 +55,9 @@ rasponsive-maps {
   border-color: darkblue;
   border-width: 1px;      */
   padding-left: 3rem;
-  
+  word-wrap: break-word;  
+  overflow-wrap: break-word;    /* za starije browser-e   */
+  line-height: 1;
 }
 
 .podaci1 {
@@ -68,7 +70,8 @@ rasponsive-maps {
   font-size: large; /* larger   */
   line-height: 1.5; /*  3     */
   color: darkblue;
-  width: 35vw;          /*pozicioniranje div u desno i sirina 35vw    */
+  width: 40vw;          /*pozicioniranje div u desno i sirina 35vw    */
+ /* width: 20rem;   */
   margin-left: 5vw;
 }
 
