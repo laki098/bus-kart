@@ -30,17 +30,14 @@ import "../admin/dopuna_stila.css";
 const RezervacijaComponent = ({ id, state }) => {
   // const [filteredLinije, setFilteredLinije] = useState([]);
   const [linija, setLinija] = useState({});
-  const [brojSedista, setBrojSedista] = useState();
   // zbog povratne karte
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [returnDate, setReturnDate] = useState(Date);
   const [val1, setVal1] = useState("");
   const [val2, setVal2] = useState("");
-  const [checked, setChecked] = useState(false);
   const [PovratnaIdLinija, setPovratnaIdLinija] = useState();
   const [ceneFilter, setCeneFilter] = useState();
   const [tipKarte, setTipKarte] = useState("");
-
   const [drugiKorisnik, setDrugiKorisnik] = useState(false);
   const [izmeniPovratak, setIzmeniPovratak] = useState(false); //menjamo datum i vreme povratka
   const [stariPovratak, setStariPovratak] = useState(false); // ostajemo kod prvobitno rezervisanog datuma i vremena povratka
@@ -48,15 +45,9 @@ const RezervacijaComponent = ({ id, state }) => {
   const [filteredLinijePovratna, setFilteredLinijePovratna] = useState([]); // kad menjamo realnoPovratnu kartu
   const [val1Pov, setVal1Pov] = useState(""); //kod promene realnoPovratne karte
   const [val2Pov, setVal2Pov] = useState("");
+  const [pKorisnik, setPKorisnik] = useState({});
 
   const [pomCena, setPomCena] = useState(""); //da mi ocita cenu kod promene rezdervacija
-
-  //const [datumDolaskaOdlazne, setDatumDolaskaOdlazne]= useState(Date);  // pom prom da omoguci min datum kod realnoPovratne karte
-  const danasDatum = new Date(); // Trenutni datum
-
-  const [mogucDatumRealnogPovratka, setMogucDatumRealnogPovratka] =
-    useState(null);
-  const [minDatRealnogPovratka, setMinDatRealnogPovratka] = useState(""); // donji limitar kod izbora min dat RealnogPovratka
 
   //? izvlacenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -67,6 +58,7 @@ const RezervacijaComponent = ({ id, state }) => {
     userPars = JSON.parse(userData);
     //?proveravamo da li postoji mejl i setujemo trenutni mejl
     if (!email) {
+      setPKorisnik(userPars);
       setEmail(userPars.email);
     }
   }
@@ -84,7 +76,6 @@ const RezervacijaComponent = ({ id, state }) => {
       }),
     });
     const data = await response.json();
-    console.log("Data cena:", data); // Da vidim tip podataka oko cene kod promene rezervacije
     setCeneFilter(data.cenaPovratne);
     return data.cenaPovratne; // Vraćamo samo vrednost cenaPovratne   ---- dodala
   };
@@ -107,7 +98,6 @@ const RezervacijaComponent = ({ id, state }) => {
         ...prevCene,
         [state.id]: cena,
       }));
-      console.log("cena karte je:", cena); // Prikazujemo cenu u konzoli
     });
   }, [ceneFilter]);
 
@@ -129,7 +119,15 @@ const RezervacijaComponent = ({ id, state }) => {
         osvezenje,
         parseInt(selectedSeats),
         tipKarte,
-        email
+        rezervacijaLogic.data.emailKorisnika?.trim()
+          ? rezervacijaLogic.data.emailKorisnika.trim()
+          : email,
+        rezervacijaLogic.data.imeIprezime?.trim()
+          ? rezervacijaLogic.data.imeIprezime.trim()
+          : pKorisnik.ime + " " + pKorisnik.prezime,
+        rezervacijaLogic.data.brojTelefona?.trim()
+          ? rezervacijaLogic.data.brojTelefona.trim()
+          : pKorisnik.brojTelefona
       )
       .then((response) => {
         console.log(response);
@@ -209,15 +207,6 @@ const RezervacijaComponent = ({ id, state }) => {
   const handleReservation = (selectedSeats) => {
     // Ovde mozete izvrsiti akcije sa selektovanim sedistima
     setSelectedSeats(selectedSeats);
-    console.log("Selektovana sedista:", selectedSeats);
-    console.log(
-      "povIspravkaIdLinija " +
-        povIspravkaIdLinija +
-        "state.pocetnaStanicaId" +
-        state.pocetnaStanicaId +
-        "state.krajnjaStanicaId  " +
-        state.krajnjaStanicaId
-    );
   };
 
   const [pom, setPom] = useState(false);
@@ -361,7 +350,15 @@ const RezervacijaComponent = ({ id, state }) => {
         osvezenje,
         parseInt(selectedSeats),
         "PrPovratna", //tipKarte,   tip karte za povratnu
-        email
+        rezervacijaLogic.data.emailKorisnika?.trim()
+          ? rezervacijaLogic.data.emailKorisnika.trim()
+          : email,
+        rezervacijaLogic.data.imeIprezime?.trim()
+          ? rezervacijaLogic.data.imeIprezime.trim()
+          : pKorisnik.ime + " " + pKorisnik.prezime,
+        rezervacijaLogic.data.brojTelefona?.trim()
+          ? rezervacijaLogic.data.brojTelefona.trim()
+          : pKorisnik.brojTelefona
       )
       .then((response) => {
         console.log(response);
@@ -392,7 +389,15 @@ const RezervacijaComponent = ({ id, state }) => {
         osvezenje,
         parseInt(selectedSeats),
         state.tipKarte,
-        email
+        rezervacijaLogic.data.emailKorisnika?.trim()
+          ? rezervacijaLogic.data.emailKorisnika.trim()
+          : email,
+        rezervacijaLogic.data.imeIprezime?.trim()
+          ? rezervacijaLogic.data.imeIprezime.trim()
+          : pKorisnik.ime + " " + pKorisnik.prezime,
+        rezervacijaLogic.data.brojTelefona?.trim()
+          ? rezervacijaLogic.data.brojTelefona.trim()
+          : pKorisnik.brojTelefona
       )
       .then((response) => {
         console.log(response);
@@ -420,11 +425,18 @@ const RezervacijaComponent = ({ id, state }) => {
         state.pocetnaStanicaId, //state.pocetnaStanicaId,
         state.krajnjaStanicaId,
         userPars.idKorisnika,
-
         osvezenje,
         parseInt(selectedSeats),
         state.tipKarte, //tipKarte,
-        state.email //email
+        rezervacijaLogic.data.emailKorisnika?.trim()
+          ? rezervacijaLogic.data.emailKorisnika.trim()
+          : email,
+        rezervacijaLogic.data.imeIprezime?.trim()
+          ? rezervacijaLogic.data.imeIprezime.trim()
+          : pKorisnik.ime + " " + pKorisnik.prezime,
+        rezervacijaLogic.data.brojTelefona?.trim()
+          ? rezervacijaLogic.data.brojTelefona.trim()
+          : pKorisnik.brojTelefona
       )
       .then((response) => {
         //console.log(response);
@@ -454,8 +466,7 @@ const RezervacijaComponent = ({ id, state }) => {
 
   //  upisujem podatke u bazu za obicnu kartu povratnu kartu i izmenjenu povratnu kartu
   const clickRezervisiPovratak = () => {
-    // alert("stariPovratak" + stariPovratak +" " +"pomDateRet" + pomDateRet);
-    if (pomDateRet === "") {
+    if (selectedValue === "Jednosmerna") {
       novaRezervacija();
     } else if (
       pomDateRet === "povratna" &&
@@ -464,8 +475,6 @@ const RezervacijaComponent = ({ id, state }) => {
     ) {
       novaRezervacijaPovratak();
       novaRezervacija();
-      //dodala za promenjeni povratak
-      //novaRezervacijaPovratakIzmena();
     } else if (pomDateRet === "povratna" && izmeniPovratak === true) {
       // alert("Izmena povratne karte u toku, id karte je: "  +state.id+ " br sedista je "+ selectedSeats);
       console.log("3 uslov: menjamo datum vreme unosimo pice i sediste");
@@ -473,41 +482,6 @@ const RezervacijaComponent = ({ id, state }) => {
 
       preRezervacija();
       novaRezervacijaPovratakIzmena();
-
-      //novaRezervacija();
-      console.log(
-        "Podaci izmenjene karte SVI -----: " +
-          "   PocetnaStanica  " +
-          state.pocetnaStanica +
-          "   KrajnjaStanica  " +
-          state.krajnjaStanica +
-          "   DatumPolaska  " +
-          pomDatPolazak +
-          "   DatumDolaska  " +
-          pomDatDolazak +
-          "   VremePolaska  " +
-          pomPolazak +
-          "   VremeDolaska" +
-          pomDolazak +
-          "   id linije  " +
-          povIspravkaIdLinija +
-          "   PocetnaStanicaId    " +
-          state.pocetnaStanicaId +
-          "   KrajnjaStanicaId    " +
-          state.krajnjaStanicaId +
-          "   userPars.idKorisnika    " +
-          userPars.idKorisnika +
-          "   osvezenje   " +
-          osvezenje +
-          "   parseInt(selectedSeats)   " +
-          parseInt(selectedSeats) +
-          "   tipKarte    " +
-          state.tipKarte +
-          "   email   " +
-          email +
-          "   rezervacija.id  " +
-          state.id
-      );
 
       // dopisano da moze samo sa picem i sedistem da se upisu novi podaci dole
       // to dole ne radi uopse nista jer mi ode u drugi uslov
@@ -524,52 +498,12 @@ const RezervacijaComponent = ({ id, state }) => {
       //  novaRezervacijaPovratakIzmena(state.id, state.linijaId, selectedSeats);
 
       novaRezervacijaPovratakIzmena();
-      {
-        /*
-      novaRezervacijaPovratakIzmena(state.pocetnaStanica, state.krajnjaStanica, pomDatPolazak, pomDatDolazak,
-        pomPolazak, pomDolazak, state.id, state.pocetnaStanicaId, state.krajnjaStanicaId, 
-        userPars.idKorisnika, osvezenje, parseInt(selectedSeats), state.tipKarte, email );
-      */
-      }
-      console.log(
-        "Podaci izmenjene karte -----: " +
-          "   PocetnaStanica  " +
-          state.pocetnaStanica +
-          "   KrajnjaStanica  " +
-          state.krajnjaStanica +
-          "   DatumPolaska  " +
-          pomDatPolazak +
-          "   DatumDolaska  " +
-          pomDatDolazak +
-          "   VremePolaska  " +
-          pomPolazak +
-          "   VremeDolaska" +
-          pomDolazak +
-          "   id linije  " +
-          povIspravkaIdLinija +
-          "   PocetnaStanicaId    " +
-          state.pocetnaStanicaId +
-          "   KrajnjaStanicaId    " +
-          state.krajnjaStanicaId +
-          "   userPars.idKorisnika    " +
-          userPars.idKorisnika +
-          "   osvezenje   " +
-          osvezenje +
-          "   parseInt(selectedSeats)   " +
-          parseInt(selectedSeats) +
-          "   tipKarte    " +
-          state.tipKarte +
-          "   email   " +
-          email +
-          "   rezervacija.id  " +
-          state.id
-      );
     }
 
     // Sacekaj nekoliko sec da te preusmeri na Pocetna.js stranicu
     setTimeout(() => {
       window.location.href = "/pocetna";
-    }, 30000); // Ova vrednost u milisekundama predstavlja koliko ce trajati prikazivanje poruke pre nego Å¡to se preusmeriÅ¡ (u ovom sluÄaju 1,5 sekunde)
+    }, 1500); // Ova vrednost u milisekundama predstavlja koliko ce trajati prikazivanje poruke pre nego sto se preusmeri (u ovom slucaju 1,5 sekunde)
   };
 
   //hocemo da menjamo povratnu liniju
@@ -789,8 +723,9 @@ const RezervacijaComponent = ({ id, state }) => {
                       <input
                         className="test"
                         type="text"
-                        name="imeKorisnika"
+                        name="imeIprezime"
                         placeholder="Ime i prezime korisnika karte"
+                        onChange={rezervacijaLogic.changeHandler}
                       />
                     </div>
 
@@ -803,6 +738,7 @@ const RezervacijaComponent = ({ id, state }) => {
                         type="text"
                         name="emailKorisnika"
                         placeholder="Email korisnika karte"
+                        onChange={rezervacijaLogic.changeHandler}
                       />
                     </div>
 
@@ -815,8 +751,9 @@ const RezervacijaComponent = ({ id, state }) => {
                       <input
                         className="test"
                         type="text"
-                        name="telKorisnika"
+                        name="brojTelefona"
                         placeholder="Telefon korisnika karte"
+                        onChange={rezervacijaLogic.changeHandler}
                       />
                     </div>
                   </div>
@@ -1173,7 +1110,7 @@ const RezervacijaComponent = ({ id, state }) => {
                           (selectedOptionValue === "Return")
                         ) {
                           setShowReturnDate(true);
-                          setPomDateRet(returnDate);
+                          setPomDateRet("jednosmerna");
                         } else {
                           setShowReturnDate(false);
                           setReturnDate(null); //da ne baca vrednosti iz baze od predhono izabranog datuma

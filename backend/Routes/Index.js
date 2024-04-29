@@ -407,6 +407,8 @@ router.post("/rezervacija", async (req, res) => {
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
+    console.log(linija.Stanicas);
+
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
     let stanicaK = await Stanica.findByPk(krajnjaStanicaId);
 

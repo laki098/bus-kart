@@ -8,8 +8,17 @@ const RezervacijaLogic = () => {
       ...data,
       [e.target.name]: e.target.value,
     });
-
-  const formValidation = (ime, mesto, mestoD, datum, datumD, vreme, vremeD,  email, telefon) => {
+  const formValidation = (
+    ime,
+    mesto,
+    mestoD,
+    datum,
+    datumD,
+    vreme,
+    vremeD,
+    email,
+    telefon
+  ) => {
     const validName = COHelpers.isStringNotEmpty(ime.current.value);
     const validMesto = COHelpers.isStringNotEmpty(mesto.current.value);
     const validMestoD = COHelpers.isStringNotEmpty(mestoD.current.value);
@@ -36,6 +45,7 @@ const RezervacijaLogic = () => {
   };
 
   return {
+    data,
     changeHandler,
     setData,
     formValidation,
