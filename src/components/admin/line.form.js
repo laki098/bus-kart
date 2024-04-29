@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AdminLogic from "./admin.logic";
 import LinijeApi from "../../api/linije.api";
 import apiUrl from "../../apiConfig";
@@ -10,7 +10,7 @@ import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import helpers from "../../helpers/helpers";
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LineForm = ({ mode, id, state }) => {
@@ -35,6 +35,11 @@ const LineForm = ({ mode, id, state }) => {
     const { pocetnaStanica, krajnjaStanica, medjustanice } = selectedStations;
     return [pocetnaStanica, ...medjustanice, krajnjaStanica];
   };
+
+  const vremePolaskaRef = useRef(null); // Definicija ref za vreme polaska
+  const vremeDolaskaRef = useRef(null); 
+  const vremePolaskaMRef = useRef(null); 
+  const vremeDolaskaMRef = useRef(null); 
 
   const getAutobusi = async () => {
     const response = await fetch(`${apiUrl}/autobusi`);
@@ -169,6 +174,52 @@ const LineForm = ({ mode, id, state }) => {
   };
 
 
+  const handleChangeVreme = () => { // Blokiranje vremena u medjustanici
+    const vremePolaskaValue = vremePolaskaRef.current.value;
+    const vremeDolaskaValue = vremeDolaskaRef.current.value;
+    const vremePolaskaMValue = vremePolaskaMRef.current.value;
+    const vremeDolaskaMValue = vremeDolaskaMRef.current.value;
+  
+    if ( vremeDolaskaValue < vremeDolaskaMValue) {
+      notifyWarn("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremeDolaskaMRef.current.value = "";
+    } 
+
+    if ( vremePolaskaValue > vremePolaskaMValue) {
+      notifyWarn("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremePolaskaMRef.current.value = "";
+    } 
+
+    if (vremeDolaskaMValue && vremeDolaskaMValue < vremePolaskaMValue) {
+      notifyWarn("Vreme  dolaska medjustanice  mora biti vece od polaska!!!");
+      // Resetovanje vrednosti input polja na prazan string
+      vremeDolaskaMRef.current.value = "";
+    } 
+  
+  
+    console.log('Vreme polaska:', vremePolaskaValue);
+    console.log('Vreme dolaska:', vremeDolaskaValue);
+    console.log('Vreme polaska medjustanice:', vremePolaskaMValue);
+    console.log('Vreme dolaska medjustanice', vremeDolaskaMValue);
+};
+
+
+
+const notifyWarn = (message) => {
+  toast.warn(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+
 
 
   //prevodjenje start
@@ -283,6 +334,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <input
                     /*  defaultValue={linija.vremePolaska} */
+                    ref={vremePolaskaRef}
                     className="input-stanica-vreme"
                     type="time"
                     required
@@ -345,12 +397,13 @@ const LineForm = ({ mode, id, state }) => {
 
                         <input
                           /* defaultValue={linija.vremePolaska} */
+                          ref={vremePolaskaMRef}
                           className="input-stanica"
                           type="time"
                           required
                           label="Time"
                           name="vremeDolaskaM"
-                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
+                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -362,12 +415,13 @@ const LineForm = ({ mode, id, state }) => {
                         </div>
                         <input
                           /* defaultValue={linija.vremePolaska} */
+                          ref={vremeDolaskaMRef}
                           className="input-stanica"
                           type="time"
                           required
                           label="Time"
                           name="vremePolaskaM"
-                          onChange={(e) =>  adminLogic.handlerMedjustanice(e, index)}
+                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -439,6 +493,7 @@ const LineForm = ({ mode, id, state }) => {
 
                   <input
                     /*  defaultValue={linija.vremeDolaska} */
+                    ref={vremeDolaskaRef}
                     className="input-stanica-vreme"
                     type="time"
                     required
@@ -634,7 +689,7 @@ const LineForm = ({ mode, id, state }) => {
                           </label>
                         </div>
                         <input
-                          defaultValue={stanicas.Medjustanica.vremeDolaskaM}
+                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
                           className="input-stanica"
                           type="time"
                           required
@@ -652,7 +707,7 @@ const LineForm = ({ mode, id, state }) => {
                           </label>
                         </div>
                         <input
-                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
+                          defaultValue={stanicas.Medjustanica.vremeDolaskaM}
                           className="input-stanica"
                           type="time"
                           required
@@ -674,6 +729,7 @@ const LineForm = ({ mode, id, state }) => {
                           name="datumPolaskaM"
                           type="date"
                           className="input-stanica"
+                          min={today}
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
@@ -690,6 +746,7 @@ const LineForm = ({ mode, id, state }) => {
                           name="datumDolaskaM"
                           type="date"
                           className="input-stanica"
+                          min={today}
                           onChange={(e) =>
                             adminLogic.handlerMedjustanice(e, index)
                           }
