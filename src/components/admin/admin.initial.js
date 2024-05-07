@@ -179,7 +179,7 @@ const AdminInitial = () => {
         <Link to="/viseLinija">
           <button className={classes.submit}>
             <p className="admin-slovaDugme">
-              <Trans i18nKey="">Produzetak linije</Trans>
+              <Trans i18nKey="description.part209">Produžetak linije</Trans>
             </p>
           </button>
         </Link>
