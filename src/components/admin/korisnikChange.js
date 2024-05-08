@@ -79,109 +79,134 @@ const KorisnikChange = () => {
       <div className="red-1"></div>
 
     <form onSubmit={submitHandler}>
-      <div className="stampajLiniju">
-      <div className="rowTabela korisniciTabelaPromena" >
-        <div className="column-1 centar-1">
-        <label ><Trans i18nKey="description.part44"> Korisničko ime </Trans>
-        </label></div>
-        <div className="column-1 centar-1 podaci">
-          <input
-          defaultValue={korisnik.korisnickoIme}
-          type="text"
-          required
-          name="korisnickoIme"
-          className="sirina-info-6"
-          onChange={korisnikLogic.changeHandler}
-          ></input>
-        </div>
-        <div className="column-1 centar-1 ">
-          <label><Trans i18nKey="description.part40">Ime</Trans></label>
-        </div>
-        <div className="column-1 centar-1 podaci">
-		    <input
-          defaultValue={korisnik.ime}
-          type="text"
-          required
-          name="ime"
-          
-          className="inputVelicina sirina-info-6"
-          onChange={korisnikLogic.changeHandler}>
-		    </input></div>
-        <div className="column-1 centar-1">
-          <label><Trans i18nKey="description.part42">Prezime</Trans></label>
-        </div>
-        <div className="column-1 centar-1 podaci">
-          <input
-          defaultValue={korisnik.prezime}
-          type="text"
-          required
-          name="prezime"
-          className="sirina-info-6"
-          onChange={korisnikLogic.changeHandler}>
-          </input></div>
-        <div className="column-1 centar-1">
-          <label><Trans i18nKey="description.part48">Broj telefona</Trans></label>
-        </div>
-        <div className="column-1 centar-1 podaci">
-          <input
-          defaultValue={korisnik.brojTelefona}
-          type="text"
-          required
-          name="brojTelefona"
-          className="sirina-info-6"
-          onChange={korisnikLogic.changeHandler}>
-          </input></div>
-        <div className="column-1 centar-1"><label>Email</label></div>
-        <div className="column-1 centar-1 podaci">
-          <input
-          defaultValue={korisnik.email}
-          type="text"
-          required
-          name="email"
-          className="sirina-info-10"
-          onChange={korisnikLogic.changeHandler}>
-          </input></div>
-        <div className="column-1 centar-1 "><label>
-        <Trans i18nKey="description.part157">Privremena rola </Trans>
-        </label></div>
-        <div className="column-1 centar-1 podaci">
-        <input type="checkbox" onChange={handleChange} value={privremenaRola} />
-        {privremenaRola && (
-          <>
-            &ensp;  <label>
-            <Trans i18nKey="description.part158">Vreme trajanja role  </Trans>
-            </label> &ensp;
-            <input
-              type="number"
-              name="vremeTrajanjaRole"
+      <div className="promena-korisnika">  {/*    className="stampajLiniju"   */}
+          {/*  <div className="rowTabela korisniciTabelaPromena" >    */}
+
+            <div className="user-kontrol">  
+              <div className="labela-korisnik">
+              <label ><Trans i18nKey="description.part44"> Korisničko ime </Trans>  </label>
+              </div>
+               
+              <input
+              defaultValue={korisnik.korisnickoIme}
+              type="text"
+              required
+              name="korisnickoIme"
+              className="korisnik-input"
               onChange={korisnikLogic.changeHandler}
-            />
-          </>
-        )}
-        </div>
-        <div className="column-1 centar-1 "><label>Role</label></div>
-        <div className="column-1 centar-1 podaci">
-        <select
-          defaultValue={korisnik.role}
-          type="text"
-          required
-          name="role"
-          onChange={korisnikLogic.changeHandler}
-        >
-          <option value="korisnik"><Trans i18nKey="description.part159">Korisnik</Trans></option>
-          <option value="menadzer"><Trans i18nKey="description.part160">Menadžer</Trans></option>
-          <option value="admin">Admin</option>
-          <option value="stjuardesa"><Trans i18nKey="description.part161">Stjuardesa</Trans></option>
-          <option value="biletar"><Trans i18nKey="description.part162">Biletar</Trans></option>
-          <option value="vozac"><Trans i18nKey="description.part163">Vozač</Trans></option>
-        </select>
-        </div>
-        <div className="column-1"><button  type="submit" className="buttonSwitch">   {/* bila je klasa dugme */}
-          {" "}
-          <Trans i18nKey="description.part129">Sačuvaj  </Trans>
-        </button></div>
-      </div>
-      </div>
+              >
+              </input>
+            </div>  
+
+            <div className="user-kontrol">
+            <div className="labela-korisnik ">
+              <label><Trans i18nKey="description.part40">Ime</Trans></label>
+            </div>
+                 
+              <input
+                defaultValue={korisnik.ime}
+                type="text"
+                required
+                name="ime"
+                className="korisnik-input"
+                onChange={korisnikLogic.changeHandler}>
+              </input>
+            </div>   
+
+            <div className="user-kontrol">
+              <div className="labela-korisnik">
+                <label><Trans i18nKey="description.part42">Prezime</Trans></label>
+              </div>
+            
+              <input
+              defaultValue={korisnik.prezime}
+              type="text"
+              required
+              name="prezime"
+              className="korisnik-input"
+              onChange={korisnikLogic.changeHandler}>
+              </input>
+            </div>
+
+            <div className="user-kontrol">
+              <div className="labela-korisnik">
+                <label><Trans i18nKey="description.part48">Broj telefona</Trans></label>
+              </div>
+            
+              <input
+              defaultValue={korisnik.brojTelefona}
+              type="text"
+              required
+              name="brojTelefona"
+              className="korisnik-input"
+              onChange={korisnikLogic.changeHandler}>
+              </input>
+            </div>
+
+            <div className="user-kontrol">
+              <div className="labela-korisnik"><label>Email</label></div>
+            
+              <input
+              defaultValue={korisnik.email}
+              type="text"
+              required
+              name="email"
+              className="korisnik-input"
+              onChange={korisnikLogic.changeHandler}>
+              </input>
+            </div>
+
+            <div className="user-kontrol">
+              <div className="labela-korisnik"><label>
+              <Trans i18nKey="description.part157">Privremena rola </Trans></label>
+              </div>
+
+            
+              <input type="checkbox" onChange={handleChange} value={privremenaRola} />
+                {privremenaRola && (
+                  <>
+                    &ensp;  <label>
+                    <Trans i18nKey="description.part158">Vreme trajanja role  </Trans>
+                    </label> &ensp;
+                    <input
+                      type="number"
+                      name="vremeTrajanjaRole"
+                      className="korisnik-input"
+                      onChange={korisnikLogic.changeHandler}
+                    />
+                  </>
+                )}
+            </div>
+
+            <div className="user-kontrol">
+            <div className="labela-korisnik "><label>Role</label></div>
+            
+              <select
+                defaultValue={korisnik.role}
+                type="text"
+                required
+                name="role"
+                className="korisnik-input"
+                onChange={korisnikLogic.changeHandler}
+              >
+                <option value="korisnik"><Trans i18nKey="description.part159">Korisnik</Trans></option>
+                <option value="menadzer"><Trans i18nKey="description.part160">Menadžer</Trans></option>
+                <option value="admin">Admin</option>
+                <option value="stjuardesa"><Trans i18nKey="description.part161">Stjuardesa</Trans></option>
+                <option value="biletar"><Trans i18nKey="description.part162">Biletar</Trans></option>
+                <option value="vozac"><Trans i18nKey="description.part163">Vozač</Trans></option>
+              </select>
+            </div>
+
+            
+            <div className="user-kontrol prazan-red">
+              <button  type="submit" className="buttonSwitch">   {/* bila je klasa dugme */}
+              {" "}
+              <Trans i18nKey="description.part129">Sačuvaj  </Trans>
+              </button></div>
+            </div>
+          {/* </div>   */}
+         
     </form>
     <ToastContainer/>
     </div>

@@ -165,6 +165,8 @@
   will-change: box-shadow, transform;
   /*   font-size: 1.125rem;          */
   font-size: 1rem;
+  margin-bottom: 0.5rem;   /* dodala da bi bio razmak izmedju dugmad kada su jedno ispod drugog  */
+  margin-top: 0.5rem;
 }
 
 .submit:focus {
