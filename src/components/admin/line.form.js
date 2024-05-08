@@ -40,6 +40,10 @@ const LineForm = ({ mode, id, state }) => {
   const vremeDolaskaRef = useRef(null); 
   const vremePolaskaMRef = useRef(null); 
   const vremeDolaskaMRef = useRef(null); 
+  const datumPolaskaRef = useRef(null);
+  const datumDolaskaRef = useRef(null);
+  const datumPolaskaMRef = useRef(null);
+  const datumDolaskaMRef = useRef(null);
 
   const getAutobusi = async () => {
     const response = await fetch(`${apiUrl}/autobusi`);
@@ -179,7 +183,39 @@ const LineForm = ({ mode, id, state }) => {
     const vremeDolaskaValue = vremeDolaskaRef.current.value;
     const vremePolaskaMValue = vremePolaskaMRef.current.value;
     const vremeDolaskaMValue = vremeDolaskaMRef.current.value;
-  
+    const datumPolaskaValue = datumPolaskaRef.current.value;
+    const datumDolaskaValue = datumDolaskaRef.current.value;
+    const datumPolaskaMValue = datumPolaskaMRef.current.value;
+    const datumDolaskaMValue = datumDolaskaMRef.current.value;
+
+    const datumPolaska = new Date(datumPolaskaValue);
+    const datumDolaska = new Date(datumDolaskaValue);
+    const datumPolaskaM = new Date(datumPolaskaMValue);
+    const datumDolaskaM = new Date(datumDolaskaMValue);
+
+
+    if (datumDolaskaM > datumPolaska) {
+      console.log("Prelazi se u drugi dan");
+      if (vremeDolaskaMValue && vremeDolaskaMValue < vremePolaskaMValue) {
+          notifyWarn("Vreme dolaska medjustanice mora biti veće od vremena polaska!");
+          // Resetovanje vrednosti input polja na prazan string
+          vremeDolaskaMRef.current.value = "";
+          return;
+      } else if (vremeDolaskaMValue && vremeDolaskaMValue > vremeDolaskaValue) {
+          notifyWarn("Vreme dolaska medjustanice ne može biti veće od krajnjeg vremena!");
+          // Resetovanje vrednosti input polja na prazan string
+          vremeDolaskaMRef.current.value = "";
+          return;
+      } else if (vremePolaskaMValue > vremeDolaskaValue) {
+          notifyWarn("Početno vreme medjustanice ne može biti veće od krajnjeg vremena!");
+          // Resetovanje vrednosti input polja na prazan string
+          vremePolaskaMRef.current.value = "";
+          return;
+      }
+      return;
+  }
+
+
     if ( vremeDolaskaValue < vremeDolaskaMValue) {
       notifyWarn("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
       // Resetovanje vrednosti input polja na prazan string
@@ -198,11 +234,15 @@ const LineForm = ({ mode, id, state }) => {
       vremeDolaskaMRef.current.value = "";
     } 
   
+    
+
+    
   
-    console.log('Vreme polaska:', vremePolaskaValue);
-    console.log('Vreme dolaska:', vremeDolaskaValue);
-    console.log('Vreme polaska medjustanice:', vremePolaskaMValue);
-    console.log('Vreme dolaska medjustanice', vremeDolaskaMValue);
+    console.log('Vreme polaska:', vremePolaskaValue,datumPolaskaValue);
+    console.log('Vreme dolaska:', vremeDolaskaValue,datumDolaskaValue);
+    console.log('Vreme polaska medjustanice:', vremePolaskaMValue,datumPolaskaMValue);
+    console.log('Vreme dolaska medjustanice', vremeDolaskaMValue,datumDolaskaMValue);
+
 };
 
 
@@ -303,6 +343,7 @@ const notifyWarn = (message) => {
 
                   <input
                     /*  defaultValue={linija.datumPolaska} */
+                    ref={datumPolaskaRef}
                     name="datumPolaska"
                     type="date"
                     required
@@ -319,6 +360,7 @@ const notifyWarn = (message) => {
 
                   <input
                     /*  defaultValue={linija.datumDolaska} */
+                    ref={datumDolaskaRef}
                     name="datumDolaska"
                     type="date"
                     required
@@ -389,6 +431,44 @@ const notifyWarn = (message) => {
                         </select>
                         <div className="red-05">
                           <label className="labela-stanica">
+                            <Trans i18nKey="description.part7">
+                              Datum polaska
+                            </Trans>
+                          </label>
+                        </div>
+
+                        <input
+                          /*  defaultValue={linija.datumPolaska} */
+                          ref={datumPolaskaMRef}
+                          name="datumPolaskaM"
+                          type="date"
+                          className="input-stanica"
+                          min={today}
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        />
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part9">
+                              Datum dolaska
+                            </Trans>
+                          </label>
+                        </div>
+
+                        <input
+                          /*  defaultValue={linija.datumPolaska} */
+                          ref={datumDolaskaMRef}
+                          name="datumDolaskaM"
+                          type="date"
+                          className="input-stanica"
+                          min={today}
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        />
+                        <div className="red-05">
+                          <label className="labela-stanica">
                             <Trans i18nKey="description.part13">
                               Vreme dolaska
                             </Trans>
@@ -423,42 +503,7 @@ const notifyWarn = (message) => {
                           name="vremePolaskaM"
                           onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
                         ></input>
-                        <div className="red-05">
-                          <label className="labela-stanica">
-                            <Trans i18nKey="description.part7">
-                              Datum polaska
-                            </Trans>
-                          </label>
-                        </div>
-
-                        <input
-                          /*  defaultValue={linija.datumPolaska} */
-                          name="datumPolaskaM"
-                          type="date"
-                          className="input-stanica"
-                          min={today}
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        />
-                        <div className="red-05">
-                          <label className="labela-stanica">
-                            <Trans i18nKey="description.part9">
-                              Datum dolaska
-                            </Trans>
-                          </label>
-                        </div>
-
-                        <input
-                          /*  defaultValue={linija.datumPolaska} */
-                          name="datumDolaskaM"
-                          type="date"
-                          className="input-stanica"
-                          min={today}
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        />
+                        
                         <div>
                           <button
                             type="button"
@@ -678,45 +723,6 @@ const notifyWarn = (message) => {
                           ))}
                         </select>
                         &emsp;&emsp;
-                        {/* <label className="labela-stanica">
-                       
-                      </label> */}
-                        <div className="red-05">
-                          <label className="labela-stanica">
-                            <Trans i18nKey="description.part13">
-                              Vreme dolaska
-                            </Trans>
-                          </label>
-                        </div>
-                        <input
-                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
-                          className="input-stanica"
-                          type="time"
-                          required
-                          label="Time"
-                          name="vremeDolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        ></input>
-                        <div className="red-05">
-                          <label className="labela-stanica">
-                            <Trans i18nKey="description.part150">
-                              Vreme odlaska (polaska)
-                            </Trans>
-                          </label>
-                        </div>
-                        <input
-                          defaultValue={stanicas.Medjustanica.vremeDolaskaM}
-                          className="input-stanica"
-                          type="time"
-                          required
-                          label="Time"
-                          name="vremePolaskaM"
-                          onChange={(e) =>
-                            adminLogic.handlerMedjustanice(e, index)
-                          }
-                        ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
                             <Trans i18nKey="description.part7">
@@ -736,9 +742,9 @@ const notifyWarn = (message) => {
                         />
                         <div className="red-05">
                           <label className="labela-stanica">
-                            <Trans i18nKey="description.part7">
+                           
                               Datum dolaska
-                            </Trans>
+                            
                           </label>
                         </div>
                         <input
@@ -751,6 +757,42 @@ const notifyWarn = (message) => {
                             adminLogic.handlerMedjustanice(e, index)
                           }
                         />
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part13">
+                              Vreme dolaska
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.vremeDolaskaM}
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremeDolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
+                        <div className="red-05">
+                          <label className="labela-stanica">
+                            <Trans i18nKey="description.part150">
+                              Vreme odlaska (polaska)
+                            </Trans>
+                          </label>
+                        </div>
+                        <input
+                          defaultValue={stanicas.Medjustanica.vremePolaskaM}
+                          className="input-stanica"
+                          type="time"
+                          required
+                          label="Time"
+                          name="vremePolaskaM"
+                          onChange={(e) =>
+                            adminLogic.handlerMedjustanice(e, index)
+                          }
+                        ></input>
                       </div>
                     ))}
                   </div>
