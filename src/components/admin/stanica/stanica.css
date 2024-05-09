@@ -216,6 +216,7 @@
 
   .sirina-info-stanica{
     width: 8rem;
+   /* word-break: break-all; /* Omogućite prelamanje reči */
    /* text-align: center;     da bi bolje stampalo    */
   }
   .sirina-info-15{

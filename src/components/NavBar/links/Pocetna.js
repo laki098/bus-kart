@@ -499,10 +499,10 @@ const Pocetna = () => {
                         </Link>
                       </div>
                       <br />
-                      <br />
+                      <br />    
                     </div>
                     <br />
-                    <br />
+                    <br />    
                   </li>
                 );
               })}
