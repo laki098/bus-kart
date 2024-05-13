@@ -403,11 +403,7 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
     } = req.body;
 
-    console.log(req.body);
-
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
-
-    console.log(linija.Stanicas);
 
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
     let stanicaK = await Stanica.findByPk(krajnjaStanicaId);
@@ -442,6 +438,12 @@ router.post("/rezervacija", async (req, res) => {
       ) {
         postojiStanicaK = true;
       }
+    }
+
+    if (!email) {
+      return res.status(404).json({
+        message: "Ne email kako bi mogao da rezervise ",
+      });
     }
 
     if (!postojiStanicaP) {
@@ -500,11 +502,12 @@ router.post("/rezervacija", async (req, res) => {
     ) {
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
       const medjustanicaKrajnja = await Medjustanica.findOne({
-        where: linijaId,
-        stanicaId: krajnjaStanicaId,
+        where: { linijaId, stanicaId: krajnjaStanicaId },
       });
+
       for (let i = 0; i < medjustanicaSve.length; i++) {
         const element = medjustanicaSve[i];
+
         if (element.redosled < medjustanicaKrajnja.redosled) {
           if (element.brojSlobodnihMesta < brojMesta) {
             res.status(404).json({ message: "nema dovoljno mesta" });
@@ -520,6 +523,8 @@ router.post("/rezervacija", async (req, res) => {
       linija.pocetnaStanicaId != pocetnaStanicaId &&
       linija.krajnjaStanicaId != krajnjaStanicaId
     ) {
+      linija.brojSlobodnihMesta -= brojMesta;
+      linija.save();
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
 
       const medjustanicaPocetna = await Medjustanica.findOne({
@@ -552,6 +557,8 @@ router.post("/rezervacija", async (req, res) => {
       linija.pocetnaStanicaId != pocetnaStanicaId &&
       linija.krajnjaStanicaId == krajnjaStanicaId
     ) {
+      linija.brojSlobodnihMesta -= brojMesta;
+      linija.save();
       const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
       const medjustanicaPocetna = await Medjustanica.findOne({
         where: { linijaId, stanicaId: pocetnaStanicaId },
@@ -589,7 +596,6 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
     });
 
-    console.log(linijaId);
     const qrCodeText = `
     oznakaRezervacije: ${kreiranjeRezervacije.id}
     LinijaId: ${linijaId}
