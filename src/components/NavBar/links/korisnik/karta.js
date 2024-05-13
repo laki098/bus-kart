@@ -284,8 +284,20 @@ const Karta = () => {
                           </>
                         )}
                       </div>
+                      <button className="dugme-otkazi-kartu"
+                              style={{ visibility: new Date(karte.datumP) < new Date() ? 'hidden' : 'visible' }}>
+                        <Trans i18nKey="description.part232">Otkaži  </Trans>
+                      </button> 
 
-                    </li>                      
+                    </li>        
+                    
+                    {/*
+                    <button className="dugme-otkazi-kartu">
+                      <Trans i18nKey="description.part232">Otkaži  </Trans>
+                    </button>   
+                      
+                    <div className="red-05"></div>         
+                    */}
 
                     {/* dole je bilo na onClick={sedistePovratak}  */}
                     {/* (karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && !predhodnaPovratna */ karte.tipKarte === 'PrPovratna'  &&   (                                         

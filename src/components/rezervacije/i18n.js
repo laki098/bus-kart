@@ -216,6 +216,7 @@ i18n
             part229: 'You have successfully logged in!',
             part230: 'Reset pasword',
             part231: 'Confirm new pasword',
+            part232: 'Cansel',
 
           }
         }
@@ -422,6 +423,7 @@ i18n
             part229: 'Uspešno ste se logovali!',
             part230: 'Resetuj lozinku',
             part231: 'Potvrdi novu lozinku',
+            part232: 'Otkaži',
 
           }
         }

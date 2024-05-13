@@ -77,6 +77,15 @@
       width: 5rem;
   }
 
+  .dugme-otkazi-kartu{
+    background-color: #035b0d ;
+    color: white;
+    font-size: 16px; 
+    border-radius: 0.3rem;
+    padding: 0.3rem; 
+    width: 5rem;
+}
+
    /* mislim da ove klase do narednog komentara ne trebaju     */
 
   .modal-karte {

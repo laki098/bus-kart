@@ -729,6 +729,7 @@ const RezervacijaComponent = ({ id, state }) => {
                       />
                     </div>
 
+                  {/*
                     <div className={classes.control}>
                       <div>
                         <label className="labela levo-23">Email</label>
@@ -741,6 +742,7 @@ const RezervacijaComponent = ({ id, state }) => {
                         onChange={rezervacijaLogic.changeHandler}
                       />
                     </div>
+                  */}
 
                     <div className={classes.control}>
                       <div>
@@ -1005,7 +1007,6 @@ const RezervacijaComponent = ({ id, state }) => {
                             {returnDate !== null ? (
                               <div>
                                 {filteredLinijePovratna
-
                                   //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
                                   .sort((a, b) => {
                                     // Konvertujemo vreme polaska u Date objekte
@@ -1018,6 +1019,17 @@ const RezervacijaComponent = ({ id, state }) => {
                                     // Poredimo Date objekte
                                     return timeA - timeB;
                                   })
+                                  // da bi prikazalo samo linije posle dolaska busa
+                                  //.filter((linija) => linija.vremePolaska > state.vremeDolaska)
+
+                                  // Filtriranje polazaka koji idu nakon vremena dolaska
+                                    .filter((linija) => {
+                                      const timeDolazak = new Date("1970-01-01T" + state.vremeDolaska);
+                                      const timePolazak = new Date("1970-01-01T" + linija.vremePolaska);
+                                      return timePolazak > timeDolazak;
+                                    })
+                                    // Prikazivanje filtriranih polazaka
+
 
                                   .map((linija) => (
                                     <div>
