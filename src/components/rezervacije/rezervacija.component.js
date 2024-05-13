@@ -1019,16 +1019,8 @@ const RezervacijaComponent = ({ id, state }) => {
                                     // Poredimo Date objekte
                                     return timeA - timeB;
                                   })
-                                  // da bi prikazalo samo linije posle dolaska busa
-                                  //.filter((linija) => linija.vremePolaska > state.vremeDolaska)
 
-                                  // Filtriranje polazaka koji idu nakon vremena dolaska
-                                    .filter((linija) => {
-                                      const timeDolazak = new Date("1970-01-01T" + state.vremeDolaska);
-                                      const timePolazak = new Date("1970-01-01T" + linija.vremePolaska);
-                                      return timePolazak > timeDolazak;
-                                    })
-                                    // Prikazivanje filtriranih polazaka
+
 
 
                                   .map((linija) => (
