@@ -422,6 +422,24 @@ router.post("/rezervacija", async (req, res) => {
       }
     }
 
+    //? Provera da li su podaci manji za 15 minuta u odnosu na vreme polaska linije
+    const trenutnoVreme = new Date();
+    const vremePolaskaRequest = new Date(datumPolaska + "T" + vremePolaska);
+
+    console.log(trenutnoVreme);
+    console.log(vremePolaskaRequest);
+    const razlika = (vremePolaskaRequest - trenutnoVreme) / (1000 * 60); // razlika u minutima
+
+    if (razlika < -15) {
+      //? Vreme polaska je manje od trenutnog vremena za više od 15 minuta
+
+      res.status(400).json({
+        error:
+          "Vreme polaska je manje od vremena polaska linije za više od 15 minuta.",
+      });
+      return;
+    }
+
     for (let i = 0; i < linija.Stanicas.length; i++) {
       const stanica = linija.Stanicas[i];
 
