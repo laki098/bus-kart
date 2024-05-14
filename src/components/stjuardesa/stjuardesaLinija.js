@@ -11,6 +11,7 @@ import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import StjuardesaApi from "../../api/stjuardesaApi.js";
 import apiUrl from "../../apiConfig.js";
+import { getValueRange } from "react-calendar/dist/cjs/shared/dates.js";
 
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
@@ -20,10 +21,9 @@ const StjuardesaLinija = ({}) => {
   const [krajnjaStanica, setKrajnjaStanica] = useState([]);
   const [okidanje, setOkidanje] = useState([]);
   const [filteredLinije, setFilteredLinije] = useState([]);
+  const [mStanica, setMStanica] = useState([]);
 
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
-
-  console.log(trenutnaRezervacija);
 
   //? Pristupite celom query string-u
   const queryString = window.location.search;
@@ -85,6 +85,20 @@ const StjuardesaLinija = ({}) => {
     /* setPocetnaStanica(data.izvlacenjeLinija.pocetnaStanica); */
     setLinija(data.izvlacenjeLinija);
     setKrajnjaStanica(data.izvlacenjeLinija.krajnjaStanica);
+    setLinija(data.izvlacenjeLinija);
+    // Izdvajanje i sortiranje medjustanica
+    const medjustanice = data.izvlacenjeLinija.Stanicas.map((stanica) => {
+      return {
+        ...stanica,
+        redosled: stanica.Medjustanica.redosled, // Dodavanje redosleda iz medjustanice
+      };
+    });
+
+    medjustanice.sort((a, b) => a.redosled - b.redosled); // Sortiranje po redosledu
+
+    console.log("Sortirane medjustanice:", medjustanice); // Ispis sortiranih medjustanica
+
+    setMStanica(medjustanice);
 
     const responseBus = await fetch(
       `${apiUrl}/autobusi/oznaka/${data.izvlacenjeLinija.oznakaBusa}`
@@ -125,7 +139,6 @@ const StjuardesaLinija = ({}) => {
   };
 
   const filterMedju = filteredLinije[0];
-  console.log(trenutnaRezervacija);
 
   //?novo cekiranje
   const novaRezervacija = () => {
@@ -147,7 +160,7 @@ const StjuardesaLinija = ({}) => {
       )
       .then((response) => {
         console.log(response);
-        console.log("-------------------------------------------------");
+        console.log("---------1----------------------------------------");
         notifySuccest();
       })
       .catch((error) => {
@@ -156,30 +169,37 @@ const StjuardesaLinija = ({}) => {
       });
   };
   const notifySuccest = () => {
-    toast.success(<Trans i18nKey="description.part216"> Uspešno ste rezervisali kartu </Trans>
-    , {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.success(
+      <Trans i18nKey="description.part216">
+        {" "}
+        Uspešno ste rezervisali kartu{" "}
+      </Trans>,
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
   const notifyWarn = () => {
-    toast.warn(<Trans i18nKey="description.part217"> Nisu uneti svi podaci </Trans>
-    , {
-      position: "top-center",
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.warn(
+      <Trans i18nKey="description.part217"> Nisu uneti svi podaci </Trans>,
+      {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
   };
   useEffect(() => {
     dobavljanjeLinije();
@@ -313,7 +333,8 @@ const StjuardesaLinija = ({}) => {
                   }}
                   className="buttonSwitch"
                 >
-                  <Trans  i18nKey="description.part218"> Izlazi </Trans>    {/* Dovde   */}
+                  <Trans i18nKey="description.part218"> Izlazi </Trans>{" "}
+                  {/* Dovde   */}
                 </button>
               </div>
             </div>
@@ -322,7 +343,7 @@ const StjuardesaLinija = ({}) => {
                 <Trans i18nKey="description.part191"> Međustanice </Trans>
               </div>
               <ul>
-                {linija?.Stanicas?.map((stanica) => (
+                {mStanica?.map((stanica) => (
                   <div key={stanica.id}>
                     <div className="stampajLiniju">
                       <li className="info-stanica sirina-info-10">
@@ -369,7 +390,8 @@ const StjuardesaLinija = ({}) => {
                           }}
                           className="buttonSwitch"
                         >
-                          <Trans  i18nKey="description.part218"> Izlazi </Trans>    {/* Dovde   */}
+                          <Trans i18nKey="description.part218"> Izlazi </Trans>{" "}
+                          {/* Dovde   */}
                         </button>
                       </div>
                     </div>
@@ -380,11 +402,19 @@ const StjuardesaLinija = ({}) => {
           </div>
         </div>
       </div>
-      
+
       <div className="red-1"></div>
       <div className="labela">
-        <Trans i18nKey="description.part219"> Ruta </Trans>
-        : {pocetnaStanica?.naziv} - {krajnjaStanica?.naziv}
+        <Trans i18nKey="description.part219"> Ruta </Trans>:{" "}
+        {pocetnaStanica?.naziv} - {krajnjaStanica?.naziv}
+      </div>
+      <div className="labela">
+        <Trans /* i18nKey="description.part219" */> Datum polaska rute </Trans>:{" "}
+        {linija?.datumPolaska}
+      </div>
+      <div className="labela">
+        <Trans /* i18nKey="description.part219" */> Vreme polaska rute </Trans>:{" "}
+        {linija?.vremePolaska}
       </div>
 
       <Autobus
@@ -411,7 +441,8 @@ const StjuardesaLinija = ({}) => {
       {!showQRScanner && (
         <button onClick={handleQRScan} className="buttonSwitch">
           <p className="admin-dugme-slova">
-          <Trans i18nKey="description.part220"> Skeniraj QR kod  </Trans></p>
+            <Trans i18nKey="description.part220"> Skeniraj QR kod </Trans>
+          </p>
         </button>
       )}
       <ToastContainer />
