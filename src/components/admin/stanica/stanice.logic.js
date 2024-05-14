@@ -16,11 +16,12 @@ const StaniceLogic = () => {
       .upisStanice(data.naziv, data.adresa)
       .then((response) => {
         if (response.status === 201) {
-        notifySuccest(response.data.message);
-        setTimeout(() => {
-          window.location.href = "/stanice.initial";
-        }, 2000); // Prikazuje notifikacije
-      }})
+          notifySuccest(response.data.message);
+          setTimeout(() => {
+            window.location.href = "/stanice.initial";
+          }, 2000); // Prikazuje notifikacije
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -31,13 +32,14 @@ const StaniceLogic = () => {
       .editStanice(data.id, data.naziv, data.adresa)
       .then((response) => {
         if (response.status === 200) {
-        notifySuccest(response.data.message);
-        setTimeout(() => {
-          window.location.href = "/stanice.initial";
-        }, 2000); // Prikazuje notifikacije
-      } if (response.status === 404) {
-        notifyWarn(data.message);
-      }
+          notifySuccest(response.data.message);
+          setTimeout(() => {
+            window.location.href = "/stanice.initial";
+          }, 2000); // Prikazuje notifikacije
+        }
+        if (response.status === 404) {
+          notifyWarn(data.message);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -66,8 +68,8 @@ const StaniceLogic = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
-  }
+    });
+  };
 
   return { changeHandler, setData, upisStanice, editStanice };
 };

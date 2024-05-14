@@ -47,28 +47,29 @@ router.get("/:idKorisnik", async (req, res) => {
 });
 
 // Kreirajte transporter za slanje email poruka
-const transporter = nodemailer.createTransport(process.env.DEPLOY == '1' ? 
-{
-  host: "mail.bustravel.rs",
-  port: 587,
-  secure: false, // use TLS,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-  tls: {
-    // do not fail on invalid certs
-    rejectUnauthorized: false,
-  },
-}
-:
-{
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+const transporter = nodemailer.createTransport(
+  process.env.DEPLOY == "1"
+    ? {
+        host: "mail.bustravel.rs",
+        port: 587,
+        secure: false, // use TLS,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+        tls: {
+          // do not fail on invalid certs
+          rejectUnauthorized: false,
+        },
+      }
+    : {
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      }
+);
 
 //? registacija na sistem
 router.post("/registration", async (req, res) => {
@@ -76,7 +77,7 @@ router.post("/registration", async (req, res) => {
     const { korisnickoIme, lozinka, ime, prezime, brojTelefona, email } =
       req.body;
 
-       // Dodatna logika za proveru postojanja korisničkog imena i emaila
+    // Dodatna logika za proveru postojanja korisničkog imena i emaila
     const existingUsername = await Korisnik.findOne({
       where: { korisnickoIme: korisnickoIme },
     });
@@ -93,12 +94,15 @@ router.post("/registration", async (req, res) => {
       return res.status(400).json({ message: "Email adresa već postoji." });
     }
     if (korisnickoIme.length < 5) {
-      return res.status(400).json({ message: "Korisničko ime mora imati najmanje 5 karaktera." });
+      return res
+        .status(400)
+        .json({ message: "Korisničko ime mora imati najmanje 5 karaktera." });
     }
     if (brojTelefona.length < 9) {
-      return res.status(400).json({ message: "Broj telefona mora imati najmanje 9 cifara." });
+      return res
+        .status(400)
+        .json({ message: "Broj telefona mora imati najmanje 9 cifara." });
     }
-
 
     //? Generisemo verifikacioni token
     const verifikacijskiToken = uuidv4();
@@ -229,8 +233,10 @@ router.post("/login", async (req, res) => {
       path: "/",
       secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     };
-    if (process.env.DEPLOY === '1') {
-      cookieSettings.domain = clientUrl.replace("https://","").replace("http://","");
+    if (process.env.DEPLOY === "1") {
+      cookieSettings.domain = clientUrl
+        .replace("https://", "")
+        .replace("http://", "");
     }
     res.cookie("userData", JSON.stringify(userData), cookieSettings);
 
@@ -246,8 +252,10 @@ router.post("/logout", (req, res) => {
   try {
     //? Brisanje JWT tokena iz kolačića
     res.clearCookie("token");
-    if (process.env.DEPLOY === '1') {
-      res.clearCookie("userData", {domain: clientUrl.replace('https://', '').replace('http://', '')})
+    if (process.env.DEPLOY === "1") {
+      res.clearCookie("userData", {
+        domain: clientUrl.replace("https://", "").replace("http://", ""),
+      });
     } else {
       res.clearCookie("userData");
     }
@@ -425,7 +433,6 @@ router.post("/karta", async (req, res) => {
       where: { korisnikId },
     });
 
-    console.log(karte);
     res.status(200).json({ message: "izvučen korisnik", karte });
   } catch (error) {
     console.log(error);

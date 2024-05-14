@@ -15,7 +15,7 @@ const { where } = require("sequelize");
 
 const router = express.Router();
 
-router.delete("/otkazivanje", async (req, res) => {
+router.put("/otkazivanje", async (req, res) => {
   try {
     const {
       rezervacijaId,
@@ -24,8 +24,6 @@ router.delete("/otkazivanje", async (req, res) => {
       krajnjaStanicaId,
       brojMesta,
     } = req.body;
-
-    console.log(rezervacijaId);
 
     let karta = await Rezervacija.findByPk(rezervacijaId);
 
@@ -370,14 +368,142 @@ router.put("/promena", async (req, res) => {
           }
         }
       }
+      let linijaN = await Linija.findByPk(linijaIdN, { include: Stanica });
+
+      if (linijaN.Stanicas.length == 0) {
+        if (linijaN.pocetnaStanicaId == pocetnaStanicaId) {
+          postojiStanicaP = true;
+        }
+        if (linijaN.krajnjaStanicaId == krajnjaStanicaId) {
+          postojiStanicaK = true;
+        }
+      }
+
+      for (let i = 0; i < linijaN.Stanicas.length; i++) {
+        const stanica = linijaN.Stanicas[i];
+
+        if (
+          stanicaP.id == stanica.id ||
+          linijaN.pocetnaStanicaId == pocetnaStanicaId
+        ) {
+          postojiStanicaP = true;
+        }
+
+        if (
+          stanicaK.id == stanica.id ||
+          linijaN.krajnjaStanicaId == krajnjaStanicaId
+        ) {
+          postojiStanicaK = true;
+        }
+      }
+
+      if (!postojiStanicaP) {
+        return res.status(404).json({
+          message: "Ne postoji stanica početna ",
+        });
+      }
+
+      if (!postojiStanicaK) {
+        return res.status(404).json({
+          message: "Ne postoji stanica krajnja na ispisanoj liniji",
+        });
+      }
+
+      if (!linijaN) {
+        return res.status(404).json({ message: "Linija nije pronađena" });
+      }
+
+      if (!stanicaP || !stanicaK) {
+        return res.status(404).json({ message: "Stanica nije pronađena" });
+      }
+
+      // Ažuriranje broja slobodnih mesta
+      //?uvecava ako je pocetna na liniji
+      if (linijaN.pocetnaStanicaId == pocetnaStanicaId) {
+        linijaN.brojSlobodnihMesta -= brojMesta;
+        await linijaN.save();
+      }
+
+      //? uslov da se uveca sedista na svim medjustanicama ako se izabere cela linija
+      if (
+        linijaN.pocetnaStanicaId == pocetnaStanicaId &&
+        linijaN.krajnjaStanicaId == krajnjaStanicaId
+      ) {
+        const medjustanicaSve = await Medjustanica.findAll({
+          where: { linijaId: linijaIdS },
+        });
+        for (let i = 0; i < medjustanicaSve.length; i++) {
+          const element = medjustanicaSve[i];
+
+          element.brojSlobodnihMesta -= brojMesta;
+          element.save();
+        }
+      }
+
+      //? ako je na pocetnoj i do neke medjusnice
+      if (
+        linijaN.pocetnaStanicaId == pocetnaStanicaId &&
+        linijaN.krajnjaStanicaId != krajnjaStanicaId
+      ) {
+        const medjustanicaSve = await Medjustanica.findAll({
+          where: { linijaId: linijaIdS },
+        });
+        const medjustanicaKrajnja = await Medjustanica.findOne({
+          where: { linijaId: linijaIdS, stanicaId: krajnjaStanicaId },
+        });
+        for (let i = 0; i < medjustanicaSve.length; i++) {
+          const element = medjustanicaSve[i];
+          if (element.redosled < medjustanicaKrajnja.redosled) {
+            element.brojSlobodnihMesta -= brojMesta;
+            element.save();
+          }
+        }
+      }
+
+      //? uslov da se uvecava sedista u slucaju da ako uveca izemdju vise medjustanicastanica
+      if (
+        linijaN.pocetnaStanicaId != pocetnaStanicaId &&
+        linijaN.krajnjaStanicaId != krajnjaStanicaId
+      ) {
+        linijaN.brojSlobodnihMesta += brojMesta;
+        linijaN.save();
+        const medjustanicaSve = await Medjustanica.findAll({
+          where: { linijaId: linijaIdS },
+        });
+
+        const medjustanicaPocetna = await Medjustanica.findOne({
+          where: { linijaId: linijaIdS, stanicaId: pocetnaStanicaId },
+        });
+
+        const medjustanicaKrajnja = await Medjustanica.findOne({
+          where: { linijaId: linijaIdS, stanicaId: krajnjaStanicaId },
+        });
+
+        for (let i = 0; i < medjustanicaSve.length; i++) {
+          const element = medjustanicaSve[i];
+
+          if (
+            element.redosled >= medjustanicaPocetna.redosled &&
+            element.redosled < medjustanicaKrajnja.redosled
+          ) {
+            if (element.brojSlobodnihMesta < brojMesta) {
+              res.status(404).json({ message: "nema dovoljno mesta" });
+              return;
+            }
+
+            element.brojSlobodnihMesta -= brojMesta;
+            element.save();
+          }
+        }
+      }
 
       //? ako ide od neke medjustanice do krajnje stanice na liniji
       if (
-        linija.pocetnaStanicaId != pocetnaStanicaId &&
-        linija.krajnjaStanicaId == krajnjaStanicaId
+        linijaN.pocetnaStanicaId != pocetnaStanicaId &&
+        linijaN.krajnjaStanicaId == krajnjaStanicaId
       ) {
-        linija.brojSlobodnihMesta += brojMesta;
-        linija.save();
+        linijaN.brojSlobodnihMesta -= brojMesta;
+        linijaN.save();
         const medjustanicaSve = await Medjustanica.findAll({
           where: { linijaId: linijaIdS },
         });
@@ -387,13 +513,13 @@ router.put("/promena", async (req, res) => {
         for (let i = 0; i < medjustanicaSve.length; i++) {
           const element = medjustanicaSve[i];
           if (element.redosled >= medjustanicaPocetna.redosled) {
-            element.brojSlobodnihMesta += brojMesta;
+            element.brojSlobodnihMesta -= brojMesta;
             element.save();
           }
         }
       }
     }
-    console.log(rezervacijaId);
+    console.log(linijaIdN);
     const updateKarte = await Rezervacija.update(
       {
         datumPolaska,
@@ -402,7 +528,7 @@ router.put("/promena", async (req, res) => {
         vremeDolaska,
         osvezenje,
         oznakaSedista,
-        linijaid: linijaIdN,
+        linijaId: linijaIdN,
       },
       { where: { id: rezervacijaId }, limit: 1 }
     );
