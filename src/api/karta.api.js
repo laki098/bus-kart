@@ -19,7 +19,21 @@ const KartaApi = () => {
     });
   };
 
-  return { otkazivanjeKarte };
+  const cekiranjeKarte = async (rezervacijaId, linijaId, idLinijaFront) => {
+    console.log(rezervacijaId, linijaId, idLinijaFront);
+    return await axios.post(
+      `${apiUrl}/linija/cekiranje/${rezervacijaId}`,
+      {
+        linijaId,
+        idLinijaFront,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  };
+
+  return { otkazivanjeKarte, cekiranjeKarte };
 };
 
 export default KartaApi;

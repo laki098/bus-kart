@@ -403,6 +403,8 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
     } = req.body;
 
+    console.log(req.body);
+
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
@@ -458,11 +460,11 @@ router.post("/rezervacija", async (req, res) => {
       }
     }
 
-    if (!email) {
+    /* if (!email) {
       return res.status(404).json({
         message: "Ne email kako bi mogao da rezervise ",
       });
-    }
+    } */
 
     if (!postojiStanicaP) {
       return res.status(404).json({
@@ -593,7 +595,6 @@ router.post("/rezervacija", async (req, res) => {
         }
       }
     }
-
     const kreiranjeRezervacije = await Rezervacija.create({
       brojMesta,
       linijaId,
@@ -614,120 +615,122 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
     });
 
-    const qrCodeText = `
-    oznakaRezervacije: ${kreiranjeRezervacije.id}
-    LinijaId: ${linijaId}
-    Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
-      kreiranjeRezervacije.id + 1
-    }
-
-  
-`;
-
-    // Postavite opcije za QR kod, na primer veličinu i error correction nivo
-    const opcije = {
-      errorCorrectionLevel: "H",
-      type: "image/png",
-      quality: 0.85,
-      margin: 1,
-      color: {
-        dark: "#000",
-        light: "#fff",
-      },
-    };
-
-    qrcode.toFile("qrcode.png", qrCodeText, opcije, (err, url) => {
-      if (err) {
-        console.error("Greška pri generisanju QR koda:", err);
-        return;
+    if (email) {
+      const qrCodeText = `
+      oznakaRezervacije: ${kreiranjeRezervacije.id}
+      LinijaId: ${linijaId}
+      Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
+        kreiranjeRezervacije.id
       }
-      // QR kod je generisan i sačuvan kao "qrcode.png"
-      // Nastavite sa slanjem e-mail poruke
-    });
-
-    //? slanje mejla korisniku kada uspesno rezervise kartu
-    const emailSubject = "Potvrda rezervacije";
-
-    // Čitajte QR kod kao binarni podaci
-    const qrCodeImagePath = "qrcode.png";
-    const qrCodeImage = fs.readFileSync(qrCodeImagePath);
-
-    // Postavite prilog za e-mail
-    const attachments = [
-      {
-        filename: "qrcode.png", // Naziv priloga
-        content: qrCodeImage, // Sadržaj priloga kao binarni podaci
-        cid: "qr-code", // ID priloga, koristite ga u HTML telu e-maila
-      },
-    ];
-
-    const emailText = `
-    <html>
-      <head>
-        <style>
-          body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-          }
   
-          .card {
-            border: 2px solid #3498db;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 400px;
-            text-align: center;
-          }
-  
-          h1 {
-            color: #3498db;
-          }
-  
-          p {
-            color: #555;
-          }
-  
-          img {
-            width: 100%;
-            border-radius: 5px;
-          }
-  
-        </style>
-      </head>
-      <body>
-        <div class="card">
-          <h1>Hvala što ste rezervisali putovanje!</h1>
-          <p>Oznaka sedišta: ${oznakaSedista}</p>
-          <p>Polazna Stanica: ${polaznaStanicaR}</p>
-          <p>Krajnja Stanica: ${krajnjaStanicaR}</p>
-          <p>Datum Polaska: ${datumPolaska}</p>
-          <p>Datum Dolaska: ${datumDolaska}</p>
-          <p>Vreme Polaska: ${vremePolaska}</p>
-          <p>Vreme Dolaska: ${vremeDolaska}</p>
-          <p>Osveženje: ${osvezenje}</p>
-          <p>Provera validnosti karte proveriti na sledećem linku:</p>
-          <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
-          <p>Molimo vas da skenirate QR kod za više detalja:</p>
-        </div>
-      </body>
-    </html>
+    
   `;
 
-    // Unutar vašeg postojećeg koda za slanje e-maila
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: emailSubject,
-      html: emailText,
-      attachments, // Dodajte prilog e-mail poruci
-    };
+      //? Postavite opcije za QR kod, na primer veličinu i error correction nivo
+      const opcije = {
+        errorCorrectionLevel: "H",
+        type: "image/png",
+        quality: 0.85,
+        margin: 1,
+        color: {
+          dark: "#000",
+          light: "#fff",
+        },
+      };
 
-    transporter.sendMail(mailOptions);
+      qrcode.toFile("qrcode.png", qrCodeText, opcije, (err, url) => {
+        if (err) {
+          console.error("Greška pri generisanju QR koda:", err);
+          return;
+        }
+        //? QR kod je generisan i sačuvan kao "qrcode.png"
+        //? Nastavite sa slanjem e-mail poruke
+      });
 
+      //? slanje mejla korisniku kada uspesno rezervise kartu
+      const emailSubject = "Potvrda rezervacije";
+
+      //? Čitajte QR kod kao binarni podaci
+      const qrCodeImagePath = "qrcode.png";
+      const qrCodeImage = fs.readFileSync(qrCodeImagePath);
+
+      //? Postavite prilog za e-mail
+      const attachments = [
+        {
+          filename: "qrcode.png", //? Naziv priloga
+          content: qrCodeImage, //? Sadržaj priloga kao binarni podaci
+          cid: "qr-code", //? ID priloga, koristite ga u HTML telu e-maila
+        },
+      ];
+
+      console.log(attachments, "-------------------");
+      const emailText = `
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: 'Arial', sans-serif;
+              line-height: 1.6;
+              margin: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+            }
+    
+            .card {
+              border: 2px solid #3498db;
+              border-radius: 10px;
+              padding: 20px;
+              max-width: 400px;
+              text-align: center;
+            }
+    
+            h1 {
+              color: #3498db;
+            }
+    
+            p {
+              color: #555;
+            }
+    
+            img {
+              width: 100%;
+              border-radius: 5px;
+            }
+    
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h1>Hvala što ste rezervisali putovanje!</h1>
+            <p>Oznaka sedišta: ${oznakaSedista}</p>
+            <p>Polazna Stanica: ${polaznaStanicaR}</p>
+            <p>Krajnja Stanica: ${krajnjaStanicaR}</p>
+            <p>Datum Polaska: ${datumPolaska}</p>
+            <p>Datum Dolaska: ${datumDolaska}</p>
+            <p>Vreme Polaska: ${vremePolaska}</p>
+            <p>Vreme Dolaska: ${vremeDolaska}</p>
+            <p>Osveženje: ${osvezenje}</p>
+            <p>Provera validnosti karte proveriti na sledećem linku:</p>
+            <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
+            <p>Molimo vas da skenirate QR kod za više detalja:</p>
+          </div>
+        </body>
+      </html>
+    `;
+
+      //? Unutar vašeg postojećeg koda za slanje e-maila
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: emailSubject,
+        html: emailText,
+        attachments, //? Dodajte prilog e-mail poruci
+      };
+
+      transporter.sendMail(mailOptions);
+    }
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {
     res.status(500).json(error.message);
@@ -744,6 +747,10 @@ router.post(
       //?dobijanje id rezervacije
       const { id } = req.params;
       const { linijaId, idLinijaFront } = req.body;
+
+      console.log(id, "-----------");
+      console.log(linijaId);
+      console.log(idLinijaFront);
 
       //?izvlacimo Rezervaciju po id-u
       const izvlacenjeRezervacije = await Rezervacija.findByPk(id);

@@ -52,7 +52,6 @@ const LinijeApi = () => {
     datumPolaska,
     id
   ) => {
-    console.log(nazivPocetneStanice, nazivKrajnjeStanice, datumPolaska, id);
     return await fetch(`${apiUrl}/linija/filterLinijaId`, {
       method: "POST",
       headers: {
@@ -73,7 +72,6 @@ const LinijeApi = () => {
   };
 
   const brisanjeLinije = async (idLinije) => {
-    console.log(idLinije);
     return await axios.delete(`${apiUrl}/linija/${idLinije}`, {}); //brisanje radi po id-u
   };
 
@@ -92,7 +90,6 @@ const LinijeApi = () => {
     vozac,
     stjuardesa
   ) => {
-    console.log(medjustanice)
     return await axios.put(`${apiUrl}/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
       pocetnaStanica,

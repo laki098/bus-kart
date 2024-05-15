@@ -4,6 +4,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import Autobus from "../rezervacije/sedista/autobus";
 import RezervacijaApi from "../../api/rezervacijaApi";
 import LinijeApi from "../../api/linije.api.js";
+import "./stjuard.css";
 
 import { ToastContainer, toast } from "react-toastify";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
@@ -12,6 +13,7 @@ import "../../components/NavBar/links/i18n";
 import StjuardesaApi from "../../api/stjuardesaApi.js";
 import apiUrl from "../../apiConfig.js";
 import { getValueRange } from "react-calendar/dist/cjs/shared/dates.js";
+import KartaApi from "../../api/karta.api.js";
 
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
@@ -22,8 +24,39 @@ const StjuardesaLinija = ({}) => {
   const [okidanje, setOkidanje] = useState([]);
   const [filteredLinije, setFilteredLinije] = useState([]);
   const [mStanica, setMStanica] = useState([]);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isConfirmationOpenC, setIsConfirmationOpenC] = useState(false);
+  const [selectedSeat, setSelectedSeat] = useState(null); // Dodajte stanje za pratnju izabranog sedišta
+  const [imePrezime, setImePrezime] = useState("");
+  const [osvezenje, setOsvezenje] = useState("");
+  const [linijaidC, setLinijaidC] = useState();
+  const [rezervacijaIdC, setRezervacijaIdC] = useState();
 
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
+
+  //? Funkcija za otvaranje modalnog prozora
+  const openModal = (seat) => {
+    setSelectedSeat(seat);
+    setIsConfirmationOpen(true);
+  };
+
+  //? Funkcija za zatvaranje modalnog prozora
+  const closeModal = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  //? Funkcija za otvaranje modalnog prozora
+  const openModalC = (seat, rezervacijaId, linijaId) => {
+    setLinijaidC(linijaId);
+    setRezervacijaIdC(rezervacijaId);
+    setSelectedSeat(seat);
+    setIsConfirmationOpenC(true);
+  };
+
+  //? Funkcija za zatvaranje modalnog prozora
+  const closeModalC = () => {
+    setIsConfirmationOpenC(false);
+  };
 
   //? Pristupite celom query string-u
   const queryString = window.location.search;
@@ -96,8 +129,6 @@ const StjuardesaLinija = ({}) => {
 
     medjustanice.sort((a, b) => a.redosled - b.redosled); // Sortiranje po redosledu
 
-    console.log("Sortirane medjustanice:", medjustanice); // Ispis sortiranih medjustanica
-
     setMStanica(medjustanice);
 
     const responseBus = await fetch(
@@ -138,9 +169,26 @@ const StjuardesaLinija = ({}) => {
     setFilteredLinije(data.rezultat);
   };
 
-  const filterMedju = filteredLinije[0];
+  const kartaApi = KartaApi();
 
-  //?novo cekiranje
+  //?cekiranje kada ima kartu
+  const cekiranjeKarte = () => {
+    kartaApi
+      .cekiranjeKarte(rezervacijaIdC, linijaidC, linija.id)
+      .then((response) => {
+        console.log(response);
+        notifySuccest();
+        closeModalC();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyWarn();
+      });
+  };
+
+  const filterMedju = filteredLinije[0];
+  //?novo cekiranje kada nema kartu
   const novaRezervacija = () => {
     RezervacijaApi()
       .rezervacija(
@@ -155,13 +203,15 @@ const StjuardesaLinija = ({}) => {
         filterMedju.pocetnaStanicaId,
         filterMedju.krajnjaStanicaId,
         3,
-        "kafa",
-        trenutnaRezervacija
+        osvezenje,
+        selectedSeat
       )
       .then((response) => {
-        console.log(response);
         console.log("---------1----------------------------------------");
+        console.log(response);
         notifySuccest();
+        closeModal();
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -425,7 +475,76 @@ const StjuardesaLinija = ({}) => {
         updateTrenutnaRezervacija={(novaRezervacija) =>
           setTrenutnaRezervacija(novaRezervacija)
         }
+        openModalC={openModalC}
+        openModal={openModal} // Prosleđivanje funkcije za otvaranje moda kao prop
       />
+      {/* Modalni prozor */}
+      {isConfirmationOpenC && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <h2> Čekiranje za sedište {selectedSeat}</h2>
+            <div>
+              <button type="potvrdi" onClick={cekiranjeKarte}>
+                Čekiranje karte
+              </button>
+              <button type="odustani" onClick={closeModalC}>
+                Odustani
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modalni prozor */}
+      {isConfirmationOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <h2> Čekiranje za sedište {selectedSeat}</h2>
+            <div>
+              <label>
+                Ime i prezime putnika:
+                <input
+                  type="text"
+                  value={imePrezime}
+                  onChange={(e) => setImePrezime(e.target.value)}
+                />
+              </label>
+              <label>
+                Osveženje:
+                <select
+                  className="option"
+                  value={osvezenje}
+                  onChange={(e) => setOsvezenje(e.target.value)}
+                >
+                  <option className="option" value="" disabled defaultValue>
+                    Izaberi Osveženje
+                  </option>
+                  <option className="option" value="kafa">
+                    Kafa
+                  </option>
+                  <option className="option" value="caj">
+                    Čaj
+                  </option>
+                  <option className="option" value="sok">
+                    Sok
+                  </option>
+                </select>
+              </label>
+              <button type="potvrdi" onClick={novaRezervacija}>
+                Potvrdi
+              </button>
+              <button type="odustani" onClick={closeModal}>
+                Odustani
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="red-1"></div>
       <button onClick={novaRezervacija} className="buttonSwitch">

@@ -12,6 +12,8 @@ function Autobus({
   pocetnaStanicaId,
   krajnjaStanicaId,
   updateTrenutnaRezervacija,
+  openModalC,
+  openModal,
 }) {
   const [sediste, setSediste] = useState([]);
   const [trenutnaRezervacija, setTrenutnaRezervacija] = useState([]);
@@ -83,6 +85,7 @@ function Autobus({
       rezervacija.some((r) => r.oznakaSedista == seatNumber)
     );
   };
+  console.log(rezervacija);
 
   return (
     <div>
@@ -92,8 +95,40 @@ function Autobus({
             key={index + 1}
             className={`sediste ${
               isSeatReserved(index + 1) ? "rezervisano" : "nije"
+            } ${
+              rezervacija &&
+              rezervacija.find(
+                (rez) => rez.oznakaSedista === index + 1 && rez.cekiran === true
+              )
+                ? "cekirano"
+                : ""
+            }${
+              rezervacija &&
+              rezervacija.find(
+                (rez) =>
+                  rez.oznakaSedista === index + 1 && rez.cekiran === false
+              )
+                ? "nijeCekirano"
+                : ""
             }`}
-            onClick={() => handleClick(index + 1)}
+            onClick={() => {
+              handleClick(index + 1);
+              const rezervacijaZaSediste = rezervacija.find(
+                (rez) => rez.oznakaSedista === index + 1
+              );
+              if (!rezervacijaZaSediste) {
+                openModal(index + 1);
+              } else if (
+                rezervacijaZaSediste &&
+                rezervacijaZaSediste.cekiran == false
+              ) {
+                openModalC(
+                  index + 1,
+                  rezervacijaZaSediste.id,
+                  rezervacijaZaSediste.linijaId
+                );
+              }
+            }}
           >
             {isSeatReserved(index + 1) ? (
               <p>
@@ -106,24 +141,6 @@ function Autobus({
             {index + 1}
           </div>
         ))}
-        <div className="labela-stanica">
-          <Trans i18nKey="description.part195">
-            {" "}
-            Trenutno rezervisano mesto broj:{" "}
-          </Trans>{" "}
-          &ensp;
-          {trenutnaRezervacija.length > 0
-            ? trenutnaRezervacija.join(", ")
-            : "Nijedno"}
-        </div>
-        &emsp;&ensp;&emsp;&ensp;
-        <button
-          onClick={handlePotvrdi}
-          disabled={trenutnaRezervacija.length === 0}
-          className="buttonSwitch"
-        >
-          <Trans i18nKey="description.part121"> Potvrdite </Trans>
-        </button>
       </div>
     </div>
   );
