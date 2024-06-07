@@ -84,6 +84,11 @@ const Rezervacija = db.define(
         },
       },
     },
+    kola: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "rezervacija",

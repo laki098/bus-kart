@@ -64,6 +64,7 @@ const Karta = () => {
         pocetnaStanicaId: item.pocetnaStanicaId, // dodala zbog upisa povratne karte
         krajnjaStanicaId: item.krajnjaStanicaId, // dodala zbog upisa povratne karte
         email: item.email, // dodala jer ga nije bilo
+        kola: item.kola,
       };
     });
     setSveKarte(a1);
@@ -145,6 +146,7 @@ const Karta = () => {
             pocetnaStanicaId: item.pocetnaStanicaId, // dodala zbog upisa povratne karte
             krajnjaStanicaId: item.krajnjaStanicaId, // dodala zbog upisa povratne karte
             email: item.email, // dodala jer ga nije bilo
+            kola: item.kola,
           };
         });
         setSveKarte(a1);
@@ -260,6 +262,10 @@ const Karta = () => {
                         </Trans>
                       </div>
                       <div className="vrednost">{karte.vremeD}</div>
+                      <div className="naslov">
+                        <Trans> Oznaka kola </Trans>
+                      </div>
+                      <div className="vrednost">{karte.kola}</div>
                       <div className="naslov">
                         <Trans i18nKey="description.part185"> Čekiran </Trans>
                       </div>

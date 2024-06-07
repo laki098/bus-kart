@@ -13,7 +13,8 @@ const LinijeApi = () => {
     vremeDolaska,
     datumPolaska,
     datumDolaska,
-    oznakaBusa
+    oznakaBusa,
+    kola
   ) => {
     return await axios.post(`${apiUrl}/linija`, {
       pocetnaStanica,
@@ -24,6 +25,7 @@ const LinijeApi = () => {
       datumPolaska,
       datumDolaska,
       oznakaBusa,
+      kola,
     });
   };
 
@@ -88,7 +90,8 @@ const LinijeApi = () => {
     pocetakRute,
     krajRute,
     vozac,
-    stjuardesa
+    stjuardesa,
+    kola
   ) => {
     return await axios.put(`${apiUrl}/linija/${id}`, {
       //edituje sve inpute, po prosledjenom id-u, bas za tu linuju(id)
@@ -104,6 +107,7 @@ const LinijeApi = () => {
       krajRute,
       vozac,
       stjuardesa,
+      kola,
     });
   };
 

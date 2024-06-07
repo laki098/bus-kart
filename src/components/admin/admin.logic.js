@@ -11,7 +11,6 @@ const AdminLogic = () => {
     vremeDolaska: "",
   });
 
-
   const changeHandler = (e) =>
     setData({
       ...data,
@@ -39,7 +38,6 @@ const AdminLogic = () => {
       medjustanice: novaMedjustanica,
     });
   };
-
 
   const handlerDatumPolaska = (e) =>
     setData({
@@ -101,7 +99,8 @@ const AdminLogic = () => {
         data.vremeDolaska,
         data.datumPolaska,
         data.datumDolaska,
-        data.oznakaBusa
+        data.oznakaBusa,
+        data.kola
       )
       .then((response) => {
         if (response.status === 201) {
@@ -135,7 +134,8 @@ const AdminLogic = () => {
         data.pocetakRute,
         data.krajRute,
         data.vozac,
-        data.stjuardesa
+        data.stjuardesa,
+        data.kola
       )
       .then((response) => {
         console.log(response);

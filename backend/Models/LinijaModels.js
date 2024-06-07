@@ -54,6 +54,11 @@ const Linija = db.define(
       allowNull: true,
       defaultValue: null,
     },
+    kola: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "linija",

@@ -101,8 +101,8 @@ const RezervacijaComponent = ({ id, state }) => {
     });
   }, [ceneFilter]);
 
-  const novaRezervacija = () => {
-    RezervacijaApi()
+  const novaRezervacija = async () => {
+    await RezervacijaApi()
       .rezervacija(
         1,
         state.pocetnaStanica,
@@ -332,8 +332,8 @@ const RezervacijaComponent = ({ id, state }) => {
     }
   }, [pomOznakaBus, stariPovratak]);
 
-  const novaRezervacijaPovratak = () => {
-    RezervacijaApi()
+  const novaRezervacijaPovratak = async () => {
+    await RezervacijaApi()
       .rezervacijaPovratna(
         1,
         state.krajnjaStanica,
@@ -465,7 +465,7 @@ const RezervacijaComponent = ({ id, state }) => {
   };
 
   //  upisujem podatke u bazu za obicnu kartu povratnu kartu i izmenjenu povratnu kartu
-  const clickRezervisiPovratak = () => {
+  const clickRezervisiPovratak = async () => {
     if (selectedValue === "Jednosmerna") {
       novaRezervacija();
     } else if (
@@ -473,8 +473,8 @@ const RezervacijaComponent = ({ id, state }) => {
       izmeniPovratak === false &&
       stariPovratak === false
     ) {
-      novaRezervacijaPovratak();
-      novaRezervacija();
+      await novaRezervacijaPovratak();
+      await novaRezervacija();
     } else if (pomDateRet === "povratna" && izmeniPovratak === true) {
       // alert("Izmena povratne karte u toku, id karte je: "  +state.id+ " br sedista je "+ selectedSeats);
       console.log("3 uslov: menjamo datum vreme unosimo pice i sediste");
@@ -729,7 +729,7 @@ const RezervacijaComponent = ({ id, state }) => {
                       />
                     </div>
 
-                  {/*
+                    {/*
                     <div className={classes.control}>
                       <div>
                         <label className="labela levo-23">Email</label>
@@ -922,7 +922,7 @@ const RezervacijaComponent = ({ id, state }) => {
                 </div>
 
                 {/* Ovde dolazimo iz fajla karta.js u slucaju da je karta povratna 
-              i zelimo rezervaciju sedista ili promenu datuma  */}
+              i zelimo rezervaciju sedista ili promenu datuma    */}
                 {state.povratna ? (
                   <div>
                     <div className="red-1"></div>
@@ -1019,9 +1019,6 @@ const RezervacijaComponent = ({ id, state }) => {
                                     // Poredimo Date objekte
                                     return timeA - timeB;
                                   })
-
-
-
 
                                   .map((linija) => (
                                     <div>

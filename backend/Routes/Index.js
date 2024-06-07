@@ -89,22 +89,8 @@ router.post("/", async (req, res) => {
       krajRute,
       stjuardesa,
       vozac,
+      kola,
     } = req.body;
-
-    console.log(
-      pocetnaStanica,
-      medjustanice,
-      krajnjaStanica,
-      vremePolaska,
-      vremeDolaska,
-      datumPolaska,
-      datumDolaska,
-      oznakaBusa,
-      pocetakRute,
-      krajRute,
-      stjuardesa,
-      vozac
-    );
 
     // Kreiranje početne stanice
     const pocetna = await Stanica.findOne({
@@ -165,6 +151,7 @@ router.post("/", async (req, res) => {
         krajRute,
         stjuardesa,
         vozac,
+        kola,
       });
 
       // Povezivanje početne stanice i krajnje stanice s linijom
@@ -218,6 +205,7 @@ router.put("/:id", async (req, res) => {
       krajRute,
       stjuardesa,
       vozac,
+      kola,
     } = req.body;
     console.log(req.body);
     const postojucaLinija = await Linija.findByPk(linijaId, {
@@ -238,6 +226,7 @@ router.put("/:id", async (req, res) => {
     postojucaLinija.krajRute = krajRute;
     postojucaLinija.stjuardesa = stjuardesa;
     postojucaLinija.vozac = vozac;
+    postojucaLinija.kola = kola;
 
     //? Povezivanje početne stanice i krajnje stanice s linijom
     const pocetna = await Stanica.findOne({
@@ -428,8 +417,6 @@ router.post("/rezervacija", async (req, res) => {
     const trenutnoVreme = new Date();
     const vremePolaskaRequest = new Date(datumPolaska + "T" + vremePolaska);
 
-    console.log(trenutnoVreme);
-    console.log(vremePolaskaRequest);
     const razlika = (vremePolaskaRequest - trenutnoVreme) / (1000 * 60); // razlika u minutima
 
     if (razlika < -15) {
@@ -481,6 +468,8 @@ router.post("/rezervacija", async (req, res) => {
     if (!linija) {
       return res.status(404).json({ message: "Linija nije pronađena" });
     }
+
+    let kola = linija.kola;
 
     if (!stanicaP || !stanicaK) {
       return res.status(404).json({ message: "Stanica nije pronađena" });
@@ -613,14 +602,15 @@ router.post("/rezervacija", async (req, res) => {
       email,
       imeIprezime,
       brojTelefona,
+      kola,
     });
-
+    console.log(email);
     if (email) {
       const qrCodeText = `
-      oznakaRezervacije: ${kreiranjeRezervacije.id}
+      oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
       LinijaId: ${linijaId}
       Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
-        kreiranjeRezervacije.id
+        kreiranjeRezervacije.id + 1
       }
   
     
@@ -712,6 +702,7 @@ router.post("/rezervacija", async (req, res) => {
             <p>Vreme Polaska: ${vremePolaska}</p>
             <p>Vreme Dolaska: ${vremeDolaska}</p>
             <p>Osveženje: ${osvezenje}</p>
+            <p>Broj kola: ${kola}</p>
             <p>Provera validnosti karte proveriti na sledećem linku:</p>
             <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
             <p>Molimo vas da skenirate QR kod za više detalja:</p>
@@ -729,7 +720,7 @@ router.post("/rezervacija", async (req, res) => {
         attachments, //? Dodajte prilog e-mail poruci
       };
 
-      transporter.sendMail(mailOptions);
+      await transporter.sendMail(mailOptions);
     }
     res.status(200).json({ message: "uspesno rezervisali" });
   } catch (error) {

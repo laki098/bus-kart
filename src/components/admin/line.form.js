@@ -26,7 +26,7 @@ const LineForm = ({ mode, id, state }) => {
   const [selectedStations, setSelectedStations] = useState({
     pocetnaStanica: "",
     krajnjaStanica: "",
-    medjustanice: []
+    medjustanice: [],
   });
 
   const [selected, setSelected] = useState([]);
@@ -37,9 +37,9 @@ const LineForm = ({ mode, id, state }) => {
   };
 
   const vremePolaskaRef = useRef(null); // Definicija ref za vreme polaska
-  const vremeDolaskaRef = useRef(null); 
-  const vremePolaskaMRef = useRef(null); 
-  const vremeDolaskaMRef = useRef(null); 
+  const vremeDolaskaRef = useRef(null);
+  const vremePolaskaMRef = useRef(null);
+  const vremeDolaskaMRef = useRef(null);
   const datumPolaskaRef = useRef(null);
   const datumDolaskaRef = useRef(null);
   const datumPolaskaMRef = useRef(null);
@@ -92,13 +92,13 @@ const LineForm = ({ mode, id, state }) => {
     console.log(waypoints);
     setWaypoints([...waypoints, ""]);
     setSelectedValues([...selectedValues, ""]);
-  
+
     // Ažurirajte selectedStations stanje
-    setSelectedStations(prevState => ({
+    setSelectedStations((prevState) => ({
       ...prevState,
-      medjustanice: [...prevState.medjustanice, ""]
+      medjustanice: [...prevState.medjustanice, ""],
     }));
-  
+
     // Ažurirajte selected promenljivu
     const updatedSelected = getSelectedStations();
     setSelected(updatedSelected);
@@ -161,24 +161,28 @@ const LineForm = ({ mode, id, state }) => {
     }
   };
 
-  const handleWaypointChange = (e, index) => { // Ova funkcija se poziva kada se vrednost neke međustanice promeni.
+  const handleWaypointChange = (e, index) => {
+    // Ova funkcija se poziva kada se vrednost neke međustanice promeni.
     const { value } = e.target;
-    setSelectedStations(prevState => ({
+    setSelectedStations((prevState) => ({
       ...prevState,
-      medjustanice: prevState.medjustanice.map((item, idx) => idx === index ? value : item)
+      medjustanice: prevState.medjustanice.map((item, idx) =>
+        idx === index ? value : item
+      ),
     }));
   };
 
-  const handleStartEndChange = (e) => { // Ova funkcija se poziva kada se promeni početna ili krajnja stanica.
+  const handleStartEndChange = (e) => {
+    // Ova funkcija se poziva kada se promeni početna ili krajnja stanica.
     const { name, value } = e.target;
-    setSelectedStations(prevState => ({
+    setSelectedStations((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
-
-  const handleChangeVreme = () => { // Blokiranje vremena u medjustanici
+  const handleChangeVreme = () => {
+    // Blokiranje vremena u medjustanici
     const vremePolaskaValue = vremePolaskaRef.current.value;
     const vremeDolaskaValue = vremeDolaskaRef.current.value;
     const vremePolaskaMValue = vremePolaskaMRef.current.value;
@@ -193,74 +197,81 @@ const LineForm = ({ mode, id, state }) => {
     const datumPolaskaM = new Date(datumPolaskaMValue);
     const datumDolaskaM = new Date(datumDolaskaMValue);
 
-
     if (datumDolaskaM > datumPolaska) {
       console.log("Prelazi se u drugi dan");
       if (vremeDolaskaMValue && vremeDolaskaMValue < vremePolaskaMValue) {
-          notifyWarn("Vreme dolaska medjustanice mora biti veće od vremena polaska!");
-          // Resetovanje vrednosti input polja na prazan string
-          vremeDolaskaMRef.current.value = "";
-          return;
+        notifyWarn(
+          "Vreme dolaska medjustanice mora biti veće od vremena polaska!"
+        );
+        // Resetovanje vrednosti input polja na prazan string
+        vremeDolaskaMRef.current.value = "";
+        return;
       } else if (vremeDolaskaMValue && vremeDolaskaMValue > vremeDolaskaValue) {
-          notifyWarn("Vreme dolaska medjustanice ne može biti veće od krajnjeg vremena!");
-          // Resetovanje vrednosti input polja na prazan string
-          vremeDolaskaMRef.current.value = "";
-          return;
+        notifyWarn(
+          "Vreme dolaska medjustanice ne može biti veće od krajnjeg vremena!"
+        );
+        // Resetovanje vrednosti input polja na prazan string
+        vremeDolaskaMRef.current.value = "";
+        return;
       } else if (vremePolaskaMValue > vremeDolaskaValue) {
-          notifyWarn("Početno vreme medjustanice ne može biti veće od krajnjeg vremena!");
-          // Resetovanje vrednosti input polja na prazan string
-          vremePolaskaMRef.current.value = "";
-          return;
+        notifyWarn(
+          "Početno vreme medjustanice ne može biti veće od krajnjeg vremena!"
+        );
+        // Resetovanje vrednosti input polja na prazan string
+        vremePolaskaMRef.current.value = "";
+        return;
       }
       return;
-  }
+    }
 
-
-    if ( vremeDolaskaValue < vremeDolaskaMValue) {
-      notifyWarn("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+    if (vremeDolaskaValue < vremeDolaskaMValue) {
+      notifyWarn(
+        "Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!"
+      );
       // Resetovanje vrednosti input polja na prazan string
       vremeDolaskaMRef.current.value = "";
-    } 
+    }
 
-    if ( vremePolaskaValue > vremePolaskaMValue) {
-      notifyWarn("Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!");
+    if (vremePolaskaValue > vremePolaskaMValue) {
+      notifyWarn(
+        "Vreme medjustanice nije u opsegu vremena polaska i dolaska.Izaberite ispravno vreme!!!"
+      );
       // Resetovanje vrednosti input polja na prazan string
       vremePolaskaMRef.current.value = "";
-    } 
+    }
 
     if (vremeDolaskaMValue && vremeDolaskaMValue < vremePolaskaMValue) {
       notifyWarn("Vreme  dolaska medjustanice  mora biti vece od polaska!!!");
       // Resetovanje vrednosti input polja na prazan string
       vremeDolaskaMRef.current.value = "";
-    } 
-  
-    
+    }
 
-    
-  
-    console.log('Vreme polaska:', vremePolaskaValue,datumPolaskaValue);
-    console.log('Vreme dolaska:', vremeDolaskaValue,datumDolaskaValue);
-    console.log('Vreme polaska medjustanice:', vremePolaskaMValue,datumPolaskaMValue);
-    console.log('Vreme dolaska medjustanice', vremeDolaskaMValue,datumDolaskaMValue);
+    console.log("Vreme polaska:", vremePolaskaValue, datumPolaskaValue);
+    console.log("Vreme dolaska:", vremeDolaskaValue, datumDolaskaValue);
+    console.log(
+      "Vreme polaska medjustanice:",
+      vremePolaskaMValue,
+      datumPolaskaMValue
+    );
+    console.log(
+      "Vreme dolaska medjustanice",
+      vremeDolaskaMValue,
+      datumDolaskaMValue
+    );
+  };
 
-};
-
-
-
-const notifyWarn = (message) => {
-  toast.warn(message, {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
-};
-
-
+  const notifyWarn = (message) => {
+    toast.warn(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   //prevodjenje start
   const lngs = {
@@ -311,7 +322,8 @@ const notifyWarn = (message) => {
                       onChange={(e) => {
                         adminLogic.changeHandler(e);
                         handleStartEndChange(e);
-                      }}>
+                      }}
+                    >
                       <option
                         className="medjustanica"
                         value=""
@@ -394,8 +406,13 @@ const notifyWarn = (message) => {
                             <hr />
                           </div>
                           <label className="labela-stanica">
-                            <strong> <Trans i18nKey="description.part165">Usputna stanica </Trans>
-                            &nbsp; {index + 1}</strong>
+                            <strong>
+                              {" "}
+                              <Trans i18nKey="description.part165">
+                                Usputna stanica{" "}
+                              </Trans>
+                              &nbsp; {index + 1}
+                            </strong>
                           </label>
                         </div>
 
@@ -483,7 +500,10 @@ const notifyWarn = (message) => {
                           required
                           label="Time"
                           name="vremeDolaskaM"
-                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
+                          onChange={(e) => {
+                            adminLogic.handlerMedjustanice(e, index);
+                            handleChangeVreme();
+                          }}
                         ></input>
                         <div className="red-05">
                           <label className="labela-stanica">
@@ -501,16 +521,22 @@ const notifyWarn = (message) => {
                           required
                           label="Time"
                           name="vremePolaskaM"
-                          onChange={(e) => { adminLogic.handlerMedjustanice(e, index); handleChangeVreme(); }}
+                          onChange={(e) => {
+                            adminLogic.handlerMedjustanice(e, index);
+                            handleChangeVreme();
+                          }}
                         ></input>
-                        
+
                         <div>
                           <button
                             type="button"
                             className="buttonSwitch korekcijaDugmeta1"
                             onClick={() => removeWaypoint(index)}
                           >
-                            <Trans i18nKey="description.part221"> Ukloni međustanicu </Trans>
+                            <Trans i18nKey="description.part221">
+                              {" "}
+                              Ukloni međustanicu{" "}
+                            </Trans>
                           </button>
                         </div>
                       </div>
@@ -576,6 +602,30 @@ const notifyWarn = (message) => {
                       );
                     })}
                   </select>
+                  <div className="radio">
+                    <select
+                      className="select"
+                      type="text"
+                      name="kola"
+                      onChange={adminLogic.changeHandler}
+                    >
+                      <option disabled={false} value="">
+                        <Trans>Izaberite kola </Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 1</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 2</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 3</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 4</Trans>
+                      </option>
+                    </select>
+                  </div>
                   <div className="red-05">
                     <label className="labela-stanica">Izaberite autobus</label>
                   </div>
@@ -698,7 +748,9 @@ const notifyWarn = (message) => {
                             <strong>
                               <Trans i18nKey="description.part165">
                                 {" "}
-                                <Trans i18nKey="description.part165">Usputna stanica </Trans>{" "}
+                                <Trans i18nKey="description.part165">
+                                  Usputna stanica{" "}
+                                </Trans>{" "}
                               </Trans>
                               {index + 1}
                             </strong>
@@ -742,9 +794,7 @@ const notifyWarn = (message) => {
                         />
                         <div className="red-05">
                           <label className="labela-stanica">
-                           
-                              Datum dolaska
-                            
+                            Datum dolaska
                           </label>
                         </div>
                         <input
@@ -927,7 +977,10 @@ const notifyWarn = (message) => {
                           className="buttonSwitch korekcijaDugmeta2"
                           onClick={() => removeWaypoint(index)}
                         >
-                          <Trans i18nKey="description.part221"> Ukloni međustanicu </Trans>
+                          <Trans i18nKey="description.part221">
+                            {" "}
+                            Ukloni međustanicu{" "}
+                          </Trans>
                         </button>
                       </div>
                     </div>
@@ -1030,7 +1083,7 @@ const notifyWarn = (message) => {
                       <div className="red-05">
                         <label className="labela-stanica">
                           <Trans i18nKey="description.part167">
-                            Izaberite stjuardesu{" "}
+                            Izaberite broj kola{" "}
                           </Trans>
                         </label>
                       </div>
@@ -1071,6 +1124,30 @@ const notifyWarn = (message) => {
                         </select>
                       </div>
                     </div>
+                  </div>
+                  <div className="radio">
+                    <select
+                      className="select"
+                      type="text"
+                      name="kola"
+                      onChange={adminLogic.changeHandler}
+                    >
+                      <option disabled={false} value="">
+                        <Trans>Izaberite kola </Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 1</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 2</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 3</Trans>
+                      </option>
+                      <option>
+                        <Trans>Kola 4</Trans>
+                      </option>
+                    </select>
                   </div>
 
                   <div className="red-1">
