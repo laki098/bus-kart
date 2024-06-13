@@ -1,103 +1,101 @@
-.prikaz{
-    width: fit-content;
-    align-items: center;
-    text-align: center;
-    position: static;
+.prikaz {
+  width: fit-content;
+  align-items: center;
+  text-align: center;
+  position: static;
 }
 
-.tabela{
-    width: max-content;
-    border: 1px solid darkblue;
-    border-collapse: collapse;
-    border-bottom: 1px solid #afa2fa;
-   /* column-rule-color: aqua;
+.tabela {
+  width: max-content;
+  border: 1px solid darkblue;
+  border-collapse: collapse;
+  border-bottom: 1px solid #afa2fa;
+  /* column-rule-color: aqua;
     column-rule-style: double;*/
-    display: flex;
-    margin: auto;
-    padding: 1rem;
-    
+  display: flex;
+  margin: auto;
+  padding: 1rem;
 }
 
 .tabela td {
-    border: 1px solid #ccc;
-    padding: 4px;
-    text-align: left;
-    height: 10px;
-    width: max-content;
-    padding: 0.5rem;
-    height: min-content;   
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  height: 10px;
+  width: max-content;
+  padding: 0.5rem;
+  height: min-content;
 }
 
-.p::hover{
-    color: blue;
+.p::hover {
+  color: blue;
 }
 
-
-.podaci{
-    font-weight: bold;
-    background-color: rgb(228, 233, 244);
+.podaci {
+  font-weight: bold;
+  background-color: rgb(228, 233, 244);
 }
-.podaci-stjuardesa{
+.podaci-stjuardesa {
   font-weight: bold;
   color: darkblue;
 }
-.podaci-stjuardesa1{
+.podaci-stjuardesa1 {
   font-weight: bold;
   color: darkblue;
-  background-color: #f5f6fa;  /* #f0effb;   */
+  background-color: #f5f6fa; /* #f0effb;   */
 }
 
-.podaci-stjuardesa-info{
+.podaci-stjuardesa-info {
   font-weight: bold;
   color: darkblue;
-  background-color: #E0F7FA;
+  background-color: #e0f7fa;
 }
 
-.podaci-korisnik{
+.podaci-korisnik {
   font-weight: bold;
   background-color: rgb(228, 233, 244);
   width: 10rem;
 }
-.podaci-sirina{
+.podaci-sirina {
   font-weight: initial;
   background-color: rgb(228, 233, 244);
   width: 7rem;
- /* text-wrap: wrap;  */
- /* word-wrap: break-word;*/
-  }
+  /* text-wrap: wrap;  */
+  /* word-wrap: break-word;*/
+}
 
-.podaci2{
-    width: 4rem;
-    font-weight: bold;
-    background-color: rgb(228, 233, 244);
+.podaci2 {
+  width: 4rem;
+  font-weight: bold;
+  background-color: rgb(228, 233, 244);
 }
 
 .table-container {
-    width: 100%;
+  width: 100%;
 }
-  
+
 .table {
-    border-collapse: collapse;
-    width: 100%;
-    justify-content: "center";
-    align-items: "center";
-    
-    position: "relative";
-    margin: auto;
-    display: "flex",  
+  border-collapse: collapse;
+  width: 100%;
+  justify-content: "center";
+  align-items: "center";
+
+  position: "relative";
+  margin: auto;
+  display: "flex";
 }
-  
+
 .table th,
 .table td {
-    border: 1px solid #ccc;
-    padding: 4px;
-    text-align: left;
-    height: 10px;
-    width: max-content;
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  height: 10px;
+  width: max-content;
 }
-  
+
 .table th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 /*
@@ -107,58 +105,57 @@
 }
 */
 
-.dugme{
-    color: darkblue;
-    background-color: lightskyblue;
-    border-color: darkblue;
-    border-radius: 0.2rem; /* bilo je 2rem  */
-    border-width: 3px;
-    border-style: initial;
-    width: 6rem;
-    height: 2rem;
-    font-size: medium;
+.dugme {
+  color: darkblue;
+  background-color: lightskyblue;
+  border-color: darkblue;
+  border-radius: 0.2rem; /* bilo je 2rem  */
+  border-width: 3px;
+  border-style: initial;
+  width: 6rem;
+  height: 2rem;
+  font-size: medium;
 }
 
-.veceDugme{
-    width: 12rem;
+.veceDugme {
+  width: 12rem;
 }
 
-.crvenoDugme{
-    background-color: #b489f7;             /*#a166fc;*/
-    width: 10rem;
+.crvenoDugme {
+  background-color: #b489f7; /*#a166fc;*/
+  width: 10rem;
 }
 
-.plavoDugme{
-    background-color: rgb(21, 82, 234);
-    color:beige;
-    width: 10rem;
+.plavoDugme {
+  background-color: rgb(21, 82, 234);
+  color: beige;
+  width: 10rem;
 }
 
-.polje{
-    border: 1px solid #ccc;
-    padding: 4px;
-    text-align: left;
-    height: 3rem;
-    width: max-content;
+.polje {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  height: 3rem;
+  width: max-content;
 }
 
-.centar{
-    text-align: center;      
-    line-height: 55px;      /* dodato zbog horizontalnog centriranja        */
+.centar {
+  text-align: center;
+  line-height: 55px; /* dodato zbog horizontalnog centriranja        */
 }
 
-
-.centar-1{
-    text-align: center;      
-    line-height: 45px;      /* dodato zbog horizontalnog centriranja        */
+.centar-1 {
+  text-align: center;
+  line-height: 45px; /* dodato zbog horizontalnog centriranja        */
 }
 
 .column {
-    float: left;    
-    width: fit-content;
-    padding: 10px;
-    height: 80px; 
-    border: 1px solid #c2bddf;
+  float: left;
+  width: fit-content;
+  padding: 10px;
+  height: 80px;
+  border: 1px solid #c2bddf;
   /*  display: grid;      */
   /*  grid-row: auto;       */
   /*  margin: auto;  */
@@ -166,266 +163,262 @@
     text-align: center;*/
 }
 
-.kolona-bus{
-    width: fit-content;   /*  99px; */
-    padding: 10px;
-    height: 80px; 
-    border: 1px solid #c2bddf;
-    text-align: center;      
-    line-height: 55px
+.kolona-bus {
+  width: fit-content; /*  99px; */
+  padding: 7px;
+  height: auto;
+  border: 1px solid #c2bddf;
+  text-align: center;
+  line-height: auto;
 }
 
 .column-1 {
-    float: left;
-    width: fit-content;
-    padding: 10px;
-    height: 70px; 
-    border: 1px solid #c2bddf;
-   /* display: flex;        */
+  float: left;
+  width: fit-content;
+  padding: 10px;
+  height: 70px;
+  border: 1px solid #c2bddf;
+  /* display: flex;        */
 }
 
 .column-2 {
   float: left;
- /* width: fit-content;   */
-  padding: 10px;   /* 10px*/
-  height: 80px; 
+  /* width: fit-content;   */
+  padding: 10px; /* 10px*/
+  height: 80px;
   border: 1px solid #c2bddf;
- /* display: flex;        */
+  /* display: flex;        */
 }
 
 /* nece se koristiti    */
-.kolona-korisnici{
+.kolona-korisnici {
   float: left;
   width: 10rem;
   padding: 10px;
-  height: 5rem;     /*70px    */
+  height: 5rem; /*70px    */
   border: 1px solid #c2bddf;
-  text-align: center;      
-  line-height: 55px; 
+  text-align: center;
+  line-height: 55px;
   font-weight: bold;
   background-color: rgb(228, 233, 244);
 }
 
-.kolonaPodaci{
-    float: left;
+.kolonaPodaci {
+  float: left;
   /*  width: 70px;        /* uze input polje kod unosa korisnika      */
-    width: min-content;
-    padding: 10px;
-    height: 80px; 
-    border: 1px solid #dddce1;  /* #d5d3e0   #c2bddf  */
-    margin: auto;
+  width: min-content;
+  padding: 10px;
+  height: 80px;
+  border: 1px solid #dddce1; /* #d5d3e0   #c2bddf  */
+  margin: auto;
 }
-.jedanBus{
+.jedanBus {
   background-color: #b489f7;
   margin: 5px;
   border-width: 1px;
   border-color: #36395a;
 }
 
-
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  .rowTabela{
-    overflow-x: auto;     /* ovim dajem responsive tabeli */
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.rowTabela {
+  overflow-x: auto; /* ovim dajem responsive tabeli */
   /* width: max-content;        */
-   width: 43rem;               /* bilo je 50rem---> ubacila sam ovu dim da bi se stampao samo 1 bus u vrsti      */
-   border: 1px solid darkblue;       
-   border-collapse: collapse;
-   border-bottom: 1px solid #afa2fa;
-   /*background-color: aliceblue;*/
-   display: flex;
-   flex-wrap: wrap;     /* zbog responsive uloge        */
+  width: 43rem; /* bilo je 50rem---> ubacila sam ovu dim da bi se stampao samo 1 bus u vrsti      */
+  border: 1px solid darkblue;
+  border-collapse: collapse;
+  border-bottom: 1px solid #afa2fa;
+  /*background-color: aliceblue;*/
+  display: flex;
+  flex-wrap: wrap; /* zbog responsive uloge        */
   /* grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto;    */
-   margin: auto;
-   padding: 10px;  
- /*   align-content: center;
+  margin: auto;
+  padding: 10px;
+  /*   align-content: center;
     text-align: left;
     vertical-align: middle;
     align-items: center;        */
-  }
+}
 
-  .rowTabela-dorada{
-    width: 95rem;
-    background-color: #e8e6f2;
-  }
+.rowTabela-dorada {
+  width: 95rem;
+  background-color: #e8e6f2;
+}
 
-  .rowTabela-dorada-1{
-    width: 98rem;
-    background-color: #e8e6f2;
-  }
+.rowTabela-dorada-1 {
+  width: 98rem;
+  background-color: #e8e6f2;
+}
 
-  .korisniciTabela{
-    width: max-content;         /* bilo je max-content 97rem i 95rem , 95%  */
-    background-color: #fbfafa;
-  }
-  .korisniciTabelaPromena{
-    width: 98rem;         /* bilo je max-content    */
-    background-color: #fbfafa;
-  }
+.korisniciTabela {
+  width: max-content; /* bilo je max-content 97rem i 95rem , 95%  */
+  background-color: #fbfafa;
+}
+.korisniciTabelaPromena {
+  width: 98rem; /* bilo je max-content    */
+  background-color: #fbfafa;
+}
 
-  .korisniciStjuardesa{
-    width: 70rem;   /*  66rem   */
-  }
-  .sirinaStjuardesa{
-    width: 82rem;
-  }
-  .vrstaStjuardesa{
-    border: 2px;
-  }
+.korisniciStjuardesa {
+  width: 70rem; /*  66rem   */
+}
+.sirinaStjuardesa {
+  width: 82rem;
+}
+.vrstaStjuardesa {
+  border: 2px;
+}
 
-  .podesi-sirinu{
-    width: fit-content;
-  }
+.podesi-sirinu {
+  width: fit-content;
+}
 
+.email-polje {
+  width: 20rem;
+  word-wrap: break-word;
+  /* overflow: auto;   */
+  line-height: 1; /* razmak izmedju linija    */
+  text-align: justify;
+}
+.email-polje-podesi {
+  width: 20rem;
+  height: 4rem;
+  word-wrap: break-word;
+  line-height: 1; /* razmak izmedju linija    */
+  text-align: justify;
+  padding: 0.2rem; /*22px;  */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
 
-  .email-polje{
-    width: 20rem;
-    word-wrap: break-word;
-   /* overflow: auto;   */
-    line-height: 1;   /* razmak izmedju linija    */
-    text-align: justify;
-  }
-  .email-polje-podesi{
-    width: 20rem;
-    height: 4rem;
-    word-wrap: break-word;
-    line-height: 1;   /* razmak izmedju linija    */
-    text-align: justify;
-    padding: 0.2rem;    /*22px;  */
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-  }
+/* kod header dela koji se primenjuje kod prevoda */
+.jezici {
+  text-align: right;
+  margin-right: 3rem;
+}
+.jezici-dugme {
+  border: "0px solid darkblue";
+  color: white;
+  background: #2794d6;
+  border-radius: 0.3rem;
+  font-size: 14px;
+  margin: 0.15rem;
+  padding: 0.2rem;
+}
 
-    /* kod header dela koji se primenjuje kod prevoda */
-  .jezici{
-    text-align: right;
-    margin-right: 3rem;
-  }
-  .jezici-dugme{
-    border: "0px solid darkblue";   
-    color: white;
-    background: #2794D6;
-    border-radius: 0.3rem;
-    font-size: 14px;
-    margin: 0.15rem;
-    padding: 0.2rem;
-  }
+.red-1 {
+  margin: 2rem;
+}
+.red-5 {
+  margin: 5rem;
+}
+.otklon-1 {
+  padding: 3rem;
+}
 
-  .red-1{
-    margin: 2rem;
-  }
-  .red-5{
-    margin: 5rem;
-  }
-  .otklon-1{
-    padding: 3rem;
-  }
+.sirina-48 {
+  width: 48rem;
+}
+.sirina-45 {
+  width: 45rem;
+}
 
-  .sirina-48{
-    width: 48rem;
-  }
-  .sirina-45{
-    width: 45rem;
-  }
-
-  .inputVelicna{
-    width: 3rem;
-  }
+.inputVelicna {
+  width: 3rem;
+}
 
 /*    ---------------------------- dugme sa Pocetna.js      */
 
 .buttonSwitch {
-    align-items: center;
-    appearance: none;
-    background-color: #fcfcfd;
-    border-radius: 15px;
-    border-width: 0;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
-      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
-    box-sizing: border-box;
-    color: #36395a;
-    cursor: pointer;
-    display: inline-flex;
-    height: 48px;       /*48px      */
-    justify-content: center;
-    line-height: 1;
-    list-style: none;
-    overflow: hidden;
-    padding-left: 16px;
-    padding-right: 16px;
-    position: relative;
-    text-align: left;
-    text-decoration: none;
-    transition: box-shadow 0.15s, transform 0.15s;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    will-change: box-shadow, transform;
-    font-size: 18px;        /*18px      */
-   
-  }
-  
-  .buttonSwitch:focus {
-    box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
-  }
-  
-  .buttonSwitch:hover {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
-      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
-    transform: translateY(-2px);
-  }
-  
-  .buttonSwitch:active {
-    box-shadow: #d6d6e7 0 3px 7px inset;
-    transform: translateY(2px);
-  }
-  .buttonSwitch-crveno{
-    background-color: #df1a1a;
-    color:#fff;
-  }
+  align-items: center;
+  appearance: none;
+  background-color: #fcfcfd;
+  border-radius: 15px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395a;
+  cursor: pointer;
+  display: inline-flex;
+  height: 48px; /*48px      */
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px; /*18px      */
+}
 
-  .stampajLiniju{
-    display: flex;
-    flex-wrap: wrap;
-   /* overflow-x: auto;   */
-  }
+.buttonSwitch:focus {
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+}
 
-  .input-new-bus {
-    border-radius: 0.2rem;
-    border-color: darkblue;
-    border-style: solid;
-   /* box-shadow: inset 0rem 0rem 1.563rem 0rem #c3def6;    */
-    /*margin-top: 0.5rem;   */
-    margin: 0.4rem;
-    height: 2rem;
-    width: 12rem;
-    font-size: medium;
-    text-align: center;
-    color: darkblue;
-  }
-  .input-new-bus::placeholder {
-    text-align: center;
-    padding-left: 0rem;
-  }
+.buttonSwitch:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
 
-  .korekcijaDugmeta{
-    background-color: blue;
-    color: #fff;
-  }
-  .korekcijaDugmeta1{
-    background-color: red;
-    color: #fff;
-  }
-  .korekcijaDugmeta2{
-    background-color: red;
-    color: #fff;
-    top: 1rem;
-  }
+.buttonSwitch:active {
+  box-shadow: #d6d6e7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+.buttonSwitch-crveno {
+  background-color: #df1a1a;
+  color: #fff;
+}
+
+.stampajLiniju {
+  display: flex;
+  flex-wrap: wrap;
+  /* overflow-x: auto;   */
+}
+
+.input-new-bus {
+  border-radius: 0.2rem;
+  border-color: darkblue;
+  border-style: solid;
+  /* box-shadow: inset 0rem 0rem 1.563rem 0rem #c3def6;    */
+  /*margin-top: 0.5rem;   */
+  margin: 0.4rem;
+  height: 2rem;
+  width: 12rem;
+  font-size: medium;
+  text-align: center;
+  color: darkblue;
+}
+.input-new-bus::placeholder {
+  text-align: center;
+  padding-left: 0rem;
+}
+
+.korekcijaDugmeta {
+  background-color: blue;
+  color: #fff;
+}
+.korekcijaDugmeta1 {
+  background-color: red;
+  color: #fff;
+}
+.korekcijaDugmeta2 {
+  background-color: red;
+  color: #fff;
+  top: 1rem;
+}
