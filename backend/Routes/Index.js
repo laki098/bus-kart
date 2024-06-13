@@ -207,7 +207,7 @@ router.put("/:id", async (req, res) => {
       vozac,
       kola,
     } = req.body;
-    console.log(req.body);
+    console.log(req.body.kola + " -----------------1---------");
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -215,6 +215,8 @@ router.put("/:id", async (req, res) => {
     if (!postojucaLinija) {
       return res.status(404).json({ message: "Linija nije pronađena." });
     }
+
+    console.log(postojucaLinija.kola);
 
     //? Azurirana svojstva linije
     postojucaLinija.vremePolaska = vremePolaska;
@@ -800,6 +802,7 @@ router.post("/filterLinija", async (req, res) => {
     //? prolazimo kroz liniju
     for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
       const linija = izvuceneLinijeDatum[index];
+      console.log(linija);
       let brojMedjustanicaNaLiniji = 0;
 
       let najmanjiBroj;
@@ -831,6 +834,7 @@ router.post("/filterLinija", async (req, res) => {
           vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
           brojSlobodnihMesta: najmanjiBroj,
           oznakaBusa: linija.oznakaBusa,
+          kola: linija.kola,
         });
       }
 
@@ -909,6 +913,7 @@ router.post("/filterLinija", async (req, res) => {
               .join(":"),
             brojSlobodnihMesta: najmanjiBroj,
             oznakaBusa: linija.oznakaBusa,
+            kola: linija.kola,
           });
         }
 
@@ -931,6 +936,7 @@ router.post("/filterLinija", async (req, res) => {
             vremeDolaska: linija.vremeDolaska.split(":").slice(0, 2).join(":"),
             brojSlobodnihMesta: najmanjiBroj,
             oznakaBusa: linija.oznakaBusa,
+            kola: linija.kola,
           });
           break;
         }
@@ -988,6 +994,7 @@ router.post("/filterLinija", async (req, res) => {
                 .join(":"),
               brojSlobodnihMesta: najmanjiBroj,
               oznakaBusa: linija.oznakaBusa,
+              kola: linija.kola,
             });
           }
 

@@ -53,8 +53,18 @@ const Pocetna = () => {
 
     const data = await response.json();
 
-    console.log(data.rezultat);
-    setFilteredLinije(data.rezultat);
+    const currentDateTime = new Date();
+
+    // Filtriraj rezultate tako da uključuju samo linije čije vreme polaska je veće od trenutnog vremena
+    const filteredResults = data.rezultat.filter((linija) => {
+      const polazakDateTime = new Date(
+        `${linija.datumPolaska}T${linija.vremePolaska}`
+      );
+      return polazakDateTime > currentDateTime;
+    });
+
+    console.log(filteredResults);
+    setFilteredLinije(filteredResults);
   };
 
   const getStanice = async () => {
@@ -225,12 +235,12 @@ const Pocetna = () => {
                 <Trans i18nKey="description.part33"> Datum polaska </Trans>
               </label>
               <div className="input-date">
-              <input
-                 type="date"
-                 className="dates"
-                 value={valueDate || today} // Postavite value na valueDate ako postoji, inače na današnji datum
-                 min={today} // Postavite min atribut na današnji datum
-                 onChange={(e) => setValueDate(e.target.value)}
+                <input
+                  type="date"
+                  className="dates"
+                  value={valueDate || today} // Postavite value na valueDate ako postoji, inače na današnji datum
+                  min={today} // Postavite min atribut na današnji datum
+                  onChange={(e) => setValueDate(e.target.value)}
                 />
               </div>
             </div>
@@ -499,10 +509,10 @@ const Pocetna = () => {
                         </Link>
                       </div>
                       <br />
-                      <br />    
+                      <br />
                     </div>
                     <br />
-                    <br />    
+                    <br />
                   </li>
                 );
               })}

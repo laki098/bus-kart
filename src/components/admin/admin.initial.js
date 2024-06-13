@@ -39,7 +39,6 @@ const AdminInitial = () => {
     if (!valueDate) return;
     const response = await LinijeApi().filterLinija(val1, val2, valueDate);
     const data = await response.json();
-    console.log(data.rezultat)
     setFilteredLinije(data.rezultat);
   };
 
@@ -92,6 +91,8 @@ const AdminInitial = () => {
     sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
+
+  console.log(filteredLinije);
 
   return (
     <div>
@@ -204,32 +205,26 @@ const AdminInitial = () => {
               {filteredLinije.map((linija) => (
                 <li key={linija.id}>
                   <div className="admin-jedan-red">
-                    <div className="polje-stanica-3">  {/* polje-stanica fino-podesavanje  */}
-                      <Trans i18nKey="description.part3">
-                        Mesto polaska{" "}
-                      </Trans>
+                    <div className="polje-stanica-3">
+                      {" "}
+                      {/* polje-stanica fino-podesavanje  */}
+                      <Trans i18nKey="description.part3">Mesto polaska </Trans>
                     </div>
-                    <div className="info-stanica-3">   {/* info-stanica-1 fino-podesavanje  */}
+                    <div className="info-stanica-3">
+                      {" "}
+                      {/* info-stanica-1 fino-podesavanje  */}
                       {linija.pocetnaStanica}
                     </div>
                     <div className="polje-stanica-3">
-                      <Trans i18nKey="description.part11">
-                        Vreme polaska{" "}
-                      </Trans>
+                      <Trans i18nKey="description.part11">Vreme polaska </Trans>
                     </div>
-                    <div className="info-stanica-3">
-                      {linija.vremePolaska}
-                    </div>
+                    <div className="info-stanica-3">{linija.vremePolaska}</div>
                     <div className="polje-stanica-3">
-                      <Trans i18nKey="description.part13">
-                        Vreme dolaska
-                      </Trans>
+                      <Trans i18nKey="description.part13">Vreme dolaska</Trans>
                     </div>
                     <div className="info-stanica-3">{linija.vremeDolaska}</div>
                     <div className="polje-stanica-3">
-                      <Trans i18nKey="description.part5">
-                        Mesto dolaska{" "}
-                      </Trans>
+                      <Trans i18nKey="description.part5">Mesto dolaska </Trans>
                     </div>
                     <div className="info-stanica-3">
                       {linija.krajnjaStanica}
@@ -246,6 +241,7 @@ const AdminInitial = () => {
                           datumPolaska: linija.datumPolaska,
                           datumDolaska: linija.datumDolaska,
                           oznakaBusa: linija.oznakaBusa,
+                          kola: linija.kola,
                         },
                       }}
                     >
