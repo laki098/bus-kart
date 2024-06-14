@@ -207,7 +207,6 @@ router.put("/:id", async (req, res) => {
       vozac,
       kola,
     } = req.body;
-    console.log(req.body.kola + " -----------------1---------");
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
@@ -1264,15 +1263,16 @@ router.post("/filtriraneLinije", async (req, res) => {
       ],
     });
 
-    console.log(sveLinije);
-
     //? Set za praćenje već viđenih kombinacija
     const vidjeneKombinacije = new Set();
 
     //? Filtriranje linija i provera da se stanice ne ponavljaju
     const filtriraneLinije = sveLinije.filter((linija) => {
+      //? Kreiranje jedinstvene kombinacije uključujući vreme polaska
       let kombinacija =
-        linija.pocetnaStanica.naziv + linija.krajnjaStanica.naziv;
+        linija.pocetnaStanica.naziv +
+        linija.krajnjaStanica.naziv +
+        linija.vremePolaska; // Dodavanje vremena polaska u kombinaciju
 
       //? Dodajemo međustanice u kombinaciju sa redosledom
       linija.Stanicas.forEach((medjustanica) => {
@@ -1294,7 +1294,6 @@ router.post("/filtriraneLinije", async (req, res) => {
       .json({ message: "Uspešno izvučena linija", filtriraneLinije });
   } catch (error) {
     res
-
       .status(500)
       .json({ message: "Došlo je do greške pri očitavanju baze", error });
   }

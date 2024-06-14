@@ -19,11 +19,6 @@ const ViseLinija = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [weeklyStates, setWeeklyStates] = useState({}); //? Stanje za sve checkboxove
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [dateList, setDateList] = useState([]);
-
-  console.log(dateList);
-
   const getLinije = async () => {
     const response = await fetch(`${apiUrl}/linija/filtriraneLinije`, {
       method: "POST",
@@ -34,6 +29,7 @@ const ViseLinija = () => {
     const data = await response.json();
     setLinije(data.filtriraneLinije);
   };
+  console.log(linije);
 
   const creiranjeViseLinija = async () => {
     if (!selectedLinija) {
@@ -193,6 +189,12 @@ const ViseLinija = () => {
                   <Trans i18nKey="description.part31">Početna stanica </Trans>
                 </div>
                 <div className="linija-info">{linija.pocetnaStanica.naziv}</div>
+                <div className="linija-polja">
+                  <Trans i18nKey="description.part11">Vreme polaska </Trans>
+                </div>
+                <div className="linija-info">
+                  {linija.vremePolaska.split(":").slice(0, 2).join(":")}
+                </div>
                 <div className="linija-polja">
                   <Trans i18nKey="description.part198">Krajnja stanica </Trans>
                 </div>
