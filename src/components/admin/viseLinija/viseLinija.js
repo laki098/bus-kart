@@ -18,6 +18,7 @@ const ViseLinija = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [weeklyStates, setWeeklyStates] = useState({}); //? Stanje za sve checkboxove
+  const [currentClickedLinija, setCurrentClickedLinija] = useState({}); //? Stanje za trenutno kliknutu liniju
 
   const getLinije = async () => {
     const response = await fetch(`${apiUrl}/linija/filtriraneLinije`, {
@@ -29,7 +30,6 @@ const ViseLinija = () => {
     const data = await response.json();
     setLinije(data.filtriraneLinije);
   };
-  console.log(linije);
 
   const creiranjeViseLinija = async () => {
     if (!selectedLinija) {
@@ -103,6 +103,7 @@ const ViseLinija = () => {
       ...prevStates,
       [id]: !prevStates[id],
     }));
+    setCurrentClickedLinija(id);
   };
 
   /* useEffect(() => {
@@ -126,9 +127,9 @@ const ViseLinija = () => {
     closeConfirmationDialog(); // Zatvori dijalog nakon potvrde
     notifySuccest();
     creiranjeViseLinija();
-    setTimeout(() => {
+    /* setTimeout(() => {
       window.location.href = "/admin.initial";
-    }, 2500);
+    }, 2500); */
   };
 
   const submitHandler = (event) => {
@@ -190,7 +191,7 @@ const ViseLinija = () => {
                 </div>
                 <div className="linija-info">{linija.pocetnaStanica.naziv}</div>
                 <div className="linija-polja">
-                  <Trans i18nKey="description.part11">Vreme polaska </Trans>
+                  <Trans i18nKey="description.part11  ">Vreme polaska </Trans>
                 </div>
                 <div className="linija-info">
                   {linija.vremePolaska.split(":").slice(0, 2).join(":")}
@@ -224,7 +225,6 @@ const ViseLinija = () => {
                       setSelectedLinija(linija);
                       setPeriod(1);
                       setSelectedPeriodFromList(1);
-                      creiranjeViseLinija();
                       openConfirmationDialog();
                     }}
                   >
@@ -266,11 +266,12 @@ const ViseLinija = () => {
                   </label>
                 </div>
                 <ListajJSON_Konzola
+                  currentClickedLinija={currentClickedLinija}
+                  weeklyStates={weeklyStates}
                   valueDate={valueDate}
                   period={period}
                   setSelectedPeriodFromList={setSelectedPeriodFromList}
                   setGeneratedDateList={setGeneratedDateList}
-                  isWeekly={weeklyStates[linija.id] || false}
                 />
               </div>
             </div>

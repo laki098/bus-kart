@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 const ListajJSON_Konzola = ({
+  currentClickedLinija,
+  weeklyStates,
   valueDate,
   period,
   setSelectedPeriodFromList,
   setGeneratedDateList,
-  isWeekly,
 }) => {
   const [izabraniDatum, setIzabraniDatum] = useState(new Date(valueDate));
   const [datumi, setDatumi] = useState([]);
@@ -18,8 +19,8 @@ const ListajJSON_Konzola = ({
     const generisiDatumeNovo = (pocetak, kraj) => {
       const datumi = [];
       let trenutniDatum = new Date(pocetak);
-
-      if (isWeekly) {
+      console.log(weeklyStates[currentClickedLinija]);
+      if (weeklyStates[currentClickedLinija]) {
         const brojNedelja = period * 4; // Broj nedelja u periodu
         for (let i = 0; i < brojNedelja; i++) {
           const formattedDate = trenutniDatum.toISOString().substring(0, 10); // Dobijamo samo YYYY-MM-DD
@@ -50,7 +51,7 @@ const ListajJSON_Konzola = ({
       return `${year}-${month}-${day}`;
     });
 
-    console.log(formatiraniDatumi);
+    // console.log(formatiraniDatumi);
 
     setDatumi(formatiraniDatumi);
     setGeneratedDateList(formatiraniDatumi);
@@ -58,10 +59,10 @@ const ListajJSON_Konzola = ({
     // Postavljanje perioda u ViseLinija komponenti
     setSelectedPeriodFromList(period);
   }, [
+    currentClickedLinija,
     izabraniDatum,
+    weeklyStates,
     period,
-    isWeekly,
-    setSelectedPeriodFromList,
     setGeneratedDateList,
   ]);
 

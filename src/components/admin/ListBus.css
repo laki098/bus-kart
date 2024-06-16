@@ -140,11 +140,6 @@
   width: max-content;
 }
 
-.centar {
-  text-align: center;
-  line-height: 55px; /* dodato zbog horizontalnog centriranja        */
-}
-
 .centar-1 {
   text-align: center;
   line-height: 45px; /* dodato zbog horizontalnog centriranja        */

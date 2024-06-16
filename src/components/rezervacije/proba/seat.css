@@ -9,8 +9,7 @@
 
   margin-top: 2rem;
   padding: 30px;
-  width: 217px;
-  margin-left: 36.5%;
+  width: 14rem;
 
   display: flex;
   flex-wrap: wrap;
@@ -200,14 +199,14 @@ p.text span {
   left: 23px;
   height: 46px;
   width: 74px;
-  top: 214px
+  top: 214px;
 }
 .sto2 {
   position: absolute;
   left: 114px;
   height: 46px;
   width: 74px;
-  top: 214px
+  top: 214px;
 }
 .left {
   left: -15px;
@@ -217,7 +216,7 @@ p.text span {
 }
 .disabled {
   background-color: red; /* Promeni boju pozadine na sivu za onemogućena sedišta */
-   /* pointer-events: none; /* Onemogući interakciju sa sedištima */ 
+  /* pointer-events: none; /* Onemogući interakciju sa sedištima */
 }
 .dugma-spratovi {
   justify-content: end;
@@ -242,10 +241,10 @@ p.text span {
 }
 .stepenice-vh {
   position: absolute;
-    left: 106px;
-    height: 51px;
-    width: 93px;
-    top: 534px;
+  left: 106px;
+  height: 51px;
+  width: 93px;
+  top: 534px;
 }
 .stepenice-vh1 {
   position: absolute;
