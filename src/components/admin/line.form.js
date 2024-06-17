@@ -1126,6 +1126,7 @@ const LineForm = ({ mode, id, state }) => {
                   </div>
                   <div className="radio">
                     <select
+                      defaultValue={state.kola}
                       className="select"
                       type="text"
                       name="kola"
