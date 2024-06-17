@@ -210,6 +210,7 @@ router.put("/:id", async (req, res) => {
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
+    console.log(kola);
 
     if (!postojucaLinija) {
       return res.status(404).json({ message: "Linija nije pronađena." });

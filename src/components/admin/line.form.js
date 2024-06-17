@@ -155,6 +155,7 @@ const LineForm = ({ mode, id, state }) => {
         oznakaBusa: formData.get("oznakaBusa"),
         vozac: formData.get("vozac"),
         stjuardesa: formData.get("stjuardesa"),
+        kola: formData.get("kola"),
       };
 
       adminLogic.editLinije(data, id);
