@@ -210,13 +210,10 @@ router.put("/:id", async (req, res) => {
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
     });
-    console.log(kola);
 
     if (!postojucaLinija) {
       return res.status(404).json({ message: "Linija nije pronađena." });
     }
-
-    console.log(postojucaLinija.kola);
 
     //? Azurirana svojstva linije
     postojucaLinija.vremePolaska = vremePolaska;
@@ -331,7 +328,6 @@ router.put("/:id", async (req, res) => {
 
         if (stanicaId1 && stanicaId1.id !== undefined) {
           updateData.stanicaId = stanicaId1.id;
-          console.log(stanicaId1, stanicaId1.id);
         }
 
         await Medjustanica.update(updateData, {
@@ -393,8 +389,6 @@ router.post("/rezervacija", async (req, res) => {
       imeIprezime,
       brojTelefona,
     } = req.body;
-
-    console.log(req.body);
 
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
@@ -606,7 +600,6 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
       kola,
     });
-    console.log(email);
     if (email) {
       const qrCodeText = `
       oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
@@ -655,7 +648,6 @@ router.post("/rezervacija", async (req, res) => {
         },
       ];
 
-      console.log(attachments, "-------------------");
       const emailText = `
       <html>
         <head>
@@ -741,16 +733,11 @@ router.post(
       const { id } = req.params;
       const { linijaId, idLinijaFront } = req.body;
 
-      console.log(id, "-----------");
-      console.log(linijaId);
-      console.log(idLinijaFront);
-
       //?izvlacimo Rezervaciju po id-u
       const izvlacenjeRezervacije = await Rezervacija.findByPk(id);
       const linijaIdInt = parseInt(linijaId, 10);
 
       if (linijaIdInt != idLinijaFront) {
-        console.log(linijaIdInt, idLinijaFront, "-------");
         res.status(404).json({ message: "Ova karta nije za ovu liniju" });
         return;
       }
@@ -802,7 +789,6 @@ router.post("/filterLinija", async (req, res) => {
     //? prolazimo kroz liniju
     for (let index = 0; index < izvuceneLinijeDatum.length; index++) {
       const linija = izvuceneLinijeDatum[index];
-      console.log(linija);
       let brojMedjustanicaNaLiniji = 0;
 
       let najmanjiBroj;

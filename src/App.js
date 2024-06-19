@@ -46,6 +46,9 @@ function App() {
           <div className="content">
             <AuthProvider>
               <Switch>
+                <Route path="*">
+                  <Pocetna />
+                </Route>
                 <Route path="/pocetna">
                   <Pocetna />
                 </Route>
