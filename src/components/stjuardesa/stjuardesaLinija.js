@@ -478,7 +478,7 @@ const StjuardesaLinija = ({}) => {
         openModalC={openModalC}
         openModal={openModal} // Prosleđivanje funkcije za otvaranje moda kao prop
       />
-      {/* Modalni prozor */}
+      {/* {/* Modalni prozor */}
       {isConfirmationOpenC && (
         <div className="modal">
           <div className="modal-content">

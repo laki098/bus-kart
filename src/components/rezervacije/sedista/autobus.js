@@ -20,7 +20,6 @@ function Autobus({
   const [odabraniAutobus, setOdabraniAutobus] = useState(null);
   const [rezervacija, setRezervacija] = useState([]);
   const [pocetnaStanicaIdS, setPocetnaStanicaIdS] = useState();
-
   const getLinije = async () => {
     const response = await fetch(`${apiUrl}/rezervacije/linija/${linijaId}`, {
       method: "POST",
@@ -85,7 +84,6 @@ function Autobus({
       rezervacija.some((r) => r.oznakaSedista == seatNumber)
     );
   };
-  console.log(rezervacija);
 
   return (
     <div>

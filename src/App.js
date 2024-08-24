@@ -1,6 +1,11 @@
 import "./App.css";
 import LoginComponent from "./components/login/login.component";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Navbar from "./components/NavBar/navbar";
 import Pocetna from "./components/NavBar/links/Pocetna";
 /* import Rezervacija from './components/rezervacija/Rezervacija';
@@ -23,6 +28,7 @@ import KorisnikChange from "./components/admin/korisnikChange";
 import Korisnik from "./components/NavBar/links/korisnik/korisnik";
 import Karta from "./components/NavBar/links/korisnik/karta";
 import Stjuardesa from "./components/stjuardesa/stjuardesa";
+import Biletar from "./components/biletar/biletar";
 import StaniceInitial from "./components/admin/stanica/stanice.initial";
 import StaniceAdd from "./components/admin/stanica/stanice.add";
 import StaniceEdit from "./components/admin/stanica/stanice.edit";
@@ -44,135 +50,126 @@ function App() {
           <Navbar />
 
           <div className="content">
-            <AuthProvider>
-              <Switch>
-                <Route path="*">
-                  <Pocetna />
-                </Route>
-                <Route path="/pocetna">
-                  <Pocetna />
-                </Route>
-                <Route path="/login.component">
-                  <LoginComponent />
-                </Route>
-                <Route path="/rezervacijakarte">
-                  <RezervacijaKarte />
-                </Route>
-                <Route path="/:id/rezervacijakarte">
-                  <RezervacijaKarte />
-                </Route>
-                <Route path="/kontakt">
-                  <Kontakt />
-                </Route>
-                <Route path="/korisnik">
-                  <Korisnik />
-                </Route>
-                <Route path="/karta">
-                  <Karta />
-                </Route>
-                <Route path="/verifikacija/:id">
-                  <Verifikacija />
-                </Route>
-                <Route path="/passwordreset/:token">
-                  <PasswordReset />
-                </Route>
-                <Route path="/registration.component">
-                  <RegistrationComponent />
-                </Route>
-                <Route path="/viseLinija">
-                  <ViseLinija />
-                </Route>
-                <Route path="/reset.password">
-                  <ResetPassword />
-                </Route>
-              </Switch>
-            </AuthProvider>
-            <AuthProvider>
-              <Switch>
-                <ProtectedRoute
-                  path="/:id/admin.change.line"
-                  component={AdminChangeLine}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/admin.component"
-                  component={AdminComponent}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/admin.initial"
-                  component={AdminInitial}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/:id/stjuardesalinija"
-                  component={StjuardesaLinija}
-                  stjuardesaOnly
-                />
-                <ProtectedRoute
-                  path="/adminpanel"
-                  component={AdminPanel}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/stjuardesa"
-                  component={Stjuardesa}
-                  stjuardesaOnly
-                />
-                <ProtectedRoute
-                  path="/bus.initial"
-                  component={BusInitional}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/stanice.initial"
-                  component={StaniceInitial}
-                  adminOnly
-                />
-                <ProtectedRoute path="/bus.add" component={BusAdd} adminOnly />
-                <ProtectedRoute
-                  path="/:idAutobusa/bus.change.line"
-                  component={BusChangeLine}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/korisniciInitial"
-                  component={KorisniciInitial}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/:idKorisnik/korisnikChange"
-                  component={KorisnikChange}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/stanice.add"
-                  component={StaniceAdd}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/:id/stanice.edit"
-                  component={StaniceEdit}
-                  adminOnly
-                />
+            <Switch>
+              <Route path="/pocetna">
+                <Pocetna />
+              </Route>
+              <Route path="/login.component">
+                <LoginComponent />
+              </Route>
+              <Route path="/rezervacijakarte">
+                <RezervacijaKarte />
+              </Route>
+              <Route path="/:id/rezervacijakarte">
+                <RezervacijaKarte />
+              </Route>
+              <Route path="/kontakt">
+                <Kontakt />
+              </Route>
+              <Route path="/korisnik">
+                <Korisnik />
+              </Route>
+              <Route path="/karta">
+                <Karta />
+              </Route>
+              <Route path="/verifikacija/:id">
+                <Verifikacija />
+              </Route>
+              <Route path="/passwordreset/:token">
+                <PasswordReset />
+              </Route>
+              <Route path="/registration.component">
+                <RegistrationComponent />
+              </Route>
+              <Route path="/viseLinija">
+                <ViseLinija />
+              </Route>
+              <Route path="/reset.password">
+                <ResetPassword />
+              </Route>
+              <ProtectedRoute
+                path="/:id/admin.change.line"
+                component={AdminChangeLine}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/admin.component"
+                component={AdminComponent}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/admin.initial"
+                component={AdminInitial}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/:id/stjuardesalinija"
+                component={StjuardesaLinija}
+                stjuardesaOnly
+              />
+              <ProtectedRoute
+                path="/adminpanel"
+                component={AdminPanel}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/stjuardesa"
+                component={Stjuardesa}
+                stjuardesaOnly
+              />
 
-                <ProtectedRoute
-                  path="/cene.initial"
-                  component={CeneInitial}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/cene.add"
-                  component={CeneAdd}
-                  adminOnly
-                />
-                <ProtectedRoute
-                  path="/:id/cene.edit"
-                  component={CeneEdit}
-                  adminOnly
-                />
-              </Switch>
-            </AuthProvider>
+              <ProtectedRoute path="/biletar" component={Biletar} biletarOnly />
+              <ProtectedRoute
+                path="/bus.initial"
+                component={BusInitional}
+                adminOnly
+              />
+              <ProtectedRoute path="/bus.add" component={BusAdd} adminOnly />
+              <ProtectedRoute
+                path="/:idAutobusa/bus.change.line"
+                component={BusChangeLine}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/korisniciInitial"
+                component={KorisniciInitial}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/:idKorisnik/korisnikChange"
+                component={KorisnikChange}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/stanice.initial"
+                component={StaniceInitial}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/stanice.add"
+                component={StaniceAdd}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/:id/stanice.edit"
+                component={StaniceEdit}
+                adminOnly
+              />
+              <ProtectedRoute
+                path="/cene.initial"
+                component={CeneInitial}
+                adminOnly
+              />
+              <ProtectedRoute path="/cene.add" component={CeneAdd} adminOnly />
+              <ProtectedRoute
+                path="/:id/cene.edit"
+                component={CeneEdit}
+                adminOnly
+              />
+              <Route path="*">
+                <Redirect to="/pocetna" />
+              </Route>
+            </Switch>
           </div>
 
           <Footer />

@@ -1,14 +1,13 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./main.css";
 import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
 import cookies from "js-cookie";
 import logo from "./../images/logo.png";
 
-
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
-  
+
   //?dropdown za logovanog korisnika
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -27,22 +26,36 @@ const Navbar = () => {
     setMenuOpen(false);
     setIsDropdownOpen(false);
   };
-  
 
   // kada korisnik pretisne dugme logout izloguje se i strana se refresuje
   const clickBaitLogout = () => {
-    loginApi().logout().then(() => {window.location.href = "pocetna";});
+    loginApi()
+      .logout()
+      .then(() => {
+        window.location.href = "pocetna";
+      });
   };
 
   //? izvlacenje korisnika iz cookisa
   let userData = cookies.get("userData");
   let userPars = {};
-  
 
   //? pitamo ga da li je prijvljen, ako nije da ne odradi to parsiranje u json.
   if (userData != undefined) {
     userPars = JSON.parse(userData);
   }
+  const renderLink = (role, path, text) => {
+    return userPars.rola === role ? (
+      <li className="item-li">
+        <Link to={path}>
+          <i className="fa-solid fa-users nav-links"></i>
+          {text}
+        </Link>
+      </li>
+    ) : (
+      ""
+    );
+  };
 
   return (
     <nav className="navbar ">
@@ -56,24 +69,9 @@ const Navbar = () => {
         className={isMobile ? "nav-links-mobile" : "nav-menu"}
         onClick={() => setIsMobile(false)}
       >
-        <li>
-          {userPars.rola === "admin" ? (
-            <Link to="/adminpanel">
-              <i className="fa-solid fa-users nav-links"></i>Admin panel
-            </Link>
-          ) : (
-            <p></p>
-          )}
-        </li>
-        {userPars.rola === "stjuardesa" ? (
-          <li className="item-li">
-            <Link to="/stjuardesa">
-              <i className="fa-solid fa-users nav-links"></i>Čekiranje
-            </Link>
-          </li>
-        ) : (
-          ""
-        )}
+        {renderLink("admin", "/adminpanel", "Admin panel")}
+        {renderLink("stjuardesa", "/stjuardesa", "Čekiranje")}
+        {renderLink("biletar", "/biletar", "Rezervacija karata")}
 
         <li>
           <Link to="/pocetna">
@@ -87,9 +85,10 @@ const Navbar = () => {
         </li>
         <div className="logins">
           {Object.keys(userPars).length === 0 ? (
-            <li >
+            <li>
               <Link to="/login.component">
-                <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi se
+                <i className="fa fa-user-circle nav-links item-lii"></i>Prijavi
+                se
               </Link>
             </li>
           ) : (
@@ -99,7 +98,11 @@ const Navbar = () => {
                 onClick={() => setMenuOpen(!menuOpen)}
               ></div> */}
               <ul className={menuOpen ? "open" : ""}>
-                <li className="item-lii " onClick={handleMenuEnter} onMouseLeave={handleMenuLeave}>
+                <li
+                  className="item-lii "
+                  onClick={handleMenuEnter}
+                  onMouseLeave={handleMenuLeave}
+                >
                   {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
                   <div onClick={toggleDropdown}>
                     <i className="fa fa-user-circle nav-links"></i>

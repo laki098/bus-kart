@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import { createContext, useContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userData = Cookies.get('userData'); // Pribavljanje sve podatke o korisniku da bi mogla da se utvrdi rola 
+    const userData = Cookies.get("userData"); // Pribavljanje sve podatke o korisniku da bi mogla da se utvrdi rola
 
     if (userData) {
       try {
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
           token: userObject.token,
         });
       } catch (error) {
-        console.error('Error parsing user data:', error);
+        console.error("Error parsing user data:", error);
       }
     }
 
@@ -32,15 +32,21 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const checkAdminRole = () => {
-    return !loading && user && user.rola === 'admin';
+    return !loading && user && user.rola === "admin";
   };
 
   const checkStjuardesaRole = () => {
-    return !loading && user && user.rola === 'stjuardesa';
+    return !loading && user && user.rola === "stjuardesa";
+  };
+
+  const checkBiletarRole = () => {
+    return !loading && user && user.rola === "biletar";
   };
 
   return (
-    <AuthContext.Provider value={{ user, checkAdminRole, checkStjuardesaRole }}>
+    <AuthContext.Provider
+      value={{ user, checkAdminRole, checkStjuardesaRole, checkBiletarRole }}
+    >
       {children}
     </AuthContext.Provider>
   );

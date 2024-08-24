@@ -15,7 +15,6 @@ const Stjuardesa = () => {
   let userData = cookies.get("userData");
   let userPars = {};
 
-  console.log(stjuardesaLinija);
   //? pitamo ga da li je prijvljen, ako nije da ne odradi to parsiranje u json.
   if (userData != undefined) {
     userPars = JSON.parse(userData);
@@ -65,22 +64,36 @@ const Stjuardesa = () => {
       <div className="labela-stanica labela-stanica-naslov red-1">
         <Trans i18nKey="description.part189"> Aktivne linije </Trans>
       </div>
-      <div className="stampajLiniju">     {/*stampajLiniju*/}
+      <div className="stampajLiniju">
+        {" "}
+        {/*stampajLiniju*/}
         <div class="rowTabela sirinaStjuardesa">
           <ul>
             {stjuardesaLinija.map((linija) => (
               <div key={linija.id}>
-                <div className="jedan-red-prikaz">    {/*  jedan-red-prikaz   */}
+                <div className="jedan-red-prikaz">
+                  {" "}
+                  {/*  jedan-red-prikaz   */}
                   {/*className="column podaci-stjuardesa-info centar sirina-info-stanica"   */}
                   {/*class="column centar podaci-stjuardesa1 "   */}
-                  <li class="linija-polja-10 ">   {/*column centar podaci-stjuardesa1    */}
-                    <Trans i18nKey="description.part31"> Početna stanica </Trans>
+                  <li class="linija-polja-10 ">
+                    {" "}
+                    {/*column centar podaci-stjuardesa1    */}
+                    <Trans i18nKey="description.part31">
+                      {" "}
+                      Početna stanica{" "}
+                    </Trans>
                   </li>
-                  <li className="linija-info-7">  {/*  column podaci-stjuardesa-info centar sirina-info-stanica  */}
+                  <li className="linija-info-7">
+                    {" "}
+                    {/*  column podaci-stjuardesa-info centar sirina-info-stanica  */}
                     {linija.pocetnaStanica.naziv}
                   </li>
                   <li class="linija-polja-10 ">
-                    <Trans i18nKey="description.part32"> Dolazna stanica </Trans>
+                    <Trans i18nKey="description.part32">
+                      {" "}
+                      Dolazna stanica{" "}
+                    </Trans>
                   </li>
                   <li className="linija-info-7">
                     {linija.krajnjaStanica.naziv}
@@ -88,15 +101,15 @@ const Stjuardesa = () => {
                   <li class="linija-polja-10 ">
                     <Trans i18nKey="description.part11"> Vreme polaska </Trans>
                   </li>
-                  <li className="linija-info-7 "> {/* column podaci-stjuardesa-info centar  */}
+                  <li className="linija-info-7 ">
+                    {" "}
+                    {/* column podaci-stjuardesa-info centar  */}
                     {linija.vremePolaska}
                   </li>
                   <li class="linija-polja-10">
                     <Trans i18nKey="description.part33"> Datum polaska </Trans>
                   </li>
-                  <li className="linija-info-7 ">
-                    {linija.datumPolaska}
-                  </li>
+                  <li className="linija-info-7 ">{linija.datumPolaska}</li>
                   <li class="linija-polja-10">
                     <Link
                       to={{
@@ -109,12 +122,15 @@ const Stjuardesa = () => {
                     >
                       <button className="buttonSwitch">
                         <p>
-                          <Trans i18nKey="description.part190"> Čekiranje </Trans>
+                          <Trans i18nKey="description.part190">
+                            {" "}
+                            Čekiranje{" "}
+                          </Trans>
                         </p>
                       </button>
                     </Link>
                   </li>
-              </div>  
+                </div>
               </div>
             ))}
           </ul>
