@@ -17,12 +17,12 @@
 
 /* kad smanjimo dimenziju da nam slova u nav baru budu u jednom redu    */
 @media (min-width: 890px) and (max-width: 1010px) {
-  .navbar{
-    font-size: 1rem;    /* 0.85rem;   */
-    padding: 0 0.1rem;    
+  .navbar {
+    font-size: 1rem; /* 0.85rem;   */
+    padding: 0 0.1rem;
   }
-  .nav-menu{
-    grid-gap: 0.025rem ;
+  .nav-menu {
+    grid-gap: 0.025rem;
   }
 }
 .navbar {
@@ -66,8 +66,6 @@
   );
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8f4f8', endColorstr='#86c4d5', GradientType=1 );
 }
-
-
 
 .logo {
   color: rgb(7, 2, 31);
@@ -161,7 +159,7 @@ img {
     );
     right: 0;
     top: 4.688rem;
-    transition: all 0.5s ease-out;    /*  ease-out  bilo */
+    transition: all 0.5s ease-out; /*  ease-out  bilo */
     width: 95%;
     margin: 1rem;
     z-index: 10;
@@ -178,7 +176,7 @@ img {
     display: block;
     position: absolute;
     font-size: 1.875rem;
-    background-color:  rgb(4, 92, 133);   
+    background-color: rgb(4, 92, 133);
     color: white;
     background-color: inherit;
     border: none;
@@ -188,40 +186,35 @@ img {
   }
 }
 
-
-
-
-
 @media (min-width: 260px) and (max-width: 890px) {
   .nav-links-mobile {
-    width: calc(var(--nav-links-width-start) + (var(--nav-links-width-end) - var(--nav-links-width-start)) * ((100vw - 260px) / (890 - 260)));
+    width: calc(
+      var(--nav-links-width-start) +
+        (var(--nav-links-width-end) - var(--nav-links-width-start)) *
+        ((100vw - 260px) / (890 - 260))
+    );
     border-radius: 1rem;
   }
 }
 
-
-
 .dropdown {
   z-index: 10;
   position: absolute;
-  width: 9.5rem;    /*  10.5    */
+  width: 9.5rem; /*  10.5    */
   text-align: center;
-  left: -1.75rem;   
+  left: -1.75rem;
   top: 2.7rem;
 }
 
-
-
 li:hover .dropdown {
   display: block;
-  background-color:  rgb(96, 182, 216)  ; /* rgb(152, 226, 248);    */
-  border-radius: 0.35rem;                   /* sa ova tri parametra sam podesila poziciju   */
-  margin-top: -0.35rem;                      /* sa 0.5rem bilo lepo ali pravi probleme oko ulaska i sa -0.01rem bilo Ok  */
+  background-color: rgb(96, 182, 216); /* rgb(152, 226, 248);    */
+  border-radius: 0.35rem; /* sa ova tri parametra sam podesila poziciju   */
+  margin-top: -0.35rem; /* sa 0.5rem bilo lepo ali pravi probleme oko ulaska i sa -0.01rem bilo Ok  */
   margin-left: 1.5rem;
   padding-bottom: 0.05rem;
- /* transition-duration: 0.5s;    */
+  /* transition-duration: 0.5s;    */
 }
-
 
 li:hover .dropdown .dropdown-item {
   display: inline-block;
@@ -231,10 +224,8 @@ li:hover .dropdown .dropdown-item {
   align-items: center;
 }
 
-
-
-.active{
-  background-color: #1d4ed8 ;       /* #1d4ed8;   */
+.active {
+  background-color: #1d4ed8; /* #1d4ed8;   */
 }
 
 nav .title {
@@ -245,9 +236,8 @@ nav .title {
   color: white;
 }
 
-
 nav ul li {
- list-style: none; 
+  list-style: none;
 }
 
 nav ul li a {
@@ -260,34 +250,31 @@ nav ul li a {
 }
 
 nav ul li a:not(.active):hover {
-  background-color:#2a59f1 ;
+  background-color: #2a59f1;
 }
 
 .test-dropdown {
   display: block;
-    text-decoration: none;
-    color: white;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 .test-dropdown:not(.active):hover {
-  background-color:  #2a59f1 ;   
+  background-color: #2a59f1;
 }
-
 
 .logins {
   cursor: pointer;
   color: white;
 }
 
-
 .item-li {
   display: inline-block;
   margin-right: 20px;
   position: relative;
-  
 }
 .item-lii {
   display: inline-block;
@@ -299,3 +286,58 @@ nav ul li a:not(.active):hover {
   color: #31cfeb;
   cursor: pointer;
 } */
+
+.povratna-rezervacija-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.povratna-rezervacija-header {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.povratna-rezervacija-line-item {
+  margin-bottom: 10px;
+}
+
+.povratna-rezervacija-checkbox-label {
+  display: flex;
+  align-items: center;
+}
+
+.povratna-rezervacija-checkbox-label input {
+  margin-right: 10px;
+}
+
+.povratna-rezervacija-submit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.povratna-rezervacija-submit-button:hover {
+  background-color: #0056b3;
+}
+
+.povratna-rezervacija-modal-container {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.povratna-rezervacija-date-input {
+  width: 75%; /* Podesi širinu da pokrije ceo dostupni prostor */
+  padding: 10px; /* Dodaj padding za bolju vidljivost */
+  border: 1px solid #ddd; /* Dodaj okvir za bolju vidljivost */
+  border-radius: 5px; /* Dodaj zaobljene ivice */
+  box-sizing: border-box; /* Osiguraj da padding i border ne prelaze širinu inputa */
+  font-size: 1em; /* Podesi veličinu fonta prema dizajnu */
+  cursor: pointer;
+}

@@ -1,0 +1,157 @@
+/* Modal.css */
+.modal-overlay {
+  position: fixed; /* Modal se prikazuje iznad sveg drugog sadržaja */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Povećava z-index da bude iznad svega */
+  pointer-events: auto; /* Omogućava klikove na overlay */
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  max-height: 99vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centriranje sadržaja horizontalno */
+  justify-content: center; /* Centriranje sadržaja vertikalno */
+  z-index: 1001; /* Veći z-index od overlay da bude iznad */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-text {
+  font-size: 1.25rem; /* Uvećanje fonta */
+  font-weight: bold; /* Podebljanje fonta */
+  color: #333; /* Tamnija boja teksta */
+  margin-bottom: 20px; /* Razmak ispod teksta */
+  text-align: center; /* Centriranje teksta */
+}
+
+.buttonModal {
+  align-items: center;
+  appearance: none;
+  background-color: #fcfcfd;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395a;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: auto;
+  justify-content: center;
+  line-height: 1;
+  padding: 12px 24px;
+  text-align: center;
+  font-size: 18px;
+  white-space: nowrap;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.buttonModal:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.buttonModal:active {
+  box-shadow: #d6d6e7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+.confirmation-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Stil za dugmad u potvrdom modal prozoru */
+.confirmation-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  color: #333; /* Tamniji tekst */
+  background-color: white; /* Bela pozadina */
+  border: 2px solid #ccc; /* Svetlo sivi okvir */
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0 10px; /* Razmak između dugmadi */
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Dugme "Da" - belo dugme sa zelenim okvirom i tekstom */
+.confirmation-button.yes {
+  border-color: #28a745; /* Zeleni okvir */
+  color: #28a745; /* Zeleni tekst */
+}
+
+.confirmation-button.yes:hover {
+  background-color: #28a745; /* Zeleno dugme kada je mišem pređeno preko njega */
+  color: white; /* Bele slova na zelenom dugmetu */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Dugme "Ne" - belo dugme sa crvenim okvirom i tekstom */
+.confirmation-button.no {
+  border-color: #dc3545; /* Crveni okvir */
+  color: #dc3545; /* Crveni tekst */
+}
+
+.confirmation-button.no:hover {
+  background-color: #dc3545; /* Crveno dugme kada je mišem pređeno preko njega */
+  color: white; /* Bele slova na crvenom dugmetu */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Dodatni stil za centriranje dugmadi u novom modal prozoru */
+.confirmation-modal-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Razmak iznad dugmadi */
+}
+
+.confirmation-modal-p {
+  margin-bottom: 20px;
+}
