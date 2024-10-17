@@ -1,16 +1,18 @@
 import loginApi from "../../api/login.api";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import ToastNotification from "../../toastNotification/ToastNotification";
 
 const LoginLogic = () => {
   /* const [korisnikB, setKorisnikB] = useState({}); */
   let [data, setData] = useState({});
+  const { notifySuccess, notifyWarn } = ToastNotification();
+
   const login = () => {
     loginApi()
       .login(data.korisnickoIme, data.lozinka)
       .then((response) => {
         /* setKorisnikB(response.data.korisnickiPodaci); */
-        notifySuccest(); // Prikazuje notifikaciju o uspešnom logovanju
+        notifySuccess(response.data.message); // Prikazuje notifikaciju o uspešnom logovanju
         setTimeout(() => {
           window.location.href = "/pocetna"; // Preusmerava korisnika na pocetna nakon nekoliko sekundi
         }, 1500);
@@ -18,13 +20,16 @@ const LoginLogic = () => {
       })
       .catch((error) => {
         console.log(error);
-        if (error.response && error.response.status === 404 || error.response && error.response.status === 401) {
+        if (
+          (error.response && error.response.status === 404) ||
+          (error.response && error.response.status === 401)
+        ) {
           notifyWarn(error.response.data.message);
         }
       });
   };
 
-  const notifySuccest = () => {
+  /* const notifySuccest = () => {
     toast.success("Uspešno ste se logovali!", {
       position: "top-center",
       autoClose: 5000,
@@ -48,7 +53,7 @@ const LoginLogic = () => {
       progress: undefined,
       theme: "light",
     });
-  };
+  }; */
 
   const changeHandler = (e) =>
     setData({

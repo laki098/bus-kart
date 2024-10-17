@@ -1,12 +1,3 @@
-/* import express from "express";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid";
-import nodemailer from "nodemailer";
-
-import Korisnik from "../Models/KorisnikModels.js";
-import Rezervacija from "../Models/RezervacijaModels.js"; */
-
 require("dotenv/config");
 const express = require("express");
 const bcrypt = require("bcryptjs");
@@ -40,7 +31,7 @@ router.get("/:idKorisnik", async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "uspesno dobavljeni svi autobusi", korisnik });
+      .json({ message: "uspesno dobavljeni svi korisnici", korisnik });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }
@@ -182,7 +173,7 @@ router.post("/login", async (req, res) => {
 
     if (!korisnik) {
       //? provera dali korisnik postoji
-      return res.status(404).json({ message: "Korisničko ime nije pronađeno" });
+      return res.status(404).json({ message: "Korisničko ime ne postoji" });
     }
 
     //? uporedjivanje hesovane lozinke sa unetom lozinkom
@@ -240,7 +231,10 @@ router.post("/login", async (req, res) => {
     }
     res.cookie("userData", JSON.stringify(userData), cookieSettings);
 
-    res.status(200).json({ userData });
+    res.status(200).json({
+      userData,
+      message: `Korisnik ${userData.ime} je uspešno prijavljen.`,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error });
@@ -321,39 +315,41 @@ router.get("/reset-sifra/:token", (req, res) => {
 router.post("/reset-sifra/:token", async (req, res) => {
   const { token } = req.params;
   const { novaSifra, potvrdaSifre } = req.body;
-  console.log(novaSifra, potvrdaSifre);
 
-  //? provera tokena u bazi sa tokenom na emailu
-  const korisnik = await Korisnik.findOne({ where: { resetToken: token } });
+  try {
+    const korisnik = await Korisnik.findOne({ where: { resetToken: token } });
 
-  if (!korisnik) {
-    return res
-      .status(404)
-      .json({ message: "Neispravan verifikacioni token za resetovanje šifre" });
+    console.log("Found user:", korisnik);
+
+    if (!korisnik) {
+      return res.status(404).json({
+        message: "Neispravan verifikacioni token za resetovanje šifre",
+      });
+    }
+
+    if (novaSifra !== potvrdaSifre) {
+      return res
+        .status(400)
+        .json({ message: "Nova šifra i potvrda šifre se ne podudaraju" });
+    }
+
+    const hesiranaSifra = await bcrypt.hash(novaSifra, 10);
+
+    korisnik.lozinka = hesiranaSifra;
+    korisnik.resetToken = null;
+    await korisnik.save();
+
+    res.status(200).json({ message: "Šifra je uspešno resetovana" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Došlo je do greške" });
   }
-
-  //? Proverite da li nova šifra i potvrda šifre odgovaraju
-  if (novaSifra !== potvrdaSifre) {
-    return res
-      .status(400)
-      .json({ message: "Nova šifra i potvrda šifre se ne podudaraju" });
-  }
-
-  //? Hesirajte novu šifru
-  const hesiranaSifra = await bcrypt.hash(novaSifra, 10);
-
-  //? Ažurirajte šifru korisnika
-  korisnik.lozinka = hesiranaSifra;
-  korisnik.resetToken = null;
-  await korisnik.save();
-
-  res.status(200).json({ message: "Šifra je uspešno resetovana" });
 });
 
 //?Brisanje korisnika po id-u
 router.delete("/:idKorisnik", async (req, res) => {
   try {
-    const { idKorisnik } = req.params; // id korisnika koji se brise
+    const { idKorisnik } = req.params; //? id korisnika koji se brise
 
     const deleteKorisnik = await Korisnik.destroy({
       where: { idKorisnik: idKorisnik },

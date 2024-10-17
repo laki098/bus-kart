@@ -2,38 +2,14 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./reset.css";
 import apiUrl from "../../apiConfig";
-import { toast, ToastContainer  } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
+import ToastNotification from "../../toastNotification/ToastNotification";
 
 const PasswordReset = () => {
   const [novaSifra, setNovaSifra] = useState("");
   const [potvrdaNoveSifre, setPotvrdaNoveSifre] = useState("");
-
+  const { notifySuccess, notifyWarn } = ToastNotification();
   const { token } = useParams();
-
-  const notifyWarn = (message) => {
-    toast.warn(message, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  }
-  const notifySuccest = (message) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
 
   const getResetPassword = async () => {
     const response = await fetch(`${apiUrl}/korisnik/reset-sifra/${token}`, {
@@ -50,9 +26,10 @@ const PasswordReset = () => {
     const data = await response.json();
     console.log(data);
     if (response.ok) {
+      console.log(response.status);
       if (response.status == 200) {
         console.log(data);
-        notifySuccest(data.message);
+        notifySuccess(data.message);
         setTimeout(() => {
           window.location.href = "/login.component";
         }, 2500);
@@ -96,7 +73,10 @@ const PasswordReset = () => {
             type={showNovaSifra ? "text" : "password"}
             onChange={(e) => setNovaSifra(e.target.value)}
           />
-          <span className="passwordToggleReset" onClick={handleToggleClickNovaSifra}>
+          <span
+            className="passwordToggleReset"
+            onClick={handleToggleClickNovaSifra}
+          >
             {showNovaSifra ? (
               <i className="fa-regular fa-eye"></i>
             ) : (
@@ -111,7 +91,10 @@ const PasswordReset = () => {
             type={showPotvrdaNoveSifre ? "text" : "password"}
             onChange={(e) => setPotvrdaNoveSifre(e.target.value)}
           />
-          <span className="passwordToggleReset" onClick={handleToggleClickPotvrdaNoveSifre}>
+          <span
+            className="passwordToggleReset"
+            onClick={handleToggleClickPotvrdaNoveSifre}
+          >
             {showPotvrdaNoveSifre ? (
               <i className="fa-regular fa-eye"></i>
             ) : (

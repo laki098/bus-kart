@@ -1,48 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./reset.css";
-import "./loginStyle.css"; //preuzimam stil iz login.component.js
+import "./loginStyle.css";
 import bus from "../images/bus.jpg";
-
 import "../admin/admin.css";
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next";
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
-import { toast, ToastContainer  } from 'react-toastify';
+import ToastNotification from "../../toastNotification/ToastNotification";
+import { ToastContainer } from "react-toastify";
 
 const ResetPassword = () => {
   const form = useRef();
   const [email, setEmail] = useState("");
+  const { notifySuccess, notifyWarn } = ToastNotification();
 
   const submit = (e) => {
     e.preventDefault();
   };
-
-  const notifyWarn = (message) => {
-    toast.warn(message, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  }
-  const notifySuccest = (message) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-
 
   const getResetPassword = async () => {
     const response = await fetch(`${apiUrl}/korisnik/zaboravljena-sifra`, {
@@ -55,30 +30,27 @@ const ResetPassword = () => {
     const data = await response.json();
 
     if (response.ok) {
-      if (response.status == 200) {
-        notifySuccest(data.message);
+      if (response.status === 200) {
+        notifySuccess(data.message);
         setTimeout(() => {
           window.location.href = "/pocetna";
         }, 2500);
       }
     } else {
-      if (response.status == 404) {
+      if (response.status === 404) {
         notifyWarn(data.message);
       }
     }
   };
 
-  //prevodjenje start
   const lngs = {
     en: { nativeName: "Engleski" },
     de: { nativeName: "Srpski" },
   };
   const { t, i18n } = useTranslation();
-  // prevodjenje end
 
   return (
     <div style={{ backgroundColor: "#e1e3eb" }}>
-      {/*  header je deo za prevodjenje*/}
       <header>
         <div style={{ textAlign: "right", marginRight: "3rem" }}>
           {Object.keys(lngs).map((lng) => (
@@ -98,8 +70,6 @@ const ResetPassword = () => {
       <form ref={form} onSubmit={submit}>
         <div className="main" style={{ paddingTop: "0.625rem" }}>
           <div className="sub-main">
-            {" "}
-            {/*  bilo je sub-main1 i daje plavu pozadinu    */}
             <div>
               <div className="imgs">
                 <div className="container-image1">
@@ -109,13 +79,10 @@ const ResetPassword = () => {
               <br />
               <p className="naslov">
                 <Trans i18nKey="description.part120">Promeni lozinku</Trans>
-              </p>{" "}
+              </p>
               <br />
               <br />
               <div>
-                {" "}
-                <br />
-                {/* bilo je  className="input1 name1"  zatim je bilo "input name1"  */}
                 <input
                   type="email"
                   placeholder="Email"
@@ -124,7 +91,7 @@ const ResetPassword = () => {
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
-              </div>{" "}
+              </div>
               <br />
               <br />
               <div className="login-button">
@@ -135,7 +102,6 @@ const ResetPassword = () => {
             </div>
           </div>
         </div>
-        {/*  </div>     */}
       </form>
       <ToastContainer />
     </div>
