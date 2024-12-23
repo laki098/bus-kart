@@ -397,6 +397,20 @@ router.post("/rezervacija", async (req, res) => {
 
     let korisnik = await Korisnik.findByPk(korisnikId);
 
+    if (korisnik.role == "korisnik") {
+      console.log("korisnik", " -------------------------------------");
+      if (korisnik.brojNeDolazaka > 2) {
+        ("problem");
+        //? broj neDolazaka je veci od 2
+
+        res.status(400).json({
+          message:
+            "Niste se pojavili 3 puta a rezervisali ste, pozovite za rezervaciju",
+        });
+        return;
+      }
+    }
+
     let postojiStanicaP = false;
     let postojiStanicaK = false;
 
@@ -419,7 +433,7 @@ router.post("/rezervacija", async (req, res) => {
       //? Vreme polaska je manje od trenutnog vremena za više od 15 minuta
 
       res.status(400).json({
-        error:
+        message:
           "Vreme polaska je manje od vremena polaska linije za više od 15 minuta.",
       });
       return;

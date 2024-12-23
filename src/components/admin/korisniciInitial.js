@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import KorisnikApi from "../../api/korisnikApi";
 import "./admin.css";
+import NeDolazakModal from "../../modal/NeDolasciModal";
 
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next"; // prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
@@ -13,6 +14,10 @@ const KorisniciInitial = () => {
   const [filtriraniKorisnici, setFiltriraniKorisnici] = useState([]);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [korisnikToDelete, setKorisnikToDelete] = useState(null);
+  const [filter, setFilter] = useState("all"); // Novo stanje za filter
+
+  const [selectedKorisnik, setSelectedKorisnik] = useState(null); // Za odabranog korisnika
+  const [isNeDolazakModalOpen, setIsNeDolazakModalOpen] = useState(false); // Za otvaranje modala
 
   const getKorisnici = async () => {
     const response = await fetch(`${apiUrl}/korisnik`);
@@ -62,13 +67,41 @@ const KorisniciInitial = () => {
     setFiltriraniKorisnici(filteredKorisnici);
   };
 
-  //prevodjenje start
+  // prevodjenje start
   const lngs = {
     en: { nativeName: "En" },
     sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje end
+
+  const handleNesavestniPutnici = () => {
+    if (filter === "nesavestni") {
+      // Resetujte prikaz svih korisnika
+      setFiltriraniKorisnici(korisnici);
+      setFilter("all"); // Postavite filter na "svi korisnici"
+    } else {
+      // Filtrirajte korisnike na osnovu nekog kriterijuma (npr. broja pritužbi)
+      const nesavestni = korisnici.filter(
+        (korisnik) => korisnik.brojNeDolazaka > 2
+      );
+      setFiltriraniKorisnici(nesavestni);
+      setFilter("nesavestni"); // Postavite filter na "nesavestni putnici"
+    }
+  };
+
+  const handleNeDolazak = (idKorisnik) => {
+    const korisnik = korisnici.find((k) => k.idKorisnik === idKorisnik);
+    if (korisnik) {
+      setSelectedKorisnik(korisnik);
+      setIsNeDolazakModalOpen(true);
+    }
+  };
+
+  const closeNeDolazakModal = () => {
+    setSelectedKorisnik(null);
+    setIsNeDolazakModalOpen(false);
+  };
 
   return (
     <>
@@ -91,88 +124,103 @@ const KorisniciInitial = () => {
       </header>
 
       <div className="red-1">
-        {/*  <Trans i18nKey="description.part156">    */}
         <input
           type="text"
           className="input-search"
           placeholder="Pretražite korisnike..."
           onChange={handleSearch}
         />
-        {/*    </Trans> */}
+        <button className="nesavestni-dugme" onClick={handleNesavestniPutnici}>
+          {filter === "nesavestni" ? "Svi korisnici" : "Nesavesni putnici"}
+        </button>
       </div>
 
       <div className="stampajLiniju">
         <div className="rowTabela korisniciTabela">
-          <ul>
-            {filtriraniKorisnici.map((korisnik) => (
-              <li key={korisnik.idKorisnik}>
-                {/* kod podataka nije valjalo sa klasama column-2 centar podaci-sirina */}
-                <div className="jedan-red-stanica ">
-                  {" "}
-                  {/* kod podataka bila je klasa "column podaci" a sada je  "column-2 podaci-sirina"  */}
-                  {/* bilo class="column centar" i --> class="column-2 centar podaci-sirina"  */}
-                  {/* -----------------     */}
-                  {/* polje-stanica fino-podesavanje  */}
-                  {/* info-stanica sirina-info-7 fino-podesavanje  */}
-                  <div className="polje-stanica-3">
-                    <Trans i18nKey="description.part44">Korisničko ime </Trans>
-                  </div>
-                  <div className="info-stanica-3 sirina-info-7 ">
-                    {korisnik.korisnickoIme}
-                  </div>
-                  <div className="polje-stanica-3">
-                    <Trans i18nKey="description.part40">Ime </Trans>
-                  </div>
-                  <div className="info-stanica-3 sirina-info-7">
-                    {" "}
-                    {korisnik.ime}
-                  </div>
-                  <div className="polje-stanica-3">
-                    <Trans i18nKey="description.part42">Prezime </Trans>
-                  </div>
-                  <div className="info-stanica-3 sirina-info-7">
-                    {" "}
-                    {korisnik.prezime}{" "}
-                  </div>
-                  <div className="polje-stanica-3">
-                    <Trans i18nKey="description.part48">Broj telefona </Trans>
-                  </div>
-                  <div className="info-stanica-3 sirina-info-10">
-                    {korisnik.brojTelefona}
-                  </div>
-                  <div className="polje-stanica-3"> Email</div>
-                  <div className="info-stanica sirina-info-15 email-polje-podesi"> {/*info-stanica sirina-info-15 email-polje */}
-                    {" "}
-                    {korisnik.email}
-                  </div>
-                  <div className="polje-stanica-3"> Role</div>
-                  <div className="info-stanica-3 sirina-info-7">     {/* sirina-info-6  */}
-                    {korisnik.role}
-                  </div>
-                  <div className="polje-stanica-3">
-                    <Link to={`${korisnik.idKorisnik}/korisnikChange`}>
-                      <button className="buttonSwitch">
-                        <Trans i18nKey="description.part145">Izmeni</Trans>
+          {filtriraniKorisnici.length > 0 ? (
+            <ul>
+              {filtriraniKorisnici.map((korisnik) => (
+                <li key={korisnik.idKorisnik}>
+                  <div className="jedan-red-stanica ">
+                    <div className="polje-stanica-3">
+                      <Trans i18nKey="description.part44">
+                        Korisničko ime{" "}
+                      </Trans>
+                    </div>
+                    <div className="info-stanica-3 sirina-info-7 ">
+                      {korisnik.korisnickoIme}
+                    </div>
+                    <div className="polje-stanica-3">
+                      <Trans i18nKey="description.part40">Ime </Trans>
+                    </div>
+                    <div className="info-stanica-3 sirina-info-7">
+                      {korisnik.ime}
+                    </div>
+                    <div className="polje-stanica-3">
+                      <Trans i18nKey="description.part42">Prezime </Trans>
+                    </div>
+                    <div className="info-stanica-3 sirina-info-7">
+                      {korisnik.prezime}
+                    </div>
+                    <div className="polje-stanica-3">
+                      <Trans i18nKey="description.part48">Broj telefona </Trans>
+                    </div>
+                    <div className="info-stanica-3 sirina-info-10">
+                      {korisnik.brojTelefona}
+                    </div>
+                    <div className="polje-stanica-3"> Email</div>
+                    <div className="info-stanica sirina-info-15 email-polje-podesi">
+                      {korisnik.email}
+                    </div>
+                    <div className="polje-stanica-3"> Role</div>
+                    <div className="info-stanica-3 sirina-info-7">
+                      {korisnik.role}
+                    </div>
+                    <div className="polje-stanica-3">
+                      <Link to={`${korisnik.idKorisnik}/korisnikChange`}>
+                        <button className="buttonSwitch">
+                          <Trans i18nKey="description.part145">Izmeni</Trans>
+                        </button>
+                      </Link>
+                    </div>
+
+                    <div className="polje-stanica-3">
+                      <button
+                        className="buttonSwitch"
+                        onClick={() => handleNeDolazak(korisnik.idKorisnik)}
+                      >
+                        <Trans i18nKey="">Ne dolasci</Trans>
                       </button>
-                    </Link>
+                    </div>
+
+                    <div className="polje-stanica-3">
+                      <button
+                        className="buttonSwitch "
+                        onClick={() => brisanjeKorisnika(korisnik.idKorisnik)}
+                      >
+                        <Trans i18nKey="description.part134">Obriši </Trans>
+                      </button>
+                    </div>
                   </div>
-                  {/* buttonSwitch-crveno  */}
-                  <div class="polje-stanica-3">
-                    <button
-                      className="buttonSwitch "
-                      onClick={() => {
-                        brisanjeKorisnika(korisnik.idKorisnik);
-                      }}
-                    >
-                      <Trans i18nKey="description.part134">Obriši </Trans>
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="no-passengers-message">
+              <Trans i18nKey="description.noUnsavedPassengers">
+                Nema nesavesnih putnika.
+              </Trans>
+            </p>
+          )}
         </div>
       </div>
+
+      {/* Modal za prikaz nedolazaka */}
+      <NeDolazakModal
+        korisnik={selectedKorisnik}
+        isOpen={isNeDolazakModalOpen}
+        onClose={closeNeDolazakModal}
+      />
 
       <div className="red-1"></div>
       <div className="confirm-dialog-container">
@@ -188,7 +236,7 @@ const KorisniciInitial = () => {
                 <Trans i18nKey="description.part153">Da </Trans>
               </button>
               <button className="confirm-dialog-no" onClick={cancelDelete}>
-                <Trans i18nKey="description.part154"> Ne </Trans>
+                <Trans i18nKey="description.part154">Ne </Trans>
               </button>
             </div>
           </div>
