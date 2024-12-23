@@ -15,17 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Karta = () => {
   const [sveKarte, setSveKarte] = useState([]);
-  const [neiskorisceneKarte, setNeiskorisceneKarte] = useState([]);
-  const [iskorisceneKarte, setIskorisceneKarte] = useState([]);
 
   const [potvrdaP, setPotvrdaP] = useState(false); //vrsta karta true= jeste povratna; je false= nije povratna
   const [loading, setLoading] = useState(true); // Dodato stanje za praćenje učitavanja
 
   let predhodnaPovratna = false;
-
-  const [predPovratna, setPredPovratna] = useState(false);
-  const [trenutnoOdabranaPovratna, setTrenutnoOdabranaPovratna] =
-    useState(null);
 
   // Izvlačenje korisnika koji je prijavljen
   let userData = cookies.get("userData");
@@ -46,7 +40,6 @@ const Karta = () => {
       body: userIdP,
     });
     const data = await response.json();
-    //console.log(data)
     const a1 = data.karte.map((item) => {
       return {
         id: item.id,
@@ -69,6 +62,19 @@ const Karta = () => {
     });
     setSveKarte(a1);
   };
+
+  // Prikaz aktivnih karata (datum i vreme dolaska nije isteklo)
+  const aktivneKarte = sveKarte.filter((karte) => {
+    const datumDolaska = new Date(`${karte.datumD}T${karte.vremeD}`);
+    return !karte.cekiranje && datumDolaska > new Date();
+  });
+
+  // Prikaz neaktivnih karata (datum i vreme dolaska je isteklo ili karta cekirana)
+  const neaktivneKarte = sveKarte.filter((karte) => {
+    const datumDolaska = new Date(`${karte.datumD}T${karte.vremeD}`);
+    return karte.cekiranje || datumDolaska <= new Date();
+  });
+
   const korisnikLogic = KorisnikLogic();
   const handleOtkaziKartu = (karte) => {
     korisnikLogic.otkazivanjeKarte(karte);
@@ -98,7 +104,6 @@ const Karta = () => {
 
   useEffect(() => {
     // Ovde ćete dobiti ažuriranu vrednost potvrdaP
-    console.log("Karta.js - potvrdaP:", potvrdaP);
     //  alert('potvrdaP  ' + potvrdaP);
   }, [potvrdaP]);
 
@@ -208,102 +213,91 @@ const Karta = () => {
             </div>
             {/* bila className="Grupa"    */}
             <div className="Grupa">
-              {sveKarte
-                .filter((karte) => karte.cekiranje === false)
-                .map((karte, index) => (
-                  <div key={karte.id}>
-                    <li className="lista-stavka">
-                      <div className="naslov">
-                        <Trans i18nKey="description.part184">
-                          {" "}
-                          Broj rezervisanih mesta{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.brojMesta}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part31">
-                          {" "}
-                          Polazna stanica{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.pocetna}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part32">
-                          {" "}
-                          Dolazna stanica{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.krajnja}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part33">
-                          {" "}
-                          Datum polaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.datumP}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part9">
-                          {" "}
-                          Datum dolaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.datumD}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part11">
-                          {" "}
-                          Vreme polaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.vremeP}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part13">
-                          {" "}
-                          Vreme dolaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.vremeD}</div>
-                      <div className="naslov">
-                        <Trans> Oznaka kola </Trans>
-                      </div>
-                      <div className="vrednost">{karte.kola}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part185"> Čekiran </Trans>
-                      </div>
+              {aktivneKarte.map((karte, index) => (
+                <div key={karte.id}>
+                  <li className="lista-stavka">
+                    <div className="naslov">
+                      <Trans i18nKey="description.part184">
+                        {" "}
+                        Broj rezervisanih mesta{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.brojMesta}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part31">
+                        {" "}
+                        Polazna stanica{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.pocetna}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part32">
+                        {" "}
+                        Dolazna stanica{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.krajnja}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part33">
+                        {" "}
+                        Datum polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.datumP}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part9"> Datum dolaska </Trans>
+                    </div>
+                    <div className="vrednost">{karte.datumD}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part11">
+                        {" "}
+                        Vreme polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.vremeP}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part13">
+                        {" "}
+                        Vreme dolaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.vremeD}</div>
+                    <div className="naslov">
+                      <Trans> Oznaka kola </Trans>
+                    </div>
+                    <div className="vrednost">{karte.kola}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part185"> Čekiran </Trans>
+                    </div>
 
-                      <div className="vrednost">
-                        {karte.cekiranje === false ? (
-                          <>
-                            {" "}
-                            <Trans i18nKey="description.part154">
-                              {" "}
-                              NE{" "}
-                            </Trans>{" "}
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <Trans i18nKey="description.part153">
-                              {" "}
-                              DA{" "}
-                            </Trans>{" "}
-                          </>
-                        )}
-                      </div>
-                      <button
-                        className="dugme-otkazi-kartu"
-                        style={{
-                          visibility:
-                            new Date(karte.datumP) < new Date()
-                              ? "hidden"
-                              : "visible",
-                        }}
-                        onClick={() => handleOtkaziKartu(karte)}
-                      >
-                        <Trans i18nKey="description.part232">Otkaži </Trans>
-                      </button>
-                    </li>
+                    <div className="vrednost">
+                      {karte.cekiranje === false ? (
+                        <>
+                          {" "}
+                          <Trans i18nKey="description.part154"> NE </Trans>{" "}
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <Trans i18nKey="description.part153"> DA </Trans>{" "}
+                        </>
+                      )}
+                    </div>
+                    <button
+                      className="dugme-otkazi-kartu"
+                      style={{
+                        visibility:
+                          new Date(karte.datumP) < new Date()
+                            ? "hidden"
+                            : "visible",
+                      }}
+                      onClick={() => handleOtkaziKartu(karte)}
+                    >
+                      <Trans i18nKey="description.part232">Otkaži </Trans>
+                    </button>
+                  </li>
 
-                    {/*
+                  {/*
                     <button className="dugme-otkazi-kartu">
                       <Trans i18nKey="description.part232">Otkaži  </Trans>
                     </button>   
@@ -311,64 +305,62 @@ const Karta = () => {
                     <div className="red-05"></div>         
                     */}
 
-                    {/* dole je bilo na onClick={sedistePovratak}  */}
-                    {
-                      /* (karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && !predhodnaPovratna */ karte.tipKarte ===
-                        "PrPovratna" && (
-                        <button
-                          className="dugme-povratna-karta"
-                          onClick={sedistePovratak_1}
-                        >
-                          <Trans i18nKey="description.part25"> Povratna </Trans>
-                        </button>
-                      )
-                    }
+                  {/* dole je bilo na onClick={sedistePovratak}  */}
+                  {
+                    /* (karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return') && !predhodnaPovratna */ karte.tipKarte ===
+                      "PrPovratna" && (
+                      <button
+                        className="dugme-povratna-karta"
+                        onClick={sedistePovratak_1}
+                      >
+                        <Trans i18nKey="description.part25"> Povratna </Trans>
+                      </button>
+                    )
+                  }
 
-                    {/*  {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return')?
+                  {/*  {(karte.tipKarte === 'Povratna' || karte.tipKarte === 'Return')?
                     predhodnaPovratna=!predhodnaPovratna : " "} */}
 
-                    {karte.tipKarte === "PrPovratna"
-                      ? (predhodnaPovratna = true)
-                      : " "}
+                  {karte.tipKarte === "PrPovratna"
+                    ? (predhodnaPovratna = true)
+                    : " "}
 
-                    {/* Idi samo ako je povratna karta na stranicu RezervacijaComponent.js parametri su state */}
+                  {/* Idi samo ako je povratna karta na stranicu RezervacijaComponent.js parametri su state */}
 
-                    {karte.tipKarte === "PrPovratna" && potvrdaP ? (
-                      <Link
-                        to={{
-                          pathname: `${karte.linijaId}/rezervacijakarte`,
-                          state: {
-                            id: karte.id,
-                            linijaId: karte.linijaId,
-                            vremePolaska: karte.vremeP,
-                            pocetnaStanica: karte.pocetna,
-                            pocetnaStanicaId: karte.pocetnaStanicaId,
-                            krajnjaStanicaId: karte.krajnjaStanicaId,
-                            brojSlobodnihMesta: karte.brojSlobodnihMesta,
-                            krajnjaStanica: karte.krajnja,
-                            vremeDolaska: karte.vremeD,
-                            datumPolaska: karte.datumP,
-                            datumDolaska: karte.datumD,
-                            povratna: potvrdaP, //ako je tip povratne karte
-                            tipKarte: karte.tipKarte, //dodala 12.02
-                            email: karte.email, //dodala 12.02
-                          },
-                        }}
-                      >
-                        &ensp;
-                        {predhodnaPovratna ? (
-                          <button className="dugme-sediste-karta">
-                            <Trans i18nKey="description.part203">
-                              Sedište{" "}
-                            </Trans>{" "}
-                          </button>
-                        ) : (
-                          " "
-                        )}
-                      </Link>
-                    ) : null}
-                  </div>
-                ))}
+                  {karte.tipKarte === "PrPovratna" && potvrdaP ? (
+                    <Link
+                      to={{
+                        pathname: `${karte.linijaId}/rezervacijakarte`,
+                        state: {
+                          id: karte.id,
+                          linijaId: karte.linijaId,
+                          vremePolaska: karte.vremeP,
+                          pocetnaStanica: karte.pocetna,
+                          pocetnaStanicaId: karte.pocetnaStanicaId,
+                          krajnjaStanicaId: karte.krajnjaStanicaId,
+                          brojSlobodnihMesta: karte.brojSlobodnihMesta,
+                          krajnjaStanica: karte.krajnja,
+                          vremeDolaska: karte.vremeD,
+                          datumPolaska: karte.datumP,
+                          datumDolaska: karte.datumD,
+                          povratna: potvrdaP, //ako je tip povratne karte
+                          tipKarte: karte.tipKarte, //dodala 12.02
+                          email: karte.email, //dodala 12.02
+                        },
+                      }}
+                    >
+                      &ensp;
+                      {predhodnaPovratna ? (
+                        <button className="dugme-sediste-karta">
+                          <Trans i18nKey="description.part203">Sedište </Trans>{" "}
+                        </button>
+                      ) : (
+                        " "
+                      )}
+                    </Link>
+                  ) : null}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -379,86 +371,75 @@ const Karta = () => {
               <Trans i18nKey="description.part188">Neaktivne karte </Trans>
             </div>
             <div className="Grupa">
-              {sveKarte
-                .filter((karte) => karte.cekiranje === true)
-                .map((karte) => (
-                  <div key={karte.id}>
-                    <li className="lista-stavka">
-                      <div className="naslov">
-                        <Trans i18nKey="description.part184">
-                          {" "}
-                          Broj rezervisanih mesta{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.brojMesta}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part31">
-                          {" "}
-                          Polazna stanica{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.pocetna}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part32">
-                          {" "}
-                          Dolazna stanica{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.krajnja}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part33">
-                          {" "}
-                          Datum polaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.datumP}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part9">
-                          {" "}
-                          Datum dolaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.datumD}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part11">
-                          {" "}
-                          Vreme polaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.vremeP}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part13">
-                          {" "}
-                          Vreme dolaska{" "}
-                        </Trans>
-                      </div>
-                      <div className="vrednost">{karte.vremeD}</div>
-                      <div className="naslov">
-                        <Trans i18nKey="description.part185"> Čekiran </Trans>
-                      </div>
+              {neaktivneKarte.map((karte) => (
+                <div key={karte.id}>
+                  <li className="lista-stavka">
+                    <div className="naslov">
+                      <Trans i18nKey="description.part184">
+                        {" "}
+                        Broj rezervisanih mesta{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.brojMesta}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part31">
+                        {" "}
+                        Polazna stanica{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.pocetna}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part32">
+                        {" "}
+                        Dolazna stanica{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.krajnja}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part33">
+                        {" "}
+                        Datum polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.datumP}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part9"> Datum dolaska </Trans>
+                    </div>
+                    <div className="vrednost">{karte.datumD}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part11">
+                        {" "}
+                        Vreme polaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.vremeP}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part13">
+                        {" "}
+                        Vreme dolaska{" "}
+                      </Trans>
+                    </div>
+                    <div className="vrednost">{karte.vremeD}</div>
+                    <div className="naslov">
+                      <Trans i18nKey="description.part185"> Čekiran </Trans>
+                    </div>
 
-                      <div className="vrednost">
-                        {karte.cekiranje === false ? (
-                          <>
-                            {" "}
-                            <Trans i18nKey="description.part154">
-                              {" "}
-                              NE{" "}
-                            </Trans>{" "}
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <Trans i18nKey="description.part153">
-                              {" "}
-                              DA{" "}
-                            </Trans>{" "}
-                          </>
-                        )}
-                      </div>
-                    </li>
-                  </div>
-                ))}
+                    <div className="vrednost">
+                      {karte.cekiranje === false ? (
+                        <>
+                          {" "}
+                          <Trans i18nKey="description.part154"> NE </Trans>{" "}
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <Trans i18nKey="description.part153"> DA </Trans>{" "}
+                        </>
+                      )}
+                    </div>
+                  </li>
+                </div>
+              ))}
             </div>
           </div>
         </div>

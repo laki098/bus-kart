@@ -1,44 +1,20 @@
-import { useState } from "react";
-
-import { toast } from "react-toastify";
+import ToastNotification from "../../../../toastNotification/ToastNotification";
 import KartaApi from "../../../../api/karta.api";
 
 const KorisnikLogic = () => {
-  const otkazivanjeKarte = async (karte) => {
-    KartaApi()
-      .otkazivanjeKarte(karte)
-      .then((response) => {
-        console.log(response);
-        notifySuccest(response.data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const { notifySuccess, notifyWarn } = ToastNotification();
 
-    const notifySuccest = (message) => {
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    };
-    const notifyWarn = (message) => {
-      toast.warn(message, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    };
+  const otkazivanjeKarte = async (karte) => {
+    try {
+      const response = await KartaApi().otkazivanjeKarte(karte);
+      console.log("Odgovor backend-a:", response);
+      notifySuccess(response.data.message); // Uspešna notifikacija
+    } catch (error) {
+      console.error("Greška prilikom otkazivanja karte:", error);
+      const errorMessage =
+        error.response?.data?.message || "Došlo je do greške.";
+      notifyWarn(errorMessage); // Notifikacija o grešci
+    }
   };
 
   return { otkazivanjeKarte };
