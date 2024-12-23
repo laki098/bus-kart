@@ -17,6 +17,7 @@
         "jsonwebtoken": "^9.0.0",
         "mariadb": "^3.2.3",
         "mysql2": "^3.3.5",
+        "node-cron": "^3.0.3",
         "nodemailer": "^6.9.3",
         "qrcode": "^1.5.3",
         "sequelize": "^6.32.1"

@@ -33,6 +33,7 @@ const Korisnik = require("./Models/KorisnikModels.js");
 const bc = require("bcryptjs");
 const CenaRouter = require("./Routes/CenaRoute.js");
 const KartaRouter = require("./Routes/KartaRouter.js");
+const CronRouter = require("./Routes/CronRoute.js");
 
 //? Kreiranje server
 const app = express();
@@ -80,6 +81,7 @@ app.use("/biletar", BiletarRouter);
 app.use("/rezervacije", RezervacijaRoute);
 app.use("/cena", CenaRouter);
 app.use("/karta", KartaRouter);
+app.use("/cron", CronRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
