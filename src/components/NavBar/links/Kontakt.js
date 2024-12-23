@@ -38,38 +38,32 @@ const Kontakt = () => {
         </div>
       </header>
 
-      
-
-
       <section className="distance">
         <div className="contact row1">
           <div className="contact_prikaz">
             <div className="contact-div-1">
               {/*   <div className="podaci1">      */}
-                <div
-                  className="podaciKontakt"   
-                  style={{ overflowX: "auto"}}   
-                >
-                  {" "}
-                  {/* 35% u paddingLeft bilo */}
-                  <div className="red-1"></div>
-                  <h4>
-                    <Trans i18nKey="description.part110">Kontakt </Trans>
-                  </h4>{" "}
-                  <div className="red-1"></div>
-                  <h5>
-                    <Trans i18nKey="description.part111">Adresa:</Trans>
-                  </h5>{" "}
-                  <h5> Jug Bogdanova, Kruševac</h5> 
-                  <div className="red-1"></div>
-                  <h5>
-                    <Trans i18nKey="description.part112">Telefon: </Trans>
-                  </h5>
-                  <h5>+381 (0)37 44 32 77</h5> 
-                  <div className="red-1"></div>
-                  <h5>e-mail:</h5> <h5> eurocompassdoo@gmail.com </h5>
-                  <div className="red-1"></div>
-                </div>
+              <div className="podaciKontakt" style={{ overflowX: "auto" }}>
+                {" "}
+                {/* 35% u paddingLeft bilo */}
+                <div className="red-1"></div>
+                <h4>
+                  <Trans i18nKey="description.part110">Kontakt </Trans>
+                </h4>{" "}
+                <div className="red-1"></div>
+                <h5>
+                  <Trans i18nKey="description.part111">Adresa:</Trans>
+                </h5>{" "}
+                <h5> Jug Bogdanova, Kruševac</h5>
+                <div className="red-1"></div>
+                <h5>
+                  <Trans i18nKey="description.part112">Telefon: </Trans>
+                </h5>
+                <h5>+381 (0)37 44 32 77</h5>
+                <div className="red-1"></div>
+                <h5>e-mail:</h5> <h5> eurocompassdoo@gmail.com </h5>
+                <div className="red-1"></div>
+              </div>
               {/*  </div>   */}
             </div>
           </div>

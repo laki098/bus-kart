@@ -148,8 +148,8 @@ const RezervacijaComponent = ({ id, state }) => {
         notifySuccest();
       })
       .catch((error) => {
-        console.log(error);
-        notifyWarn();
+        console.log(error, "---------");
+        notifyWarn(error);
       });
   };
 
@@ -169,10 +169,18 @@ const RezervacijaComponent = ({ id, state }) => {
         theme: "light",
       }
     );
+
+    // Redirekcija nakon 3 sekundi
+    setTimeout(() => {
+      window.location.href = "/pocetna";
+    }, 3000);
   };
-  const notifyWarn = () => {
+  const notifyWarn = (error) => {
+    console.log(error);
     toast.warn(
-      <Trans i18nKey="description.part217">"Nisu uneti svi podaci"</Trans>,
+      <Trans /* i18nKey="description.part217" */>
+        {error.response.data.message}
+      </Trans>,
       {
         position: "top-center",
         autoClose: 10000,
@@ -383,11 +391,10 @@ const RezervacijaComponent = ({ id, state }) => {
       )
       .then((response) => {
         console.log(response);
-        //     notifySuccest();          da ne bi duplo javljalo poruku o uspesnosti rezervacije povratne karte
+        notifySuccest();
       })
       .catch((error) => {
         console.log(error);
-        notifyWarn();
       });
   };
 
@@ -427,7 +434,6 @@ const RezervacijaComponent = ({ id, state }) => {
       .catch((error) => {
         console.log("Greška prilikom izvršavanja izmenjenog upisa karte");
         console.log(error);
-        notifyWarn();
       });
   };
 
@@ -470,12 +476,13 @@ const RezervacijaComponent = ({ id, state }) => {
           }, 3000);
         }
         if (response.status === 404) {
-          notifyWarn();
+          console.log(response);
+          notifyWarn(response);
         }
       })
       .catch((error) => {
-        console.log(error);
-        notifyWarn();
+        console.log(error, "aaaaaaaaaa");
+        notifyWarn(error);
       });
   };
 
@@ -522,9 +529,9 @@ const RezervacijaComponent = ({ id, state }) => {
     }
 
     // Sacekaj nekoliko sec da te preusmeri na Pocetna.js stranicu
-    setTimeout(() => {
+    /*  setTimeout(() => {
       window.location.href = "/pocetna";
-    }, 1500); // Ova vrednost u milisekundama predstavlja koliko ce trajati prikazivanje poruke pre nego sto se preusmeri (u ovom slucaju 1,5 sekunde)
+    }, 1500);  */ // Ova vrednost u milisekundama predstavlja koliko ce trajati prikazivanje poruke pre nego sto se preusmeri (u ovom slucaju 1,5 sekunde)
   };
 
   //hocemo da menjamo povratnu liniju

@@ -10,7 +10,7 @@ const Slider = ({ value }) => {
     setCurrentValue(value);
     setCurrentPage(value <= 50 ? 1 : 2);
   }, [value]);
-  
+
   return (
     <div className="slider-container">
       <div className="slider-wrapper">
@@ -21,8 +21,16 @@ const Slider = ({ value }) => {
           disabled
         />
         <div className="customSlider-progress-bar">
-        <div className={`page-number ${currentPage === 1 || currentPage === 2 ? 'active' : ''} ${currentPage === 1 ? 'right-skew' : ''}`}>1</div>
-          <div className={`page-number ${currentPage === 2 ? 'active' : ''}`}>2</div>
+          <div
+            className={`page-number ${
+              currentPage === 1 || currentPage === 2 ? "active" : ""
+            } ${currentPage === 1 ? "right-skew" : ""}`}
+          >
+            1
+          </div>
+          <div className={`page-number ${currentPage === 2 ? "active" : ""}`}>
+            2
+          </div>
         </div>
       </div>
     </div>

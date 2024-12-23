@@ -4,6 +4,7 @@ import AdminLogic from "./admin.logic";
 import { Link } from "react-router-dom";
 import "./admin.css";
 import apiUrl from "../../apiConfig";
+import LanguageSwitcher from "../header/header";
 
 import classes from "../registration/registration.module.css";
 import "../login/loginStyle.css";
@@ -96,23 +97,7 @@ const AdminInitial = () => {
 
   return (
     <div>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="admin-initial-polje admin-initial-polje-izmena ">
         <div className="admin-centar">

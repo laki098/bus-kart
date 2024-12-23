@@ -10,13 +10,16 @@ const KartaApi = () => {
       krajnjaStanicaId: karte.krajnjaStanicaId,
       brojMesta: karte.brojMesta,
     });
-    return await axios.put(`${apiUrl}/karta/otkazivanje`, {
+    console.log("Pre slanja zahteva");
+    const response = await axios.put(`${apiUrl}/karta/otkazivanje`, {
       rezervacijaId: karte.id,
       linijaId: karte.linijaId,
       pocetnaStanicaId: karte.pocetnaStanicaId,
       krajnjaStanicaId: karte.krajnjaStanicaId,
       brojMesta: karte.brojMesta,
     });
+    console.log("Odgovor backend-a:", response);
+    return response;
   };
 
   const cekiranjeKarte = async (rezervacijaId, linijaId, idLinijaFront) => {

@@ -1,0 +1,180 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in Animation for Modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content Box */
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  text-align: center;
+  animation: slideIn 0.4s ease-in-out;
+}
+
+/* Slide-in Animation for Modal */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Title */
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Modal Text */
+.modal-content p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Button Style */
+.close-modal-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.close-modal-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.close-modal-button:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 3px;
+}
+
+/* User Details */
+.user-details {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Nedolazak (No-show) Items - Add Border and Padding */
+.nedolazak-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Label for Nedolazak (No-show) */
+.nedolazak-item p {
+  margin: 5px 0;
+}
+
+/* Add some spacing and style between details */
+.nedolazak-item strong {
+  color: #333;
+  font-size: 16px;
+}
+/* Dugme za brisanje nedolazaka */
+.delete-modal-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #dc3545; /* Crvena boja za brisanje */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  margin-left: 10px; /* Razmak između dugmadi */
+}
+
+.delete-modal-button:hover {
+  background: #c82333; /* Tamnija crvena na hover */
+  transform: scale(1.05);
+}
+
+.delete-modal-button:focus {
+  outline: 2px solid #c82333;
+  outline-offset: 3px;
+}
+
+/* Razmak između dugmadi */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.confirm-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-modal-buttons button:first-child {
+  background-color: #d9534f;
+  color: white;
+}
+
+.confirm-modal-buttons button:last-child {
+  background-color: #5bc0de;
+  color: white;
+}

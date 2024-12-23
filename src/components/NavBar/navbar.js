@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import loginApi from "../../api/login.api";
 import cookies from "js-cookie";
 import logo from "./../images/logo.png";
+import { Padding } from "maplibre-gl";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -83,7 +84,7 @@ const Navbar = () => {
             <i className="fa-solid fa-address-book nav-links"></i>Kontakt
           </Link>
         </li>
-        <div className="logins">
+        <div className="logins nav-links">
           {Object.keys(userPars).length === 0 ? (
             <li>
               <Link to="/login.component">
@@ -93,10 +94,6 @@ const Navbar = () => {
             </li>
           ) : (
             <>
-              {/* <div
-                className="menu"
-                onClick={() => setMenuOpen(!menuOpen)}
-              ></div> */}
               <ul className={menuOpen ? "open" : ""}>
                 <li
                   className="item-lii "
@@ -104,8 +101,8 @@ const Navbar = () => {
                   onMouseLeave={handleMenuLeave}
                 >
                   {/* stavi sta hoces samo ne LINK!!!  umesto ovog diva ispod*/}
-                  <div onClick={toggleDropdown}>
-                    <i className="fa fa-user-circle nav-links"></i>
+                  <div onClick={toggleDropdown} style={{ padding: "0.5rem" }}>
+                    <i className="fa fa-user-circle nav-links item-lii"></i>
                     {userPars.ime}
                   </div>
                   {isDropdownOpen && (
@@ -123,10 +120,9 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li className="dropdown-item item-li">
-                        {/* stavi sta hoces samo ne LINK!!! umesto ovog diva ispod*/}
                         <div className="test-dropdown">
                           <p onClick={clickBaitLogout}>
-                            <i className="fa-solid fa-arrow-right-from-bracket nav-links "></i>
+                            <i className="fa-solid fa-arrow-right-from-bracket nav-links"></i>
                             Logout
                           </p>
                         </div>

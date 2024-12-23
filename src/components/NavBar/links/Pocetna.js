@@ -11,9 +11,10 @@ import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
 import { useMediaQuery } from "react-responsive"; // responsive
-import MediaQuery from "react-responsive";
 import Slider from "./slider/slider";
 import apiUrl from "../../../apiConfig";
+
+import LanguageSwitcher from "../../header/header";
 
 const Pocetna = () => {
   //prevodjenje
@@ -36,16 +37,11 @@ const Pocetna = () => {
   const [val2, setVal2] = useState("");
   const [stanice, setStanice] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [bus1, bus2];
+  const slides = [bus1, bus1];
   const [showClass, setShowClass] = useState(false);
   const today = new Date().toISOString().split("T")[0];
 
   const [sliderValue, setSliderValue] = useState(50);
-  const NovaVrednost = 50;
-  const handleNekePromene = () => {
-    // Implementirajte logiku koja će promeniti vrednost slidera kada pređete na drugu stranicu
-    setSliderValue(NovaVrednost); // Postavite novu vrednost prema potrebi
-  };
 
   const filterLinija = async () => {
     if (!valueDate) return;
@@ -100,7 +96,10 @@ const Pocetna = () => {
   };
 
   const changer = () => {
-    setShowClass(!showClass);
+    if (!showClass) {
+      setShowClass(true); // Otvori filter ako nije već otvoren
+    }
+    // Ako je već otvoren, ništa se ne menja
   };
 
   const clickBait = (event) => {
@@ -155,31 +154,17 @@ const Pocetna = () => {
 
   return (
     <div>
-      <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
-      <div>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
+
+      <div className="sliderBar">
         <Slider value={sliderValue} />
       </div>
 
       {isDesktop && (
         <div className="home-page">
+          <i className="fa fa-bus"></i>
+          {/* Filteri */}
           <h2 className="h2-card">
-            <i className="fa fa-bus"></i>
             <span className="span">
               <Trans i18nKey="description.part30"> Pronađite liniju </Trans>
             </span>
@@ -190,7 +175,7 @@ const Pocetna = () => {
                 <Trans i18nKey="description.part31"> Polazna stanica </Trans>
               </label>
               <select
-                className=" box-title"
+                className="box-title"
                 value={val1}
                 onChange={(e) => setVal1(e.target.value)}
               >
@@ -210,6 +195,7 @@ const Pocetna = () => {
                 onClick={click}
               ></button>
             </div>
+
             <div className="form">
               <label className="labela">
                 <Trans i18nKey="description.part32"> Dolazna stanica </Trans>
@@ -220,7 +206,7 @@ const Pocetna = () => {
                 onChange={(e) => setVal2(e.target.value)}
               >
                 {stanice.map((linija) => {
-                  if (val1 != linija) {
+                  if (val1 !== linija) {
                     return (
                       <option key={linija} value={linija}>
                         {linija}
@@ -230,6 +216,7 @@ const Pocetna = () => {
                 })}
               </select>
             </div>
+
             <div className="form">
               <label className="labela">
                 <Trans i18nKey="description.part33"> Datum polaska </Trans>
@@ -244,6 +231,7 @@ const Pocetna = () => {
                 />
               </div>
             </div>
+
             <div className="form-button">
               <button onClick={clickBait} className="buttonSwitch buttonCenter">
                 <Trans i18nKey="description.part34"> Red vožnje </Trans>
@@ -357,165 +345,175 @@ const Pocetna = () => {
           </h2>
           {isDesktop && (
             <div className="scroll">
-              {filteredLinije.map((linija) => {
-                return (
-                  <li key={linija.id}>
-                    <div className="travel">
-                      <div className="operator"> {linija.prevoznik}</div>
-                      <div className="start">
-                        <span className="start-time">
-                          {" "}
-                          {linija.vremePolaska}
-                        </span>
-                        <div className="start-destination">
-                          {" "}
-                          {linija.pocetnaStanica}{" "}
+              {filteredLinije.length === 0 ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    fontSize: "1.2rem",
+                    color: "red",
+                  }}
+                >
+                  <Trans>Nema pronađenih linija</Trans>
+                </div>
+              ) : (
+                filteredLinije.map((linija) => {
+                  return (
+                    <li key={linija.id}>
+                      <div className="travel">
+                        <div className="operator">{linija.prevoznik}</div>
+                        <div className="start">
+                          <span className="start-time">
+                            {linija.vremePolaska}
+                          </span>
+                          <div className="start-destination">
+                            {linija.pocetnaStanica}
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="travel-time">
-                        <div className="time">
-                          {/* {linija.vremeDolaska - linija.vremePolaska} */}
-                          {vremePuta(linija)}
-                        </div>
-                        <div className="time-line"></div>
-                        <div className="space">
-                          <Trans i18nKey="description.part36">
-                            Broj mesta:
-                          </Trans>
-                          :{linija.brojSlobodnihMesta}
-                        </div>
-                      </div>
-
-                      <div className="end">
-                        <div className="end-destination">
-                          {" "}
-                          {linija.krajnjaStanica}
-                        </div>
-                        <span className="end-time"> {linija.vremeDolaska}</span>
-                      </div>
-                      <div>
-                        <Link
-                          to={{
-                            pathname: `${linija.id}/rezervacijakarte`,
-                            state: {
-                              id: linija.id,
-                              vremePolaska: linija.vremePolaska,
-                              pocetnaStanica: linija.pocetnaStanica,
-                              pocetnaStanicaId: linija.pocetnaStanicaId,
-                              krajnjaStanicaId: linija.krajnjaStanicaId,
-                              brojSlobodnihMesta: linija.brojSlobodnihMesta,
-                              krajnjaStanica: linija.krajnjaStanica,
-                              vremeDolaska: linija.vremeDolaska,
-                              datumPolaska: linija.datumPolaska,
-                              datumDolaska: linija.datumDolaska,
-                            },
-                          }}
-                        >
-                          <button
-                            className="buttonSwitch1"
-                            style={{ fontSize: "1rem" }}
-                          >
-                            <Trans i18nKey="description.part35">
-                              {" "}
-                              Rezerviši{" "}
+                        <div className="travel-time">
+                          <div className="time">{vremePuta(linija)}</div>
+                          <div className="time-line"></div>
+                          <div className="space">
+                            <Trans i18nKey="description.part36">
+                              Broj mesta:
                             </Trans>
-                          </button>
-                        </Link>
+                            {linija.brojSlobodnihMesta}
+                          </div>
+                        </div>
+                        <div className="end">
+                          <div className="end-destination">
+                            {linija.krajnjaStanica}
+                          </div>
+                          <span className="end-time">
+                            {linija.vremeDolaska}
+                          </span>
+                        </div>
+                        <div>
+                          <Link
+                            to={{
+                              pathname: `${linija.id}/rezervacijakarte`,
+                              state: {
+                                id: linija.id,
+                                vremePolaska: linija.vremePolaska,
+                                pocetnaStanica: linija.pocetnaStanica,
+                                pocetnaStanicaId: linija.pocetnaStanicaId,
+                                krajnjaStanicaId: linija.krajnjaStanicaId,
+                                brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                                krajnjaStanica: linija.krajnjaStanica,
+                                vremeDolaska: linija.vremeDolaska,
+                                datumPolaska: linija.datumPolaska,
+                                datumDolaska: linija.datumDolaska,
+                              },
+                            }}
+                          >
+                            <button
+                              className="buttonSwitch1"
+                              style={{ fontSize: "1rem" }}
+                            >
+                              <Trans i18nKey="description.part35">
+                                Rezerviši
+                              </Trans>
+                            </button>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                );
-              })}
+                    </li>
+                  );
+                })
+              )}
             </div>
           )}
           {!isDesktop && (
             <div className="scroll">
-              {filteredLinije.map((linija) => {
-                return (
-                  <li key={linija.id}>
-                    <div className="travel1">
-                      {" "}
-                      {/* izbrisala klasu travel*/}
-                      <br />
-                      <div
-                        style={{
-                          fontStyle: "inherit",
-                          color: "darkblue",
-                          fontSize: "1.2rem",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {" "}
-                        {linija.prevoznik}
-                      </div>{" "}
-                      {/*className="operator"*/}
-                      <div className="start">
-                        <div className="start-destination">
-                          {" "}
-                          {linija.pocetnaStanica}{" "}
-                        </div>
-                        <span className="start-time">
-                          {" "}
-                          {linija.vremePolaska}
-                        </span>
-                      </div>
-                      <div className="travel-time">
-                        <div className="time">
-                          {/* {linija.vremeDolaska - linija.vremePolaska} */}
-                          {vremePuta(linija)}
-                        </div>
-                        <div className="time-line"></div>
-                        <div className="space">
-                          <Trans i18nKey="description.part36">Broj mesta</Trans>
-                          :{linija.brojSlobodnihMesta}
-                        </div>
-                      </div>
-                      <div className="end">
-                        <div className="end-destination">
-                          {" "}
-                          {linija.krajnjaStanica}
-                        </div>
-                        <span className="end-time"> {linija.vremeDolaska}</span>
-                      </div>
-                      <div>
-                        <Link
-                          to={{
-                            //? prosledjivanje id-a linije kroz url
-                            pathname: `${linija.id}/rezervacijakarte`,
-                            //? prosledjivanje podataka za rezervaciju
-                            state: {
-                              id: linija.id,
-                              vremePolaska: linija.vremePolaska,
-                              pocetnaStanica: linija.pocetnaStanica,
-                              pocetnaStanicaId: linija.pocetnaStanicaId,
-                              krajnjaStanicaId: linija.krajnjaStanicaId,
-                              brojSlobodnihMesta: linija.brojSlobodnihMesta,
-                              krajnjaStanica: linija.krajnjaStanica,
-                              vremeDolaska: linija.vremeDolaska,
-                              datumPolaska: linija.datumPolaska,
-                              datumDolaska: linija.datumDolaska,
-                            },
+              {filteredLinije.length === 0 ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    fontSize: "1.2rem",
+                    color: "red",
+                  }}
+                >
+                  <Trans>Nema pronađenih linija</Trans>
+                </div>
+              ) : (
+                filteredLinije.map((linija) => {
+                  return (
+                    <li key={linija.id}>
+                      <div className="travel1">
+                        <div
+                          style={{
+                            fontStyle: "inherit",
+                            color: "darkblue",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
                           }}
                         >
-                          <button
-                            className="buttonSwitch1"
-                            style={{ marginLeft: "-1rem" }}
-                          >
-                            <Trans i18nKey="description.part35">
-                              Rezerviši
+                          {linija.prevoznik}
+                        </div>
+                        <div className="start">
+                          <div className="start-destination">
+                            {linija.pocetnaStanica}
+                          </div>
+                          <span className="start-time">
+                            {linija.vremePolaska}
+                          </span>
+                        </div>
+                        <div className="travel-time">
+                          <div className="time">{vremePuta(linija)}</div>
+                          <div className="time-line"></div>
+                          <div className="space">
+                            <Trans i18nKey="description.part36">
+                              Broj mesta:
                             </Trans>
-                          </button>
-                        </Link>
+                            {linija.brojSlobodnihMesta}
+                          </div>
+                        </div>
+                        <div className="end">
+                          <div className="end-destination">
+                            {linija.krajnjaStanica}
+                          </div>
+                          <span className="end-time">
+                            {linija.vremeDolaska}
+                          </span>
+                        </div>
+                        <div>
+                          <Link
+                            to={{
+                              pathname: `${linija.id}/rezervacijakarte`,
+                              state: {
+                                id: linija.id,
+                                vremePolaska: linija.vremePolaska,
+                                pocetnaStanica: linija.pocetnaStanica,
+                                pocetnaStanicaId: linija.pocetnaStanicaId,
+                                krajnjaStanicaId: linija.krajnjaStanicaId,
+                                brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                                krajnjaStanica: linija.krajnjaStanica,
+                                vremeDolaska: linija.vremeDolaska,
+                                datumPolaska: linija.datumPolaska,
+                                datumDolaska: linija.datumDolaska,
+                              },
+                            }}
+                          >
+                            <button
+                              className="buttonSwitch1"
+                              style={{ marginLeft: "-1rem" }}
+                            >
+                              <Trans i18nKey="description.part35">
+                                Rezerviši
+                              </Trans>
+                            </button>
+                          </Link>
+                        </div>
+                        <br />
+                        <br />
                       </div>
                       <br />
                       <br />
-                    </div>
-                    <br />
-                    <br />
-                  </li>
-                );
-              })}
+                    </li>
+                  );
+                })
+              )}
             </div>
           )}
         </div>
@@ -525,7 +523,7 @@ const Pocetna = () => {
           src={slides[currentSlide]}
           alt="Slideshow"
           className="bus-image"
-          style={{ height: "auto", opacity: "130%" }}
+          style={{ opacity: "130%" }}
         />
       </div>
     </div>
