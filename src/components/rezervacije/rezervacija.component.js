@@ -26,6 +26,8 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { isVisible } from "@testing-library/user-event/dist/utils";
 import "../admin/dopuna_stila.css";
 
+import LanguageSwitcher from "../header/header";
+
 //import { PotvrdaContext } from '../NavBar/links/korisnik/karta';    // da onemoguci promenu tipa karte jer je ovo povratna karta
 
 const RezervacijaComponent = ({ id, state }) => {
@@ -609,23 +611,7 @@ const RezervacijaComponent = ({ id, state }) => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      {/* <LanguageSwitcher lngs={lngs} i18n={i18n} /> */}
       <div>
         <Slider value={sliderValue} />
       </div>

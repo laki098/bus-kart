@@ -13,6 +13,8 @@ import { Link } from "react-router-dom"; //zbog rezervacije sedista povratne kar
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import LanguageSwitcher from "../../../header/header.js";
+
 const Karta = () => {
   const [sveKarte, setSveKarte] = useState([]);
 
@@ -183,23 +185,7 @@ const Karta = () => {
   return (
     <>
       <div>
-        <header>
-          <div className="jezici">
-            {Object.keys(lngs).map((lng) => (
-              <button
-                key={lng}
-                className="jezici-dugme-promena"
-                style={{
-                  fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-                }}
-                type="submit"
-                onClick={() => i18n.changeLanguage(lng)}
-              >
-                {lngs[lng].nativeName}
-              </button>
-            ))}
-          </div>
-        </header>
+        <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
         <div className="labela-stanica labela-stanica-naslov veliki-naslov red-1">
           <Trans i18nKey="description.part186">Moje karte </Trans>

@@ -41,6 +41,7 @@ import CeneAdd from "./components/admin/cena/cene.add";
 import CeneEdit from "./components/admin/cena/cene.edit";
 import Verifikacija from "./components/admin/verifikacija/verifikacija";
 import ViseLinija from "./components/admin/viseLinija/viseLinija";
+import BiletarRezervacija from "./components/biletar/biletarRezervacija";
 
 function App() {
   return (
@@ -119,6 +120,11 @@ function App() {
               />
 
               <ProtectedRoute path="/biletar" component={Biletar} biletarOnly />
+              <ProtectedRoute
+                path="/:id/biletarRezervacija"
+                component={BiletarRezervacija}
+                biletarOnly
+              />
               <ProtectedRoute
                 path="/bus.initial"
                 component={BusInitional}

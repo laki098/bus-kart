@@ -10,6 +10,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import { ToastContainer } from "react-toastify";
+import LanguageSwitcher from "../header/header";
 
 const BusForm = ({ mode, idAutobusa }) => {
   const [bus, setBus] = useState({});
@@ -26,8 +27,6 @@ const BusForm = ({ mode, idAutobusa }) => {
       izmeinAutobus();
     }
   }, []);
-
- 
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -56,46 +55,39 @@ const BusForm = ({ mode, idAutobusa }) => {
   // prevodjenje end
 
   return (
-    <div>        {/* className="pozadina"  */}
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
-
+    <div>
+      {" "}
+      {/* className="pozadina"  */}
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
       <div className="red-1"></div>
       <div className="red-1"></div>
       <div className="red-1"></div>
-
-      <div >                                    {/*  className="main"   */}
-        <div className="tabela-stanica prosiri-tabela-stanica">        {/* sub-main */}
+      <div>
+        {" "}
+        {/*  className="main"   */}
+        <div className="tabela-stanica prosiri-tabela-stanica">
+          {" "}
+          {/* sub-main */}
           <form onSubmit={submitHandler}>
             <div>
-            
               {mode === "add" ? (
-                <p className="naslovStanica">          {/* naslov    */}
+                <p className="naslovStanica">
+                  {" "}
+                  {/* naslov    */}
                   <Trans i18nKey="description.part127">Dodajte autobus</Trans>
                 </p>
               ) : (
-                <p className="naslovStanica"><Trans i18nKey="description.part143">Edituj autobus</Trans></p>
+                <p className="naslovStanica">
+                  <Trans i18nKey="description.part143">Edituj autobus</Trans>
+                </p>
               )}
               <div className="red-1"></div>
-              <div><label className="labela-stanica">
-              <Trans i18nKey="description.part144">Oznaka autobusa</Trans>
-              </label></div>
-              
+              <div>
+                <label className="labela-stanica">
+                  <Trans i18nKey="description.part144">Oznaka autobusa</Trans>
+                </label>
+              </div>
+
               {/* biolo je input-new  pa onda input-new-bus*/}
               <input
                 defaultValue={bus.oznakaBusa}
@@ -107,11 +99,15 @@ const BusForm = ({ mode, idAutobusa }) => {
                 onChange={busLogic.changeHandler}
               />
               <div className="red-1"></div>
-              <div><label className="labela-stanica">
-                <Trans i18nKey="description.part126">Registarska tablica</Trans>
-              </label></div>
-              
-                  {/*  className="input-new" */}
+              <div>
+                <label className="labela-stanica">
+                  <Trans i18nKey="description.part126">
+                    Registarska tablica
+                  </Trans>
+                </label>
+              </div>
+
+              {/*  className="input-new" */}
               <input
                 defaultValue={bus.tablice}
                 type="text"
@@ -122,10 +118,12 @@ const BusForm = ({ mode, idAutobusa }) => {
                 onChange={busLogic.changeHandler}
               />
               <div className="red-1"></div>
-              <div><label className="labela-stanica">
-                <Trans i18nKey="description.part36">Broj mesta</Trans>
-              </label></div>
-              
+              <div>
+                <label className="labela-stanica">
+                  <Trans i18nKey="description.part36">Broj mesta</Trans>
+                </label>
+              </div>
+
               <input
                 defaultValue={bus.brojSedista}
                 type="number"
@@ -136,11 +134,8 @@ const BusForm = ({ mode, idAutobusa }) => {
                 onChange={busLogic.changeHandler}
               />
               <div className="red-1"></div>
-                {/* bilo je className="button"   style={{ height: "2rem" }}*/}
-              <button
-                type="submit"
-                className="buttonSwitch"
-              >
+              {/* bilo je className="button"   style={{ height: "2rem" }}*/}
+              <button type="submit" className="buttonSwitch">
                 {mode === "add" ? (
                   <Trans i18nKey="description.part128">"Dodaj"</Trans>
                 ) : (
@@ -152,9 +147,8 @@ const BusForm = ({ mode, idAutobusa }) => {
           </form>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
-    
   );
 };
 

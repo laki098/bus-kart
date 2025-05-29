@@ -8,6 +8,7 @@ import "../../NavBar/links/i18n";
 import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import apiUrl from "../../../apiConfig";
+import LanguageSwitcher from "../../header/header";
 
 const StaniceInitial = () => {
   const [stanice, setStanice] = useState([]);
@@ -52,27 +53,11 @@ const StaniceInitial = () => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="red-1"></div>
       <div className="stampajLiniju">
-        <div className="tabela-stanica spisak-stanica" >
+        <div className="tabela-stanica spisak-stanica">
           <ul>
             {stanice.map((stanica) => {
               return (
@@ -82,7 +67,6 @@ const StaniceInitial = () => {
                       <Trans i18nKey="description.part142">Naziv </Trans>
                     </div>
                     <div className="info-stanica sirina-info-stanica   fino-podesavanje">
-                      
                       {stanica.naziv}
                     </div>
                     <div className="polje-stanica">

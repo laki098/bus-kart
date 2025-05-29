@@ -12,6 +12,7 @@ import { useMediaQuery } from "react-responsive"; // responsive
 import apiUrl from "../../apiConfig";
 import Autobus from "../rezervacije/sedista/autobus";
 import { ToastContainer, toast } from "react-toastify";
+import LanguageSwitcher from "../header/header";
 
 const Biletar = () => {
   // Prevođenje
@@ -33,6 +34,7 @@ const Biletar = () => {
   const [valueDate, setValueDate] = useState(
     localStorage.getItem("datumPolaska")
   );
+
   const [valueTime, setValueTime] = useState(
     localStorage.getItem("vremePolaska")
   );
@@ -132,12 +134,11 @@ const Biletar = () => {
 
       const currentDateTime = new Date();
 
-      // Filtriraj rezultate da uključuju samo linije koje su u budućnosti
       const filteredResults = rezultat.filter((linija) => {
         const polazakDateTime = new Date(
           `${linija.datumPolaska}T${linija.vremePolaska}`
         );
-        return polazakDateTime > currentDateTime;
+        return polazakDateTime >= currentDateTime;
       });
 
       setFilteredLinije(filteredResults);
@@ -191,6 +192,7 @@ const Biletar = () => {
   //? useEffect za automatsko filtriranje kada se promeni vrednost
   useEffect(() => {
     filterLinija();
+    changer();
   }, [val1, val2, valueDate, valueTime]);
 
   const click = () => {
@@ -203,17 +205,40 @@ const Biletar = () => {
 
   const changer = () => {
     setShowClass(!showClass);
+    setShowClass(true);
   };
 
   const vremePuta = (linija) => {
+    if (
+      !linija ||
+      !linija.datumPolaska ||
+      !linija.vremePolaska ||
+      !linija.datumDolaska ||
+      !linija.vremeDolaska
+    ) {
+      console.error("Nedostaju podaci za liniju:", linija);
+      return "Nepoznato vreme";
+    }
+
     const datumPolaska = new Date(linija.datumPolaska);
     const vremePolaska = linija.vremePolaska.split(":");
+
+    if (vremePolaska.length < 2) {
+      console.error("Neispravan format vremena polaska:", linija.vremePolaska);
+      return "Nepoznato vreme";
+    }
 
     datumPolaska.setHours(vremePolaska[0]);
     datumPolaska.setMinutes(vremePolaska[1]);
 
     const datumDolaska = new Date(linija.datumDolaska);
     const vremeDolaska = linija.vremeDolaska.split(":");
+
+    if (vremeDolaska.length < 2) {
+      console.error("Neispravan format vremena dolaska:", linija.vremeDolaska);
+      return "Nepoznato vreme";
+    }
+
     datumDolaska.setHours(vremeDolaska[0]);
     datumDolaska.setMinutes(vremeDolaska[1]);
 
@@ -225,9 +250,7 @@ const Biletar = () => {
     if (sati < 1) {
       return `${minuti} min`;
     } else {
-      const sati1 = `${sati}h`;
-      const min = `${minuti}m`;
-      return [sati1, min].join(" : ");
+      return `${sati}h : ${minuti}m`;
     }
   };
 
@@ -337,23 +360,7 @@ const Biletar = () => {
   return (
     <>
       <div>
-        <header>
-          <div style={{ textAlign: "right", marginRight: "3rem" }}>
-            {Object.keys(lngs).map((lng) => (
-              <button
-                key={lng}
-                className="jezici-dugme-promena"
-                style={{
-                  fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-                }}
-                type="submit"
-                onClick={() => i18n.changeLanguage(lng)}
-              >
-                {lngs[lng].nativeName}
-              </button>
-            ))}
-          </div>
-        </header>
+        <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
         <div className="home-page">
           <h2 className="h2-card">
@@ -426,217 +433,200 @@ const Biletar = () => {
                 onClick={click}
               ></button>
             </div>
-            <div className="form">
-              <label className="labela">
-                <Trans i18nKey="description.part11"> Vreme Polaska </Trans>
-              </label>
-              <input
-                className="input-stanica-vreme"
-                type="time"
-                required
-                name="vremePolaska"
-                value={valueTime}
-                onChange={(e) => setValueTime(e.target.value)}
-              ></input>
-            </div>
           </div>
         </div>
       </div>
 
-      {filteredLinije.length > 0 &&
-        filteredLinije.map((linija) => (
-          <Autobus
-            key={linija.id}
-            autobusData={autobus}
-            linijaId={linija.id}
-            pocetnaStanicaId={linija.pocetnaStanicaId}
-            krajnjaStanicaId={linija.krajnjaStanicaId}
-            updateTrenutnaRezervacija={(novaRezervacija) =>
-              setTrenutnaRezervacija(novaRezervacija)
-            }
-            openModalC={openModalC}
-            openModal={openModal}
-          />
-        ))}
-      {/* {/* Modalni prozor */}
-      {isConfirmationOpenC && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
+      <ul>
+        <div className={`home-page1 .home-page1 ${showClass ? "show" : ""}`}>
+          {" "}
+          {/*kada se pretisne dugme otvorit se nov div sa ispisanim podacima*/}
+          <style>{`
+                  .home-page1 {
+                    display: none;
+                  }
+                  .show {
+                    display: block;
+                  }
+                `}</style>
+          <h2 className="card-header">
+            <i className="fa-solid fa-bus"></i>
+            <span className="span">
+              <Trans i18nKey="description.part34"> Red vožnje </Trans>
             </span>
-            <h2> Otkazivanje karte za sediste: {selectedSeat}</h2>
-            <div>
-              <button type="potvrdi" onClick={() => {}}>
-                Otkazivanje karte
-              </button>
-              <button type="odustani" onClick={closeModalC}>
-                Odustani
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Modalni prozor */}
-      {isConfirmationOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <h2> Nova Rezervacija za sediste: {selectedSeat}</h2>
-            <div>
-              <label>
-                Ime i prezime putnika:
-                <input
-                  type="text"
-                  value={imePrezime}
-                  onChange={(e) => setImePrezime(e.target.value)}
-                />
-              </label>
-              <label>
-                Email putnika:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-              <label>
-                Broj telefona putnika:
-                <input
-                  type="text"
-                  value={brojTelefona}
-                  onChange={(e) => setBrojTelefona(e.target.value)}
-                />
-              </label>
-              <label>
-                Tip karte:
-                <select
-                  className="option"
-                  value={tipKarte}
-                  onChange={(e) => setTipKarte(e.target.value)}
+          </h2>
+          {isDesktop && (
+            <div className="scroll">
+              {filteredLinije.length === 0 ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    fontSize: "1.2rem",
+                    color: "red",
+                  }}
                 >
-                  <option className="option" value="" disabled defaultValue>
-                    Izaberi tip karte
-                  </option>
-                  <option className="option" value="jednosmerna">
-                    Jednosmerna
-                  </option>
-                  <option className="option" value="povratna">
-                    Povratna
-                  </option>
-                </select>
-              </label>
-
-              {/* Ovde dolazimo iz fajla karta.js u slucaju da je karta povratna 
-              i zelimo rezervaciju sedista ili promenu datuma    */}
-              {tipKarte == "povratna" && (
-                <div className="ograda1">
-                  <div>
-                    <label htmlFor="returnDate">
-                      <Trans i18nKey="description.part70">
-                        {" "}
-                        Datum povratka{" "}
-                      </Trans>
-                    </label>
-                    &emsp; &ensp;
-                    <input
-                      type="date"
-                      id="returnDate"
-                      name="returnDate"
-                      min={filteredLinije[0].datumDolaska}
-                      onChange={(e) => {
-                        e.persist();
-
-                        setTimeout(() => setReturnDate(e.target.value), 0);
-                      }}
-                      onClick={() => {
-                        setPomPolazak("");
-                        setPomDolazak("");
-
-                        setPomDatDolazak("");
-                      }}
-                    />
-                  </div>
-                  <div style={{ textAlign: "left", paddingLeft: "2rem" }}>
-                    <label>
-                      <Trans i18nKey="description.part11">
-                        {" "}
-                        Vreme polaska{" "}
-                      </Trans>
-                    </label>
-                  </div>
-
-                  <div className="teget">
-                    {/* Ovde formira podatke za povratnu kartu  */}
-                    {returnDate !== null ? (
-                      <div>
-                        {filteredLinijePovratna
-                          //ovim prikazujemo sortiranu listu u rastucem nizu u odnosu na vreme polaska
-                          .sort((a, b) => {
-                            // Konvertujemo vreme polaska u Date objekte
-                            const timeA = new Date(
-                              "1970-01-01T" + a.vremePolaska
-                            );
-                            const timeB = new Date(
-                              "1970-01-01T" + b.vremePolaska
-                            );
-                            // Poredimo Date objekte
-                            return timeA - timeB;
-                          })
-
-                          .map((linija) => (
-                            <div>
-                              <li key={linija.id}>
-                                <label>
-                                  {linija.vremePolaska} ---
-                                  {linija.vremeDolaska}---
-                                </label>
-                                <input
-                                  type="checkbox"
-                                  value={linija.id}
-                                  checked={checkedItemId === linija.id}
-                                  onChange={() =>
-                                    handleCheckboxChange(linija.id)
-                                  }
-                                  onClick={() => {
-                                    setPovratnaIdLinija(linija.id);
-                                    setPomPolazak(linija.vremePolaska);
-                                    setPomDolazak(linija.vremeDolaska);
-                                    setPomDatDolazak(linija.datumDolaska);
-                                    setPomDateRet("povratna"); // sluzi kod dela gde pozivamo upis u bazu podataka u karti
-                                    // setDatumDolaskaOdlazne(linija.datumDolaska);
-                                  }}
-                                />
-                              </li>
-                            </div>
-                          ))}
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    <hr />
-                    <Trans i18nKey="description.part212">
-                      Odabrali ste polazak - dolazak (h):{" "}
-                    </Trans>
-                    <hr />
-                    {pomPolazak}---{pomDolazak}
-                  </div>
+                  <Trans>Nema pronađenih linija</Trans>
                 </div>
+              ) : (
+                filteredLinije.map((linija) => {
+                  return (
+                    <li key={linija.id}>
+                      <div className="travel">
+                        <div className="operator">{linija.prevoznik}</div>
+                        <div className="start">
+                          <span className="start-time">
+                            {linija.vremePolaska.substring(0, 5)}
+                          </span>
+                          <div className="start-destination">
+                            {linija.pocetnaStanica}
+                          </div>
+                        </div>
+                        <div className="travel-time">
+                          <div className="time">{vremePuta(linija)}</div>
+                          <div className="time-line"></div>
+                          <div className="space">
+                            <Trans i18nKey="description.part36">
+                              Broj mesta:
+                            </Trans>
+                            {linija.brojSlobodnihMesta}
+                          </div>
+                        </div>
+                        <div className="end">
+                          <div className="end-destination">
+                            {linija.krajnjaStanica}
+                          </div>
+                          <span className="end-time">
+                            {linija.vremeDolaska.substring(0, 5)}
+                          </span>
+                        </div>
+                        <div>
+                          <Link
+                            to={{
+                              pathname: `${linija.id}/biletarRezervacija`,
+                              state: {
+                                id: linija.id,
+                                vremePolaska: linija.vremePolaska,
+                                pocetnaStanica: linija.pocetnaStanica,
+                                pocetnaStanicaId: linija.pocetnaStanicaId,
+                                krajnjaStanicaId: linija.krajnjaStanicaId,
+                                brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                                krajnjaStanica: linija.krajnjaStanica,
+                                vremeDolaska: linija.vremeDolaska,
+                                datumPolaska: linija.datumPolaska,
+                                datumDolaska: linija.datumDolaska,
+                                oznakaBusa: linija.oznakaBusa,
+                              },
+                            }}
+                          >
+                            <button className="buttonSwitch1">
+                              <Trans i18nKey="description.part35">
+                                Rezerviši
+                              </Trans>
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })
               )}
-              <div className="red-1"></div>
-
-              <button type="potvrdi" onClick={novaRezervacija}>
-                Potvrdi
-              </button>
-              <button type="odustani" onClick={closeModal}>
-                Odustani
-              </button>
             </div>
-          </div>
+          )}
+          {!isDesktop && (
+            <div className="scroll">
+              {filteredLinije.length === 0 ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1rem",
+                    fontSize: "1.2rem",
+                    color: "red",
+                  }}
+                >
+                  <Trans>Nema pronađenih linija</Trans>
+                </div>
+              ) : (
+                filteredLinije.map((linija) => {
+                  return (
+                    <li key={linija.id}>
+                      <div className="travel1">
+                        <div
+                          style={{
+                            fontStyle: "inherit",
+                            color: "darkblue",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {linija.prevoznik}
+                        </div>
+                        <div className="start">
+                          <div className="start-destination">
+                            {linija.pocetnaStanica}
+                          </div>
+                          <span className="start-time">
+                            {linija.vremePolaska}
+                          </span>
+                        </div>
+                        <div className="travel-time">
+                          <div className="time">{vremePuta(linija)}</div>
+                          <div className="time-line"></div>
+                          <div className="space">
+                            <Trans i18nKey="description.part36">
+                              Broj mesta:
+                            </Trans>
+                            {linija.brojSlobodnihMesta}
+                          </div>
+                        </div>
+                        <div className="end">
+                          <div className="end-destination">
+                            {linija.krajnjaStanica}
+                          </div>
+                          <span className="end-time">
+                            {linija.vremeDolaska}
+                          </span>
+                        </div>
+                        <div>
+                          <Link
+                            to={{
+                              pathname: `${linija.id}/biletarRezervacija`,
+                              state: {
+                                id: linija.id,
+                                vremePolaska: linija.vremePolaska,
+                                pocetnaStanica: linija.pocetnaStanica,
+                                pocetnaStanicaId: linija.pocetnaStanicaId,
+                                krajnjaStanicaId: linija.krajnjaStanicaId,
+                                brojSlobodnihMesta: linija.brojSlobodnihMesta,
+                                krajnjaStanica: linija.krajnjaStanica,
+                                vremeDolaska: linija.vremeDolaska,
+                                datumPolaska: linija.datumPolaska,
+                                datumDolaska: linija.datumDolaska,
+                                oznakaBusa: linija.oznakaBusa,
+                              },
+                            }}
+                          >
+                            <button className="buttonSwitch1">
+                              <Trans i18nKey="description.part35">
+                                Rezerviši
+                              </Trans>
+                            </button>
+                          </Link>
+                        </div>
+
+                        <br />
+                        <br />
+                      </div>
+                      <br />
+                      <br />
+                    </li>
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
-      )}
+      </ul>
       <ToastContainer />
     </>
   );

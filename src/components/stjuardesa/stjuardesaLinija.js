@@ -15,6 +15,8 @@ import apiUrl from "../../apiConfig.js";
 import { getValueRange } from "react-calendar/dist/cjs/shared/dates.js";
 import KartaApi from "../../api/karta.api.js";
 
+import LanguageSwitcher from "../header/header.js";
+
 const StjuardesaLinija = ({}) => {
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [autobus, setAutobus] = useState([]);
@@ -309,23 +311,7 @@ const StjuardesaLinija = ({}) => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div>
         <div className="labela-stanica labela-stanica-naslov red-1">

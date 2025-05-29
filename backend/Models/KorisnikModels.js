@@ -113,6 +113,10 @@ const Korisnik = db.define(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    brisanjeNeDolazaka: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
 
   {

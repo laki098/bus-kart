@@ -4,7 +4,6 @@ import "./pocetna.css";
 import helpers from "../../../helpers/helpers";
 import { Link } from "react-router-dom";
 import bus1 from "../../images/bus1.jpg";
-import bus2 from "../../images/bus2.jpg";
 
 import "./i18n"; // za prevodjenje
 import "../../rezervacije/i18n";

@@ -8,6 +8,7 @@ import { useTranslation, Trans } from "react-i18next"; // prevodjenje
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
+import LanguageSwitcher from "../header/header";
 
 const KorisniciInitial = () => {
   const [korisnici, setKorisnici] = useState([]);
@@ -105,23 +106,7 @@ const KorisniciInitial = () => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="red-1">
         <input

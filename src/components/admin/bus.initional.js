@@ -10,6 +10,7 @@ import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import "../../components/NavBar/links/i18n";
 import "../../components/rezervacije/i18n";
 import apiUrl from "../../apiConfig";
+import LanguageSwitcher from "../header/header";
 
 const BusInitional = () => {
   const [busevi, setBusevi] = useState([]);
@@ -56,23 +57,7 @@ const BusInitional = () => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="stampajLiniju">
         <div class="rowTabela  podesi-sirinu">
@@ -102,7 +87,10 @@ const BusInitional = () => {
                       >
                         <Trans i18nKey="description.part171">Tablice </Trans>
                       </div>
-                      <div className="kolona-bus podaci sirina-info-6"> {bus.tablice} </div>
+                      <div className="kolona-bus podaci sirina-info-6">
+                        {" "}
+                        {bus.tablice}{" "}
+                      </div>
                       <div className="kolona-bus">
                         <Trans i18nKey="description.part36">Broj mesta </Trans>{" "}
                       </div>

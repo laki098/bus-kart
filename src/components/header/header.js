@@ -1,10 +1,24 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom"; // Uvezi useLocation
 
 const LanguageSwitcher = ({ lngs, i18n }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State za otvaranje/zatvaranje dropdown-a
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation(); // Dobavi informacije o trenutnoj putanji
+
+  // Ako smo na početnoj ("/"), boja teksta je bela, inače crna
+  const textColor = location.pathname === "/pocetna" ? "white" : "black";
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen); // Promeni stanje dropdown-a
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Debugging log da vidiš šta se dešava
+  console.log("lngs:", lngs);
+  console.log("i18n.resolvedLanguage:", i18n.resolvedLanguage);
+
+  // Proveri da li `lngs` i `i18n.resolvedLanguage` postoje
+  const currentLanguage = lngs?.[i18n.resolvedLanguage] || {
+    nativeName: "Unknown",
   };
 
   return (
@@ -14,18 +28,18 @@ const LanguageSwitcher = ({ lngs, i18n }) => {
         <button
           className="jezici-dugme-promena"
           style={{
-            fontWeight: "bold", // Ovaj stil možeš dodati, da bi trenutni jezik bio podebljan
+            fontWeight: "bold",
+            color: textColor, // Dinamički setuj boju teksta
           }}
           type="button"
           onClick={toggleDropdown}
         >
           <img
-            src={`/images/${i18n.resolvedLanguage === "sr" ? "sr" : "gb"}.png`} // Dinamičko prikazivanje zastave
+            src={`/images/${i18n.resolvedLanguage === "sr" ? "sr" : "gb"}.png`}
             alt={i18n.resolvedLanguage}
             style={{ width: "24px", marginRight: "0.5rem" }}
           />
           {lngs[i18n.resolvedLanguage].nativeName}{" "}
-          {/* Prikaz trenutnog jezika */}
         </button>
 
         {/* Dropdown za odabir jezika */}
@@ -38,7 +52,7 @@ const LanguageSwitcher = ({ lngs, i18n }) => {
             }}
           >
             {Object.keys(lngs)
-              .filter((lng) => lng !== i18n.resolvedLanguage) // Prikazivanje samo jezika koji nije trenutno izabran
+              .filter((lng) => lng !== i18n.resolvedLanguage)
               .map((lng) => (
                 <button
                   key={lng}
@@ -46,6 +60,7 @@ const LanguageSwitcher = ({ lngs, i18n }) => {
                   style={{
                     fontWeight:
                       i18n.resolvedLanguage === lng ? "bold" : "normal",
+                    color: textColor, // Takođe primeni boju teksta ovde
                     display: "flex",
                     alignItems: "center",
                     padding: "0.5rem",
@@ -54,13 +69,12 @@ const LanguageSwitcher = ({ lngs, i18n }) => {
                   }}
                   type="button"
                   onClick={() => {
-                    i18n.changeLanguage(lng); // Promeni jezik na izabrani
-                    setIsDropdownOpen(false); // Zatvori dropdown nakon što jezik bude promenjen
+                    i18n.changeLanguage(lng);
+                    setIsDropdownOpen(false);
                   }}
                 >
-                  {/* Zastava i naziv jezika */}
                   <img
-                    src={`/images/${lng === "sr" ? "sr" : "gb"}.png`} // Dinamičko prikazivanje zastave
+                    src={`/images/${lng === "sr" ? "sr" : "gb"}.png`}
                     alt={lng}
                     style={{ width: "24px", marginRight: "0.5rem" }}
                   />

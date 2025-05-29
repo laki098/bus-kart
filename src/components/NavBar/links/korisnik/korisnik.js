@@ -14,6 +14,8 @@ import cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import LanguageSwitcher from "../../../header/header";
+
 const Korisnik = () => {
   const [korisnik, setKorisnik] = useState({});
 
@@ -54,7 +56,6 @@ const Korisnik = () => {
     setKorisnik(data.korisnik);
   };
 
-
   const back = () => {
     setTimeout(() => {
       window.location.href = "/pocetna";
@@ -71,23 +72,7 @@ const Korisnik = () => {
 
   return (
     <div>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="red-5"></div>
 
@@ -185,7 +170,7 @@ const Korisnik = () => {
             </div>
             <div className="red-1"></div>
             <div>
-              <button type="submit" onClick={back}  className="buttonSwitch">
+              <button type="submit" onClick={back} className="buttonSwitch">
                 {" "}
                 {/*  user-button   */}
                 <Trans i18nKey="description.part129"> Sačuvaj </Trans>
@@ -194,7 +179,7 @@ const Korisnik = () => {
           </form>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

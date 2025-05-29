@@ -440,50 +440,72 @@ router.post("/karta", async (req, res) => {
   }
 });
 
-//? dobavljanje ne dolazaka korisnika kroz URL parametar
 router.get("/neDolasci/:korisnikId", async (req, res) => {
   try {
     const { korisnikId } = req.params;
-    console.log("korisnikId", korisnikId);
+    const korisnik = await Korisnik.findByPk(korisnikId);
 
-    // Izračunavanje trenutnog vremena minus jedan sat
+    if (!korisnik) {
+      return res.status(404).json({ message: "Korisnik nije pronađen" });
+    }
+
+    const poslednjeBrisanje = korisnik.brisanjeNeDolazaka || new Date(0);
     const trenutniDatumVreme = new Date();
-    trenutniDatumVreme.setHours(trenutniDatumVreme.getHours() - 1);
+    const trenutniDatum = trenutniDatumVreme.toISOString().split("T")[0];
+    const trenutniVreme = trenutniDatumVreme.toTimeString().slice(0, 5);
 
-    // Izvlačenje datuma i vremena iz trenutnog datuma-vremena
-    const trenutniDatum = trenutniDatumVreme.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const trenutniVreme = trenutniDatumVreme.toTimeString().slice(0, 5); // Format: HH:mm
-
-    const karte = await Rezervacija.findAll({
+    // Dohvatanje svih nedolazaka pre trenutnog vremena
+    const sviNedolasci = await Rezervacija.findAll({
       where: {
         korisnikId,
         cekiran: false,
         [Op.or]: [
-          {
-            datumDolaska: { [Op.lt]: trenutniDatum }, // Dolasci pre trenutnog datuma
-          },
+          { datumDolaska: { [Op.lt]: trenutniDatum } },
           {
             [Op.and]: [
-              { datumDolaska: trenutniDatum }, // Dolasci na isti datum
-              { vremeDolaska: { [Op.lt]: trenutniVreme } }, // Vreme dolaska manje od trenutnog vremena
+              { datumDolaska: trenutniDatum },
+              { vremeDolaska: { [Op.lt]: trenutniVreme } },
             ],
           },
         ],
       },
     });
 
-    const polasci = karte.map((rezervacija) => ({
-      datumPolaska: rezervacija.dataValues.datumPolaska,
-      vremePolaska: rezervacija.dataValues.vremePolaska,
-      rezervacijaId: rezervacija.dataValues.id,
-    }));
+    // Razdvajanje aktivnih i starih nedolazaka
+    const aktivniNedolasci = [];
+    const stariNedolasci = [];
 
-    res.status(200).json({ message: "izvučen korisnik", polasci });
+    sviNedolasci.forEach((rez) => {
+      const datumDolaska = rez.datumDolaska;
+      const vremeDolaska = rez.vremeDolaska;
+
+      if (
+        new Date(datumDolaska) > poslednjeBrisanje ||
+        (datumDolaska === poslednjeBrisanje.toISOString().split("T")[0] &&
+          vremeDolaska > poslednjeBrisanje.toTimeString().slice(0, 5))
+      ) {
+        aktivniNedolasci.push({
+          datumPolaska: rez.datumPolaska,
+          vremePolaska: rez.vremePolaska,
+          rezervacijaId: rez.id,
+        });
+      } else {
+        stariNedolasci.push({
+          datumPolaska: rez.datumPolaska,
+          vremePolaska: rez.vremePolaska,
+          rezervacijaId: rez.id,
+        });
+      }
+    });
+
+    res.status(200).json({
+      message: "Izvučeni korisnikovi nedolasci",
+      aktivniNedolasci,
+      stariNedolasci,
+    });
   } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ message: "došlo je do greške pri filtriranju", error });
+    console.error(error);
+    res.status(500).json({ message: "Greška pri dohvatanju nedolazaka" });
   }
 });
 
@@ -492,16 +514,18 @@ router.put("/obrisiNeDolaske/:korisnikId", async (req, res) => {
     const { korisnikId } = req.params;
     console.log("korisnikId", korisnikId);
 
-    // Izračunavanje trenutnog vremena minus jedan sat
     const trenutniDatumVreme = new Date();
-    trenutniDatumVreme.setHours(trenutniDatumVreme.getHours() - 1);
+
+    // Izračunavanje trenutnog vremena minus jedan sat
+    /*  const trenutniDatumVreme = new Date();
+    trenutniDatumVreme.setHours(trenutniDatumVreme.getHours() - 1); */
 
     // Izvlačenje datuma i vremena iz trenutnog datuma-vremena
-    const trenutniDatum = trenutniDatumVreme.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const trenutniVreme = trenutniDatumVreme.toTimeString().slice(0, 5); // Format: HH:mm
+    /* const trenutniDatum = trenutniDatumVreme.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    const trenutniVreme = trenutniDatumVreme.toTimeString().slice(0, 5); // Format: HH:mm */
 
     // Ažuriranje rezervacija koje ispunjavaju uslove
-    const [brojAžuriranih] = await Rezervacija.update(
+    /* const [brojAžuriranih] = await Rezervacija.update(
       { cekiran: true }, // Nova vrednost za `cekiran`
       {
         where: {
@@ -520,21 +544,18 @@ router.put("/obrisiNeDolaske/:korisnikId", async (req, res) => {
           ],
         },
       }
-    );
+    ); */
 
     // Ako su rezervacije uspešno ažurirane, resetuj broj nedolazaka korisnika
-    if (brojAžuriranih > 0) {
-      await Korisnik.update(
-        { brojNeDolazaka: 0 }, // Resetovanje broja nedolazaka
-        { where: { idKorisnik: korisnikId } } // Pronađi korisnika prema korisnikId
-      );
 
-      res.status(200).json({
-        message: `Uspešno ažurirano ${brojAžuriranih} nedolazaka i resetovan broj nedolazaka korisnika.`,
-      });
-    } else {
-      res.status(404).json({ message: "Nema nedolazaka za ažuriranje." });
-    }
+    await Korisnik.update(
+      { brojNeDolazaka: 0, brisanjeNeDolazaka: trenutniDatumVreme }, // Resetovanje broja nedolazaka
+      { where: { idKorisnik: korisnikId } } // Pronađi korisnika prema korisnikId
+    );
+
+    res.status(200).json({
+      message: `Broj nedolazaka korisnika ${korisnikId} je uspešno resetovan.`,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

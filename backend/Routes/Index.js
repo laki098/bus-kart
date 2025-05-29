@@ -19,6 +19,7 @@ const Rezervacija = require("../Models/RezervacijaModels.js");
 const Stanica = require("../Models/StanicaModels.js");
 const Medjustanica = require("../Models/MedjustanicaModels.js");
 const Linija = require("../Models/LinijaModels.js");
+const db = require("../dbConfig.js");
 
 const qrcode = require("qrcode");
 const fs = require("fs");
@@ -190,6 +191,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  const transaction = await db.transaction();
   try {
     const linijaId = req.params.id;
     const {
@@ -207,15 +209,46 @@ router.put("/:id", async (req, res) => {
       vozac,
       kola,
     } = req.body;
+
+    // Preuzmi autobus na osnovu oznakeBusa iz modela Bus
+    const autobus = await Bus.findOne(
+      { where: { oznakaBusa } },
+      { transaction }
+    );
+    if (!autobus) {
+      await transaction.rollback();
+      return res.status(404).json({ message: "Autobus nije pronađen." });
+    }
+
+    console.log(autobus);
+    const brojSedista = autobus.brojSedista;
+
     const postojucaLinija = await Linija.findByPk(linijaId, {
       include: Stanica,
+      transaction,
     });
-
     if (!postojucaLinija) {
+      await transaction.rollback();
       return res.status(404).json({ message: "Linija nije pronađena." });
     }
 
-    //? Azurirana svojstva linije
+    // Povezivanje početne i krajnje stanice s linijom
+    const pocetna = await Stanica.findOne(
+      { where: { naziv: pocetnaStanica } },
+      { transaction }
+    );
+    const krajnja = await Stanica.findOne(
+      { where: { naziv: krajnjaStanica } },
+      { transaction }
+    );
+    if (!pocetna || !krajnja) {
+      await transaction.rollback();
+      return res.status(404).json({ message: "Stanica nije pronađena." });
+    }
+    postojucaLinija.pocetnaStanicaId = pocetna.id;
+    postojucaLinija.krajnjaStanicaId = krajnja.id;
+
+    // Ažurirana svojstva linije
     postojucaLinija.vremePolaska = vremePolaska;
     postojucaLinija.vremeDolaska = vremeDolaska;
     postojucaLinija.datumPolaska = datumPolaska;
@@ -227,53 +260,90 @@ router.put("/:id", async (req, res) => {
     postojucaLinija.vozac = vozac;
     postojucaLinija.kola = kola;
 
-    //? Povezivanje početne stanice i krajnje stanice s linijom
-    const pocetna = await Stanica.findOne({
-      where: {
-        naziv: pocetnaStanica,
-      },
+    // Validacija rezervacija u odnosu na kapacitet novog autobusa
+    const reservations = await Rezervacija.findAll({
+      where: { linijaId },
+      transaction,
     });
 
-    const krajnja = await Stanica.findOne({
-      where: {
-        naziv: krajnjaStanica,
-      },
+    // Provera: Ukupan broj rezervacija ne sme biti veći od kapaciteta autobusa
+    if (reservations.length > brojSedista) {
+      await transaction.rollback();
+      return res.status(400).json({
+        message:
+          "Nije moguće promeniti autobus: broj rezervacija prelazi kapacitet novog autobusa.",
+      });
+    }
+
+    //  Validacija pojedinačnih rezervacija
+    let zauzetaSedista = new Set();
+    reservations.forEach((rez) => {
+      const sediste = Number(rez.oznakaSedista);
+      console.log(sediste, brojSedista, "---------------------");
+      if (sediste >= 1 && sediste <= brojSedista) {
+        zauzetaSedista.add(sediste);
+      }
     });
 
-    postojucaLinija.pocetnaStanicaId = pocetna.id;
-    postojucaLinija.krajnjaStanicaId = krajnja.id;
+    for (const rez of reservations) {
+      const trenutnoSediste = Number(rez.oznakaSedista);
+      if (trenutnoSediste < 1 || trenutnoSediste > brojSedista) {
+        console.log(
+          `Rezervacija ID ${rez.id}: oznakaSedista ${trenutnoSediste} van opsega [1, ${brojSedista}]`
+        );
+        let novoSediste = null;
+        for (let i = 1; i <= brojSedista; i++) {
+          if (!zauzetaSedista.has(i)) {
+            novoSediste = i;
+            zauzetaSedista.add(i);
+            break;
+          }
+        }
+        if (novoSediste === null) {
+          await transaction.rollback();
+          return res.status(400).json({
+            message: "Nema slobodnih sedišta za preusmeravanje rezervacije.",
+          });
+        }
+        rez.oznakaSedista = novoSediste;
+        await rez.save({ transaction });
+        console.log(
+          `Rezervacija ID ${rez.id} ažurirana: novo oznakaSedista ${novoSediste}`
+        );
+        // Opciono: dodaj logiku za slanje email notifikacije korisniku
+      }
+    }
 
-    //? Cuvanje promena u bazi
-    await postojucaLinija.save();
+    // Izračunaj broj slobodnih mesta: kapacitet autobusa minus broj rezervacija
+    const brojRezervacija = reservations.length;
+    const slobodnaMesta = brojSedista - brojRezervacija;
+    postojucaLinija.brojSlobodnihMesta = slobodnaMesta;
 
-    //? Azuriranje medjustanice
+    // Sačuvaj izmene linije unutar transakcije
+    await postojucaLinija.save({ transaction });
+
+    // Azuriranje medjustanice
     for (let i = 0; i < medjustanice.length; i++) {
       if (
         medjustanice[i] === null ||
         (medjustanice[i] && Object.keys(medjustanice[i]).length === 0)
       ) {
-        //? Preskoči korak ako je element null ili prazan objekat
         continue;
       }
-
       const medjustanicaData = medjustanice[i];
       const redosled = medjustanicaData.redosled;
       const stanicaIdFr = medjustanicaData.stanica;
       let stanicaId1;
 
       if (stanicaIdFr) {
-        stanicaId1 = await Stanica.findOne({
-          where: { naziv: stanicaIdFr },
-        });
+        stanicaId1 = await Stanica.findOne({ where: { naziv: stanicaIdFr } });
       }
 
-      //? Ažuriranje i kreiranje podataka medjustanice
       const medjustanica = await Medjustanica.findOne({
         where: { redosled, linijaId },
       });
       if (!medjustanica) {
-        //? Ako medjustanica ne postoji, kreiramo novu
-        const noviMedjustanica = await Medjustanica.create({
+        await Medjustanica.create({
           redosled,
           brojSlobodnihMesta: postojucaLinija.brojSlobodnihMesta,
           vremePolaskaM: medjustanicaData.vremePolaskaM,
@@ -286,7 +356,6 @@ router.put("/:id", async (req, res) => {
           stanicaId: stanicaId1.id,
         });
       } else {
-        //? Ako medjustanica već postoji, ažuriraj postojeće podatke
         const updateData = {};
 
         if (
@@ -325,7 +394,6 @@ router.put("/:id", async (req, res) => {
         ) {
           updateData.krajRute = medjustanicaData.krajRute;
         }
-
         if (stanicaId1 && stanicaId1.id !== undefined) {
           updateData.stanicaId = stanicaId1.id;
         }
@@ -336,10 +404,13 @@ router.put("/:id", async (req, res) => {
       }
     }
 
+    // Commit transakcije da se sve promene sačuvaju u bazi
+    await transaction.commit();
     return res.status(200).json({ message: "Uspešno uređena linija." });
   } catch (error) {
+    await transaction.rollback();
     console.log(error);
-    res.status(500).json({ error });
+    return res.status(500).json({ error });
   }
 });
 
@@ -390,6 +461,8 @@ router.post("/rezervacija", async (req, res) => {
       brojTelefona,
     } = req.body;
 
+    console.log(oznakaSedista, "----------------------------");
+
     let linija = await Linija.findByPk(linijaId, { include: Stanica });
 
     let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
@@ -398,16 +471,30 @@ router.post("/rezervacija", async (req, res) => {
     let korisnik = await Korisnik.findByPk(korisnikId);
 
     if (korisnik.role == "korisnik") {
-      console.log("korisnik", " -------------------------------------");
       if (korisnik.brojNeDolazaka > 2) {
         ("problem");
         //? broj neDolazaka je veci od 2
 
-        res.status(400).json({
+        return res.status(400).json({
           message:
             "Niste se pojavili 3 puta a rezervisali ste, pozovite za rezervaciju",
         });
-        return;
+      }
+
+      // Provera koliko je karata već rezervisano
+      const previousReservations = await Rezervacija.findAll({
+        where: { korisnikId, linijaId },
+      });
+      const totalReservedSeats = previousReservations.reduce(
+        (total, rezervacija) => total + rezervacija.brojMesta,
+        0
+      );
+      // Ako zbir prethodnih rezervacija i novih mesta prelazi 3, vraća se greška
+      if (totalReservedSeats + brojMesta > 3) {
+        return res.status(400).json({
+          message:
+            "Rezervacija ne može da pređe 3 karte online. Ako želite više mesta, pozovite dispečera.",
+        });
       }
     }
 
@@ -711,6 +798,7 @@ router.post("/rezervacija", async (req, res) => {
             <p>Vreme Dolaska: ${vremeDolaska}</p>
             <p>Osveženje: ${osvezenje}</p>
             <p>Broj kola: ${kola}</p>
+            <p><strong>Napomena:</strong> Moguće su promene broja sedišta. Bićete pravovremeno obavešteni ukoliko dođe do promene.</p>
             <p>Provera validnosti karte proveriti na sledećem linku:</p>
             <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
             <p>Molimo vas da skenirate QR kod za više detalja:</p>

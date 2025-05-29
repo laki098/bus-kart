@@ -12,6 +12,7 @@ import helpers from "../../helpers/helpers";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LanguageSwitcher from "../header/header";
 
 const LineForm = ({ mode, id, state }) => {
   const [linija, setLinija] = useState([]);
@@ -284,23 +285,7 @@ const LineForm = ({ mode, id, state }) => {
 
   return (
     <div>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div>
         <div className="tabela-stanica prosiri-tabela-stanica">

@@ -5,6 +5,8 @@ import "./i18n"; // za prevodjenje
 import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 
+import LanguageSwitcher from "../../header/header";
+
 //import SeatSabiranje from "../../rezervacije/proba/seatbiranje";
 //import Autobus from "../../rezervacije/sedista/autobus";
 
@@ -20,23 +22,7 @@ const Kontakt = () => {
   return (
     <div>
       {/*  header je deo za prevodjenje*/}
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <section className="distance">
         <div className="contact row1">

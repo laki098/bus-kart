@@ -7,6 +7,7 @@ import "../NavBar/links/i18n";
 import "../rezervacije/i18n";
 import apiUrl from "../../apiConfig";
 import "../../components/admin/stanica/stanica.css";
+import LanguageSwitcher from "../header/header";
 
 const Stjuardesa = () => {
   const [stjuardesaLinija, setStjuardesaLinija] = useState([]);
@@ -43,23 +44,7 @@ const Stjuardesa = () => {
 
   return (
     <>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="labela-stanica labela-stanica-naslov red-1">
         <Trans i18nKey="description.part189"> Aktivne linije </Trans>

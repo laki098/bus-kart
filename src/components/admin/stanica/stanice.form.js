@@ -8,6 +8,8 @@ import "../../rezervacije/i18n";
 import { useTranslation, Trans } from "react-i18next"; //prevodjenje
 import { ToastContainer } from "react-toastify";
 
+import LanguageSwitcher from "../../header/header";
+
 const StaniceForm = ({ mode, id }) => {
   const [stanice, setStanice] = useState({});
   const staniceLogic = StaniceLogic();
@@ -27,8 +29,6 @@ const StaniceForm = ({ mode, id }) => {
       izmeniStanice();
     }
   }, []);
-
-  
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -56,23 +56,7 @@ const StaniceForm = ({ mode, id }) => {
 
   return (
     <div>
-      <header>
-        <div className="jezici">
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              className="jezici-dugme-promena"
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <div className="red-1"></div>
       <div className="red-1"></div>
@@ -122,7 +106,7 @@ const StaniceForm = ({ mode, id }) => {
           </div>
           <div>
             <div className="red-1"></div>
-            <button  type="submit" className="buttonSwitch">
+            <button type="submit" className="buttonSwitch">
               {mode === "add" ? (
                 <>
                   <Trans i18nKey="description.part128">Dodaj</Trans>
@@ -137,7 +121,7 @@ const StaniceForm = ({ mode, id }) => {
           <div className="red-1"></div>
         </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

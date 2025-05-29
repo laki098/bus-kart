@@ -9,6 +9,7 @@ import "../../components/NavBar/links/i18n";
 import apiUrl from "../../apiConfig";
 import ToastNotification from "../../toastNotification/ToastNotification";
 import { ToastContainer } from "react-toastify";
+import LanguageSwitcher from "../header/header";
 
 const ResetPassword = () => {
   const form = useRef();
@@ -51,22 +52,7 @@ const ResetPassword = () => {
 
   return (
     <div style={{ backgroundColor: "#e1e3eb" }}>
-      <header>
-        <div style={{ textAlign: "right", marginRight: "3rem" }}>
-          {Object.keys(lngs).map((lng) => (
-            <button
-              key={lng}
-              style={{
-                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-      </header>
+      <LanguageSwitcher lngs={lngs} i18n={i18n} />
       <form ref={form} onSubmit={submit}>
         <div className="main" style={{ paddingTop: "0.625rem" }}>
           <div className="sub-main">
