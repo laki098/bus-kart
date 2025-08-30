@@ -14,6 +14,7 @@ const S2 = ({
   pocetnaStanicaId,
   krajnjaStanicaId,
 }) => {
+  const MAX_SELECTION = 3;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [trenutniSprat, setTrenutniSprat] = useState("gornji");
   const [rezervacija, setRezervacija] = useState([]);
@@ -36,7 +37,7 @@ const S2 = ({
 
   const notifyWarn = () => {
     toast.warn(
-      "Već ste izabrali sedište. Možete promeniti sedište kada isključite postojeće.",
+      `Možete izabrati najviše ${MAX_SELECTION} sedišta. Za više rezervacija pozvati operatera.`,
       {
         position: "top-center",
         autoClose: 3000,
@@ -51,6 +52,28 @@ const S2 = ({
   };
 
   const handleSeatClick = (seatNumber) => {
+    if (isSeatReserved(seatNumber)) return; // ne dozvoli rezervisana
+
+    if (selectedSeats.includes(seatNumber)) {
+      // toggle OFF
+      const next = selectedSeats.filter((s) => s !== seatNumber);
+      setSelectedSeats(next);
+      onReservation(next);
+    } else {
+      // pokušaj dodavanja novog
+      if (selectedSeats.length >= MAX_SELECTION) {
+        notifyWarn();
+        return;
+      }
+      const next = [...selectedSeats, seatNumber];
+      setSelectedSeats(next);
+      onReservation(next);
+    }
+  };
+
+  const isSeatSelected = (seatNumber) => selectedSeats.includes(seatNumber);
+
+  /* const handleSeatClick = (seatNumber) => {
     // Proverite da li korisnik već ima selektovano sedište
     if (selectedSeats.length > 0) {
       if (selectedSeats != seatNumber) {
@@ -71,7 +94,7 @@ const S2 = ({
 
   const isSeatSelected = (seatNumber) => {
     return selectedSeats.includes(seatNumber);
-  };
+  }; */
 
   const handlePromeniSprat = (sprat) => {
     setTrenutniSprat(sprat);

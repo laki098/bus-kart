@@ -2,14 +2,11 @@ import LoginLogic from "./login.logic";
 import { Link } from "react-router-dom";
 import "./loginStyle.css";
 import profile from "../images/profile.png";
-import user from "../images/user.png";
-import password from "../images/password.png";
 
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next";
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 
-import "../admin/admin.css";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 
@@ -18,109 +15,86 @@ import LanguageSwitcher from "../header/header";
 const LoginComponent = () => {
   const loginLogic = LoginLogic();
 
-  //prevodjenje start
-  const lngs = {
-    en: { nativeName: "En" },
-    sr: { nativeName: "Sr" },
-  };
-  const { t, i18n } = useTranslation();
-  // prevodjenje end
+  // prevod
+  const lngs = { en: { nativeName: "En" }, sr: { nativeName: "Sr" } };
+  const { i18n } = useTranslation();
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-  };
-
-  const [password, setPassword] = useState("");
+  // show/hide lozinka
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleToggleClick = () => {
-    setShowPassword(!showPassword);
-  };
 
   return (
     <div className="pozadina">
       <LanguageSwitcher lngs={lngs} i18n={i18n} />
-      <form onSubmit={submitHandler}>
-        <div className="main">
-          <div className="sub-main sirina-20">
+
+      <div className="login-wrap">
+        <form
+          className="login-card"
+          onSubmit={(e) => {
+            e.preventDefault();
+            loginLogic.login();
+          }}
+        >
+          <div className="login-header">
+            <div className="login-avatar">
+              <img src={profile} alt="profile" />
+            </div>
             <div>
-              <div className="imgs">
-                <div className="container-image">
-                  <img src={profile} alt="profile" className="profile" />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div className="red-1"></div>
-                  <p className="naslovLogin">
-                    <Trans i18nKey="description.part124">Logovanje</Trans>
-                  </p>{" "}
-                  <div className="red-1"></div>
-                  <div>
-                    {/* <img src={user} alt="user" className="user" /> */}
-                    <input
-                      type="text"
-                      placeholder="Korisničko ime"
-                      name="korisnickoIme"
-                      className="name1 input-new"
-                      onChange={loginLogic.changeHandler}
-                      autoComplete="username"
-                    />
-                  </div>
-                  <div className="second-input">
-                    <div className="passwordContainer">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Lozinka"
-                        name="lozinka"
-                        current-password
-                        className="name1 input-new"
-                        onChange={loginLogic.changeHandler}
-                        autoComplete="current-password"
-                      />
-                      <span
-                        className="passwordToggleLogin "
-                        onClick={handleToggleClick}
-                      >
-                        {showPassword ? (
-                          <i className="fa-regular fa-eye"></i>
-                        ) : (
-                          <i className="fa-regular fa-eye-slash"></i>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="login-button">
-                    <button className="button" onClick={loginLogic.login}>
-                      Login
-                    </button>
-                  </div>
-                  <div className="link">
-                    {" "}
-                    {/* bilo je "a naslov"  */}
-                    <Link to="/reset.password" className=" naslov-srednji">
-                      <Trans i18nKey="description.part125">
-                        Zaboravljena šifra
-                      </Trans>{" "}
-                    </Link>{" "}
-                    <div className="red-1"></div>
-                    <Link
-                      to="/registration.component"
-                      className=" naslov-srednji"
-                    >
-                      <Trans i18nKey="description.part52">Registracija</Trans>
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <h1 className="login-title">
+                <Trans i18nKey="description.part124">Logovanje</Trans>
+              </h1>
+              <p className="login-subtitle">Dobrodošli nazad</p>
             </div>
           </div>
-        </div>
-      </form>
+
+          <div className="login-fields">
+            <label className="login-label">Korisničko ime</label>
+            <input
+              type="text"
+              name="korisnickoIme"
+              autoComplete="username"
+              className="login-input"
+              placeholder="Unesite korisničko ime"
+              onChange={loginLogic.changeHandler}
+            />
+
+            <label className="login-label">Lozinka</label>
+            <div className="login-password">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="lozinka"
+                autoComplete="current-password"
+                className="login-input"
+                placeholder="Unesite lozinku"
+                onChange={loginLogic.changeHandler}
+              />
+              <button
+                type="button"
+                className="login-eye"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Sakrij lozinku" : "Prikaži lozinku"}
+                title={showPassword ? "Sakrij lozinku" : "Prikaži lozinku"}
+              >
+                {showPassword ? (
+                  <i className="fa-regular fa-eye" />
+                ) : (
+                  <i className="fa-regular fa-eye-slash" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" className="login-btn">
+            Login
+          </button>
+
+          <div className="login-links">
+            <Link to="/reset.password">Zaboravljena šifra</Link>
+            <span>•</span>
+            <Link to="/registration.component">Registrujte se</Link>
+          </div>
+        </form>
+      </div>
+
       <ToastContainer />
     </div>
   );

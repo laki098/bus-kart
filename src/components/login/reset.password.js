@@ -46,7 +46,7 @@ const ResetPassword = () => {
 
   const lngs = {
     en: { nativeName: "Engleski" },
-    de: { nativeName: "Srpski" },
+    sr: { nativeName: "Srpski" },
   };
   const { t, i18n } = useTranslation();
 

@@ -1,326 +1,182 @@
-.main {
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  /* padding-top: 2rem;           bilo je 5.625    */
-  padding-bottom: 2rem; /* 5.625    */
-
-  background-color: #e1e3eb;
-}
-.sub-main {
-  display: flex;
-  justify-content: center;
-  /* height: 34.375rem;      */
-  height: max-content;
-  width: 45%; /* bilo 45%     */
-  box-shadow: 0.688rem 0.75rem 0.813rem 0.75rem rgb(207, 207, 207);
-  padding-top: 1.875rem;
-  padding-bottom: 2rem;
-  border-radius: 3.75rem;
-  background-color: white;
-  color: #290371; /* dodala sam   */
-}
-
+/* Pozadina stranice */
 .pozadina {
-  background-color: #e1e3eb;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e7ebf5 0%, #e3e6ef 60%, #e7ebf5 100%);
 }
 
-.imgs {
-  padding-top: 1.25rem;
-  justify-content: center;
+/* Wrap centriranje */
+.login-wrap {
+  display: grid;
+  place-items: center;
+  padding: 32px 16px 64px;
+}
+
+/* Kartica */
+.login-card {
+  width: min(420px, 92vw);
+  background: radial-gradient(
+      900px 200px at 50% -140px,
+      rgba(37, 99, 235, 0.12),
+      transparent 60%
+    ),
+    #ffffff;
+  border: 1px solid rgba(2, 6, 23, 0.06);
+  border-radius: 24px;
+  padding: 22px 22px 20px;
+  box-shadow: 0 22px 35px rgba(2, 6, 23, 0.15),
+    0 1px 0 rgba(2, 6, 23, 0.06) inset;
+}
+
+/* Header */
+.login-header {
   display: flex;
-}
-.container-image {
-  background-color: rgb(223, 221, 221);
-  border-radius: 9.375rem;
   align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 7.188rem;
-  width: 7.188rem;
-}
-.profile {
-  height: 7.938rem;
-  /* width: 129px; */
-  border-radius: 8.125rem;
+  gap: 16px;
+  margin-bottom: 10px;
 }
 
-.input {
-  /* width: 18.75rem;     */
-  /* height: 3.125rem;    */
-  width: 70%; /* 20rem    */
-  height: 3.3rem;
-  border-radius: 1.5rem; /* 3.75rem;   */
-  box-shadow: inset 0rem 0rem 1.563rem 0rem #888;
-  border: none;
-  outline: none;
-  background-color: #fff;
-  margin-top: 0.5rem; /* dodala   */
-  font-size: small;
-}
-
-input::placeholder {
-  /* dodala   */
-  font-weight: bold;
-  opacity: 0.8;
-  color: blue;
-  font-size: 0.8rem;
-  padding-left: 3rem; /* bilo 2rem    */
-}
-
-.user {
-  height: 2.063rem; /* bilo 3.063   */
-  width: 2.75rem; /* 3.75   */
-  position: absolute;
-  padding-left: 1.063rem;
-  margin-left: 0rem;
-}
-.user1 {
-  height: 2.55rem; /* 3.55  3.25  bilo   */
-  width: 3.375rem; /* 4.375    */
-  position: absolute;
-  padding-left: 0.188rem;
-  margin-left: 0rem;
-}
-
-.name1 {
-  /*  padding-left: 0.01rem; */ /* bilo 4.375   */
-  /*    font-size: 1.25rem;       */
-  /*    font-size: small;         */
-  font-size: small;
-}
-.second-input {
-  padding-top: 1.25rem;
-}
-
-/* .button{
-    width: 20vw;
-    height: 3.125rem;
-    border-radius: 3.75rem;
-    background-color: #93cede;
-    color: white;
-    font-size: 1.563rem;
-    border: none;
-} */
-.login-button {
-  padding-top: 1.563rem;
-}
-
-.link {
-  font-size: 1.563rem;
-  font-weight: 25rem;
-  padding-top: 0.938rem;
-}
-.a {
-  color: blue;
-  font-size: medium;
-}
-
-.button {
-  align-items: center;
-  appearance: none;
-  background-color: #fcfcfd;
-  border-radius: 0.25rem;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem,
-    rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,
-    #d6d6e7 0 -0.188rem 0 inset;
-  box-sizing: border-box;
-  color: darkblue; /*#36395A;  */
-  cursor: pointer;
-  display: inline-flex;
-  /*font-family: "JetBrains Mono",monospace;    */
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  height: 3rem;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
+.login-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
   overflow: hidden;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow 0.15s, transform 0.15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow, transform;
-  font-size: 1.125rem;
+}
+.login-avatar img {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  filter: brightness(1.05);
 }
 
-.button:focus {
-  box-shadow: #d6d6e7 0 0 0 1.5px inset,
-    rgba(45, 35, 66, 0.4) 0 0.125rem 0.25rem,
-    rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,
-    #d6d6e7 0 -0.188rem 0 inset;
+.login-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 26px);
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.button:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 0.25rem 0.5rem,
-    rgba(45, 35, 66, 0.3) 0 0.438rem 0.813rem -0.188rem,
-    #d6d6e7 0 -0.188rem 0 inset;
-  transform: translateY(-0.125rem);
+.login-subtitle {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
 }
 
-.button:active {
-  box-shadow: #d6d6e7 0 0.188rem 0.438rem inset;
-  transform: translateY(0.125rem);
+/* Polja */
+.login-fields {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.naslov {
-  /* text-size-adjust: 35px;   */
-  font-size: large;
-  color: darkblue;
-  font-weight: bold;
+.login-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
 }
 
-.naslovLogin {
-  /* text-size-adjust: 35px;   */
-  font-size: large;
-  color: darkblue;
-  font-weight: bold;
+.login-input {
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(2, 6, 23, 0.1);
+  background: #fff;
+  font-size: 15px;
+  color: #0f172a;
+  outline: none;
+  transition: border 0.15s, box-shadow 0.15s;
+}
+.login-input::placeholder {
+  color: #94a3b8;
 }
 
-.naslov-srednji {
-  font-size: medium;
-  color: darkblue;
+.login-input:hover {
+  border-color: rgba(2, 6, 23, 0.18);
+}
+.login-input:focus {
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-.naslov-veci {
-  font-size: larger;
-}
-
-.labela {
-  color: #290371;
-  text-decoration: blue;
-}
-
-.labela::content {
-  color: darkblue;
-}
-
-.input-new {
-  border-radius: 1rem;
-  border-color: darkblue;
-  border-style: initial;
-  box-shadow: inset 0rem 0rem 1.563rem 0rem #c3def6;
-  /*margin-top: 0.5rem;   */
-  margin: 0.4rem;
-  height: 2rem;
-  width: 12rem;
-  font-size: medium;
-  text-align: center;
-  color: blue;
-}
-.input-new::placeholder {
-  text-align: center;
-  padding-left: 0rem;
-}
-
-@media only screen and (max-width: 480px) {
-  .naslov {
-    font-size: medium;
-  } /* labele   */
-  .name {
-    font-size: 1.5rem;
-  } /* za input polja */
-  .input {
-    height: 2.5rem;
-    width: 80%;
-  }
-  .profile {
-    height: 3rem;
-  }
-  .container-image {
-    height: 3rem;
-    width: 3rem;
-  }
-  .button {
-    font-size: 0.5rem;
-    height: 0.7rem;
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-  } /* dugme  */
-  .user {
-    width: 2rem;
-    height: 2rem;
-    padding-left: 0.2rem;
-    margin-left: -1.5rem;
-  } /* slicice u input polja  */
-  .user1 {
-    width: 2.2rem;
-    height: 2.2rem;
-    padding-left: 0.05rem;
-    margin-left: -1.5rem;
-  }
-  .sub-main {
-    width: 85%;
-  }
-  .profile {
-    height: 5rem;
-    border-radius: 8rem;
-  }
-}
-
-@media only screen and (min-width: 481px) and (max-width: 650px) {
-  /* 767px    */
-  .sub-main {
-    width: 70%;
-  } /* 15rem    */
-  .input {
-    height: 2.5rem;
-    width: 70%;
-  } /* 70%    */
-  .user {
-    width: 2rem;
-    height: 2rem;
-    padding-left: 0.2rem;
-    margin-left: -1.8rem;
-  } /* slicice u input polja  */
-  .user1 {
-    width: 2.2rem;
-    height: 2.2rem;
-    padding-left: 0.05rem;
-    margin-left: -1.8rem;
-  }
-}
-
-@media only screen and (min-width: 651px) {
-  .user {
-    margin-left: -2.5rem;
-  } /* 4    */
-  .user1 {
-    margin-left: -2.5rem;
-  }
-  /* .input {width: 70%;}        */
-}
-
-.button:active {
-  box-shadow: #d6d6e7 0 0.188rem 0.438rem inset;
-  transform: translateY(0.125rem);
-}
-.medjustanica {
-  text-align: center;
-}
-
-.passwordContainer {
+/* Lozinka sa okom */
+.login-password {
   position: relative;
 }
-
-.passwordToggleLogin {
+.login-eye {
   position: absolute;
-  top: 14px;
-  transform: translateX(-165%);
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #334155;
   cursor: pointer;
+  font-size: 18px;
+  padding: 6px;
 }
-.edit-medjustanica {
-  width: 10rem;
-  height: 2rem;
-  border-color: darkblue;
-  border-radius: 0.3rem;
-  margin: 0.2rem;
-  text-align: center;
-  margin-left: 2.2rem;
+
+/* Dugme */
+.login-btn {
+  margin-top: 14px;
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #fff;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.35),
+    0 2px 0 rgba(2, 6, 23, 0.1) inset;
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.login-btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.4),
+    0 2px 0 rgba(2, 6, 23, 0.1) inset;
+}
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+/* Linkovi */
+.login-links {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.login-links a {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: 600;
+}
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsivno */
+@media (max-width: 520px) {
+  .login-card {
+    padding: 18px 16px;
+  }
+  .login-avatar {
+    width: 68px;
+    height: 68px;
+  }
+  .login-avatar img {
+    width: 56px;
+    height: 56px;
+  }
 }

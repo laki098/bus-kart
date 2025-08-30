@@ -12,6 +12,6 @@ const sequelize = new Sequelize({
 });
 
 //? pravi Modele(tabele u bazi) ako ne postoje
-sequelize.sync();
+/* sequelize.sync(); */
 
 module.exports = sequelize;

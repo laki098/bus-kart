@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [process.env.CLIENT_BASE_URL],
+    origin: process.env.CLIENT_BASE_URL,
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })
@@ -51,7 +51,14 @@ app.use(
 database
   .authenticate()
   .then(() => {
-    Korisnik.findOrCreate({
+    console.log("Sequelize connected successfully");
+
+    // prvo napravi tabele
+    return database.sync();
+  })
+  .then(() => {
+    // tek sada ubaci admina
+    return Korisnik.findOrCreate({
       where: { korisnickoIme: "admin" },
       defaults: {
         korisnickoIme: "admin",
@@ -64,7 +71,6 @@ database
         validan: true,
       },
     });
-    console.log("Sequilize connected successfully");
   })
   .catch((err) => {
     console.error("Unable to connect to Sequelize", err);

@@ -5,7 +5,7 @@ import classes from "./registration.module.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const RegistrationComponent = () => {
-  let [formInputsValid, setFormInputsValid] = useState({
+  const [formInputsValid, setFormInputsValid] = useState({
     name: true,
     prezime: true,
     email: true,
@@ -13,6 +13,7 @@ const RegistrationComponent = () => {
     lozinka: true,
     brojTelefona: true,
   });
+
   const registrationLogic = RegistrationLogic();
 
   const fNameInputRef = useRef();
@@ -21,6 +22,8 @@ const RegistrationComponent = () => {
   const emailInputRef = useRef();
   const brojTelefonaInputRef = useRef();
   const lozinkaInputRef = useRef();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const confirmeHandler = (event) => {
     event.preventDefault();
@@ -33,6 +36,7 @@ const RegistrationComponent = () => {
       lozinkaInputRef,
       brojTelefonaInputRef
     );
+
     setFormInputsValid({
       name: formValidation.validName,
       prezime: formValidation.validPrezime,
@@ -41,123 +45,149 @@ const RegistrationComponent = () => {
       brojTelefona: formValidation.validPhone,
       lozinka: formValidation.validLozinka,
     });
-    if (!formValidation.isFormValid) {
-      return;
-    }
+
+    if (!formValidation.isFormValid) return;
 
     registrationLogic.registracija();
   };
 
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleToggleClick = () => {
-    setShowPassword(!showPassword);
-  };
-  
   return (
     <>
-      <form onSubmit={confirmeHandler} className={classes.form}>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.name ? "" : classes.invalid
-          }`}
-        >
-          <label>Ime:</label>
-          <input
-            type="text"
-            name="ime"
-            onChange={registrationLogic.changeHandler}
-            ref={fNameInputRef}
-          />
-          {!formInputsValid.name && <p>Unesite ime</p>}
-        </div>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.prezime ? "" : classes.invalid
-          }`}
-        >
-          <label>Prezime:</label>
-          <input
-            type="text"
-            name="prezime"
-            ref={prezimeInputRef}
-            onChange={registrationLogic.changeHandler}
-          />
-          {!formInputsValid.prezime && <p>Unesite prezime</p>}
-        </div>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.korisnickoIme ? "" : classes.invalid
-          }`}
-        >
-          <label>Korisnicko ime:</label>
-          <input
-            type="text"
-            name="korisnickoIme"
-            ref={korisnickoImeInputRef}
-            onChange={registrationLogic.changeHandler}
-          ></input>
-          {!formInputsValid.korisnickoIme && <p>Unesite korisničko ime</p>}
-        </div>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.lozinka ? "" : classes.invalid
-          }`}
-        >
-          <label>Lozinka:</label>
-          <div className={classes.passwordContainer}>
+      <div className={classes.wrap}>
+        <form onSubmit={confirmeHandler} className={classes.form}>
+          <header className={classes.header}>
+            <div className={classes.badge} aria-hidden="true">
+              ✳︎
+            </div>
+            <div>
+              <h1 className={classes.title}>Registracija</h1>
+              <p className={classes.subtitle}>Kreirajte novi nalog</p>
+            </div>
+          </header>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.name ? "" : classes.invalid
+            }`}
+          >
+            <label>Ime</label>
             <input
-              type={showPassword ? "text" : "password"}
-              name="lozinka"
-              ref={lozinkaInputRef}
+              type="text"
+              name="ime"
+              placeholder="Unesite ime"
+              autoComplete="given-name"
+              onChange={registrationLogic.changeHandler}
+              ref={fNameInputRef}
+            />
+            {!formInputsValid.name && <p>Unesite ime</p>}
+          </div>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.prezime ? "" : classes.invalid
+            }`}
+          >
+            <label>Prezime</label>
+            <input
+              type="text"
+              name="prezime"
+              placeholder="Unesite prezime"
+              autoComplete="family-name"
+              ref={prezimeInputRef}
               onChange={registrationLogic.changeHandler}
             />
-            <span
-              className={classes.passwordToggle}
-              onClick={handleToggleClick}
-            >
-              {showPassword ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
-            </span>
+            {!formInputsValid.prezime && <p>Unesite prezime</p>}
           </div>
-          {!formInputsValid.lozinka && <p>Lozinka ne može biti manja od 6 karaktera</p>}
-        </div>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.brojTelefona ? "" : classes.invalid
-          }`}
-        >
-          <label>Broj telefona:</label>
-          <input
-            type="text"
-            name="brojTelefona"
-            ref={brojTelefonaInputRef}
-            onChange={registrationLogic.changeHandler}
-          ></input>
-          {!formInputsValid.brojTelefona && <p>Unesite broj telefona</p>}
-        </div>
-        <div
-          className={`${classes.control} ${
-            formInputsValid.email ? "" : classes.invalid
-          }`}
-        >
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            ref={emailInputRef}
-            onChange={registrationLogic.changeHandler}
-          ></input>
-          {!formInputsValid.email && <p>Unesite email</p>}
-        </div>
-        <div>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.korisnickoIme ? "" : classes.invalid
+            }`}
+          >
+            <label>Korisničko ime</label>
+            <input
+              type="text"
+              name="korisnickoIme"
+              placeholder="npr. mika123"
+              autoComplete="username"
+              ref={korisnickoImeInputRef}
+              onChange={registrationLogic.changeHandler}
+            />
+            {!formInputsValid.korisnickoIme && <p>Unesite korisničko ime</p>}
+          </div>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.lozinka ? "" : classes.invalid
+            }`}
+          >
+            <label>Lozinka</label>
+            <div className={classes.passwordContainer}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="lozinka"
+                placeholder="Min. 6 karaktera"
+                autoComplete="new-password"
+                ref={lozinkaInputRef}
+                onChange={registrationLogic.changeHandler}
+              />
+              <button
+                type="button"
+                className={classes.passwordToggle}
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Sakrij lozinku" : "Prikaži lozinku"}
+                title={showPassword ? "Sakrij lozinku" : "Prikaži lozinku"}
+              >
+                {showPassword ? (
+                  <i className="fa-regular fa-eye" />
+                ) : (
+                  <i className="fa-regular fa-eye-slash" />
+                )}
+              </button>
+            </div>
+            {!formInputsValid.lozinka && (
+              <p>Lozinka ne može biti kraća od 6 karaktera</p>
+            )}
+          </div>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.brojTelefona ? "" : classes.invalid
+            }`}
+          >
+            <label>Broj telefona</label>
+            <input
+              type="tel"
+              name="brojTelefona"
+              placeholder="npr. 0631234567"
+              autoComplete="tel"
+              ref={brojTelefonaInputRef}
+              onChange={registrationLogic.changeHandler}
+            />
+            {!formInputsValid.brojTelefona && <p>Unesite broj telefona</p>}
+          </div>
+
+          <div
+            className={`${classes.control} ${
+              formInputsValid.email ? "" : classes.invalid
+            }`}
+          >
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              ref={emailInputRef}
+              onChange={registrationLogic.changeHandler}
+            />
+            {!formInputsValid.email && <p>Unesite ispravan email</p>}
+          </div>
+
           <button className={classes.submit}>Registruj se</button>
-        </div>
-      </form>
+        </form>
+      </div>
+
       <ToastContainer />
     </>
   );

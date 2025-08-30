@@ -115,12 +115,11 @@ const RezervacijaComponent = ({ id, state }) => {
     //? Ovde mozemo izvrsiti akcije sa selektovanim sedistima za povratak
     setSelectedSeatsReturn(selectedSeatsReturn);
   };
-  console.log(selectedSeatsReturn);
 
   const novaRezervacija = async () => {
     await RezervacijaApi()
       .rezervacija(
-        1,
+        selectedSeats?.length ?? 0,
         state.pocetnaStanica,
         state.krajnjaStanica,
         state.datumPolaska,
@@ -133,7 +132,7 @@ const RezervacijaComponent = ({ id, state }) => {
         userPars.idKorisnika,
 
         osvezenje,
-        parseInt(selectedSeats),
+        selectedSeats,
         tipKarte,
         rezervacijaLogic.data.emailKorisnika?.trim()
           ? rezervacijaLogic.data.emailKorisnika.trim()
@@ -229,6 +228,7 @@ const RezervacijaComponent = ({ id, state }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const handleReservation = (selectedSeats) => {
+    console.log(selectedSeats);
     // Ovde mozete izvrsiti akcije sa selektovanim sedistima
     setSelectedSeats(selectedSeats);
   };
@@ -366,7 +366,7 @@ const RezervacijaComponent = ({ id, state }) => {
   const novaRezervacijaPovratak = async () => {
     await RezervacijaApi()
       .rezervacijaPovratna(
-        1,
+        selectedSeatsReturn?.length ?? 0,
         state.krajnjaStanica,
         state.pocetnaStanica,
         returnDate,
@@ -379,7 +379,7 @@ const RezervacijaComponent = ({ id, state }) => {
         userPars.idKorisnika,
 
         osvezenje,
-        parseInt(selectedSeatsReturn),
+        selectedSeatsReturn,
         "PrPovratna", //tipKarte,   tip karte za povratnu
         rezervacijaLogic.data.emailKorisnika?.trim()
           ? rezervacijaLogic.data.emailKorisnika.trim()
@@ -404,7 +404,7 @@ const RezervacijaComponent = ({ id, state }) => {
   const novaRezervacijaPovratakIzmena = () => {
     RezervacijaApi()
       .rezervacijaPovratnaIzmena(
-        1,
+        selectedSeatsReturn?.length ?? 0,
         state.pocetnaStanica, //citamo state ReadOnly
         state.krajnjaStanica, //citamo state ReadOnly
         pomDatPolazak, //korisnik promenio sa Fronta unosom novih podataka a bilo je returnDate,
@@ -417,7 +417,7 @@ const RezervacijaComponent = ({ id, state }) => {
         userPars.idKorisnika,
 
         osvezenje,
-        parseInt(selectedSeatsReturn),
+        selectedSeatsReturn,
         state.tipKarte,
         rezervacijaLogic.data.emailKorisnika?.trim()
           ? rezervacijaLogic.data.emailKorisnika.trim()
@@ -443,7 +443,7 @@ const RezervacijaComponent = ({ id, state }) => {
   const preRezervacija = () => {
     RezervacijaApi()
       .pre_rezervacija(
-        1,
+        selectedSeatsReturn?.length ?? 0,
         state.pocetnaStanica,
         state.krajnjaStanica,
         pomDatPolazak, //state.datumPolaska,
@@ -455,7 +455,7 @@ const RezervacijaComponent = ({ id, state }) => {
         state.krajnjaStanicaId,
         userPars.idKorisnika,
         osvezenje,
-        parseInt(selectedSeatsReturn),
+        selectedSeatsReturn,
         state.tipKarte, //tipKarte,
         rezervacijaLogic.data.emailKorisnika?.trim()
           ? rezervacijaLogic.data.emailKorisnika.trim()

@@ -47,7 +47,7 @@ const CeneInitial = () => {
   //prevodjenje
   const lngs = {
     en: { nativeName: "En" },
-    de: { nativeName: "Sr" },
+    sr: { nativeName: "Sr" },
   };
   const { t, i18n } = useTranslation();
   // prevodjenje

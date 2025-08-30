@@ -25,6 +25,8 @@ const qrcode = require("qrcode");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
 
+const { Op } = require("sequelize");
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -111,6 +113,7 @@ router.post("/", async (req, res) => {
     for (let i = 0; i < datumPolaska.length; i++) {
       const datumPolaska1 = datumPolaska[i];
       const datumDolaska1 = datumDolaska[i];
+
       //kreiranje broja sedista.. izlacenja po oznaci busa
       const brojMestaUBusu = await Bus.findOne({
         where: {
@@ -128,7 +131,6 @@ router.post("/", async (req, res) => {
       });
 
       const brojSlobodnihMesta = brojMestaUBusu.brojSedista;
-
       // Kreiranje medjustanica sa vremenima
       const medjustaniceWithTimes = medjustanice.map((stanica) => ({
         naziv: stanica.stanica,
@@ -158,35 +160,41 @@ router.post("/", async (req, res) => {
       // Povezivanje početne stanice i krajnje stanice s linijom
       novaLinija.setPocetnaStanica(pocetna);
       novaLinija.setKrajnjaStanica(krajnja);
-
       // Povezivanje medjustanica sa vremenima s linijom
-      await Promise.all(
-        medjustaniceWithTimes.map(async (stanica, index) => {
-          const foundStanica = await Stanica.findOne({
-            where: {
-              naziv: stanica.naziv,
-            },
-          });
+      if (
+        Array.isArray(medjustaniceWithTimes) &&
+        medjustaniceWithTimes.length > 0
+      ) {
+        await Promise.all(
+          medjustaniceWithTimes.map(async (stanica, index) => {
+            const foundStanica = await Stanica.findOne({
+              where: {
+                naziv: stanica.naziv,
+              },
+            });
 
-          await novaLinija.addStanica(foundStanica, {
-            through: {
-              redosled: index + 1,
-              vremePolaskaM: stanica.vremePolaska,
-              vremeDolaskaM: stanica.vremeDolaska,
-              datumPolaskaM: stanica.datumPolaska,
-              datumDolaskaM: stanica.datumDolaska,
-              brojSlobodnihMesta,
-              pocetakRute,
-              krajRute,
-            },
-          });
-        })
-      );
+            await novaLinija.addStanica(foundStanica, {
+              through: {
+                redosled: index + 1,
+                vremePolaskaM: stanica.vremePolaska,
+                vremeDolaskaM: stanica.vremeDolaska,
+                datumPolaskaM: stanica.datumPolaska,
+                datumDolaskaM: stanica.datumDolaska,
+                brojSlobodnihMesta,
+                pocetakRute,
+                krajRute,
+              },
+            });
+          })
+        );
+      }
     }
 
     return res.status(201).json({ message: "Uspešno dodate nova linija" });
   } catch (error) {
-    res.status(500).json({ error });
+    res
+      .status(500)
+      .json({ message: "Greška na serveru", detalji: error.message });
   }
 });
 
@@ -220,7 +228,6 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Autobus nije pronađen." });
     }
 
-    console.log(autobus);
     const brojSedista = autobus.brojSedista;
 
     const postojucaLinija = await Linija.findByPk(linijaId, {
@@ -440,9 +447,10 @@ const transporter = nodemailer.createTransport(
 );
 
 router.post("/rezervacija", async (req, res) => {
+  const t = await db.transaction();
   try {
     const {
-      brojMesta,
+      // brojMesta više ne koristimo direktno (računamo iz sedišta)
       polaznaStanicaR,
       krajnjaStanicaR,
       datumPolaska,
@@ -454,373 +462,393 @@ router.post("/rezervacija", async (req, res) => {
       krajnjaStanicaId,
       korisnikId,
       osvezenje,
-      oznakaSedista,
+      oznakaSedista, // može biti [1,2,3] ili "1,2,3" ili 5
       tipKarte,
       email,
       imeIprezime,
       brojTelefona,
     } = req.body;
 
-    console.log(oznakaSedista, "----------------------------");
-
-    let linija = await Linija.findByPk(linijaId, { include: Stanica });
-
-    let stanicaP = await Stanica.findByPk(pocetnaStanicaId);
-    let stanicaK = await Stanica.findByPk(krajnjaStanicaId);
-
-    let korisnik = await Korisnik.findByPk(korisnikId);
-
-    if (korisnik.role == "korisnik") {
-      if (korisnik.brojNeDolazaka > 2) {
-        ("problem");
-        //? broj neDolazaka je veci od 2
-
-        return res.status(400).json({
-          message:
-            "Niste se pojavili 3 puta a rezervisali ste, pozovite za rezervaciju",
-        });
-      }
-
-      // Provera koliko je karata već rezervisano
-      const previousReservations = await Rezervacija.findAll({
-        where: { korisnikId, linijaId },
-      });
-      const totalReservedSeats = previousReservations.reduce(
-        (total, rezervacija) => total + rezervacija.brojMesta,
-        0
-      );
-      // Ako zbir prethodnih rezervacija i novih mesta prelazi 3, vraća se greška
-      if (totalReservedSeats + brojMesta > 3) {
-        return res.status(400).json({
-          message:
-            "Rezervacija ne može da pređe 3 karte online. Ako želite više mesta, pozovite dispečera.",
-        });
-      }
+    // --- Normalizacija sedišta ---
+    let seatsToReserve = [];
+    if (Array.isArray(oznakaSedista)) {
+      seatsToReserve = oznakaSedista;
+    } else if (typeof oznakaSedista === "string") {
+      seatsToReserve = oznakaSedista
+        .split(",")
+        .map((s) => Number(String(s).trim()))
+        .filter((n) => Number.isFinite(n));
+    } else if (typeof oznakaSedista === "number") {
+      seatsToReserve = [oznakaSedista];
     }
-
-    let postojiStanicaP = false;
-    let postojiStanicaK = false;
-
-    if (linija.Stanicas.length == 0) {
-      if (linija.pocetnaStanicaId == pocetnaStanicaId) {
-        postojiStanicaP = true;
-      }
-      if (linija.krajnjaStanicaId == krajnjaStanicaId) {
-        postojiStanicaK = true;
-      }
+    // uniq + >=1
+    seatsToReserve = Array.from(new Set(seatsToReserve.map(Number))).filter(
+      (n) => Number.isFinite(n) && n >= 1
+    );
+    if (seatsToReserve.length === 0) {
+      await t.rollback();
+      return res.status(400).json({ message: "Nisu prosleđena sedišta." });
     }
+    const requestedCount = seatsToReserve.length;
 
-    //? Provera da li su podaci manji za 15 minuta u odnosu na vreme polaska linije
-    const trenutnoVreme = new Date();
-    const vremePolaskaRequest = new Date(datumPolaska + "T" + vremePolaska);
-
-    const razlika = (vremePolaskaRequest - trenutnoVreme) / (1000 * 60); // razlika u minutima
-
-    if (razlika < -15) {
-      //? Vreme polaska je manje od trenutnog vremena za više od 15 minuta
-
-      res.status(400).json({
-        message:
-          "Vreme polaska je manje od vremena polaska linije za više od 15 minuta.",
-      });
-      return;
-    }
-
-    for (let i = 0; i < linija.Stanicas.length; i++) {
-      const stanica = linija.Stanicas[i];
-
-      if (
-        stanicaP.id == stanica.id ||
-        linija.pocetnaStanicaId == pocetnaStanicaId
-      ) {
-        postojiStanicaP = true;
-      }
-
-      if (
-        stanicaK.id == stanica.id ||
-        linija.krajnjaStanicaId == krajnjaStanicaId
-      ) {
-        postojiStanicaK = true;
-      }
-    }
-
-    /* if (!email) {
-      return res.status(404).json({
-        message: "Ne email kako bi mogao da rezervise ",
-      });
-    } */
-
-    if (!postojiStanicaP) {
-      return res.status(404).json({
-        message: "Ne postoji stanica početna ",
-      });
-    }
-
-    if (!postojiStanicaK) {
-      return res.status(404).json({
-        message: "Ne postoji stanica krajnja na ispisanoj liniji",
-      });
-    }
-
+    // --- Učitavanje i lockovanje podataka ---
+    const linija = await Linija.findByPk(linijaId, {
+      include: Stanica,
+      transaction: t,
+      lock: t.LOCK.UPDATE,
+    });
     if (!linija) {
+      await t.rollback();
       return res.status(404).json({ message: "Linija nije pronađena" });
     }
 
-    let kola = linija.kola;
-
+    const stanicaP = await Stanica.findByPk(pocetnaStanicaId, {
+      transaction: t,
+      lock: t.LOCK.UPDATE,
+    });
+    const stanicaK = await Stanica.findByPk(krajnjaStanicaId, {
+      transaction: t,
+      lock: t.LOCK.UPDATE,
+    });
     if (!stanicaP || !stanicaK) {
+      await t.rollback();
       return res.status(404).json({ message: "Stanica nije pronađena" });
     }
 
-    // Ažuriranje broja slobodnih mesta
-    //?umanjuje ako je pocetna na liniji
-    if (linija.pocetnaStanicaId == pocetnaStanicaId) {
-      if (linija.brojSlobodnihMesta < brojMesta) {
-        return res.status(404).json({ message: "nema dovoljno mesta" });
-        return;
-      }
-
-      linija.brojSlobodnihMesta -= brojMesta;
-      await linija.save();
-    }
-
-    //? uslov da se umanje sedista na svim medjustanicama ako se izabere cela linija
-    if (
-      linija.pocetnaStanicaId == pocetnaStanicaId &&
-      linija.krajnjaStanicaId == krajnjaStanicaId
-    ) {
-      const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
-      for (let i = 0; i < medjustanicaSve.length; i++) {
-        const element = medjustanicaSve[i];
-        if (element.brojSlobodnihMesta < brojMesta) {
-          res.status(404).json({ message: "nema dovoljno mesta" });
-          return;
-        }
-        element.brojSlobodnihMesta -= brojMesta;
-        element.save();
-      }
-    }
-
-    //? ako je na pocetnoj i do neke medjusnice
-    if (
-      linija.pocetnaStanicaId == pocetnaStanicaId &&
-      linija.krajnjaStanicaId != krajnjaStanicaId
-    ) {
-      const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
-      const medjustanicaKrajnja = await Medjustanica.findOne({
-        where: { linijaId, stanicaId: krajnjaStanicaId },
-      });
-
-      for (let i = 0; i < medjustanicaSve.length; i++) {
-        const element = medjustanicaSve[i];
-
-        if (element.redosled < medjustanicaKrajnja.redosled) {
-          if (element.brojSlobodnihMesta < brojMesta) {
-            res.status(404).json({ message: "nema dovoljno mesta" });
-            return;
-          }
-          element.brojSlobodnihMesta -= brojMesta;
-          element.save();
-        }
-      }
-    }
-    //? uslov da se umanje sedista u slucaju da ako umanjimo izemdju vise medjustanicastanica
-    if (
-      linija.pocetnaStanicaId != pocetnaStanicaId &&
-      linija.krajnjaStanicaId != krajnjaStanicaId
-    ) {
-      linija.brojSlobodnihMesta -= brojMesta;
-      linija.save();
-      const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
-
-      const medjustanicaPocetna = await Medjustanica.findOne({
-        where: { linijaId, stanicaId: pocetnaStanicaId },
-      });
-
-      const medjustanicaKrajnja = await Medjustanica.findOne({
-        where: { linijaId, stanicaId: krajnjaStanicaId },
-      });
-
-      for (let i = 0; i < medjustanicaSve.length; i++) {
-        const element = medjustanicaSve[i];
-
-        if (
-          element.redosled >= medjustanicaPocetna.redosled &&
-          element.redosled < medjustanicaKrajnja.redosled
-        ) {
-          if (element.brojSlobodnihMesta < brojMesta) {
-            res.status(404).json({ message: "nema dovoljno mesta" });
-            return;
-          }
-
-          element.brojSlobodnihMesta -= brojMesta;
-          element.save();
-        }
-      }
-    }
-    //? ako ide od neke medjustanice do krajnje stanice na liniji
-    if (
-      linija.pocetnaStanicaId != pocetnaStanicaId &&
-      linija.krajnjaStanicaId == krajnjaStanicaId
-    ) {
-      linija.brojSlobodnihMesta -= brojMesta;
-      linija.save();
-      const medjustanicaSve = await Medjustanica.findAll({ where: linijaId });
-      const medjustanicaPocetna = await Medjustanica.findOne({
-        where: { linijaId, stanicaId: pocetnaStanicaId },
-      });
-      for (let i = 0; i < medjustanicaSve.length; i++) {
-        const element = medjustanicaSve[i];
-        if (element.redosled >= medjustanicaPocetna.redosled) {
-          if (element.brojSlobodnihMesta < brojMesta) {
-            res.status(404).json({ message: "nema dovoljno mesta" });
-            return;
-          }
-          element.brojSlobodnihMesta -= brojMesta;
-          element.save();
-        }
-      }
-    }
-    const kreiranjeRezervacije = await Rezervacija.create({
-      brojMesta,
-      linijaId,
-      polaznaStanicaR,
-      krajnjaStanicaR,
-      datumPolaska,
-      datumDolaska,
-      vremePolaska,
-      vremeDolaska,
-      pocetnaStanicaId,
-      krajnjaStanicaId,
-      korisnikId,
-      osvezenje,
-      oznakaSedista,
-      tipKarte,
-      email,
-      imeIprezime,
-      brojTelefona,
-      kola,
+    const korisnik = await Korisnik.findByPk(korisnikId, {
+      transaction: t,
+      lock: t.LOCK.UPDATE,
     });
-    if (email) {
-      const qrCodeText = `
-      oznakaRezervacije: ${kreiranjeRezervacije.id + 1}
-      LinijaId: ${linijaId}
-      Cekiranje URL: ${req.get("host")}/linija/cekiranje/${
-        kreiranjeRezervacije.id + 1
-      }
-  
-    
-  `;
+    if (!korisnik) {
+      await t.rollback();
+      return res.status(404).json({ message: "Korisnik nije pronađen" });
+    }
 
-      //? Postavite opcije za QR kod, na primer veličinu i error correction nivo
-      const opcije = {
+    // --- Vremenska validacija (15 min) ---
+    const trenutnoVreme = new Date();
+    const vremePolaskaRequest = new Date(`${datumPolaska}T${vremePolaska}`);
+    const razlikaMin = (vremePolaskaRequest - trenutnoVreme) / (1000 * 60);
+    if (razlikaMin < -15) {
+      await t.rollback();
+      return res.status(400).json({
+        message:
+          "Vreme polaska je manje od vremena polaska linije za više od 15 minuta.",
+      });
+    }
+
+    // --- Provera da li su početna/krajnja validne za liniju ---
+    let postojiStanicaP = false;
+    let postojiStanicaK = false;
+
+    if ((linija.Stanicas || []).length === 0) {
+      if (linija.pocetnaStanicaId === pocetnaStanicaId) postojiStanicaP = true;
+      if (linija.krajnjaStanicaId === krajnjaStanicaId) postojiStanicaK = true;
+    } else {
+      for (const s of linija.Stanicas) {
+        if (
+          s.id === pocetnaStanicaId ||
+          linija.pocetnaStanicaId === pocetnaStanicaId
+        ) {
+          postojiStanicaP = true;
+        }
+        if (
+          s.id === krajnjaStanicaId ||
+          linija.krajnjaStanicaId === krajnjaStanicaId
+        ) {
+          postojiStanicaK = true;
+        }
+      }
+    }
+
+    if (!postojiStanicaP) {
+      await t.rollback();
+      return res.status(404).json({ message: "Ne postoji stanica početna" });
+    }
+    if (!postojiStanicaK) {
+      await t.rollback();
+      return res
+        .status(404)
+        .json({ message: "Ne postoji stanica krajnja na ispisanoj liniji" });
+    }
+
+    // --- Limit: max 3 karte po liniji za običnog korisnika ---
+    if (korisnik.role === "korisnik") {
+      const totalPrevSeatsRaw = await Rezervacija.sum("brojMesta", {
+        where: { korisnikId, linijaId },
+        transaction: t,
+      });
+      const totalPrevSeats = Number(totalPrevSeatsRaw) || 0;
+      if (totalPrevSeats + requestedCount > 3) {
+        await t.rollback();
+        return res.status(400).json({
+          message:
+            "Rezervacija ne može da pređe 3 karte online za istu liniju. Ako želite više mesta, pozovite dispečera.",
+        });
+      }
+    }
+
+    // --- Provera zauzetosti traženih sedišta na istoj liniji ---
+    const existingSeats = await Rezervacija.findAll({
+      where: {
+        linijaId,
+        oznakaSedista: { [Op.in]: seatsToReserve },
+      },
+      transaction: t,
+      lock: t.LOCK.UPDATE,
+    });
+    if (existingSeats.length > 0) {
+      const taken = existingSeats.map((r) => r.oznakaSedista);
+      await t.rollback();
+      return res.status(409).json({
+        message: `Neka od traženih sedišta su već zauzeta: ${taken.join(", ")}`,
+      });
+    }
+
+    // --- Ažuriranje slobodnih mesta (linija + medjustanice) ---
+    // 1) Početna = početna linije
+    if (linija.pocetnaStanicaId === pocetnaStanicaId) {
+      if (linija.brojSlobodnihMesta < requestedCount) {
+        await t.rollback();
+        return res.status(404).json({ message: "nema dovoljno mesta" });
+      }
+      linija.brojSlobodnihMesta -= requestedCount;
+      await linija.save({ transaction: t });
+    }
+
+    // 2) kompletna ruta (početna linije -> krajnja linije)
+    if (
+      linija.pocetnaStanicaId === pocetnaStanicaId &&
+      linija.krajnjaStanicaId === krajnjaStanicaId
+    ) {
+      const medjustaniceSve = await Medjustanica.findAll({
+        where: { linijaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      for (const m of medjustaniceSve) {
+        if (m.brojSlobodnihMesta < requestedCount) {
+          await t.rollback();
+          return res.status(404).json({ message: "nema dovoljno mesta" });
+        }
+        m.brojSlobodnihMesta -= requestedCount;
+        await m.save({ transaction: t });
+      }
+    }
+
+    // 3) početna linije -> neka međustanica
+    if (
+      linija.pocetnaStanicaId === pocetnaStanicaId &&
+      linija.krajnjaStanicaId !== krajnjaStanicaId
+    ) {
+      const medjustaniceSve = await Medjustanica.findAll({
+        where: { linijaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      const medjustanicaKrajnja = await Medjustanica.findOne({
+        where: { linijaId, stanicaId: krajnjaStanicaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+
+      for (const m of medjustaniceSve) {
+        if (m.redosled < medjustanicaKrajnja.redosled) {
+          if (m.brojSlobodnihMesta < requestedCount) {
+            await t.rollback();
+            return res.status(404).json({ message: "nema dovoljno mesta" });
+          }
+          m.brojSlobodnihMesta -= requestedCount;
+          await m.save({ transaction: t });
+        }
+      }
+    }
+
+    // 4) između dve međustanice (ni početna ni krajnja linije)
+    if (
+      linija.pocetnaStanicaId !== pocetnaStanicaId &&
+      linija.krajnjaStanicaId !== krajnjaStanicaId
+    ) {
+      linija.brojSlobodnihMesta -= requestedCount;
+      await linija.save({ transaction: t });
+
+      const medjustaniceSve = await Medjustanica.findAll({
+        where: { linijaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      const medjustanicaPocetna = await Medjustanica.findOne({
+        where: { linijaId, stanicaId: pocetnaStanicaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      const medjustanicaKrajnja = await Medjustanica.findOne({
+        where: { linijaId, stanicaId: krajnjaStanicaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+
+      for (const m of medjustaniceSve) {
+        if (
+          m.redosled >= medjustanicaPocetna.redosled &&
+          m.redosled < medjustanicaKrajnja.redosled
+        ) {
+          if (m.brojSlobodnihMesta < requestedCount) {
+            await t.rollback();
+            return res.status(404).json({ message: "nema dovoljno mesta" });
+          }
+          m.brojSlobodnihMesta -= requestedCount;
+          await m.save({ transaction: t });
+        }
+      }
+    }
+
+    // 5) neka međustanica -> krajnja linije
+    if (
+      linija.pocetnaStanicaId !== pocetnaStanicaId &&
+      linija.krajnjaStanicaId === krajnjaStanicaId
+    ) {
+      linija.brojSlobodnihMesta -= requestedCount;
+      await linija.save({ transaction: t });
+
+      const medjustaniceSve = await Medjustanica.findAll({
+        where: { linijaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      const medjustanicaPocetna = await Medjustanica.findOne({
+        where: { linijaId, stanicaId: pocetnaStanicaId },
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+
+      for (const m of medjustaniceSve) {
+        if (m.redosled >= medjustanicaPocetna.redosled) {
+          if (m.brojSlobodnihMesta < requestedCount) {
+            await t.rollback();
+            return res.status(404).json({ message: "nema dovoljno mesta" });
+          }
+          m.brojSlobodnihMesta -= requestedCount;
+          await m.save({ transaction: t });
+        }
+      }
+    }
+
+    // --- Kreiraj rezervaciju za SVAKO sedište ---
+    const createdReservations = [];
+    for (const seat of seatsToReserve) {
+      const r = await Rezervacija.create(
+        {
+          brojMesta: 1,
+          linijaId,
+          polaznaStanicaR,
+          krajnjaStanicaR,
+          datumPolaska,
+          datumDolaska,
+          vremePolaska,
+          vremeDolaska,
+          pocetnaStanicaId,
+          krajnjaStanicaId,
+          korisnikId,
+          osvezenje,
+          oznakaSedista: seat,
+          tipKarte,
+          email,
+          imeIprezime,
+          brojTelefona,
+          kola: linija.kola,
+        },
+        { transaction: t }
+      );
+      createdReservations.push(r);
+    }
+
+    // --- Commit ---
+    await t.commit();
+
+    // --- Poseban mejl za SVAKU kartu (posle commit-a) ---
+    if (email) {
+      const opcijeQR = {
         errorCorrectionLevel: "H",
         type: "image/png",
         quality: 0.85,
         margin: 1,
-        color: {
-          dark: "#000",
-          light: "#fff",
-        },
+        color: { dark: "#000", light: "#fff" },
       };
 
-      qrcode.toFile("qrcode.png", qrCodeText, opcije, (err, url) => {
-        if (err) {
-          console.error("Greška pri generisanju QR koda:", err);
-          return;
+      for (const rez of createdReservations) {
+        try {
+          const qrText = `
+oznakaRezervacije: ${rez.id}
+LinijaId: ${linijaId}
+Cekiranje URL: ${req.get("host")}/linija/cekiranje/${rez.id}
+          `.trim();
+
+          const qrBuffer = await qrcode.toBuffer(qrText, opcijeQR);
+
+          const emailSubject = `Potvrda rezervacije – sedište ${rez.oznakaSedista}`;
+          const emailHtml = `
+<html>
+  <head>
+    <style>
+      body { font-family: Arial, sans-serif; line-height:1.6; }
+      .card { border: 2px solid #3498db; border-radius:10px; padding:20px; max-width:480px; }
+      h1 { color:#3498db; margin-top:0; }
+      p { color:#333; margin:6px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Hvala što ste rezervisali putovanje!</h1>
+      <p><b>Oznaka sedišta:</b> ${rez.oznakaSedista}</p>
+      <p><b>Polazna stanica:</b> ${polaznaStanicaR}</p>
+      <p><b>Krajnja stanica:</b> ${krajnjaStanicaR}</p>
+      <p><b>Datum polaska:</b> ${datumPolaska}</p>
+      <p><b>Datum dolaska:</b> ${datumDolaska}</p>
+      <p><b>Vreme polaska:</b> ${vremePolaska}</p>
+      <p><b>Vreme dolaska:</b> ${vremeDolaska}</p>
+      <p><b>Osveženje:</b> ${osvezenje}</p>
+      <p><b>Broj kola:</b> ${linija.kola}</p>
+      <p><strong>Napomena:</strong> Moguće su promene broja sedišta. Bićete pravovremeno obavešteni ukoliko dođe do promene.</p>
+      <p>Provera validnosti karte:</p>
+      <p><a href="${process.env.CLIENT_BASE_URL}/verifikacija/${rez.id}">Provera validnosti</a></p>
+      <p>QR kod za ovu kartu je u prilogu.</p>
+    </div>
+  </body>
+</html>
+          `;
+
+          await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: emailSubject,
+            html: emailHtml,
+            attachments: [
+              {
+                filename: "qrcode.png",
+                content: qrBuffer, // direktno iz memorije, bez snimanja na disk
+                cid: "qr-code",
+              },
+            ],
+          });
+        } catch (mailErr) {
+          console.error("Slanje mejla neuspešno (rez:", rez.id, "):", mailErr);
         }
-        //? QR kod je generisan i sačuvan kao "qrcode.png"
-        //? Nastavite sa slanjem e-mail poruke
-      });
-
-      //? slanje mejla korisniku kada uspesno rezervise kartu
-      const emailSubject = "Potvrda rezervacije";
-
-      //? Čitajte QR kod kao binarni podaci
-      const qrCodeImagePath = "qrcode.png";
-      const qrCodeImage = fs.readFileSync(qrCodeImagePath);
-
-      //? Postavite prilog za e-mail
-      const attachments = [
-        {
-          filename: "qrcode.png", //? Naziv priloga
-          content: qrCodeImage, //? Sadržaj priloga kao binarni podaci
-          cid: "qr-code", //? ID priloga, koristite ga u HTML telu e-maila
-        },
-      ];
-
-      const emailText = `
-      <html>
-        <head>
-          <style>
-            body {
-              font-family: 'Arial', sans-serif;
-              line-height: 1.6;
-              margin: 20px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-            }
-    
-            .card {
-              border: 2px solid #3498db;
-              border-radius: 10px;
-              padding: 20px;
-              max-width: 400px;
-              text-align: center;
-            }
-    
-            h1 {
-              color: #3498db;
-            }
-    
-            p {
-              color: #555;
-            }
-    
-            img {
-              width: 100%;
-              border-radius: 5px;
-            }
-    
-          </style>
-        </head>
-        <body>
-          <div class="card">
-            <h1>Hvala što ste rezervisali putovanje!</h1>
-            <p>Oznaka sedišta: ${oznakaSedista}</p>
-            <p>Polazna Stanica: ${polaznaStanicaR}</p>
-            <p>Krajnja Stanica: ${krajnjaStanicaR}</p>
-            <p>Datum Polaska: ${datumPolaska}</p>
-            <p>Datum Dolaska: ${datumDolaska}</p>
-            <p>Vreme Polaska: ${vremePolaska}</p>
-            <p>Vreme Dolaska: ${vremeDolaska}</p>
-            <p>Osveženje: ${osvezenje}</p>
-            <p>Broj kola: ${kola}</p>
-            <p><strong>Napomena:</strong> Moguće su promene broja sedišta. Bićete pravovremeno obavešteni ukoliko dođe do promene.</p>
-            <p>Provera validnosti karte proveriti na sledećem linku:</p>
-            <a href="${process.env.CLIENT_BASE_URL}/verifikacija/${kreiranjeRezervacije.id}">Provera validnosti</a>
-            <p>Molimo vas da skenirate QR kod za više detalja:</p>
-          </div>
-        </body>
-      </html>
-    `;
-
-      //? Unutar vašeg postojećeg koda za slanje e-maila
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: emailSubject,
-        html: emailText,
-        attachments, //? Dodajte prilog e-mail poruci
-      };
-
-      await transporter.sendMail(mailOptions);
+      }
     }
-    res.status(200).json({ message: "uspesno rezervisali" });
+
+    return res.status(200).json({
+      message: "Uspešno rezervisano.",
+      rezervacije: createdReservations.map((r) => ({
+        id: r.id,
+        sediste: r.oznakaSedista,
+      })),
+    });
   } catch (error) {
-    res.status(500).json(error.message);
+    try {
+      await t.rollback();
+    } catch (_) {}
+    console.log(error);
+    return res.status(500).json(error.message || "Greška na serveru");
   }
 });
 
