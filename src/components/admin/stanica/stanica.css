@@ -1,295 +1,319 @@
-.naslovStanica{
-    text-align: center;
-    color: darkblue;
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    padding: 2rem;
-  }
+/* ===== Modern card-list stil za STANICE (svetlo, bez dark moda) ===== */
 
-  .labela-stanica{
-    color: darkblue;
-    font-size: medium;
-   /* font-weight: ;    */
-    align-items: center;
-  }
-  .labela-stanica-naslov{
-    font-weight: bold;
-    font-size: larger;
-  }
-  .labela-stanica-vece{
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .veliki-naslov{
-    font-size: 25px ;
-  }
-  .red-05{
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .red-03{
-    margin-bottom: 0.3rem;
-    margin-top: 0.3rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-    /* glavna tabela za prikaz spiskova stanica   */
-  .tabela-stanica{
-  /*  overflow-x: auto;   /* zbog responsive dela     */
-    width: max-content;   
-   /* width: 14rem;         */
-    border: 1px solid darkblue;
-    border-radius: 0.3rem;
-    border-collapse: collapse;
-    display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    padding: 2rem;    /* 3rem   */
-    background-color: aliceblue;
-  }
- /*  .spisak-stanica{
-    width: 45rem;   
-  } */
-  .prosiri-tabela-stanica{
-    padding: 3rem;
-  }
+.station-page {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 24px;
+}
+.station-card {
+  width: min(920px, 94%);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.12);
+}
+.station-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eef2f7;
+}
+.station-card__header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #1f2937;
+}
 
-    /* prikaz podataka jedne stanice    */
-  .jedan-red-stanica{
-    width: fit-content;   /* 33rem    */
-    line-height: 45px; 
-    background-color: rgb(240, 238, 238);
-    border: 1px solid rgb(151, 192, 246);
-    border-radius: 0.2rem;
-    padding: 0.2rem;
-    margin: 0.2rem;
-    display: flex;
-    flex-wrap: wrap;  
-  }
-  .jedan-red-visina{
-    line-height: 35px ;
-  }
-  .jedan-red-prikaz{
-    border: 1.5px solid grey;
-    width: fit-content;
-    line-height: 45px; 
-    border-radius: 0.2rem;
-    padding: 0.2rem;
-    margin: 0.3rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.station-empty {
+  padding: 18px 20px;
+  color: #64748b;
+}
 
-  .jedan-red-prikaz-stjuardesa{
-   /* border: 1.5px solid grey;   */
-    border-bottom: 1px solid gray;
-   /* width: fit-content; */
-    line-height: 45px; 
-    border-radius: 0.2rem;
-    padding: 0.2rem;
-    margin: 0.3rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.station-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.station-item {
+  margin: 0;
+}
 
-  .input-stanica{
-    width: 10rem;
-    height: 2rem;
-    border-color: darkblue;
-    border-radius: 0.3rem;
-    margin: 0.2rem;
-    text-align: center;   /* dodala da bi placeholder bio centriran a i sami unoseni podaci   */
-  }
+/* kartica za jednu stanicu */
+.station-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto; /* naziv | adresa | akcije */
+  gap: 12px 16px;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #edf0f6;
+  border-radius: 14px;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.station-grid:hover {
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.1);
+  transform: translateY(-1px);
+}
 
-  .input-stanica::placeholder{
-    color: blue;
-    align-items: center;
-    text-align: center;
-    padding-left: 0.5rem;       /* dodala sam zbog poravnanja kod forme za dodavanje linije   */
-   /* text-align: center;   */
-  }
+.station-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.station-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #97a6ba;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.station-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #f8fafc;
+  border: 1px solid #e7eaf0;
+  border-radius: 10px;
+  padding: 8px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  .input-stanica-vreme{
-    border-radius: 0.3rem;
-    border-color: darkblue;
-    border-style: solid;
-  /*  box-shadow: inset 0rem 0rem 1.563rem 0rem #c3def6;    */
-    margin: 0.2rem;
-    height: 2rem;
-    width: 10rem;
-  /*  font-size: medium;    */
-    text-align: center;
-    color: blue;
-   /* padding-left: 0.375rem;
-    font-size: 1.25rem; */
-  }
+/* dugmad */
+.station-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s ease;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(2, 6, 23, 0.12);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn--primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+.btn--ghost {
+  background: #fff;
+}
+.btn--danger {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
 
+/* modal potvrde – isti stil kao na drugim stranama */
+.confirm-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm-dialog-box.modern {
+  width: min(520px, 92%);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 28px 70px rgba(2, 6, 23, 0.35);
+}
+.confirm-dialog-text {
+  font-size: 16px;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+.confirm-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
 
-  .polje-stanica{
-   /* line-height: 30px;    */
-    width: fit-content;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.5rem;
-    background-color: #fff;
-   /* flex-wrap: wrap;    */
+/* responsive */
+@media (max-width: 900px) {
+  .station-grid {
+    grid-template-columns: 1fr 1.5fr auto;
   }
-  .polje-stanica-1{
-    width: fit-content;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.2rem;
-    background-color: #fff;
-    display: flex;
-    align-items: center; /* Centrira po vertikali */
-    justify-content: center; /* Centrira po horizontali */
+}
+@media (max-width: 640px) {
+  .station-card {
+    width: min(720px, 94%);
   }
-  .polje-stanica-2{
-    width: 8rem;
-    height: 4rem;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.5rem;
-    background-color: #fff;
+  .station-grid {
+    grid-template-columns: 1fr;
   }
-  .polje-stanica-3{
-    word-wrap: break-word;
-    line-height: 1;
-    width: 8rem;
-    height: 4rem;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.2rem;
-    background-color: #fff;
-    font-size: medium;
-    font-weight: normal;
-    display: flex;
-    align-items: center; /* Centrira po vertikali */
-    justify-content: center; /* Centrira po horizontali */
-    text-align: center;
+  .station-actions {
+    justify-content: flex-start;
   }
-  .info-stanica-3{
-    word-wrap: break-word;
-    line-height: 1;
-    width: 8rem;
-    height: 4rem;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.2rem;
-    background-color: rgb(221, 234, 250);
-    color: darkblue;
-    font-size: medium;
-    font-weight: bold;
-    display: flex;
-    align-items: center; /* Centrira po vertikali */
-    justify-content: center; /* Centrira po horizontali */
-    text-align: center;
-  }
+}
 
-  .info-stanica{
-    width: 5rem;
-    border: 1px solid rgb(156, 198, 253);
-    background-color: rgb(221, 234, 250);
-    padding: 0.5rem;
-    color: darkblue;
-    font-size: medium;
-    font-weight: bold;
-   /* flex-wrap: wrap;    */
-  }
+/* ================== stationForm (scoped, soft/neumorphism) ================== */
+:root {
+  --ui-border: #e6ebf2;
+  --ui-primary: #2563eb;
+  --ui-primary-2: #3b82f6;
+  --ui-text: #0f172a;
+}
 
-  .fino-podesavanje{
-    word-wrap: break-word;
-    line-height: 1;
-    display: flex;
-    align-items: center; /* Vertikalno centriranje */
-    justify-content: center;
-    text-align: center;
-  }
+/* Kartica – uža kao login */
+.stationForm-card {
+  background: #fff;
+  border: 1px solid var(--ui-border);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  width: min(560px, 94%);
+  margin: 24px auto;
+}
 
-  .fino-podesavanje-1{
-    word-wrap: break-word;
-    line-height: 1;
-    display: flexbox;    
-    justify-items: center;
-    align-items: center; /* Vertikalno centriranje */
-    justify-content: center;
-    text-align: center;
-  }
+/* Header – spušten naslov */
+.stationForm-cardHeader {
+  padding: 34px 24px 8px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
 
-  .sirina-info-stanica{
-    width: 8rem;
-   /* word-break: break-all; /* Omogućite prelamanje reči */
-   /* text-align: center;     da bi bolje stampalo    */
-  }
-  .sirina-info-15{
-    width: 18rem;
-    padding: 22px;
-    text-align: center;
-  }
-  .sirina-info-10{
-    width: 10rem;
-  }
-  .sirina-info-8{
-    width: 8rem;
-    text-align: center;
-  }
-  .sirina-info-7{
-    width: 7rem;
-    text-align: center;
-  }
-  .sirina-info-6{
-    width: 6rem;
-    text-align: center;
-  }
-  .sirina-info-5{
-    width: 5rem;
-  }
-  .sirina-info-4{
-    width: 4rem;
-  }
-  .sirina-info-3{
-    width: 3rem;
-  }
-  .sirina-info-2{
-    width: 2rem;
-  }
-  .sirina-20{
-    width: 20rem;
-  }
-  .sirina-39{
-    width: 39rem;
-  }
-  .sirina-info-14{
-    width: 14rem;
-  }
+/* Naslov – plavi gradijent + glow */
+.stationForm-title {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.28rem;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.25));
+}
 
-  .ograda-medjustanice{
-    border:1px solid darkgreen;
-    border-radius: 0.3rem;
-    width: fit-content;
-    height: auto;
-    background-color: #fff;
-    padding: 1rem;
+/* Telo kartice */
+.stationForm-cardBody {
+  padding: 22px 24px 26px;
+}
+@media (max-width: 640px) {
+  .stationForm-cardBody {
+    padding: 20px 16px;
   }
+}
 
-  .odaberiBus{
-    border: 1px solid darkblue;
-    border-radius: 0.2rem;
-    width: max-content;
-    padding: 0.5rem;
-    margin: 0.5rem;
-  }
+/* Forma – vertikalni razmaci kao login */
+.stationForm-form > * + * {
+  margin-top: 18px;
+}
 
-  .pisi-levo{
-    justify-content: left;
-    text-align: left;
-    width: 10rem;  
-  }
-  .pisi-desno{
-    justify-content: left;
-    text-align: left;
-    width: 10rem;
-    margin-left: 11rem;
-    margin-top: -3.5rem;
-  }
-  .obicna-debljina{
-    font-weight: normal;
-  }
+/* Polja */
+.stationForm-field {
+}
+.stationForm-label {
+  display: block;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #8aa0b4;
+  font-weight: 800;
+}
+
+/* Input (pill) */
+.stationForm-input {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: var(--ui-text);
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.04s;
+}
+.stationForm-input::placeholder {
+  color: #94a3b8;
+  font-weight: 600;
+}
+.stationForm-input:focus {
+  outline: 0;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35),
+    inset 0 2px 5px rgba(15, 23, 42, 0.04);
+}
+
+/* Number spinner off (ako nekad zatreba) */
+.stationForm-input[type="number"]::-webkit-outer-spin-button,
+.stationForm-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.stationForm-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Akcije */
+.stationForm-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* Dugme – gradient + glow */
+.stationForm-button {
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  border: 1px solid #1d4ed8;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.6) inset;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.stationForm-button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.33),
+    0 2px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.stationForm-button:active {
+  transform: translateY(1px);
+}

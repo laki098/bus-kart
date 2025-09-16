@@ -1,0 +1,174 @@
+/* ================== userForm (scoped, soft/neumorphism) ================== */
+:root {
+  --ui-border: #e6ebf2;
+  --ui-primary: #2563eb;
+  --ui-primary-2: #3b82f6;
+  --ui-text: #0f172a;
+}
+
+/* Kartica – uža kao login */
+.userForm-card {
+  background: #fff;
+  border: 1px solid var(--ui-border);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  width: min(560px, 94%);
+  margin: 24px auto;
+}
+
+/* Header – spušten naslov */
+.userForm-cardHeader {
+  padding: 34px 24px 8px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Naslov – plavi gradijent + glow */
+.userForm-title {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.28rem;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.25));
+}
+
+/* Telo kartice */
+.userForm-cardBody {
+  padding: 22px 24px 26px;
+}
+@media (max-width: 640px) {
+  .userForm-cardBody {
+    padding: 20px 16px;
+  }
+}
+
+/* Forma – vertikalni razmaci kao login */
+.userForm-form > * + * {
+  margin-top: 18px;
+}
+
+/* Polje + label iznad */
+.userForm-field {
+}
+.userForm-label {
+  display: block;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #8aa0b4;
+  font-weight: 800;
+}
+
+/* Input (pill) */
+.userForm-input {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: var(--ui-text);
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.04s;
+}
+.userForm-input::placeholder {
+  color: #94a3b8;
+  font-weight: 600;
+}
+.userForm-input:focus {
+  outline: 0;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35),
+    inset 0 2px 5px rgba(15, 23, 42, 0.04);
+}
+
+/* Select (isti tretman kao input) */
+.userForm-select {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: #0f172a;
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.04s;
+  appearance: none;
+}
+.userForm-select:focus {
+  outline: 0;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35),
+    inset 0 2px 5px rgba(15, 23, 42, 0.04);
+}
+
+/* Checkbox red – poravnanje labela i kvadratića */
+.userForm-check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  color: #334155;
+}
+.userForm-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  accent-color: var(--ui-primary);
+}
+
+/* Ukloni number spinnere (ako zatreba) */
+.userForm-input[type="number"]::-webkit-outer-spin-button,
+.userForm-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.userForm-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Akcije */
+.userForm-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* Dugme – gradient + glow */
+.userForm-button {
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  border: 1px solid #1d4ed8;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.6) inset;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.userForm-button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.33),
+    0 2px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.userForm-button:active {
+  transform: translateY(1px);
+}

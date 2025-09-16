@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import apiUrl from "../../../apiConfig";
 import ListajJSON_Konzola from "../ListajJSON_Konzola";
-import "../../admin/viseLinija/viseLinija.css";
+
+import "../../admin/viseLinija/viseLinija.css"; // ⬅️ u ovaj fajl nalepi CSS ispod
 import { ToastContainer, toast } from "react-toastify";
 
-import "../../NavBar/links/i18n"; // za prevodjenje
+import "../../NavBar/links/i18n";
 import "../../rezervacije/i18n";
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next";
 import LanguageSwitcher from "../../header/header";
 
 const ViseLinija = () => {
@@ -18,55 +19,37 @@ const ViseLinija = () => {
   const [generatedDateList, setGeneratedDateList] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [weeklyStates, setWeeklyStates] = useState({}); //? Stanje za sve checkboxove
-  const [currentClickedLinija, setCurrentClickedLinija] = useState({}); //? Stanje za trenutno kliknutu liniju
+  const [weeklyStates, setWeeklyStates] = useState({});
+  const [currentClickedLinija, setCurrentClickedLinija] = useState({});
 
   const getLinije = async () => {
     const response = await fetch(`${apiUrl}/linija/filtriraneLinije`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
     setLinije(data.filtriraneLinije);
   };
 
   const creiranjeViseLinija = async () => {
-    if (!selectedLinija) {
-      console.error("Nisu odabrana linija");
-      return;
-    }
-    if (!selectedPeriodFromList) {
-      console.error("Nisu odabrana  period ");
-      return;
-    }
-    if (!generatedDateList.length) {
-      console.error("Nisu odabrana  nema generisanih datuma.");
-      return;
-    }
+    if (!selectedLinija) return;
+    if (!selectedPeriodFromList) return;
+    if (!generatedDateList.length) return;
 
     const pocetnaStanica = selectedLinija.pocetnaStanica.naziv;
     const krajnjaStanica = selectedLinija.krajnjaStanica.naziv;
     const vremePolaska = selectedLinija.vremePolaska;
     const vremeDolaska = selectedLinija.vremeDolaska;
 
-    // Prikupljanje medjustanica sa vremenima
-    const medjustanice = selectedLinija.Stanicas.map((medjustanica) => ({
-      stanica: medjustanica.naziv,
-      vremePolaskaM: medjustanica.Medjustanica.vremePolaskaM,
-      vremeDolaskaM: medjustanica.Medjustanica.vremeDolaskaM,
-      datumPolaskaM: "2023-12-26", // Postavite datum kako vam odgovara
-      datumDolaskaM: "2023-12-26", // Postavite datum kako vam odgovara
-      pocetakRute: medjustanica.pocetakRute,
-      krajRute: medjustanica.krajRute,
+    const medjustanice = selectedLinija.Stanicas.map((m) => ({
+      stanica: m.naziv,
+      vremePolaskaM: m.Medjustanica.vremePolaskaM,
+      vremeDolaskaM: m.Medjustanica.vremeDolaskaM,
+      datumPolaskaM: "2023-12-26",
+      datumDolaskaM: "2023-12-26",
+      pocetakRute: m.pocetakRute,
+      krajRute: m.krajRute,
     }));
-
-    const oznakaBusa = selectedLinija.oznakaBusa;
-    const pocetakRute = null;
-    const krajRute = null;
-    const stjuardesa = "";
-    const vozac = "";
 
     const dataToSend = {
       pocetnaStanica,
@@ -76,192 +59,176 @@ const ViseLinija = () => {
       vremeDolaska,
       datumPolaska: generatedDateList.slice(),
       datumDolaska: generatedDateList.slice(),
-      oznakaBusa,
-      pocetakRute,
-      krajRute,
-      stjuardesa,
-      vozac,
+      oznakaBusa: selectedLinija.oznakaBusa,
+      pocetakRute: null,
+      krajRute: null,
+      stjuardesa: "",
+      vozac: "",
     };
 
     try {
-      const response = await fetch(`${apiUrl}/linija`, {
+      await fetch(`${apiUrl}/linija`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),
       });
-
-      // Dodajte logiku za obradu odgovora servera ako je potrebno...
     } catch (error) {
       console.error("Greška prilikom slanja zahteva:", error);
     }
   };
 
-  //? za stanje chackBoxa 7 dana kreiranje datuma(produzetak linije)
   const handleCheckboxChange = (id) => {
-    setWeeklyStates((prevStates) => ({
-      ...prevStates,
-      [id]: !prevStates[id],
-    }));
+    setWeeklyStates((prev) => ({ ...prev, [id]: !prev[id] }));
     setCurrentClickedLinija(id);
   };
-
-  /* useEffect(() => {
-    creiranjeViseLinija();
-  }, [selectedLinija, generatedDateList, selectedPeriodFromList]); */
 
   useEffect(() => {
     getLinije();
   }, []);
 
-  const openConfirmationDialog = () => {
-    setIsConfirmationOpen(true);
-  };
-
-  const closeConfirmationDialog = () => {
-    setIsConfirmationOpen(false);
-  };
-
+  const openConfirmationDialog = () => setIsConfirmationOpen(true);
+  const closeConfirmationDialog = () => setIsConfirmationOpen(false);
   const confirmAction = () => {
-    // Ovdje možete implementirati logiku za akciju nakon potvrde, ako je potrebno
-    closeConfirmationDialog(); // Zatvori dijalog nakon potvrde
+    closeConfirmationDialog();
     notifySuccest();
     creiranjeViseLinija();
-    /* setTimeout(() => {
-      window.location.href = "/admin.initial";
-    }, 2500); */
   };
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-  };
+  const submitHandler = (e) => e.preventDefault();
 
-  const notifySuccest = () => {
+  const notifySuccest = () =>
     toast.success("Uspešno ste produžili liniju", {
       position: "top-center",
       autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
       theme: "light",
     });
-  };
 
   const handleDateChange = (e) => {
     setValueDate(e.target.value);
-    // Omogućite dugme ako je izabran datum
     setIsButtonDisabled(false);
   };
 
-  const lngs = {
-    en: { nativeName: "En" },
-    sr: { nativeName: "Sr" },
-  };
-  const { t, i18n } = useTranslation();
+  const lngs = { en: { nativeName: "En" }, sr: { nativeName: "Sr" } };
+  const { i18n } = useTranslation();
 
   return (
     <>
       <LanguageSwitcher lngs={lngs} i18n={i18n} />
 
       <form onSubmit={submitHandler}>
-        <div className="linija-okvir">
+        <div className="extendLines-wrap">
           {linije.map((linija) => (
-            <div key={linija.id}>
-              <div className="linija-red">
-                <div className="linija-polja">
-                  <Trans i18nKey="description.part31">Početna stanica </Trans>
+            <div className="extendLines-card" key={linija.id}>
+              <div className="extendLines-row">
+                <div className="extendLines-chipLabel">
+                  <Trans i18nKey="description.part31">Početna stanica</Trans>
                 </div>
-                <div className="linija-info">{linija.pocetnaStanica.naziv}</div>
-                <div className="linija-polja">
-                  <Trans i18nKey="description.part11  ">Vreme polaska </Trans>
+                <div className="extendLines-chipValue">
+                  {linija.pocetnaStanica.naziv}
                 </div>
-                <div className="linija-info">
+
+                <div className="extendLines-chipLabel">
+                  <Trans i18nKey="description.part11">Vreme polaska</Trans>
+                </div>
+                <div className="extendLines-chipValue">
                   {linija.vremePolaska.split(":").slice(0, 2).join(":")}
                 </div>
-                <div className="linija-polja">
-                  <Trans i18nKey="description.part198">Krajnja stanica </Trans>
+
+                <div className="extendLines-chipLabel">
+                  <Trans i18nKey="description.part198">Krajnja stanica</Trans>
                 </div>
-                <div className="linija-info">{linija.krajnjaStanica.naziv}</div>
-                <div className="linija-polja">
+                <div className="extendLines-chipValue">
+                  {linija.krajnjaStanica.naziv}
+                </div>
+
+                {/* Datum (input) */}
+                <div className="extendLines-inputCell">
                   <input
                     type="date"
-                    className="unos-datuma"
-                    value={setValueDate[linija.id]}
+                    className="extendLines-input extendLines-input--date"
+                    value={
+                      setValueDate[linija.id]
+                    } /* ostavljeno kako je u tvom kodu */
                     onChange={handleDateChange}
                   />
                 </div>
 
-                {linija.Stanicas.map((medjustanica) => (
-                  <React.Fragment key={medjustanica.id}>
-                    <div className="linija-polja-10">
-                      <Trans i18nKey="description.part204"> Međustanica </Trans>
+                {/* Međustanice */}
+                {linija.Stanicas.map((m) => (
+                  <React.Fragment key={m.id}>
+                    <div className="extendLines-chipLabel">
+                      <Trans i18nKey="description.part204">Međustanica</Trans>
                     </div>
-                    <div className="linija-info">{medjustanica.naziv}</div>
+                    <div className="extendLines-chipValue">{m.naziv}</div>
                   </React.Fragment>
                 ))}
-                <div className="linija-dugme">
-                  <button
-                    className="button-linija"
-                    disabled={isButtonDisabled}
-                    onClick={() => {
-                      setSelectedLinija(linija);
-                      setPeriod(1);
-                      setSelectedPeriodFromList(1);
-                      openConfirmationDialog();
-                    }}
-                  >
-                    <Trans i18nKey="description.part205"> 1 mesec </Trans>
-                  </button>{" "}
-                  &emsp;
-                  <button
-                    className="button-linija"
-                    disabled={isButtonDisabled}
-                    onClick={() => {
-                      setSelectedLinija(linija);
-                      setPeriod(3);
-                      setSelectedPeriodFromList(3);
-                      openConfirmationDialog();
-                    }}
-                  >
-                    <Trans i18nKey="description.part206"> 3 meseci </Trans>
-                  </button>{" "}
-                  &emsp;
-                  <button
-                    className="button-linija"
-                    disabled={isButtonDisabled}
-                    onClick={() => {
-                      setSelectedLinija(linija);
-                      setPeriod(6);
-                      setSelectedPeriodFromList(6);
-                      openConfirmationDialog();
-                    }}
-                  >
-                    <Trans i18nKey="description.part207"> 6 meseci </Trans>
-                  </button>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={weeklyStates[linija.id] || false}
-                      onChange={() => handleCheckboxChange(linija.id)}
-                    />
-                    Generisi datume svakih 7 dana
-                  </label>
-                </div>
-                <ListajJSON_Konzola
-                  currentClickedLinija={currentClickedLinija}
-                  weeklyStates={weeklyStates}
-                  valueDate={valueDate}
-                  period={period}
-                  setSelectedPeriodFromList={setSelectedPeriodFromList}
-                  setGeneratedDateList={setGeneratedDateList}
-                />
               </div>
+
+              {/* Akcije */}
+              <div className="extendLines-actions">
+                <button
+                  className="extendLines-btn extendLines-btn--primary"
+                  disabled={isButtonDisabled}
+                  onClick={() => {
+                    setSelectedLinija(linija);
+                    setPeriod(1);
+                    setSelectedPeriodFromList(1);
+                    openConfirmationDialog();
+                  }}
+                >
+                  <Trans i18nKey="description.part205">1 mesec</Trans>
+                </button>
+
+                <button
+                  className="extendLines-btn extendLines-btn--primary"
+                  disabled={isButtonDisabled}
+                  onClick={() => {
+                    setSelectedLinija(linija);
+                    setPeriod(3);
+                    setSelectedPeriodFromList(3);
+                    openConfirmationDialog();
+                  }}
+                >
+                  <Trans i18nKey="description.part206">3 meseci</Trans>
+                </button>
+
+                <button
+                  className="extendLines-btn extendLines-btn--primary"
+                  disabled={isButtonDisabled}
+                  onClick={() => {
+                    setSelectedLinija(linija);
+                    setPeriod(6);
+                    setSelectedPeriodFromList(6);
+                    openConfirmationDialog();
+                  }}
+                >
+                  <Trans i18nKey="description.part207">6 meseci</Trans>
+                </button>
+
+                <label className="extendLines-weekly">
+                  <input
+                    type="checkbox"
+                    checked={weeklyStates[linija.id] || false}
+                    onChange={() => handleCheckboxChange(linija.id)}
+                  />
+                  <span>Generiši datume svakih 7 dana</span>
+                </label>
+              </div>
+
+              {/* Helper za generisanje datuma */}
+              <ListajJSON_Konzola
+                currentClickedLinija={currentClickedLinija}
+                weeklyStates={weeklyStates}
+                valueDate={valueDate}
+                period={period}
+                setSelectedPeriodFromList={setSelectedPeriodFromList}
+                setGeneratedDateList={setGeneratedDateList}
+              />
             </div>
           ))}
         </div>
+
+        {/* Potvrda */}
         <div className="confirm-dialog-container">
           {isConfirmationOpen && (
             <div className="confirm-dialog-overlay">
@@ -270,19 +237,20 @@ const ViseLinija = () => {
                   Da li ste sigurni da želite produžiti liniju?
                 </div>
                 <button className="confirm-dialog-yes" onClick={confirmAction}>
-                  <Trans i18nKey="description.part153"> Da </Trans>
+                  <Trans i18nKey="description.part153">Da</Trans>
                 </button>
                 <button
                   className="confirm-dialog-no"
                   onClick={closeConfirmationDialog}
                 >
-                  <Trans i18nKey="description.part154"> Ne </Trans>
+                  <Trans i18nKey="description.part154">Ne</Trans>
                 </button>
               </div>
             </div>
           )}
         </div>
       </form>
+
       <ToastContainer />
     </>
   );

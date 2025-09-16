@@ -1,108 +1,347 @@
-.cene-form{
-      width: max-content;   
-      border: 1px solid darkblue;
-      border-radius: 0.3rem;
-      border-collapse: collapse;
-      display: flex;
-      flex-wrap: wrap;
-      margin: auto;
-      padding: 2rem;    /* 3rem   */
-      background-color: aliceblue;
+.price-page {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 24px;
+}
+.price-card {
+  width: min(920px, 94%);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.12);
+}
+.price-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eef2f7;
+}
+.price-card__header h2 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.1px;
+  color: #1f2937;
 }
 
-.cene-labela {
-    color: darkblue;
-    font-size: medium;
-    align-items: center;
+.price-empty {
+  padding: 18px 20px;
+  color: #64748b;
 }
-.naslov-cene{
-    text-align: center;
-    color: darkblue;
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    padding: 2rem;
-  }
-  .input-cene{
-    width: 10rem;
-    height: 2rem;
-    border-color: darkblue;
-    border-radius: 0.3rem;
-    margin: 0.2rem;
-    margin: 1rem;
-    text-align: center;  
-  }
- .cene-okvir {
-    width: max-content;
-    border: 1px solid darkblue;
-    border-radius: 0.3rem;
-    border-collapse: collapse;
-    display: flex;
-    flex-wrap: wrap;
-    margin: auto;
-    padding: 2rem;
-    background-color: aliceblue;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
- }
- .cene-red {
-  width: fit-content;
-    line-height: 45px;
-    background-color: rgb(240, 238, 238);
-    border: 1px solid rgb(151, 192, 246);
-    border-radius: 0.2rem;
-    padding: 0.2rem;
-    margin: 0.2rem;
-    display: flex;
-    flex-wrap: wrap;
- }
- .cene-polja {
-    width: fit-content;
-    border: 1px solid rgb(156, 198, 253);
-    padding: 0.5rem;
-    background-color: #fff;
-    padding-top: 1rem;
- }
- .cene-polja1 {
-    width: 99px;
-    padding: 10px;
-    height: 80px;
-    border: 1px solid #c2bddf;
-    text-align: center;
-    line-height: 55px;
- }
- /*
- .cene-polja-podesavanje {
-  width: 99px;
-  padding: 10px;
-  height: 80px;
-  border: 1px solid #c2bddf;
-  text-align: center;       */
- /* line-height: 55px;    
-}*/
 
- @media (max-width: 480px) {
-  .cene-okvir {
-      width: auto; 
-      padding: 1rem; 
-  }
+.price-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.price-item {
+  margin: 0;
+}
 
-  .cene-polja1 {
-     
-      box-sizing: border-box; 
-      margin: 0; 
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto; /* 3 polja + akcije */
+  gap: 12px 16px;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #edf0f6;
+  border-radius: 14px;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.price-grid:hover {
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.1);
+  transform: translateY(-1px);
+}
+
+.price-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.price-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #97a6ba;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.price-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #f8fafc;
+  border: 1px solid #e7eaf0;
+  border-radius: 10px;
+  padding: 8px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* cena vizuelno izdvojena */
+.price-value--money {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+/* akcije desno */
+.price-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ===== Dugmad (uvek isto kroz app) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s ease;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(2, 6, 23, 0.12);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+.btn--ghost {
+  background: #fff;
+}
+.btn--danger {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* ===== Confirm modal  ===== */
+.confirm-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm-dialog-box.modern {
+  width: min(520px, 92%);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 28px 70px rgba(2, 6, 23, 0.35);
+}
+.confirm-dialog-text {
+  font-size: 16px;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+.confirm-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .price-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
   }
 }
-/* @media (max-width: 768px) {
-  .cene-okvir {
-      width: 100%; 
-      padding: 1rem; 
+@media (max-width: 640px) {
+  .price-card {
+    width: min(720px, 94%);
   }
-} */
+  .price-grid {
+    grid-template-columns: 1fr;
+  }
+  .price-actions {
+    justify-content: flex-start;
+  }
+}
+/* ================== priceForm (scoped, soft/neumorphism) ================== */
+:root {
+  --ui-border: #e6ebf2;
+  --ui-primary: #2563eb;
+  --ui-primary-2: #3b82f6;
+  --ui-text: #0f172a;
+}
 
-@media (max-width: 925px) {
-  .cene-okvir {
-      width: 100%; 
-      padding: 1rem; 
+/* Kartica – uža kao login */
+.priceForm-card {
+  background: #fff;
+  border: 1px solid var(--ui-border);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  width: min(560px, 94%);
+  margin: 24px auto;
+}
+
+/* Header – spušten naslov */
+.priceForm-cardHeader {
+  padding: 34px 24px 8px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Naslov – plavi gradijent + glow */
+.priceForm-title {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.28rem;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.25));
+}
+
+/* Telo kartice */
+.priceForm-cardBody {
+  padding: 22px 24px 26px;
+}
+@media (max-width: 640px) {
+  .priceForm-cardBody {
+    padding: 20px 16px;
   }
+}
+
+/* Forma – vertikalni razmaci kao login */
+.priceForm-form > * + * {
+  margin-top: 18px;
+}
+
+/* Polje + label iznad */
+.priceForm-field {
+}
+.priceForm-label {
+  display: block;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #8aa0b4;
+  font-weight: 800;
+}
+
+/* Input (pill) */
+.priceForm-input {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: var(--ui-text);
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.04s;
+}
+.priceForm-input::placeholder {
+  color: #94a3b8;
+  font-weight: 600;
+}
+.priceForm-input:focus {
+  outline: 0;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35),
+    inset 0 2px 5px rgba(15, 23, 42, 0.04);
+}
+
+/* Select (isti vizuelni tretman kao input) */
+.priceForm-select {
+  width: 100%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: #0f172a;
+  box-shadow: inset 0 2px 5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.04s;
+  appearance: none;
+}
+.priceForm-select:focus {
+  outline: 0;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35),
+    inset 0 2px 5px rgba(15, 23, 42, 0.04);
+}
+
+/* Ukloni number spinnere */
+.priceForm-input[type="number"]::-webkit-outer-spin-button,
+.priceForm-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.priceForm-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Akcije */
+.priceForm-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* Dugme – gradient + glow */
+.priceForm-button {
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-primary-2) 0%,
+    var(--ui-primary) 100%
+  );
+  border: 1px solid #1d4ed8;
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.6) inset;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.priceForm-button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.33),
+    0 2px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.priceForm-button:active {
+  transform: translateY(1px);
 }

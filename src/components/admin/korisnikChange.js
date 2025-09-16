@@ -4,8 +4,9 @@ import KorisnikApi from "../../api/korisnikApi";
 import KorisnikLogic from "./korisnikLogic";
 
 import "./ListBus.css";
+import "./userChange.css";
 
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next";
 import "../../components/NavBar/links/i18n";
 import "../../components/rezervacije/i18n";
 import { ToastContainer } from "react-toastify";
@@ -33,7 +34,7 @@ const KorisnikChange = () => {
       prezime: formData.get("prezime"),
       brojTelefona: formData.get("brojTelefona"),
       email: formData.get("email"),
-      role: formData.get("role"), //mesto formdata stavljam userpars.rola
+      role: formData.get("role"),
       vremeTrajanjaRole: formData.get("vremeTrajanjaRole"),
       privremenaRola,
     };
@@ -66,14 +67,12 @@ const KorisnikChange = () => {
       <div className="red-1"></div>
 
       <form onSubmit={submitHandler}>
-        <div className="promena-korisnika">
-          {" "}
-          {/*    className="stampajLiniju"   */}
-          {/*  <div className="rowTabela korisniciTabelaPromena" >    */}
-          <div className="user-kontrol">
-            <div className="labela-korisnik">
+        <div className="userForm-card userForm-cardBody userForm-form">
+          {/* Korisničko ime */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>
-                <Trans i18nKey="description.part44"> Korisničko ime </Trans>{" "}
+                <Trans i18nKey="description.part44">Korisničko ime</Trans>
               </label>
             </div>
 
@@ -82,12 +81,14 @@ const KorisnikChange = () => {
               type="text"
               required
               name="korisnickoIme"
-              className="korisnik-input"
+              className="userForm-input"
               onChange={korisnikLogic.changeHandler}
-            ></input>
+            />
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik ">
+
+          {/* Ime */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>
                 <Trans i18nKey="description.part40">Ime</Trans>
               </label>
@@ -98,12 +99,14 @@ const KorisnikChange = () => {
               type="text"
               required
               name="ime"
-              className="korisnik-input"
+              className="userForm-input"
               onChange={korisnikLogic.changeHandler}
-            ></input>
+            />
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik">
+
+          {/* Prezime */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>
                 <Trans i18nKey="description.part42">Prezime</Trans>
               </label>
@@ -114,12 +117,14 @@ const KorisnikChange = () => {
               type="text"
               required
               name="prezime"
-              className="korisnik-input"
+              className="userForm-input"
               onChange={korisnikLogic.changeHandler}
-            ></input>
+            />
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik">
+
+          {/* Broj telefona */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>
                 <Trans i18nKey="description.part48">Broj telefona</Trans>
               </label>
@@ -130,12 +135,14 @@ const KorisnikChange = () => {
               type="text"
               required
               name="brojTelefona"
-              className="korisnik-input"
+              className="userForm-input"
               onChange={korisnikLogic.changeHandler}
-            ></input>
+            />
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik">
+
+          {/* Email */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>Email</label>
             </div>
 
@@ -144,14 +151,16 @@ const KorisnikChange = () => {
               type="text"
               required
               name="email"
-              className="korisnik-input"
+              className="userForm-input"
               onChange={korisnikLogic.changeHandler}
-            ></input>
+            />
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik">
+
+          {/* Privremena rola */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>
-                <Trans i18nKey="description.part157">Privremena rola </Trans>
+                <Trans i18nKey="description.part157">Privremena rola</Trans>
               </label>
             </div>
 
@@ -159,27 +168,30 @@ const KorisnikChange = () => {
               type="checkbox"
               onChange={handleChange}
               value={privremenaRola}
+              className="userForm-checkbox"
             />
             {privremenaRola && (
               <>
                 &ensp;{" "}
                 <label>
                   <Trans i18nKey="description.part158">
-                    Vreme trajanja role{" "}
+                    Vreme trajanja role
                   </Trans>
                 </label>{" "}
                 &ensp;
                 <input
                   type="number"
                   name="vremeTrajanjaRole"
-                  className="korisnik-input"
+                  className="userForm-input"
                   onChange={korisnikLogic.changeHandler}
                 />
               </>
             )}
           </div>
-          <div className="user-kontrol">
-            <div className="labela-korisnik ">
+
+          {/* Role */}
+          <div className="userForm-field">
+            <div className="userForm-label">
               <label>Role</label>
             </div>
 
@@ -188,7 +200,7 @@ const KorisnikChange = () => {
               type="text"
               required
               name="role"
-              className="korisnik-input"
+              className="userForm-select"
               onChange={korisnikLogic.changeHandler}
             >
               <option value="korisnik">
@@ -209,16 +221,16 @@ const KorisnikChange = () => {
               </option>
             </select>
           </div>
-          <div className="user-kontrol prazan-red">
-            <button type="submit" className="buttonSwitch">
-              {" "}
-              {/* bila je klasa dugme */}{" "}
-              <Trans i18nKey="description.part129">Sačuvaj </Trans>
+
+          {/* Sačuvaj */}
+          <div className="userForm-actions">
+            <button type="submit" className="userForm-button">
+              <Trans i18nKey="description.part129">Sačuvaj</Trans>
             </button>
           </div>
         </div>
-        {/* </div>   */}
       </form>
+
       <ToastContainer />
     </div>
   );

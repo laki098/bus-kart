@@ -1,0 +1,296 @@
+/* === EC Auth-like tema za AdminInitial (prefiks: adminInitional-) === */
+:root {
+  --ec-primary-1: #3b82f6;
+  --ec-primary-2: #2563eb;
+  --ec-surface: #ffffff;
+  --ec-border: #e6e8ee;
+  --ec-text: #0f172a;
+  --ec-muted: #475569;
+  --ec-radius-lg: 22px;
+  --ec-shadow-lg: 0 28px 70px rgba(2, 6, 23, 0.18);
+  --ec-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+/* Page */
+.adminInitional-page {
+  min-height: 100dvh;
+  padding: 18px 0 40px;
+}
+
+/* Card */
+.adminInitional-card {
+  width: min(860px, 94%);
+  margin: 18px auto;
+  background: var(--ec-surface);
+  border: 1px solid var(--ec-border);
+  border-radius: var(--ec-radius-lg);
+  box-shadow: var(--ec-shadow-lg);
+  overflow: hidden;
+}
+.adminInitional-card--auth {
+  width: min(620px, 92%);
+}
+.adminInitional-cardBody {
+  padding: 22px;
+}
+
+/* Card head */
+.adminInitional-cardHead {
+  text-align: center;
+  padding: 22px 20px 6px;
+}
+.adminInitional-cardTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ec-text);
+  letter-spacing: 0.2px;
+}
+.adminInitional-cardSubtitle {
+  margin-top: 2px;
+  color: #5b708c;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Grid za polja */
+.adminInitional-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  justify-items: center;
+  margin-top: 8px;
+}
+.adminInitional-field {
+  text-align: center;
+  width: 100%;
+}
+.adminInitional-label {
+  color: #1f3b66;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Input/select */
+.adminInitional-input {
+  width: min(460px, 100%);
+  height: 50px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  outline: none;
+  transition: 0.15s ease;
+  box-shadow: var(--ec-shadow-sm);
+}
+.adminInitional-input:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35);
+}
+.adminInitional-input--date {
+  text-align: center;
+}
+select.adminInitional-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23677' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+
+/* Buttons */
+.adminInitional-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  font-weight: 800;
+  transition: 0.15s ease;
+  box-shadow: var(--ec-shadow-sm);
+  text-decoration: none;
+}
+.adminInitional-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.12);
+}
+.adminInitional-btn:active {
+  transform: translateY(0);
+}
+.adminInitional-btn--primary {
+  background: linear-gradient(135deg, var(--ec-primary-1), var(--ec-primary-2));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.32);
+}
+.adminInitional-btn--ghost {
+  background: #fff;
+}
+.adminInitional-btn--danger {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  box-shadow: 0 12px 26px rgba(239, 68, 68, 0.28);
+}
+.adminInitional-btn--block {
+  width: 100%;
+}
+.adminInitional-btn--wide {
+  width: min(520px, 92%);
+}
+.adminInitional-btn--sm {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+.adminInitional-btn--grow {
+  width: 100%;
+}
+
+/* Akcije: primarno + sekundarna dva dugmeta u redu */
+.adminInitional-actions {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  margin-top: 16px;
+}
+.adminInitional-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: min(520px, 92%);
+}
+@media (max-width: 640px) {
+  .adminInitional-secondary {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+/* Rezultati lista */
+.adminInitional-table {
+  display: none;
+}
+.adminInitional-table.is-visible {
+  display: block;
+}
+
+/* Spoljašnja kartica za rezultate */
+.adminInitional-card.adminInitional-results {
+  width: min(1100px, 96%);
+  margin: 14px auto;
+  position: relative;
+  padding: 18px 18px 10px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--ec-shadow-lg);
+}
+.adminInitional-card.adminInitional-results::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid #e3ecff;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+/* Red sa kapsulama */
+.adminInitional-resultRow {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 6px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(130px, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+.adminInitional-chipLabel,
+.adminInitional-chipValue {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+  padding: 6px 12px;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 1px solid #d7e6ff;
+  box-shadow: inset 0 2px 0 #f4f8ff;
+}
+.adminInitional-chipLabel {
+  background: #fff;
+  color: #405774;
+  font-weight: 800;
+}
+.adminInitional-chipValue {
+  background: #eef5ff;
+  border-color: #cfe2ff;
+  color: #0f1c4a;
+  font-weight: 800;
+}
+
+.adminInitional-resultRow:hover .adminInitional-chipValue {
+  box-shadow: inset 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Responsive za rezultate */
+@media (max-width: 1200px) {
+  .adminInitional-resultRow {
+    grid-template-columns: repeat(6, minmax(140px, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .adminInitional-resultRow {
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .adminInitional-resultRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Confirm modal */
+.adminInitional-confirmOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.adminInitional-confirmBox {
+  width: min(520px, 92%);
+  background: #fff;
+  border: 1px solid var(--ec-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 32px 80px rgba(2, 6, 23, 0.35);
+}
+.adminInitional-confirmText {
+  font-size: 16px;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+.adminInitional-confirmActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* Extra responsive */
+@media (max-width: 640px) {
+  .adminInitional-btn--wide {
+    width: 100%;
+  }
+}

@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import BusLogic from "./bus.logic";
 import BusApi from "../../api/bus.api";
 
-import "../login/loginStyle.css"; /* koristim stil kao ize dela za logovanje */
-//import "../NavBar/links/pocetna.css";
-import "./stanica/stanica.css";
-
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import "./busForm.css";
+import { useTranslation, Trans } from "react-i18next";
 import "../NavBar/links/i18n";
 import "../../components/NavBar/links/i18n";
 import { ToastContainer } from "react-toastify";
@@ -15,138 +12,118 @@ import LanguageSwitcher from "../header/header";
 const BusForm = ({ mode, idAutobusa }) => {
   const [bus, setBus] = useState({});
   const busLogic = BusLogic();
+
   const izmeinAutobus = async () => {
     const response = await BusApi().filterBusId(idAutobusa);
     const data = await response.data;
-
     setBus(data.autobusi);
   };
 
   useEffect(() => {
-    if (mode == "edit") {
-      izmeinAutobus();
-    }
-  }, []);
+    if (mode === "edit") izmeinAutobus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, idAutobusa]);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
+  const submitHandler = (e) => {
+    e.preventDefault();
     if (mode === "add") {
       busLogic.upisBus();
-    } else if (mode === "edit") {
-      const formData = new FormData(event.target);
-      const data = {
-        idAutobusa: idAutobusa,
-        oznakaBusa: formData.get("oznakaBusa"),
-        tablice: formData.get("tablice"),
-        brojSedista: formData.get("brojSedista"),
-      };
-
-      busLogic.editBus(data);
+    } else {
+      const fd = new FormData(e.target);
+      busLogic.editBus({
+        idAutobusa,
+        oznakaBusa: fd.get("oznakaBusa"),
+        tablice: fd.get("tablice"),
+        brojSedista: fd.get("brojSedista"),
+      });
     }
   };
 
-  //prevodjenje start
-  const lngs = {
-    en: { nativeName: "En" },
-    sr: { nativeName: "Sr" },
-  };
-  const { t, i18n } = useTranslation();
-  // prevodjenje end
+  const lngs = { en: { nativeName: "En" }, sr: { nativeName: "Sr" } };
+  const { i18n } = useTranslation();
 
   return (
     <div>
-      {" "}
-      {/* className="pozadina"  */}
       <LanguageSwitcher lngs={lngs} i18n={i18n} />
-      <div className="red-1"></div>
-      <div className="red-1"></div>
-      <div className="red-1"></div>
-      <div>
-        {" "}
-        {/*  className="main"   */}
-        <div className="tabela-stanica prosiri-tabela-stanica">
-          {" "}
-          {/* sub-main */}
-          <form onSubmit={submitHandler}>
-            <div>
-              {mode === "add" ? (
-                <p className="naslovStanica">
-                  {" "}
-                  {/* naslov    */}
-                  <Trans i18nKey="description.part127">Dodajte autobus</Trans>
-                </p>
-              ) : (
-                <p className="naslovStanica">
-                  <Trans i18nKey="description.part143">Edituj autobus</Trans>
-                </p>
-              )}
-              <div className="red-1"></div>
-              <div>
-                <label className="labela-stanica">
-                  <Trans i18nKey="description.part144">Oznaka autobusa</Trans>
-                </label>
-              </div>
 
-              {/* biolo je input-new  pa onda input-new-bus*/}
+      <div className="busForm-card">
+        <div className="busForm-cardHeader">
+          <span className="busForm-title">
+            {mode === "add" ? (
+              <Trans i18nKey="description.part127">Dodajte autobus</Trans>
+            ) : (
+              <Trans i18nKey="description.part143">Edituj autobus</Trans>
+            )}
+          </span>
+        </div>
+
+        <div className="busForm-cardBody">
+          <form onSubmit={submitHandler} className="busForm-form" noValidate>
+            <div className="busForm-field">
+              <p className="busForm-label">
+                <Trans i18nKey="description.part144">Oznaka autobusa</Trans>
+              </p>
               <input
-                defaultValue={bus.oznakaBusa}
+                key={bus?.oznakaBusa || mode + "-ozn"}
+                defaultValue={bus?.oznakaBusa}
                 type="text"
+                name="oznakaBusa"
+                className="busForm-input"
                 placeholder="Oznaka autobusa"
                 required
-                name="oznakaBusa"
-                className="input-stanica"
+                autoComplete="off"
                 onChange={busLogic.changeHandler}
               />
-              <div className="red-1"></div>
-              <div>
-                <label className="labela-stanica">
-                  <Trans i18nKey="description.part126">
-                    Registarska tablica
-                  </Trans>
-                </label>
-              </div>
+            </div>
 
-              {/*  className="input-new" */}
+            <div className="busForm-field">
+              <p className="busForm-label">
+                <Trans i18nKey="description.part126">Registarska tablica</Trans>
+              </p>
               <input
-                defaultValue={bus.tablice}
+                key={bus?.tablice || mode + "-tab"}
+                defaultValue={bus?.tablice}
                 type="text"
-                placeholder="Registarska tablice"
-                required
                 name="tablice"
-                className="input-stanica"
+                className="busForm-input"
+                placeholder="Registarske tablice"
+                required
+                autoComplete="off"
                 onChange={busLogic.changeHandler}
               />
-              <div className="red-1"></div>
-              <div>
-                <label className="labela-stanica">
-                  <Trans i18nKey="description.part36">Broj mesta</Trans>
-                </label>
-              </div>
+            </div>
 
+            <div className="busForm-field">
+              <p className="busForm-label">
+                <Trans i18nKey="description.part36">Broj mesta</Trans>
+              </p>
               <input
-                defaultValue={bus.brojSedista}
+                key={bus?.brojSedista || mode + "-br"}
+                defaultValue={bus?.brojSedista}
                 type="number"
                 name="brojSedista"
-                className="input-stanica"
+                className="busForm-input"
                 placeholder="Broj mesta"
+                min={1}
+                step={1}
                 required
                 onChange={busLogic.changeHandler}
               />
-              <div className="red-1"></div>
-              {/* bilo je className="button"   style={{ height: "2rem" }}*/}
-              <button type="submit" className="buttonSwitch">
+            </div>
+
+            <div className="busForm-actions">
+              <button type="submit" className="busForm-button">
                 {mode === "add" ? (
-                  <Trans i18nKey="description.part128">"Dodaj"</Trans>
+                  <Trans i18nKey="description.part128">Dodaj</Trans>
                 ) : (
-                  <Trans i18nKey="description.part129">"Sačuvaj"</Trans>
+                  <Trans i18nKey="description.part129">Sačuvaj</Trans>
                 )}
               </button>
-              <div className="red-1"></div>
             </div>
           </form>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );

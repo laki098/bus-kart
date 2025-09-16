@@ -1,53 +1,90 @@
-import { Link } from "react-router-dom";
-import "./admin.css";
+// src/components/admin/admin.panel.js
+import { NavLink } from "react-router-dom";
+import "./admin1.css";
 import LanguageSwitcher from "../header/header";
-
-import "../NavBar/links/i18n"; // za prevodjenje
+import "../NavBar/links/i18n";
 import "../rezervacije/i18n";
-import { useTranslation, Trans } from "react-i18next"; //prevodjenje
+import { useTranslation, Trans } from "react-i18next";
+import { FiTruck, FiShare2, FiUsers, FiMapPin, FiTag } from "react-icons/fi";
 
-const AdminPanel = () => {
-  //prevodjenje
-  const lngs = {
-    en: { nativeName: "En" },
-    sr: { nativeName: "Sr" },
-  };
-  const { t, i18n } = useTranslation();
-  // prevodjenje
+export default function AdminPanel({ counts = {}, showLang = true }) {
+  const lngs = { en: { nativeName: "En" }, sr: { nativeName: "Sr" } };
+  const { i18n } = useTranslation();
+
+  const NAV_ITEMS = [
+    {
+      id: "buses",
+      to: "/bus.initial",
+      key: "description.part174",
+      fallback: "Autobusi",
+      icon: FiTruck,
+      exact: true,
+    },
+    {
+      id: "lines",
+      to: "/admin.initial",
+      key: "description.part176",
+      fallback: "Linija",
+      icon: FiShare2,
+      exact: true,
+    },
+    {
+      id: "users",
+      to: "/korisniciInitial",
+      key: "description.part175",
+      fallback: "Korisnici",
+      icon: FiUsers,
+      exact: true,
+    },
+    {
+      id: "stations",
+      to: "/stanice.initial",
+      key: "description.part173",
+      fallback: "Stanice",
+      icon: FiMapPin,
+      exact: true,
+    },
+    {
+      id: "prices",
+      to: "/cene.initial",
+      key: "description.part201",
+      fallback: "Cene",
+      icon: FiTag,
+      exact: true,
+    },
+  ];
 
   return (
-    <div>
-      <LanguageSwitcher lngs={lngs} i18n={i18n} />
-      <div className="red-1"></div>
-      <Link to={"/bus.initial"}>
-        <button className="button-panel">
-          <Trans i18nKey="description.part174">Autobusi </Trans>
-        </button>
-      </Link>
-      &ensp;
-      <Link to={"/admin.initial"}>
-        <button className="button-panel">
-          <Trans i18nKey="description.part176">Linije </Trans>
-        </button>
-      </Link>
-      &ensp;
-      <Link to={"/korisniciInitial"}>
-        <button className="button-panel">
-          <Trans i18nKey="description.part175">Korisnici </Trans>
-        </button>
-      </Link>
-      <Link to={"stanice.initial"}>
-        <button className="button-panel">
-          <Trans i18nKey="description.part173"> Stanice </Trans>
-        </button>
-      </Link>
-      <Link to={"/cene.initial"}>
-        <button className="button-panel">
-          <Trans i18nKey="description.part201"> Cene </Trans>
-        </button>
-      </Link>
+    <div className="adminbar">
+      <div className="container">
+        {/* NEMA shell-like */}
+        <div className="adminbar__inner">
+          <div /> {/* levo prazan stub da centriranje radi */}
+          <nav className="admin-subnav pro" aria-label="Admin navigacija">
+            <div className="admin-subnav__scroll">
+              {NAV_ITEMS.map(({ id, to, key, fallback, icon: Icon, exact }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  className="admin-chip"
+                  activeClassName="is-active"
+                  exact={!!exact}
+                >
+                  <span className="admin-chip__icon">
+                    <Icon />
+                  </span>
+                  <span className="admin-chip__label">
+                    <Trans i18nKey={key}>{fallback}</Trans>
+                  </span>
+                  {counts[id] != null && (
+                    <span className="admin-chip__badge">{counts[id]}</span>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default AdminPanel;
+}

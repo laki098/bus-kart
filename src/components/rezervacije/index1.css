@@ -196,10 +196,6 @@
   margin-left: 70rem;
 }
 
-.red-1 {
-  margin: 1rem;
-}
-
 .forma {
   width: 70%;
   height: auto;
@@ -352,4 +348,514 @@
 }
 .margin {
   margin-bottom: 1rem;
+}
+
+/* ===== Rezervacija – modern UI (prefiks: reservation-) ===== */
+
+.reservation-form {
+  /* centrira sadržaj i briše stari okvir forme */
+  width: min(1100px, 96%);
+  margin: 24px auto 48px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* Kolona nema pozadinu (stari .flex-clan je imao) */
+.reservation-col {
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+/* Kartica (sekcije: Putnik / Linija / Dodaci / Cena...) */
+.reservation-card {
+  --ui-radius: 18px;
+  --ui-border: #e5e7eb;
+  --ui-shadow: 0 20px 50px rgba(2, 6, 23, 0.08);
+  background: #fff;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+  padding: 18px 18px 20px;
+}
+
+/* Naslov kartice kao “badge” */
+.reservation-card__title {
+  display: inline-block;
+  background: #1f64ff;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+/* Label & inputs */
+.reservation-label {
+  display: block;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.reservation-card input,
+.reservation-card select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  outline: none;
+  padding: 0 12px;
+  background: #fff;
+  font-size: 15px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.reservation-card input:focus,
+.reservation-card select:focus {
+  border-color: #2f6dfc;
+  box-shadow: 0 0 0 4px rgba(47, 109, 252, 0.15);
+}
+
+/* Select (prefiks dodat) */
+.reservation-select {
+  background: #fff !important;
+}
+
+/* Dugmad */
+.reservation-button,
+.reservation-primary {
+  --btn-bg: #1f64ff;
+  --btn-bg-hover: #2f6dfc;
+  --btn-text: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.06s ease, background 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px rgba(31, 100, 255, 0.24);
+}
+
+.reservation-button:hover,
+.reservation-primary:hover {
+  background: var(--btn-bg-hover);
+}
+
+.reservation-button:active,
+.reservation-primary:active {
+  transform: translateY(1px);
+}
+
+.reservation-button--ghost {
+  background: #fff;
+  color: #1f64ff;
+  border-color: #cbd5e1;
+  box-shadow: none;
+}
+.reservation-button--ghost:hover {
+  background: #f1f5ff;
+  border-color: #93c5fd;
+}
+
+/* Desni panel – autobus kao kartica */
+.reservation-bus {
+  --ui-radius: 18px;
+  --ui-border: #e5e7eb;
+  --ui-shadow: 0 20px 50px rgba(2, 6, 23, 0.08);
+  background: #fff;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+  padding: 16px 10px 10px;
+}
+
+/* Sažetak/cena */
+.reservation-summary {
+  background: #f8fafc;
+  border: 1px dashed #dbeafe;
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: #0f172a;
+}
+
+/* Info napomena */
+.reservation-note {
+  background: #eff6ff !important;
+  color: #1e40af !important;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+/* Lista povratnih polazaka */
+.reservation-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.reservation-list__item {
+  list-style: none;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.2s;
+}
+.reservation-list__item:hover {
+  border-color: #bfdbfe;
+  background: #f8fbff;
+  box-shadow: 0 6px 14px rgba(2, 6, 23, 0.06);
+}
+
+/* :has – oboji selektovanu stavku (savremeni browseri) */
+.reservation-list__item:has(input:checked) {
+  border-color: #1f64ff;
+  background: #f0f5ff;
+}
+
+/* Tekst unutar stavke */
+.reservation-list__label {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Date input u povratnoj karti */
+.povratna-rezervacija-date-input {
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0 12px;
+  background: #fff;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.povratna-rezervacija-date-input:focus {
+  border-color: #2f6dfc;
+  box-shadow: 0 0 0 4px rgba(47, 109, 252, 0.15);
+}
+
+/* Sitna poravnanja gde su ranije korišćene util klase */
+.reservation-card .red-1 {
+  margin: 12px 0;
+}
+.reservation-card hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 10px 0;
+}
+
+/* Mobilni “snap” */
+@media (max-width: 640px) {
+  .reservation-form {
+    width: 94%;
+  }
+  .reservation-card {
+    padding: 14px;
+  }
+}
+/* ====== LAYOUT FIX ====== */
+
+/* širi container i više “air” oko forme */
+.reservation-form {
+  width: min(1240px, 96%);
+  margin: 32px auto 56px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* dve kolone: leva fiksna širina, desna raste — veći razmak */
+.reservation-grid {
+  display: grid;
+  grid-template-columns: 420px minmax(640px, 1fr);
+  align-items: start;
+}
+
+/* ====== UKLANJANJE STARIH FIKSNIH ŠIRINA ====== */
+/* stari .flex-clan { width: 30rem } i .deoForme { width: fit-content } su pravili razliku
+   ovim sve kartice rade 100% širine kolone */
+.reservation-col {
+  width: auto !important;
+}
+
+.reservation-card {
+  width: 100% !important; /* sve kartice jednako široke */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* neke sekcije imaju .sirina-3polja = 22rem – poništi */
+.reservation-card.sirina-3polja {
+  width: 100% !important;
+}
+
+/* malo veći unutrašnji razmak da vizuelno budu iste “kutije” */
+.reservation-card {
+  --ui-radius: 18px;
+  --ui-border: #e5e7eb;
+  --ui-shadow: 0 20px 50px rgba(2, 6, 23, 0.08);
+  padding: 18px 18px 20px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+  background: #fff;
+
+  margin-top: 30px;
+}
+
+/* naslov-badge ostaje, samo malo razmaka ispod */
+.reservation-card__title {
+  margin-bottom: 12px;
+}
+
+/* desna kartica (autobus) – uskladi padding da vizuelno prate leve */
+.reservation-bus {
+  padding: 18px 14px 14px;
+  border-radius: 18px;
+}
+
+/* inputi full širina – poravnanje ivica */
+.reservation-card input,
+.reservation-card select,
+.povratna-rezervacija-date-input {
+  width: 100%;
+}
+
+/* vertikalni ritam među kontrolama u kartici */
+.reservation-card .red-1 {
+  margin: 12px 0;
+}
+.reservation-card hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 10px 0;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 980px) {
+  .reservation-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* === CTA traka (dno) === */
+.reservation-cta {
+  width: min(1100px, 96%);
+  margin: 18px auto 48px;
+}
+
+.reservation-cta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.1);
+  padding: 14px 16px;
+}
+
+.reservation-cta__summary {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.reservation-cta__label {
+  color: #334155;
+  font-weight: 600;
+}
+
+.reservation-cta__price {
+  color: #0f172a;
+  font-size: 18px;
+}
+
+/* veliko primarno dugme (nije full-width) */
+.reservation-primary--lg {
+  height: 48px;
+  padding: 0 22px;
+  font-size: 16px;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(31, 100, 255, 0.25);
+}
+
+.reservation-primary--lg:hover {
+  transform: translateY(-1px);
+}
+
+/* mobilno – dugme ispod cene, full width */
+@media (max-width: 640px) {
+  .reservation-cta__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .reservation-primary--lg {
+    width: 100%;
+  }
+}
+/* === Razmaci odozgo i između kolona/kartica (patch) === */
+
+/* malo veći odmak ispod steppera/hedera */
+.reservation-grid {
+  margin-top: 28px; /* povećaj po želji (32/40) */
+  gap: 36px; /* razmak levo–desno i vertikalno */
+}
+
+@media (min-width: 1200px) {
+  .reservation-grid {
+    gap: 48px;
+  } /* još “air”-a na većim ekranima */
+}
+
+/* veći vertikalni razmaci između kartica u levoj koloni */
+.reservation-col .reservation-card + .reservation-card {
+  margin-top: 18px;
+}
+
+/* ako želiš još malo “air”-a baš od vrha stranice */
+.reservation-form {
+  margin-top: 56px; /* prepisuje starije vrednosti */
+}
+
+/* desni panel (autobus) – mali odmak od vrha kolone za balans */
+.reservation-bus {
+  margin-top: 30px;
+}
+
+/* centriraj dvokolonski blok unutar forme */
+.reservation-grid {
+  justify-content: center; /* centriraj grid kolone u containteru */
+  margin-inline: auto; /* sigurnosno centriranje samog grida */
+  gap: 48px; /* malo veći razmak levo–desno */
+}
+
+/* veći odmak od vrha stranice */
+.reservation-form {
+  margin-top: 72px; /* podesi po ukusu (npr. 64–96px) */
+}
+
+/* neka i CTA traka ima istu širinu/centar kao grid */
+.reservation-cta {
+  width: min(1240px, 96%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reservation-col .reservation-card + .reservation-card {
+  margin-top: 22px;
+}
+
+/* === CENTAR EKRANA – PATCH (stavi na sam kraj fajla) === */
+
+/* 1) Pregazi stari .forma na ovoj stranici i centriraj omotač */
+.forma.reservation-form {
+  width: min(1240px, 96%) !important;
+  margin: 72px auto 56px !important; /* auto = horizontalni centar */
+  border: 0 !important;
+  background: transparent !important;
+}
+
+/* 2) Grid (leve kartice + autobus) tačno u sredini */
+.reservation-grid {
+  max-width: 1100px; /* širina bloka u sredini */
+  margin-left: auto;
+  margin-right: auto; /* horizontalni centar */
+  justify-content: center;
+  gap: 48px; /* razmak između kolona */
+}
+
+/* precizne kolone na većim širinama (balans) */
+@media (min-width: 1100px) {
+  .reservation-grid {
+    grid-template-columns: 440px 640px;
+  }
+}
+
+/* 3) CTA traka ispod – isti centar i širina kao forma */
+.reservation-cta {
+  width: min(1240px, 96%) !important;
+  margin: 24px auto 72px !important; /* auto centriranje */
+}
+
+/* 4) Dodatno: malo “air”-a između kartica levo */
+.reservation-col .reservation-card + .reservation-card {
+  margin-top: 22px;
+}
+/* === CENTRIRANJE & PORAVNANJE (final patch) === */
+
+/* 1) Omotač forme – tačno u sredini stranice */
+.forma.reservation-form {
+  width: min(1240px, 96%) !important;
+  margin: 72px auto 56px !important; /* auto = horizontalni centar */
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+/* 2) Dvokolonski blok – striktno centriran */
+.reservation-grid {
+  display: grid !important;
+  grid-template-columns: 440px minmax(560px, 1fr); /* leve kartice + autobus */
+  column-gap: 56px;
+  row-gap: 24px;
+  max-width: 1100px; /* širina samog bloka */
+  margin-left: auto !important;
+  margin-right: auto !important; /* centar */
+  justify-content: center;
+}
+
+/* 3) Ukloni nasleđene margine iz .flex-container koje krive raspored */
+.reservation-grid > div {
+  margin: 0 !important; /* pregazi .flex-container > div { margin:10px } */
+}
+.reservation-col {
+  width: auto !important;
+}
+
+/* 4) Leve kartice – isti vertikalni razmak */
+.reservation-col .reservation-card + .reservation-card {
+  margin-top: 22px !important;
+}
+
+.autobus,
+.autobus-stujardesa {
+  margin-left: auto !important;
+  margin-right: auto !important; /* centar u okviru kartice */
+}
+
+/* 6) CTA traka – ista širina/centar kao forma */
+.reservation-cta {
+  width: min(1240px, 96%) !important;
+  margin: 24px auto 72px !important;
+}
+
+/* 7) Malo više “air”-a iznad grida */
+.reservation-grid {
+  margin-top: 32px;
+}
+
+@media (max-width: 980px) {
+  .reservation-grid {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    column-gap: 24px;
+  }
 }

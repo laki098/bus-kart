@@ -1,81 +1,196 @@
-.contact {
-  background-color: #ebf5fb;
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 3vh;
-  padding-bottom: 3vh;
+/* ================== Contact Page (scoped) ================== */
+:root {
+  --cp-surface: #ffffff;
+  --cp-bg: #f1f5f9;
+  --cp-border: #e6ebf2;
+  --cp-text: #0f172a;
+  --cp-muted: #64748b;
+  --cp-primary: #2563eb;
+  --cp-primary-2: #3b82f6;
+
+  --cp-radius-lg: 22px;
+  --cp-shadow-lg: 0 24px 60px rgba(2, 6, 23, 0.12);
+  --cp-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
 }
-.contact_prikaz {
-  width: 50%;
-  height: 60vh;
-  padding: 10px;
+
+.contactPage {
 }
-.contact-div {
-  display: block;
-  padding-top: 16vh;
-  font-size: larger;
-  line-height: 3;
+
+/* Sekcija sa blagim “air” razmakom */
+.contactPage-section {
+  padding: 24px 0 36px;
 }
-rasponsive-maps {
-  overflow: hidden;
+
+/* Dvokolona koja se prelomi u jednu na mobilu */
+.contactPage-grid {
+  width: min(1100px, 96%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* Kartica sa podacima */
+.contactPage-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-lg);
+  box-shadow: var(--cp-shadow-lg);
+  padding: 18px 18px 16px;
   position: relative;
-  height: 75vh;
+  overflow: hidden;
 }
-.rasponsive-maps iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-}
-.row1:after {
+.contactPage-card::before {
   content: "";
-  display: table;
-  clear: both;
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--cp-primary-2), var(--cp-primary));
+  opacity: 0.9;
+}
+.contactPage-head {
+  text-align: left;
+  padding: 10px 2px 8px;
+}
+.contactPage-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--cp-text);
+  margin: 0;
+}
+.contactPage-subtitle {
+  margin: 4px 0 0;
+  color: #54657c;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.distance {
-  margin-top: 7vh;
+/* Lista stavki */
+.contactPage-list {
+  margin-top: 10px;
+  display: grid;
+  gap: 12px;
+}
+.contactPage-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid #e7eef9;
+  border-radius: 14px;
+  background: #fbfdff;
+  box-shadow: inset 0 1px 0 #f5f8ff;
+}
+.contactPage-itemIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  background: #eef4ff;
+  color: #1e3a8a;
+}
+.contactPage-itemBody {
+  flex: 1;
+}
+.contactPage-itemLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  color: #7b8aa1;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.contactPage-itemValue {
+  color: var(--cp-text);
+  font-weight: 800;
+}
+.contactPage-link {
+  color: var(--cp-text);
+  font-weight: 800;
+  text-decoration: none;
+}
+.contactPage-link:hover {
+  text-decoration: underline;
 }
 
-@media screen and (max-width: 600px) {
-  .contact_prikaz {
-    width: 100%;
+/* Akcije */
+.contactPage-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.contactPage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--cp-shadow-sm);
+  transition: 0.15s ease;
+  color: #111827;
+}
+.contactPage-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.12);
+}
+.contactPage-btn--primary {
+  background: linear-gradient(135deg, var(--cp-primary-2), var(--cp-primary));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.32);
+}
+.contactPage-btn--ghost {
+  background: #fff;
+}
+
+/* Mapa – responzivna (16/9) sa blagim okvirom */
+.contactPage-mapCard {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-lg);
+  box-shadow: var(--cp-shadow-lg);
+  padding: 12px;
+  display: grid;
+  align-items: center;
+}
+.contactPage-map {
+  width: 100%;
+  aspect-ratio: 16/9; /* elegantno rešenje za responsivnost */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 2px 6px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e6ebf2;
+}
+.contactPage-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .contactPage-grid {
+    grid-template-columns: 1fr;
+  }
+  .contactPage-map {
+    aspect-ratio: 4/3;
   }
 }
-/*                                              nisam unela klasu .unos iz radnog fajla     */
-
-.podaci {      /* pisalo podaci    */
-  text-align: left;
-}
-.podaciKontakt{
-  text-align: left;
-  background-color: #fff;
-/*  border-radius: 0.2rem;
-  border-color: darkblue;
-  border-width: 1px;      */
-  padding-left: 3rem;
-  word-wrap: break-word;  
-  overflow-wrap: break-word;    /* za starije browser-e   */
-  line-height: 1;
-}
-
-.podaci1 {
-  text-align: center;
-}
-
-.contact-div-1 {
-  display: block;
-  padding-top: 6vh; /* 16    */
-  font-size: large; /* larger   */
-  line-height: 1.5; /*  3     */
-  color: darkblue;
-  width: 40vw;          /*pozicioniranje div u desno i sirina 35vw    */
- /* width: 20rem;   */
-  margin-left: 5vw;
-}
-
-.prikazKontakt{
-  padding-left: "10%";
-  overflow-x: auto;
+@media (max-width: 640px) {
+  .contactPage-title {
+    font-size: 1.4rem;
+  }
+  .contactPage-item {
+    padding: 10px;
+  }
 }
